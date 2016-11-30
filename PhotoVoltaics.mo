@@ -22,7 +22,7 @@ package PhotoVoltaics
       connect(rampVoltage.n, diode.n) annotation(Line(points = {{10, -20}, {14, -20}, {20, -20}, {20, 50}, {10, 50}}, color = {0, 0, 255}));
       connect(fixedTemperature.port, diode.heatPort) annotation(Line(points = {{-60, 40}, {0, 40}}, color = {191, 0, 0}));
       connect(fixedTemperature.port, zDiode.heatPort) annotation(Line(points = {{-60, 40}, {-50, 40}, {-40, 40}, {-40, 10}, {0, 10}}, color = {191, 0, 0}));
-      annotation(Icon(coordinateSystem(preserveAspectRatio = false)), Diagram(coordinateSystem(preserveAspectRatio = false)));
+      annotation(Icon(coordinateSystem(preserveAspectRatio = false)), Diagram(coordinateSystem(preserveAspectRatio = false)), experiment(StartTime=0, StopTime=1));
     end TestZener;
   end ComponentTesting;
 
@@ -42,7 +42,7 @@ package PhotoVoltaics
       /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
       connect(ground.p, variableResistor.n) annotation(Line(points = {{0, -20}, {14, -20}, {30, -20}, {30, -10}}, color = {0, 0, 255}));
       connect(variableResistor.R, powerRamp.y) annotation(Line(points = {{41, -2.22045e-15}, {49.5, -2.22045e-15}, {49.5, 0}, {59, 0}}, color = {0, 0, 127}));
-      annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime=0, StopTime=1, NumberOfIntervals = 5000));
+      annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime=0, StopTime=1));
     end SimpleResistor;
 
     model SimpleCurrentSource
@@ -58,7 +58,7 @@ package PhotoVoltaics
       connect(signalCurrent.i, rampCurrent.y) annotation(Line(points = {{37, 0}, {59, 0}}, color = {0, 0, 127}));
       connect(ground.p, signalCurrent.n) annotation(Line(points = {{0, -20}, {30, -20}, {30, -10}}, color = {0, 0, 255}));
       /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
-      annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime=0, StopTime=1, NumberOfIntervals = 5000));
+      annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime=0, StopTime=1));
     end SimpleCurrentSource;
 
     model SimpleSignal
@@ -76,7 +76,7 @@ package PhotoVoltaics
       connect(ground.p, signalCurrent.n) annotation(Line(points = {{0, -30}, {0, -20}, {40, -20}, {40, -10}}, color = {0, 0, 255}));
       connect(cell.p, signalCurrent.p) annotation(Line(points = {{1.77636e-15, 10}, {1.77636e-15, 16}, {0, 16}, {0, 20}, {40, 20}, {40, 10}}, color = {0, 0, 255}));
       connect(rampE.y, cell.variableIrradiance) annotation(Line(points = {{-19, 0}, {-12, 0}}, color = {0, 0, 127}));
-      annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime=0, StopTime=1, NumberOfIntervals = 5000));
+      annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime=0, StopTime=1));
     end SimpleSignal;
 
     model SeriesParallel
@@ -92,7 +92,7 @@ package PhotoVoltaics
       /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
       connect(signalCurrent.i, rampCurrent.y) annotation(Line(points = {{47, 0}, {59, 0}}, color = {0, 0, 127}));
       connect(ground.p, signalCurrent.n) annotation(Line(points = {{0, -28}, {0, -28}, {0, -20}, {40, -20}, {40, -10}}, color = {0, 0, 255}));
-      annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime=0, StopTime=1, NumberOfIntervals = 5000));
+      annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime=0, StopTime=1));
     end SeriesParallel;
     annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})));
   end Testing;
