@@ -13,7 +13,7 @@
         T=298.15)                                                                                                                                                                         annotation(Placement(transformation(extent = {{-10, 10}, {10, 30}})));
       Modelica.Electrical.Analog.Sources.RampVoltage rampVoltage(duration = 1, startTime = 0, V = Vmax - Vmin, offset = Vmin) annotation(Placement(transformation(extent = {{-10, -30}, {10, -10}})));
       Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(transformation(extent = {{10, -60}, {30, -40}})));
-      PhotoVoltaics.Components.Diode diode(m = 40 / 25.69, useHeatPort = true) annotation(Placement(transformation(extent = {{-10, 40}, {10, 60}})));
+      PhotoVoltaics.Components.Diode2 diode(m=40/25.69, useHeatPort=true) annotation (Placement(transformation(extent={{-10,40},{10,60}})));
       parameter PhotoVoltaics.Records.ModuleData moduleData annotation(Placement(transformation(extent = {{-10, 80}, {10, 100}})));
       Modelica.Thermal.HeatTransfer.Sources.FixedTemperature fixedTemperature(T = 298.15) annotation(Placement(transformation(extent = {{-80, 30}, {-60, 50}})));
     equation
@@ -82,6 +82,32 @@
       annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(__Dymola_NumberOfIntervals = 5000));
     end SimpleModuleResistor;
 
+    model SimpleModuleResistorShadow
+      extends Modelica.Icons.Example;
+      Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Components.Modules.Simple module(
+        moduleData(ns=48),
+        T=298.15,
+        shadow=cat(
+                1,
+                fill(0.5, 1),
+                fill(0, 47)))                                           annotation (Placement(visible=true, transformation(
+            origin={0,0},
+            extent={{-10,10},{10,-10}},
+            rotation=-90)));
+      parameter Records.ModuleData moduleData(BvCell=12)=
+                                                PhotoVoltaics.Records.NET_NU_S5_E3E() annotation(Placement(transformation(extent = {{60, 60}, {80, 80}})));
+      Sources.PowerRamp powerRamp(duration = 0.6, height = 8, offset = -4, ref = moduleData.VmpCellRef / moduleData.ImpRef, startTime = 0.2) annotation(Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+      Modelica.Electrical.Analog.Basic.VariableResistor variableResistor annotation(Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {30, 0})));
+    equation
+      connect(ground.p, module.n) annotation (Line(points={{0,-20},{0,-10}}, color={0,0,255}));
+      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
+      connect(variableResistor.R,powerRamp. y) annotation(Line(points = {{41, -2.22045e-15}, {49.5, -2.22045e-15}, {49.5, 0}, {59, 0}}, color = {0, 0, 127}));
+      connect(module.p, variableResistor.p) annotation (Line(points={{0,10},{0,10},{0,20},{30,20},{30,10}}, color={0,0,255}));
+      connect(variableResistor.n, ground.p) annotation (Line(points={{30,-10},{30,-20},{0,-20}}, color={0,0,255}));
+      annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(__Dymola_NumberOfIntervals = 5000));
+    end SimpleModuleResistorShadow;
+
     model SimpleModuleCurrentSource
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -131,7 +157,39 @@
   package Components
     extends Modelica.Icons.Package;
 
-    model Diode "Diode with two superimposed exponential functions"
+    model Diode "Diode with one exponential function"
+      extends Modelica.Electrical.Analog.Interfaces.OnePort;
+      extends Modelica.Electrical.Analog.Interfaces.ConditionalHeatPort(T = 298.15);
+      constant Modelica.SIunits.Charge Q = 1.6021766208E-19 "Elementary charge of electron";
+      parameter Real m = 1 "Ideality factor of diode";
+      parameter Modelica.SIunits.Resistance R = 1E8 "Parallel ohmic resistance";
+      parameter Modelica.SIunits.Temperature TRef = 298.15 "Reference temperature" annotation(Dialog(group = "Reference data"));
+      parameter Modelica.SIunits.Voltage VRef(min = Modelica.Constants.small) = 0.6292 "Reference voltage > 0 at TRef" annotation(Dialog(group = "Reference data"));
+      parameter Modelica.SIunits.Current IRef(min = Modelica.Constants.small) = 8.540 "Reference current > 0 at TRef" annotation(Dialog(group = "Reference data"));
+      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaI = +0.00053 "Temperature coefficient of reference current at TRef" annotation(Dialog(group = "Reference data"));
+      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaV = -0.00340 "Temperature coefficient of reference voltage at TRef*" annotation(Dialog(group = "Reference data"));
+      Modelica.SIunits.Voltage Vt "Voltage equivalent of temperature (k*T/Q)";
+      Modelica.SIunits.Voltage VRefActual "Reference voltage w.r.t. actual temperature";
+      Modelica.SIunits.Current IRefActual "Reference current w.r.t. actual temperature";
+      Modelica.SIunits.Current Ids "Saturation current";
+    equation
+      // Temperature dependent voltage
+      Vt = Modelica.Constants.k * T_heatPort / Q;
+      // Re-calculate reference voltage and current with respect to reference temperature
+      VRefActual = VRef * (1 + alphaV * (T_heatPort - TRef));
+      IRefActual = IRef * (1 + alphaI * (T_heatPort - TRef));
+      // Actual temperature dependent saturation current is determined from reference voltage and current
+      Ids = IRefActual / (exp(VRefActual / m / Vt) - 1);
+      i = Ids * (exp(v / m / Vt) - 1) + v / R;
+      LossPower = v * i;
+      annotation(defaultComponentName = "diode", Documentation(info = "<html>
+           <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
+<pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
+  i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
+</html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor={0,0,255},     fillColor={255,255,255},     fillPattern=FillPattern.Sphere),  Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}), Text(extent = {{-152, 114}, {148, 74}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor={0,0,255},     fillColor={255,255,255},     fillPattern=FillPattern.Solid),   Line(points = {{-99, 0}, {96, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255})}));
+    end Diode;
+
+    model Diode2 "Diode with two superimposed exponential functions"
       extends Modelica.Electrical.Analog.Interfaces.OnePort;
       extends Modelica.Electrical.Analog.Interfaces.ConditionalHeatPort(T = 298.15);
       constant Modelica.SIunits.Charge Q = 1.6021766208E-19 "Elementary charge of electron";
@@ -159,12 +217,12 @@
       Ids = IRefActual / (exp(VRefActual / m / Vt) - 1);
       i = Ids * (exp(v / m / Vt) - 1) - Ibv * exp(-(v + Bv) / (Nbv * m * Vt)) + v / R;
       LossPower = v * i;
-      annotation(Documentation(info = "<html>
+      annotation(defaultComponentName = "diode", Documentation(info = "<html>
            <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
 <pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
   i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
 </html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}), Text(extent = {{-152, 114}, {148, 74}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-99, 0}, {96, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255})}));
-    end Diode;
+    end Diode2;
 
     package Cells
       extends Modelica.Icons.Package;
@@ -196,29 +254,51 @@
         Cells.Simple cell[moduleData.ns](
           final useHeatPort=fill(useHeatPort,moduleData.ns),
           final T=fill(T,moduleData.ns),
-          final useConstantIrradiance=fill(useConstantIrradiance,moduleData.ns),
           final constantIrradiance=fill(constantIrradiance,moduleData.ns),
-          final moduleData=fill(moduleData,moduleData.ns)) annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
-        Modelica.Thermal.HeatTransfer.Components.ThermalCollector thermalCollector(final m=moduleData.ns) if useHeatPort annotation (Placement(transformation(extent={{-10,-60},{10,-40}})));
-        Blocks.GainReplicator gainReplicator(final n=moduleData.ns, final k=PhotoVoltaics.Functions.limit(shadow,zeros(moduleData.ns),ones(moduleData.ns)))
+          final moduleData=fill(moduleData,moduleData.ns),
+          final useConstantIrradiance=fill(false, moduleData.ns))
+                                                           annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+        Modelica.Thermal.HeatTransfer.Components.ThermalCollector collectorModule(final m=moduleData.ns) if  useHeatPort annotation (Placement(transformation(extent={{-10,-60},{10,-40}})));
+        Blocks.GainReplicator gainReplicator(final n=moduleData.ns, final k=PhotoVoltaics.Functions.limit(ones(moduleData.ns)-shadow,zeros(moduleData.ns),ones(moduleData.ns)))
           annotation (Placement(transformation(
               extent={{-10,-10},{10,10}},
               rotation=270,
               origin={0,40})));
+        Diode diode[moduleData.nb](
+          final useHeatPort=fill(useHeatPort, moduleData.nb),
+          final T=fill(T, moduleData.nb),
+          final m=fill(1, moduleData.nb),
+          final R=fill(1E8, moduleData.nb),
+          final TRef=fill(moduleData.TRef, moduleData.nb),
+          final IRef=fill(moduleData.IscRef, moduleData.nb),
+          final alphaI=fill(0, moduleData.nb),
+          final alphaV=fill(0, moduleData.nb),
+          final VRef=fill(0.5, moduleData.nb))
+                                         annotation (Placement(transformation(extent={{-20,-30},{-40,-10}})));
+        Modelica.Thermal.HeatTransfer.Components.ThermalCollector collectorByPass(final m=moduleData.nb) if  useHeatPort annotation (Placement(transformation(extent={{-40,-60},{-20,-40}})));
       equation
+        assert(mod(moduleData.ns,moduleData.nb)==0,"Simple: number of bypassed cells cannot be determined unambiguously");
         LossPower = sum(cell.LossPower);
-
+        // Connect cells to module
         connect(p, cell[1].p) annotation (Line(points={{-100,0},{-100,0},{-10,0}},color={0,0,255}));
         for k in 1:moduleData.ns-1 loop
           connect(cell[k].n,cell[k+1].p);
         end for;
+        // Inter-module connections
         connect(cell[moduleData.ns].n, n) annotation (Line(points={{10,0},{100,0}}, color={0,0,255}));
-        connect(cell.heatPort, thermalCollector.port_a) annotation (Line(points={{0,-10},{0,-40}}, color={191,0,0}));
-        connect(thermalCollector.port_b, heatPort) annotation (Line(points={{0,-60},{0,-80},{0,-100}},  color={191,0,0}));
+        connect(cell.heatPort, collectorModule.port_a) annotation (Line(points={{0,-10},{0,-40}}, color={191,0,0}));
+        connect(collectorModule.port_b, heatPort) annotation (Line(points={{0,-60},{0,-80},{0,-100}}, color={191,0,0}));
         connect(irradiance, gainReplicator.u) annotation (Line(points={{0,70},{0,70},{0,52}}, color={0,0,127}));
         connect(gainReplicator.y, cell.variableIrradiance) annotation (Line(points={{-2.22045e-15,29},{0,18.5},{0,12}}, color={0,0,127}));
+        // Connect bypass diodes
+        for k in 1:moduleData.nb loop
+          connect(diode[k].n, cell[(k-1)*div(moduleData.ns,moduleData.nb)+1].p) annotation (Line(points={{-40,-20},{-50,-20},{-60,-20},{-60,0},{-10,0}}, color={0,0,255}));
+          connect(diode[k].p, cell[k*div(moduleData.ns,moduleData.nb)].n) annotation (Line(points={{-20,-20},{20,-20},{60,-20},{60,0},{10,0}}, color={0,0,255}));
+        end for;
 
-        annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={                         Rectangle(lineColor={0,0,0},        fillPattern=FillPattern.Solid,    extent = {{-80, 80}, {80, -80}}, fillColor={85,85,255}),
+        connect(collectorByPass.port_a, diode.heatPort) annotation (Line(points={{-30,-40},{-30,-30}}, color={191,0,0}));
+        connect(collectorByPass.port_b, heatPort) annotation (Line(points={{-30,-60},{-30,-60},{-30,-96},{-30,-100},{0,-100}}, color={191,0,0}));
+        annotation (defaultComponentName = "module", Icon(coordinateSystem(preserveAspectRatio=false), graphics={Rectangle(lineColor={0,0,0},        fillPattern=FillPattern.Solid,    extent = {{-80, 80}, {80, -80}}, fillColor={85,85,255}),
               Line(points={{-40,80},{-40,-80}}, color={255,255,255}),
               Line(points={{0,80},{0,-80}}, color={255,255,255}),
               Line(points={{40,80},{40,-80}}, color={255,255,255}),
@@ -561,7 +641,13 @@ The original data of this module are taken from
 
     partial model PartialCell "Partial cell model"
       extends PhotoVoltaics.Interfaces.PartialComponent;
-      Components.Diode diode(final useHeatPort = useHeatPort, final T = T, final TRef = moduleData.TRef) annotation(Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Components.Diode2 diode(
+        final useHeatPort=useHeatPort,
+        final T=T,
+        final TRef=moduleData.TRef) annotation (Placement(visible=true, transformation(
+            origin={0,0},
+            extent={{-10,-10},{10,10}},
+            rotation=0)));
       Sources.SignalCurrent signalCurrent(final useHeatPort = useHeatPort, final T = T, final TRef = moduleData.TRef) annotation(Placement(visible = true, transformation(origin = {0, 30}, extent = {{-10, 10}, {10, -10}}, rotation = 180)));
     equation
       connect(p, diode.p) annotation(Line(points={{-100,0},{-60,0},{-10,0}},        color = {0, 0, 255}));
