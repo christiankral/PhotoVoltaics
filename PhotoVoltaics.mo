@@ -8,7 +8,9 @@
       extends Modelica.Icons.Example;
       parameter Modelica.SIunits.Voltage Vmin = -5.25;
       parameter Modelica.SIunits.Voltage Vmax = +0.75;
-      Modelica.Electrical.Analog.Semiconductors.ZDiode zDiode(R = moduleData.RshCell, Bv = moduleData.BvCell, Ibv = moduleData.Ibv, Nbv = moduleData.Nbv, useHeatPort = true, T = 298.15) annotation(Placement(transformation(extent = {{-10, 10}, {10, 30}})));
+      Modelica.Electrical.Analog.Semiconductors.ZDiode zDiode(                        Bv = moduleData.BvCell, Ibv = moduleData.Ibv, Nbv = moduleData.Nbv, useHeatPort = true,
+        R=1E8,
+        T=298.15)                                                                                                                                                                         annotation(Placement(transformation(extent = {{-10, 10}, {10, 30}})));
       Modelica.Electrical.Analog.Sources.RampVoltage rampVoltage(duration = 1, startTime = 0, V = Vmax - Vmin, offset = Vmin) annotation(Placement(transformation(extent = {{-10, -30}, {10, -10}})));
       Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(transformation(extent = {{10, -60}, {30, -40}})));
       PhotoVoltaics.Components.Diode diode(m = 40 / 25.69, useHeatPort = true) annotation(Placement(transformation(extent = {{-10, 40}, {10, 60}})));
@@ -61,6 +63,25 @@
       annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(__Dymola_NumberOfIntervals = 5000));
     end SimpleCellCurrentSource;
 
+    model SimpleModuleResistor
+      extends Modelica.Icons.Example;
+      Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Components.Modules.Simple module(moduleData(ns=48), T=298.15)     annotation (Placement(visible=true, transformation(
+            origin={0,0},
+            extent={{-10,10},{10,-10}},
+            rotation=-90)));
+      parameter Records.ModuleData moduleData = PhotoVoltaics.Records.NET_NU_S5_E3E() annotation(Placement(transformation(extent = {{60, 60}, {80, 80}})));
+      Sources.PowerRamp powerRamp(duration = 0.6, height = 8, offset = -4, ref = moduleData.VmpCellRef / moduleData.ImpRef, startTime = 0.2) annotation(Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+      Modelica.Electrical.Analog.Basic.VariableResistor variableResistor annotation(Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {30, 0})));
+    equation
+      connect(ground.p, module.n) annotation (Line(points={{0,-20},{0,-10}}, color={0,0,255}));
+      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
+      connect(variableResistor.R,powerRamp. y) annotation(Line(points = {{41, -2.22045e-15}, {49.5, -2.22045e-15}, {49.5, 0}, {59, 0}}, color = {0, 0, 127}));
+      connect(module.p, variableResistor.p) annotation (Line(points={{0,10},{0,10},{0,20},{30,20},{30,10}}, color={0,0,255}));
+      connect(variableResistor.n, ground.p) annotation (Line(points={{30,-10},{30,-20},{0,-20}}, color={0,0,255}));
+      annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(__Dymola_NumberOfIntervals = 5000));
+    end SimpleModuleResistor;
+
     model SimpleModuleCurrentSource
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -86,26 +107,7 @@
       annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(__Dymola_NumberOfIntervals = 5000));
     end SimpleModuleCurrentSource;
 
-    model SimpleModuleResistor
-      extends Modelica.Icons.Example;
-      Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      Components.Modules.Simple module(moduleData(ns=48), T=298.15)     annotation (Placement(visible=true, transformation(
-            origin={0,0},
-            extent={{-10,10},{10,-10}},
-            rotation=-90)));
-      parameter Records.ModuleData moduleData = PhotoVoltaics.Records.NET_NU_S5_E3E() annotation(Placement(transformation(extent = {{60, 60}, {80, 80}})));
-      Sources.PowerRamp powerRamp(duration = 0.6, height = 8, offset = -4, ref = moduleData.VmpCellRef / moduleData.ImpRef, startTime = 0.2) annotation(Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-      Modelica.Electrical.Analog.Basic.VariableResistor variableResistor annotation(Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {30, 0})));
-    equation
-      connect(ground.p, module.n) annotation (Line(points={{0,-20},{0,-10}}, color={0,0,255}));
-      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
-      connect(variableResistor.R,powerRamp. y) annotation(Line(points = {{41, -2.22045e-15}, {49.5, -2.22045e-15}, {49.5, 0}, {59, 0}}, color = {0, 0, 127}));
-      connect(module.p, variableResistor.p) annotation (Line(points={{0,10},{0,10},{0,20},{30,20},{30,10}}, color={0,0,255}));
-      connect(variableResistor.n, ground.p) annotation (Line(points={{30,-10},{30,-20},{0,-20}}, color={0,0,255}));
-      annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(__Dymola_NumberOfIntervals = 5000));
-    end SimpleModuleResistor;
-
-    model SimpleSignal
+    model SimpleCellSignal
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(visible = true, transformation(origin = {0, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       PhotoVoltaics.Components.Cells.Simple cell(useConstantIrradiance = false, moduleData = moduleData) annotation(Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
@@ -121,23 +123,8 @@
       connect(variableResistor.p, cell.p) annotation (Line(points={{30,10},{30,20},{0,20},{0,10}}, color={0,0,255}));
       connect(ground.p, variableResistor.n) annotation (Line(points={{0,-30},{0,-30},{0,-18},{0,-20},{30,-20},{30,-10}}, color={0,0,255}));
       annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)));
-    end SimpleSignal;
+    end SimpleCellSignal;
 
-    model SeriesParallel
-      extends Modelica.Icons.Example;
-      Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(visible = true, transformation(origin = {0, -38}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      PhotoVoltaics.Components.Cells.SeriesParallel cell(moduleData = moduleData) annotation(Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
-      Modelica.Blocks.Sources.Ramp rampCurrent(duration = 0.6, startTime = 0.2, height = cell.moduleData.IscRef) annotation(Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-      Modelica.Electrical.Analog.Sources.SignalCurrent signalCurrent annotation(Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {40, 0})));
-      parameter Records.ModuleData moduleData = PhotoVoltaics.Records.NET_NU_S5_E3E() annotation(Placement(transformation(extent = {{60, 60}, {80, 80}})));
-    equation
-      connect(cell.p, signalCurrent.p) annotation(Line(points = {{0, 10}, {0, 20}, {40, 20}, {40, 10}}, color = {0, 0, 255}));
-      connect(cell.n, ground.p) annotation(Line(points = {{0, -10}, {0, -28}}, color = {0, 0, 255}));
-      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
-      connect(signalCurrent.i, rampCurrent.y) annotation(Line(points = {{47, 0}, {59, 0}}, color = {0, 0, 127}));
-      connect(ground.p, signalCurrent.n) annotation(Line(points = {{0, -28}, {0, -28}, {0, -20}, {40, -20}, {40, -10}}, color = {0, 0, 255}));
-      annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)));
-    end SeriesParallel;
     annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})));
   end Testing;
 
@@ -176,7 +163,7 @@
            <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
 <pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
   i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
-</html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}), Text(extent = {{-152, 114}, {148, 74}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-99, 0}, {96, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255})}));
+</html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}), Text(extent = {{-152, 114}, {148, 74}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-99, 0}, {96, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255})}));
     end Diode;
 
     package Cells
@@ -200,30 +187,6 @@
                 fillPattern=FillPattern.Solid),                                                                                                                                                                                             Line(points = {{-40, 80}, {-40, -80}}, color = {255, 255, 255}), Line(points = {{40, 80}, {40, -80}}, color = {255, 255, 255}), Text(extent = {{-150, -140}, {150, -100}}, textString = "%name", lineColor = {0, 0, 255})}), Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})));
       end Simple;
 
-      model SeriesParallel "One diode model with series and parallel resitor"
-        extends PhotoVoltaics.Interfaces.PartialCell(signalCurrent(final irradianceRef = moduleData.irradianceRef, final alphaRef = moduleData.alphaIsc, final IRef = IphRef), diode(final Bv = moduleData.BvCell, final Ibv = moduleData.Ibv, final Nbv = moduleData.Nbv, final VRef = moduleData.VocCellRef, final IRef = moduleData.IscRef, final alphaI = moduleData.alphaIsc, final alphaV = moduleData.alphaVoc, final R = 1E8, final m = m));
-        final parameter Real m(start = 1, fixed = false) "Ideality factor of diode";
-        final parameter Modelica.SIunits.Current IsdRef(start = 1E-6, fixed = false) "Reference saturation current of cell";
-        final parameter Modelica.SIunits.Current IphRef(start = moduleData.IscRef, fixed = false) "Reference photo current of cell";
-        Modelica.Electrical.Analog.Basic.Resistor resistorSeries(final R = moduleData.RsCell) annotation(Placement(visible = true, transformation(origin = {-50, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-        Modelica.Electrical.Analog.Basic.Resistor resistorParallel(final R = moduleData.RshCell) annotation(Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      initial equation
-        // Open circiut equation
-        IphRef = IsdRef * (exp(moduleData.VocCellRef / m / moduleData.VtCellRef) - 1) + moduleData.VocCellRef / moduleData.RshCell;
-        // Short circuit equation
-        IphRef = IsdRef * (exp(moduleData.RsCell * moduleData.IscRef / m / moduleData.VtCellRef) - 1) + moduleData.RsCell * moduleData.IscRef / moduleData.RshCell + moduleData.IscRef;
-        // Maximum power equation
-        IphRef = IsdRef * (exp((moduleData.VmpCellRef + moduleData.RsCell * moduleData.ImpRef) / m / moduleData.VtCellRef) - 1) + (moduleData.VmpCellRef + moduleData.RsCell * moduleData.ImpRef) / moduleData.RshCell + moduleData.ImpRef;
-      equation
-        LossPower = diode.LossPower;
-        /*15.09.2016.Beim zweiten VeRshuch die Schaltung aufzubauen, wurden bei der Diode keine bestimmten Werte eingesetzt. Dadurch erhalten wir eine annähernd richtige I-U Kennlinie einer Solarzelle, jedoch verläuft die Kennlinie nicht wie erwartet. Die Kennlinie weist Ecken auf die eigentlich nicht sein sollten.
-      /* Nach 3 Stunden Arbeit bin ich zum Entschluss gekommen das der Fehler nicht an der Diode lag sonderen
-      an der Rampe. Bei der Umstellung von der Höhe der Rampen von 1000 auf 10 ergab sich die erwartetete I-U     Kurve */
-        connect(resistorParallel.n, n) annotation(Line(points = {{10, -30}, {20, -30}, {20, 0}, {100, 0}}, color = {0, 0, 255}));
-        connect(resistorSeries.p, p) annotation(Line(points = {{-60, 0}, {-100, 0}}, color = {0, 0, 255}));
-        connect(resistorParallel.p, resistorSeries.n) annotation(Line(points = {{-10, -30}, {-20, -30}, {-20, 0}, {-40, 0}}, color = {0, 0, 255}));
-        annotation(defaultComponentName = "cell", Icon(coordinateSystem(initialScale = 0.1), graphics={  Rectangle(lineColor = {0, 85, 255}, fillPattern = FillPattern.Sphere, extent = {{-80, 80}, {80, -80}}, fillColor = {85, 85, 255}), Line(points = {{-40, 80}, {-40, -80}}, color = {255, 255, 255}), Line(points = {{40, 80}, {40, -80}}, color = {255, 255, 255}), Rectangle(extent = {{-20, 10}, {20, -6}}, lineColor = {255, 255, 255}), Line(points = {{-30, 2}, {-20, 2}}, color = {255, 255, 255}), Line(points = {{20, 2}, {30, 2}}, color = {255, 255, 255}), Rectangle(extent = {{-8, -20}, {8, -60}}, lineColor = {255, 255, 255}), Line(points = {{0, -20}, {0, -10}}, color = {255, 255, 255}), Line(points = {{0, -70}, {0, -60}}, color = {255, 255, 255}), Line(points = {{-100, -100}, {100, 100}}, color = {255, 0, 0}, thickness = 0.5), Line(points = {{-100, 100}, {100, -100}}, color = {255, 0, 0}, thickness = 0.5)}), Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Icon(graphics = {Rectangle(origin = {-11, 9}, extent = {{-71, 65}, {71, -65}})}));
-      end SeriesParallel;
     end Cells;
 
     package Modules
