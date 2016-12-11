@@ -1,6 +1,121 @@
 ﻿package PhotoVoltaics
   extends Modelica.Icons.Package;
 
+  package UsersGuide "User's Guide"
+    extends Modelica.Icons.Information;
+    class Concept "Concept"
+      extends Modelica.Icons.Information;
+      annotation(preferredView = "info", Documentation(info="<html>
+</html>"));
+    end Concept;
+
+    class License "Modelica License 1.1"
+      extends Modelica.Icons.Information;
+      annotation(Documentation(info="<html>
+<h4>PhotoVoltaics Modelica Library</h4>
+
+<p>The PhotoVoltaics library is released under the
+<a href=\"https://www.modelica.org/licenses/ModelicaLicense1.1\">Modelica License 1.1</a>
+</p>
+<h4>
+ The Modelica License (Version 1.1 of June 30, 2000)
+</h4>
+<p>
+Redistribution and use in source and binary forms, with or without modification
+are permitted, provided that the following conditions are met:
+<ol>
+  <li> The author and copyright notices in the source files, these license
+       conditions and the disclaimer below are (a) retained and (b) reproduced
+       in the documentation provided with the distribution.</li>
+  <li> Modifications of the original source files are allowed, provided that a
+       prominent notice is inserted in each changed file and the accompanying
+       documentation, stating how and when the file was modified, and provided
+       that the conditions under (1) are met.</li>
+  <li> It is not allowed to charge a fee for the original version or a modified
+       version of the software, besides a reasonable fee for distribution and
+       support. Distribution in aggregate with other (possibly commercial)
+       programs as part of a larger (possibly commercial) software distribution
+       is permitted, provided that it is not advertised as a product of your
+       own.</li>
+</ol>
+<h5>Disclaimer</h5>
+<p>
+The software (sources, binaries, etc.) in their original or in a modified form
+ are provided \"as is\" and the copyright holders assume no responsibility for
+ its contents what so ever. Any express or implied warranties, including, but
+ not limited to, the implied warranties of merchantability and fitness for a
+ particular purpose are <b>disclaimed</b>. <b>In no event</b> shall the
+ copyright holders, or any party who modify and/or redistribute the package,
+ <b>be liable</b> for any direct, indirect, incidental, special, exemplary,
+ or consequential damages, arising in any way out of the use of this software,
+ even if advised of the possibility of such damage.
+</p>
+
+<h4>Module Data</h4>
+
+<p>Module data are taken from manufacturer data sheets. The original links and, if possible,
+PDF files of the data sheets are provided througn this library.</p>
+</html>"));
+    end License;
+
+    class Contact "Contact"
+      extends Modelica.Icons.Contact;
+      annotation(preferredView = "info", Documentation(info="<html>
+<p>
+This library was developed during a diploma thesis at the
+<a href=\"http://www.tgm.ac.at\">TGM</a>
+by Mohamed Elmoghazy, Ramazan Kavlak, Jovan Brkic and Muaz Ceran under the supervision of Christian Kral.
+</p>
+
+<p>
+<img src=\"modelica://WindPowerPlants/Resources/Images/tgm.png\"
+           alt=\"tgm.png\">
+</p>
+
+<h4>Contact</h4>
+
+<p>
+Christian Kral<br>
+<a href=\"http://christiankral.net\">Electric machines and drives</a><br>
+1060 Vienna, Austria<br>
+email: <a HREF=\"mailto:dr.christian.kral@gmail.com\">dr.christian.kral@gmail.com</a><br>
+</p>
+
+<h4>Co-Authors of the Library</h4>
+<p>
+Mohamed Elmoghazy<br>
+Ramazan Kavlak<br>
+Jovan Brkic<br>
+Muaz Ceran</p>
+
+</html>"));
+    end Contact;
+
+    class References "References"
+      extends Modelica.Icons.References;
+      annotation(preferredView = "info", Documentation(info="<html>
+<h4>References</h4>
+
+</html>"));
+    end References;
+
+    class ReleaseNotes "Release Notes"
+      extends Modelica.Icons.ReleaseNotes;
+      annotation(preferredView = "info", Documentation(info="<html>
+
+<h5>Version X.X.X, 2016-XX-X</h5>
+<ul>
+<li>Initial version</li>
+</ul>
+</html>"));
+    end ReleaseNotes;
+    annotation(preferredView = "info", Documentation(info="<html>
+<p>
+This library provides models for the modeling and simulation of photo voltaic power plants.
+</p>
+</html>"));
+  end UsersGuide;
+
   package ComponentTesting
     extends Modelica.Icons.ExamplesPackage;
 
@@ -682,6 +797,8 @@ The original data of this module are taken from
       annotation(Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})), Icon(coordinateSystem(preserveAspectRatio = false)), Diagram(coordinateSystem(preserveAspectRatio = false)));
     end PartialComponent;
   end Interfaces;
+
+
   annotation(Icon(coordinateSystem(initialScale = 0.1), graphics={  Ellipse(origin = {36, 75}, fillColor = {255, 255, 127}, fillPattern = FillPattern.Solid, extent = {{0, 1}, {40, -39}}, endAngle = 360), Rectangle(origin = {-60, -9}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -7}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {-60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -5}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
             fillPattern =                                                                                                                                                                                                        FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Line(origin = {18, 34}, points = {{4, 10}, {-84, -16}}), Line(origin = {-12, 70}, points = {{34, -6}, {-34, 6}}), Line(points = {{36, 30}, {28, 16}}, color = {28, 108, 200})}), Diagram(coordinateSystem(initialScale = 0.1)), uses(Modelica(version = "3.2.2")));
 end PhotoVoltaics;
