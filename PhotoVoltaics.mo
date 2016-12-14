@@ -1,6 +1,5 @@
 ﻿package PhotoVoltaics
   extends Modelica.Icons.Package;
-
   package UsersGuide "User's Guide"
     extends Modelica.Icons.Information;
     class Concept "Concept"
@@ -64,11 +63,11 @@ PDF files of the data sheets are provided througn this library.</p>
 <p>
 This library was developed during a diploma thesis at the
 <a href=\"http://www.tgm.ac.at\">TGM</a>
-by Mohamed Elmoghazy, Ramazan Kavlak, Jovan Brkic and Muaz Ceran under the supervision of Christian Kral.
+by Jovan Brkic, Muaz Ceran, Mohamed Elmoghazy and Ramazan Kavlak under the supervision of Christian Kral.
 </p>
 
 <p>
-<img src=\"modelica://WindPowerPlants/Resources/Images/tgm.png\"
+<img src=\"modelica://PhotoVoltaics/Resources/Images/tgm.png\"
            alt=\"tgm.png\">
 </p>
 
@@ -83,11 +82,11 @@ email: <a HREF=\"mailto:dr.christian.kral@gmail.com\">dr.christian.kral@gmail.co
 
 <h4>Co-Authors of the Library</h4>
 <p>
+Jovan Brkic<br>
+Muaz Ceran<br>
 Mohamed Elmoghazy<br>
 Ramazan Kavlak<br>
-Jovan Brkic<br>
-Muaz Ceran</p>
-
+</p>
 </html>"));
     end Contact;
 
@@ -118,7 +117,6 @@ This library provides models for the modeling and simulation of photo voltaic po
 
   package ComponentTesting
     extends Modelica.Icons.ExamplesPackage;
-
     model TestZener
       extends Modelica.Icons.Example;
       parameter Modelica.SIunits.Voltage Vmin = -5.25;
@@ -145,7 +143,6 @@ This library provides models for the modeling and simulation of photo voltaic po
 
   package Testing
     extends Modelica.Icons.ExamplesPackage;
-
     model SimpleCellResistor
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -181,13 +178,14 @@ This library provides models for the modeling and simulation of photo voltaic po
     model SimpleModuleResistor
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      Components.Modules.Simple module(moduleData(ns=48), T=298.15)     annotation (Placement(visible=true, transformation(
+      Components.Modules.Simple module(T=298.15, final moduleData=moduleData)      annotation (Placement(visible=true, transformation(
             origin={0,0},
             extent={{-10,10},{10,-10}},
             rotation=-90)));
-      parameter Records.ModuleData moduleData = PhotoVoltaics.Records.NET_NU_S5_E3E() annotation(Placement(transformation(extent = {{60, 60}, {80, 80}})));
       Sources.PowerRamp powerRamp(duration = 0.6, height = 8, offset = -4, ref = moduleData.VmpCellRef / moduleData.ImpRef, startTime = 0.2) annotation(Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
       Modelica.Electrical.Analog.Basic.VariableResistor variableResistor annotation(Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {30, 0})));
+      parameter Records.NET_NU_S5_E3E moduleData
+        annotation (Placement(transformation(extent={{-10,40},{10,60}})));
     equation
       connect(ground.p, module.n) annotation (Line(points={{0,-20},{0,-10}}, color={0,0,255}));
       /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
@@ -210,10 +208,9 @@ This library provides models for the modeling and simulation of photo voltaic po
             origin={0,0},
             extent={{-10,10},{10,-10}},
             rotation=-90)));
-      parameter Records.ModuleData moduleData(BvCell=12)=
-                                                PhotoVoltaics.Records.NET_NU_S5_E3E() annotation(Placement(transformation(extent = {{60, 60}, {80, 80}})));
       Sources.PowerRamp powerRamp(duration = 0.6, height = 8, offset = -4, ref = moduleData.VmpCellRef / moduleData.ImpRef, startTime = 0.2) annotation(Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
       Modelica.Electrical.Analog.Basic.VariableResistor variableResistor annotation(Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {30, 0})));
+      parameter Records.NET_NU_S5_E3E moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
     equation
       connect(ground.p, module.n) annotation (Line(points={{0,-20},{0,-10}}, color={0,0,255}));
       /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
@@ -238,7 +235,7 @@ This library provides models for the modeling and simulation of photo voltaic po
             extent={{-10,10},{10,-10}},
             rotation=-90)));
       Modelica.Electrical.Analog.Sources.SignalCurrent signalCurrent annotation(Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {30, 0})));
-      parameter Records.ModuleData moduleData = PhotoVoltaics.Records.NET_NU_S5_E3E() annotation(Placement(transformation(extent = {{60, 60}, {80, 80}})));
+      parameter Records.NET_NU_S5_E3E moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
     equation
       connect(module.p, signalCurrent.p) annotation (Line(points={{0,10},{0,20},{30,20},{30,10}}, color={0,0,255}));
       connect(ground.p, module.n) annotation (Line(points={{0,-20},{0,-10}}, color={0,0,255}));
@@ -253,9 +250,9 @@ This library provides models for the modeling and simulation of photo voltaic po
       Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(visible = true, transformation(origin = {0, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       PhotoVoltaics.Components.Cells.Simple cell(useConstantIrradiance = false, moduleData = moduleData) annotation(Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
       Modelica.Blocks.Sources.Ramp rampE(duration = 0.6, startTime = 0.2, height = 1000, offset = 0) annotation(Placement(visible = true, transformation(origin = {-30, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      parameter Records.ModuleData moduleData = PhotoVoltaics.Records.NET_NU_S5_E3E() annotation(Placement(transformation(extent = {{60, 60}, {80, 80}})));
       Sources.PowerRamp powerRamp(duration = 0.6, height = 8, offset = -4, ref = moduleData.VmpCellRef / moduleData.ImpRef, startTime = 0.2) annotation(Placement(visible = true, transformation(origin={70,0},    extent = {{10, -10}, {-10, 10}}, rotation = 0)));
       Modelica.Electrical.Analog.Basic.VariableResistor variableResistor annotation(Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin={30,0})));
+      parameter Records.NET_NU_S5_E3E moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
     equation
       connect(ground.p, cell.n) annotation(Line(points = {{0, -30}, {0, -18}, {0, -10}, {-1.77636e-15, -10}}, color = {0, 0, 255}));
       /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
@@ -265,13 +262,11 @@ This library provides models for the modeling and simulation of photo voltaic po
       connect(ground.p, variableResistor.n) annotation (Line(points={{0,-30},{0,-30},{0,-18},{0,-20},{30,-20},{30,-10}}, color={0,0,255}));
       annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)));
     end SimpleCellSignal;
-
     annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})));
   end Testing;
 
   package Components
     extends Modelica.Icons.Package;
-
     model Diode "Diode with one exponential function"
       extends Modelica.Electrical.Analog.Interfaces.OnePort;
       extends Modelica.Electrical.Analog.Interfaces.ConditionalHeatPort(T = 298.15);
@@ -341,7 +336,6 @@ This library provides models for the modeling and simulation of photo voltaic po
 
     package Cells
       extends Modelica.Icons.Package;
-
       model Simple
         extends PhotoVoltaics.Interfaces.PartialCell(signalCurrent(final irradianceRef = moduleData.irradianceRef, final alphaRef = moduleData.alphaIsc, final IRef = IphRef), diode(final Bv = moduleData.BvCell, final Ibv = moduleData.Ibv, final Nbv = moduleData.Nbv, final VRef = moduleData.VocCellRef, final IRef = moduleData.IscRef, final alphaI = moduleData.alphaIsc, final alphaV = moduleData.alphaVoc, final R = 1E8, final m = m));
         final parameter Real m(start = 1, fixed = false) "Ideality factor of diode";
@@ -359,7 +353,6 @@ This library provides models for the modeling and simulation of photo voltaic po
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),                                                                                                                                                                                             Line(points = {{-40, 80}, {-40, -80}}, color = {255, 255, 255}), Line(points = {{40, 80}, {40, -80}}, color = {255, 255, 255}), Text(extent = {{-150, -140}, {150, -100}}, textString = "%name", lineColor = {0, 0, 255})}), Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})));
       end Simple;
-
     end Cells;
 
     package Modules
@@ -410,10 +403,10 @@ This library provides models for the modeling and simulation of photo voltaic po
           connect(diode[k].n, cell[(k-1)*div(moduleData.ns,moduleData.nb)+1].p) annotation (Line(points={{-40,-20},{-50,-20},{-60,-20},{-60,0},{-10,0}}, color={0,0,255}));
           connect(diode[k].p, cell[k*div(moduleData.ns,moduleData.nb)].n) annotation (Line(points={{-20,-20},{20,-20},{60,-20},{60,0},{10,0}}, color={0,0,255}));
         end for;
-
         connect(collectorByPass.port_a, diode.heatPort) annotation (Line(points={{-30,-40},{-30,-30}}, color={191,0,0}));
         connect(collectorByPass.port_b, heatPort) annotation (Line(points={{-30,-60},{-30,-60},{-30,-96},{-30,-100},{0,-100}}, color={191,0,0}));
-        annotation (defaultComponentName = "module", Icon(coordinateSystem(preserveAspectRatio=false), graphics={Rectangle(lineColor={0,0,0},        fillPattern=FillPattern.Solid,    extent = {{-80, 80}, {80, -80}}, fillColor={85,85,255}),
+        annotation (defaultComponentName = "module", Icon(coordinateSystem(preserveAspectRatio=false), graphics={Rectangle(lineColor={0,0,0},
+                  fillPattern =                                                                                                                                  FillPattern.Solid,    extent = {{-80, 80}, {80, -80}}, fillColor={85,85,255}),
               Line(points={{-40,80},{-40,-80}}, color={255,255,255}),
               Line(points={{0,80},{0,-80}}, color={255,255,255}),
               Line(points={{40,80},{40,-80}}, color={255,255,255}),
@@ -566,7 +559,6 @@ This library provides models for the modeling and simulation of photo voltaic po
     public
       Modelica.Blocks.Interfaces.RealInput u "Input signal connector" annotation (Placement(transformation(extent={{-140,-20},{-100,20}})));
       Modelica.Blocks.Interfaces.RealOutput y[n] "Output signal connectors" annotation (Placement(transformation(extent={{100,-10},{120,10}})));
-
     equation
       y = k*u;
       annotation (
@@ -632,7 +624,6 @@ input <i>u</i>:
 
   package Sources
     extends Modelica.Icons.Package;
-
     model SignalCurrent "Generic current source using the input signal as source current"
       extends Modelica.Electrical.Analog.Interfaces.ConditionalHeatPort(T = 298.15);
       parameter Modelica.SIunits.Temperature TRef = 298.15 "Reference temperature";
@@ -670,7 +661,9 @@ input <i>u</i>:
       extends Modelica.Blocks.Interfaces.SO;
     equation
       y = ref * 10 ^ (offset + (if time < startTime then 0 else if time < startTime + duration then (time - startTime) * height / duration else height));
-      annotation(Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Line(points = {{-80, 68}, {-80, -80}}, color = {192, 192, 192}), Polygon(points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid), Line(points = {{-90, -70}, {82, -70}}, color = {192, 192, 192}), Polygon(points = {{90, -70}, {68, -62}, {68, -78}, {90, -70}}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid), Line(points = {{-80, -70}, {-40, -70}, {31, 38}}), Text(extent = {{-150, -150}, {150, -110}}, lineColor = {0, 0, 0}, textString = "duration=%duration"), Line(points = {{31, 38}, {86, 38}})}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{-80, 90}, {-86, 68}, {-74, 68}, {-80, 90}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Line(points = {{-80, 68}, {-80, -80}}, color = {95, 95, 95}), Line(points = {{-80, -20}, {-20, -20}, {50, 50}}, color = {0, 0, 255}, thickness = 0.5), Line(points = {{-90, -70}, {82, -70}}, color = {95, 95, 95}), Polygon(points = {{90, -70}, {68, -64}, {68, -76}, {90, -70}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95},
+      annotation(Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Line(points = {{-80, 68}, {-80, -80}}, color = {192, 192, 192}), Polygon(points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192},
+                fillPattern =                                                                                                                                                                                                        FillPattern.Solid), Line(points = {{-90, -70}, {82, -70}}, color = {192, 192, 192}), Polygon(points = {{90, -70}, {68, -62}, {68, -78}, {90, -70}}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192},
+                fillPattern =                                                                                                                                                                                                        FillPattern.Solid), Line(points = {{-80, -70}, {-40, -70}, {31, 38}}), Text(extent = {{-150, -150}, {150, -110}}, lineColor = {0, 0, 0}, textString = "duration=%duration"), Line(points = {{31, 38}, {86, 38}})}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{-80, 90}, {-86, 68}, {-74, 68}, {-80, 90}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Line(points = {{-80, 68}, {-80, -80}}, color = {95, 95, 95}), Line(points = {{-80, -20}, {-20, -20}, {50, 50}}, color = {0, 0, 255}, thickness = 0.5), Line(points = {{-90, -70}, {82, -70}}, color = {95, 95, 95}), Polygon(points = {{90, -70}, {68, -64}, {68, -76}, {90, -70}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95},
                 fillPattern =                                                                                                                                                                                                        FillPattern.Solid), Polygon(points = {{-40, -20}, {-42, -30}, {-38, -30}, {-40, -20}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95},
                 fillPattern =                                                                                                                                                                                                        FillPattern.Solid), Line(points = {{-40, -20}, {-40, -70}}, color = {95, 95, 95}), Polygon(points = {{-40, -70}, {-42, -60}, {-38, -60}, {-40, -70}, {-40, -70}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95},
                 fillPattern =                                                                                                                                                                                                        FillPattern.Solid), Text(extent = {{-72, -39}, {-34, -50}}, lineColor = {0, 0, 0}, textString = "offset"), Text(extent = {{-38, -72}, {6, -83}}, lineColor = {0, 0, 0}, textString = "startTime"), Text(extent = {{-78, 92}, {-37, 72}}, lineColor = {0, 0, 0}, textString = "y"), Text(extent = {{70, -80}, {94, -91}}, lineColor = {0, 0, 0}, textString = "time"), Line(points = {{-20, -20}, {-20, -70}}, color = {95, 95, 95}), Line(points = {{-19, -20}, {50, -20}}, color = {95, 95, 95}), Line(points = {{50, 50}, {101, 50}}, color = {0, 0, 255}, thickness = 0.5), Line(points = {{50, 50}, {50, -20}}, color = {95, 95, 95}), Polygon(points = {{50, -20}, {42, -18}, {42, -22}, {50, -20}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95},
@@ -697,6 +690,7 @@ If parameter duration is set to 0.0, the limiting case of a Step signal is achie
   package Records "Records"
     record ModuleData "Data of PV module"
       extends Modelica.Icons.Record;
+      constant String moduleType="empty";
       constant Modelica.SIunits.Charge Q = 1.6021766208E-19 "Elementary charge of electron";
       parameter Modelica.SIunits.Temperature TRef = 298.15 "Reference temperature" annotation(Dialog(group = "Reference data"));
       parameter Modelica.SIunits.Irradiance irradianceRef = 1000 "Reference solar irradiance" annotation(Dialog(group = "Reference data"));
@@ -718,13 +712,16 @@ If parameter duration is set to 0.0, the limiting case of a Step signal is achie
   parameter Modelica.SIunits.Resistance RshCell = 1E8 "Shunt resistance of cell" annotation(Dialog(group = "Non-ideal effects"));
   */
       final parameter Modelica.SIunits.Voltage VtCellRef = Modelica.Constants.k * TRef / Q "Reference temperature voltage of cell";
-      annotation(choicesAllMatching = true, defaultComponentPrefixes = "parameter", Icon(coordinateSystem(preserveAspectRatio = false)), Diagram(coordinateSystem(preserveAspectRatio = false)));
+      annotation(defaultComponentPrefixes = "parameter", Icon(coordinateSystem(preserveAspectRatio = false),
+            graphics={Text(
+              extent={{-100,-10},{100,-30}},
+              lineColor={28,108,200},
+              textString="%moduleType")}),                                                                    Diagram(coordinateSystem(preserveAspectRatio = false)));
     end ModuleData;
-
     extends Modelica.Icons.Package;
-
     record NET_NU_S5_E3E "NET NU monocrystalline SI cell 185W"
       extends ModuleData(
+        moduleType="NET_NU_S5_E3E",
         final TRef = 298.15,
         final irradianceRef = 1000,
         final VocRef = 30.2,
@@ -734,7 +731,7 @@ If parameter duration is set to 0.0, the limiting case of a Step signal is achie
         final alphaIsc = +0.00053,
         final alphaVoc = -0.00340,
         final ns = 48, final nb = 3);
-      annotation(Documentation(info = "<html>
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
 The original data of this module are taken from
 <a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. An offline version of these data is also
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NET_NU_S5_E3E.pdf\">available</a>.
@@ -742,8 +739,9 @@ The original data of this module are taken from
     end NET_NU_S5_E3E;
 
     record NET_NU_S5_E3F "NET NU monocrystalline SI cell 185W"
-      extends ModuleData(final TRef = 298.15, final irradianceRef = 1000, final VocRef = 30.2, final IscRef = 8.54, final VmpRef = 24.0, final ImpRef = 7.71, final alphaIsc = +0.00053, final alphaVoc = -0.00340, final ns = 48, final nb = 3);
-      annotation(Documentation(info = "<html>
+      extends ModuleData(moduleType="NET_NU_S5_E3F",
+      final TRef = 298.15, final irradianceRef = 1000, final VocRef = 30.2, final IscRef = 8.54, final VmpRef = 24.0, final ImpRef = 7.71, final alphaIsc = +0.00053, final alphaVoc = -0.00340, final ns = 48, final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
 The original data of this module are taken from
 <a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. An offline version of these data is also
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NET_NU_S5_E3E.pdf\">available</a>.
@@ -753,7 +751,6 @@ The original data of this module are taken from
 
   package Interfaces "Interfaces"
     extends Modelica.Icons.InterfacesPackage;
-
     partial model PartialCell "Partial cell model"
       extends PhotoVoltaics.Interfaces.PartialComponent;
       Components.Diode2 diode(
@@ -773,7 +770,7 @@ The original data of this module are taken from
       connect(signalCurrent.heatPort, heatPort) annotation(Line(points = {{-1.33227e-15, 20}, {60, 20}, {60, -80}, {0, -80}, {0, -100}}, color = {191, 0, 0}));
       connect(signalCurrent.irradiance, irradiance) annotation(Line(points={{8.88178e-16,37},{8.88178e-16,44},{0,44},{0,70}},
                                                                                                  color = {0, 0, 127}));
-      annotation(Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})), Icon(coordinateSystem(preserveAspectRatio = false)), Diagram(coordinateSystem(preserveAspectRatio = false)));
+      annotation(Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})), Icon(coordinateSystem(preserveAspectRatio = false)));
     end PartialCell;
 
     partial model PartialComponent "Partial cell or module"
@@ -794,11 +791,15 @@ The original data of this module are taken from
       connect(irradiance, variableIrradiance) annotation(Line(points = {{0, 70}, {0, 70}, {0, 120}}, color = {0, 0, 127}));
       connect(const.y, irradiance) annotation(Line(points = {{-19, 80}, {-20, 80}, {-20, 80}, {0, 80}, {0, 80}, {0, 70}, {0, 70}}, color = {0, 0, 127}));
       connect(irradiance, irradiance) annotation(Line(points = {{0, 70}, {0, 70}}, color = {0, 0, 127}));
-      annotation(Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})), Icon(coordinateSystem(preserveAspectRatio = false)), Diagram(coordinateSystem(preserveAspectRatio = false)));
+      annotation(Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})), Icon(coordinateSystem(preserveAspectRatio = false)));
     end PartialComponent;
   end Interfaces;
-
-
-  annotation(Icon(coordinateSystem(initialScale = 0.1), graphics={  Ellipse(origin = {36, 75}, fillColor = {255, 255, 127}, fillPattern = FillPattern.Solid, extent = {{0, 1}, {40, -39}}, endAngle = 360), Rectangle(origin = {-60, -9}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -7}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {-60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -5}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
+  annotation(Icon(coordinateSystem(initialScale = 0.1), graphics={  Ellipse(origin = {36, 75}, fillColor = {255, 255, 127},
+            fillPattern =                                                                                                                 FillPattern.Solid, extent = {{0, 1}, {40, -39}}, endAngle = 360), Rectangle(origin = {-60, -9}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
+            fillPattern =                                                                                                                                                                                                        FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -7}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
+            fillPattern =                                                                                                                                                                                                        FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {-60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
+            fillPattern =                                                                                                                                                                                                        FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
+            fillPattern =                                                                                                                                                                                                        FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
+            fillPattern =                                                                                                                                                                                                        FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -5}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
             fillPattern =                                                                                                                                                                                                        FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Line(origin = {18, 34}, points = {{4, 10}, {-84, -16}}), Line(origin = {-12, 70}, points = {{34, -6}, {-34, 6}}), Line(points = {{36, 30}, {28, 16}}, color = {28, 108, 200})}), Diagram(coordinateSystem(initialScale = 0.1)), uses(Modelica(version = "3.2.2")));
 end PhotoVoltaics;
