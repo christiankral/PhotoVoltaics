@@ -140,6 +140,38 @@ This library provides models for the modeling and simulation of photo voltaic po
       connect(fixedTemperature.port, zDiode.heatPort) annotation(Line(points = {{-60, 40}, {-50, 40}, {-40, 40}, {-40, 10}, {0, 10}}, color = {191, 0, 0}));
       annotation(Icon(coordinateSystem(preserveAspectRatio = false)), Diagram(coordinateSystem(preserveAspectRatio = false)));
     end TestZener;
+
+    model SinglePhaseVoltageControlledConverter "Test of voltage current controlled converter"
+      extends Modelica.Icons.Example;
+      Components.SinglePhaseVoltageControlledConverter converter annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+      Modelica.Electrical.Analog.Sources.ConstantCurrent constantCurrent(I=1) annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=90,
+            origin={-40,0})));
+      Modelica.Electrical.Analog.Basic.Ground groundDC annotation (Placement(transformation(extent={{-50,-40},{-30,-20}})));
+      Modelica.Electrical.QuasiStationary.SinglePhase.Sources.VoltageSource voltageSource(
+        f=50,
+        V=100,
+        phi=0) annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={40,0})));
+      Modelica.Electrical.QuasiStationary.SinglePhase.Basic.Ground groundAC annotation (Placement(transformation(extent={{30,-38},{50,-18}})));
+      Modelica.Blocks.Sources.Ramp ramp(
+        duration=0.6,
+        startTime=0.2,
+        height=200,
+        offset=-100)   annotation (Placement(transformation(extent={{-60,-80},{-40,-60}})));
+    equation
+      connect(constantCurrent.n, converter.dc_p) annotation (Line(points={{-40,10},{-26,10},{-10,10}}, color={0,0,255}));
+      connect(constantCurrent.p, converter.dc_n) annotation (Line(points={{-40,-10},{-26,-10},{-10,-10}}, color={0,0,255}));
+      connect(groundDC.p, constantCurrent.p) annotation (Line(points={{-40,-20},{-40,-10}}, color={0,0,255}));
+      connect(converter.ac_p, voltageSource.pin_p) annotation (Line(points={{10,10},{40,10}}, color={85,170,255}));
+      connect(converter.ac_n, voltageSource.pin_n) annotation (Line(points={{10,-10},{25,-10},{40,-10}}, color={85,170,255}));
+      connect(groundAC.pin, voltageSource.pin_n) annotation (Line(points={{40,-18},{40,-14},{40,-10}}, color={85,170,255}));
+      connect(ramp.y, converter.vDCRef) annotation (Line(points={{-39,-70},{-20,-70},{0,-70},{0,-12}}, color={0,0,127}));
+      annotation (experiment(StopTime=180));
+    end SinglePhaseVoltageControlledConverter;
   end ComponentTesting;
 
   package Testing
@@ -155,7 +187,7 @@ This library provides models for the modeling and simulation of photo voltaic po
     equation
       connect(cell.p, variableResistor.p) annotation(Line(points = {{0, 10}, {0, 20}, {40, 20}, {40, 10}}, color = {0, 0, 255}));
       connect(ground.p, cell.n) annotation(Line(points = {{0, -20}, {0, -10}}, color = {0, 0, 255}));
-/* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
+      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
       connect(ground.p, variableResistor.n) annotation(Line(points = {{0, -20}, {14, -20}, {40, -20}, {40, -10}}, color = {0, 0, 255}));
       connect(variableResistor.R, powerRamp.y) annotation(Line(points = {{51, -2.22045e-15}, {49.5, -2.22045e-15}, {49.5, 0}, {59, 0}}, color = {0, 0, 127}));
       annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
@@ -172,7 +204,7 @@ This library provides models for the modeling and simulation of photo voltaic po
       connect(signalVoltage.n, ground.p) annotation(Line(points = {{40, -10}, {40, -10}, {40, -20}, {0, -20}, {0, -20}}, color = {0, 0, 255}));
       connect(signalVoltage.p, cell.p) annotation(Line(points = {{40, 10}, {40, 10}, {40, 20}, {0, 20}, {0, 10}, {0, 10}}, color = {0, 0, 255}));
       connect(ground.p, cell.n) annotation(Line(points = {{0, -20}, {0, -10}}, color = {0, 0, 255}));
-/* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
+      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
       connect(signalVoltage.v, rampCurrent.y) annotation(Line(points = {{47, 0}, {59, 0}, {59, 0}}, color = {0, 0, 127}));
       annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
     end SimpleCellVoltageSource;
@@ -189,7 +221,7 @@ This library provides models for the modeling and simulation of photo voltaic po
       connect(variableResistor.n, ground.p) annotation(Line(points = {{40, -10}, {40, -10}, {40, -20}, {0, -20}, {0, -30}}, color = {0, 0, 255}));
       connect(cell.p, variableResistor.p) annotation(Line(points = {{0, 10}, {0, 10}, {0, 20}, {40, 20}, {40, 10}}, color = {0, 0, 255}));
       connect(ground.p, cell.n) annotation(Line(points = {{0, -30}, {0, -18}, {0, -10}, {-1.77636e-15, -10}}, color = {0, 0, 255}));
-/* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
+      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
       connect(triangleAndStep.step, cell.variableIrradiance) annotation(Line(points = {{-49, 6}, {-30, 6}, {-30, 0}, {-12, 0}}, color = {0, 0, 127}));
       connect(triangleAndStep.triangle, power10.u) annotation(Line(points = {{-49, -6}, {-30, -6}, {-30, -60}, {92, -60}, {92, 0}, {82, 0}}, color = {0, 0, 127}));
       connect(variableResistor.R, power10.y) annotation(Line(points = {{51, 0}, {59, 0}}, color = {0, 0, 127}));
@@ -217,7 +249,7 @@ on the horizontal axis</li>
       connect(module.p, variableResistor.p) annotation(Line(points = {{0, 10}, {0, 20}, {40, 20}, {40, 10}}, color = {0, 0, 255}));
       connect(variableResistor.R, powerRamp.y) annotation(Line(points = {{51, 0}, {59, 0}}, color = {0, 0, 127}));
       connect(ground.p, module.n) annotation(Line(points = {{0, -20}, {0, -10}}, color = {0, 0, 255}));
-/* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
+      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
       annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
     end SimpleModule;
 
@@ -233,9 +265,53 @@ on the horizontal axis</li>
       connect(variableResistor.n, ground.p) annotation(Line(points = {{40, -10}, {40, -20}, {0, -20}}, color = {0, 0, 255}));
       connect(module.p, variableResistor.p) annotation(Line(points = {{0, 10}, {0, 20}, {40, 20}, {40, 10}}, color = {0, 0, 255}));
       connect(ground.p, module.n) annotation(Line(points = {{0, -20}, {0, -10}}, color = {0, 0, 255}));
-/* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
+      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
       annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
     end SimpleModuleShadow;
+
+    model SimpleModuleMP
+      extends Modelica.Icons.Example;
+      Modelica.Electrical.Analog.Basic.Ground groundDC annotation (Placement(visible=true, transformation(
+            origin={-40,-30},
+            extent={{-10,-10},{10,10}},
+            rotation=0)));
+      Components.Modules.Simple module(moduleData = moduleData,T=298.15,useConstantIrradiance=false) annotation(Placement(visible = true, transformation(origin={-40,0},  extent = {{-10, 10}, {10, -10}}, rotation = -90)));
+      parameter Records.NET_NU_S5_E3E moduleData annotation(Placement(transformation(extent = {{60, 60}, {80, 80}})));
+      Modelica.Blocks.Sources.Ramp ramp(
+        duration=100,
+        startTime=100,
+        height=800,
+        offset=200)    annotation (Placement(transformation(extent={{-80,-10},{-60,10}})));
+      Components.SinglePhaseVoltageControlledConverter converter annotation (Placement(transformation(extent={{20,-10},{40,10}})));
+      Blocks.MPTracker mpTracker(VmpRef=moduleData.VmpRef, ImpRef=moduleData.ImpRef) annotation (Placement(transformation(extent={{0,-60},{20,-40}})));
+      Modelica.Electrical.QuasiStationary.SinglePhase.Basic.Ground groundAC annotation (Placement(transformation(extent={{50,-40},{70,-20}})));
+      Modelica.Electrical.QuasiStationary.SinglePhase.Sources.VoltageSource voltageSource(
+        f=50,
+        V=230,
+        phi=0) annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={60,0})));
+      Modelica.Electrical.Analog.Sensors.PowerSensor powerSensor annotation (Placement(transformation(extent={{-20,10},{0,30}})));
+    equation
+      connect(groundDC.p, module.n) annotation (Line(points={{-40,-20},{-40,-10}}, color={0,0,255}));
+      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
+      connect(ramp.y, module.variableIrradiance) annotation (Line(points={{-59,0},{-52,0}}, color={0,0,127}));
+      connect(groundDC.p, converter.dc_n) annotation (Line(points={{-40,-20},{-40,-20},{20,-20},{20,-10}}, color={0,0,255}));
+      connect(mpTracker.vRef, converter.vDCRef) annotation (Line(points={{21,-50},{30,-50},{30,-12}}, color={0,0,127}));
+      connect(converter.ac_p, voltageSource.pin_p) annotation (Line(points={{40,10},{40,10},{40,20},{60,20},{60,10}}, color={85,170,255}));
+      connect(converter.ac_n, groundAC.pin) annotation (Line(points={{40,-10},{40,-20},{60,-20}}, color={85,170,255}));
+      connect(groundAC.pin, voltageSource.pin_n) annotation (Line(points={{60,-20},{60,-20},{60,-10}}, color={85,170,255}));
+      connect(module.p, powerSensor.pc) annotation (Line(points={{-40,10},{-40,10},{-40,20},{-20,20}}, color={0,0,255}));
+      connect(powerSensor.nc, converter.dc_p) annotation (Line(points={{0,20},{0,20},{20,20},{20,10}}, color={0,0,255}));
+      connect(mpTracker.power, powerSensor.power) annotation (Line(points={{-2,-50},{-2,-50},{-18,-50},{-18,9}}, color={0,0,127}));
+      connect(powerSensor.pc, powerSensor.pv) annotation (Line(points={{-20,20},{-20,30},{-10,30}}, color={0,0,255}));
+      connect(powerSensor.nv, groundDC.p) annotation (Line(points={{-10,10},{-10,10},{-10,-18},{-10,-20},{-40,-20}}, color={0,0,255}));
+      annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(
+          StopTime=300,
+          Interval=0.1,
+          Tolerance=1e-06));
+    end SimpleModuleMP;
     annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})));
   end Testing;
 
@@ -258,12 +334,12 @@ on the horizontal axis</li>
       Modelica.SIunits.Current IRefActual "Reference current w.r.t. actual temperature";
       Modelica.SIunits.Current Ids "Saturation current";
     equation
-// Temperature dependent voltage
+      // Temperature dependent voltage
       Vt = Modelica.Constants.k * T_heatPort / Q;
-// Re-calculate reference voltage and current with respect to reference temperature
+      // Re-calculate reference voltage and current with respect to reference temperature
       VRefActual = VRef * (1 + alphaV * (T_heatPort - TRef));
       IRefActual = IRef * (1 + alphaI * (T_heatPort - TRef));
-// Actual temperature dependent saturation current is determined from reference voltage and current
+      // Actual temperature dependent saturation current is determined from reference voltage and current
       Ids = IRefActual / (exp(VRefActual / m / Vt) - 1);
       i = Ids * (exp(v / m / Vt) - 1) + v / R;
       LossPower = v * i;
@@ -271,7 +347,7 @@ on the horizontal axis</li>
            <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
 <pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
   i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
-</html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Sphere), Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}), Text(extent = {{-152, 114}, {148, 74}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid), Line(points = {{-99, 0}, {96, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255})}));
+</html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Sphere), Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}), Text(extent = {{-152, 114}, {148, 74}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid), Line(points = {{-99, 0}, {96, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255})}));
     end Diode;
 
     model Diode2 "Diode with two superimposed exponential functions"
@@ -293,12 +369,12 @@ on the horizontal axis</li>
       Modelica.SIunits.Current IRefActual "Reference current w.r.t. actual temperature";
       Modelica.SIunits.Current Ids "Saturation current";
     equation
-// Temperature dependent voltage
+      // Temperature dependent voltage
       Vt = Modelica.Constants.k * T_heatPort / Q;
-// Re-calculate reference voltage and current with respect to reference temperature
+      // Re-calculate reference voltage and current with respect to reference temperature
       VRefActual = VRef * (1 + alphaV * (T_heatPort - TRef));
       IRefActual = IRef * (1 + alphaI * (T_heatPort - TRef));
-// Actual temperature dependent saturation current is determined from reference voltage and current
+      // Actual temperature dependent saturation current is determined from reference voltage and current
       Ids = IRefActual / (exp(VRefActual / m / Vt) - 1);
       i = Ids * (exp(v / m / Vt) - 1) - Ibv * exp(-(v + Bv) / (Nbv * m * Vt)) + v / R;
       LossPower = v * i;
@@ -306,8 +382,100 @@ on the horizontal axis</li>
            <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
 <pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
   i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
-</html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}), Text(extent = {{-152, 114}, {148, 74}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-99, 0}, {96, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255})}));
+</html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}), Text(extent = {{-152, 114}, {148, 74}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-99, 0}, {96, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255})}));
     end Diode2;
+
+    model SinglePhaseVoltageControlledConverter "Ideal current controlled DC/AC converter"
+      extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
+      extends PhotoVoltaics.Interfaces.QuasiStatic.ACpins;
+      parameter Modelica.SIunits.Time T = 1E-6
+        "Internal integtration time constant";
+      Modelica.SIunits.Power powerDC = vDC * iDC "Power of DC side";
+      Modelica.SIunits.Power powerAC=Modelica.ComplexMath.real(vAC*Modelica.ComplexMath.conj(iAC)) "Complex apparent power of AC side";
+      Modelica.Blocks.Interfaces.RealInput vDCRef(final unit="V") "DC voltage" annotation (Placement(transformation(
+            extent={{-20,-20},{20,20}},
+            rotation=90,
+            origin={0,-120}), iconTransformation(
+            extent={{-20,-20},{20,20}},
+            rotation=90,
+            origin={0,-120})));
+      Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={-80,0})));
+      Modelica.Electrical.Analog.Sensors.CurrentSensor currentSensor annotation (Placement(transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=270,
+            origin={-80,60})));
+      Modelica.Blocks.Math.Product product annotation (Placement(transformation(extent={{-50,20},{-30,40}})));
+      Modelica.Blocks.Math.Feedback feedback annotation (Placement(transformation(extent={{-20,40},{0,20}})));
+      Modelica.Electrical.QuasiStationary.SinglePhase.Sensors.PowerSensor powerSensor annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={80,60})));
+      Modelica.ComplexBlocks.ComplexMath.ComplexToReal complexToReal annotation(Placement(transformation(extent={{48,60},{28,80}})));
+      Modelica.Electrical.QuasiStationary.SinglePhase.Basic.VariableConductor variableConductor annotation (Placement(transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=270,
+            origin={80,30})));
+      Modelica.Blocks.Continuous.Integrator integrator(final k = -1 / T) annotation(Placement(transformation(extent={{-10,-10},{10,10}},      rotation = 0, origin={30,30})));
+      Modelica.Blocks.Math.Gain gain(final k=-1) annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={-10,58})));
+    equation
+      connect(signalVoltage.n, dc_n) annotation (Line(points={{-80,-10},{-80,-70},{-80,-100},{-100,-100}}, color={0,0,255}));
+      connect(currentSensor.p, dc_p) annotation (Line(points={{-80,70},{-80,70},{-80,76},{-80,100},{-100,100}}, color={0,0,255}));
+      connect(currentSensor.n, signalVoltage.p) annotation (Line(points={{-80,50},{-80,50},{-80,10}}, color={0,0,255}));
+      connect(signalVoltage.v, vDCRef) annotation (Line(points={{-73,0},{-60,0},{-60,0},{-60,-80},{0,-80},{0,-120}}, color={0,0,127}));
+      connect(currentSensor.i, product.u1) annotation (Line(points={{-70,60},{-66,60},{-60,60},{-60,36},{-52,36}}, color={0,0,127}));
+      connect(vDCRef, product.u2) annotation (Line(points={{0,-120},{0,-120},{0,-80},{-60,-80},{-60,-80},{-60,24},{-52,24}}, color={0,0,127}));
+      connect(product.y, feedback.u1) annotation (Line(points={{-29,30},{-24,30},{-18,30}}, color={0,0,127}));
+      connect(powerSensor.currentP, ac_p) annotation (Line(points={{80,70},{80,70},{80,100},{100,100}}, color={85,170,255}));
+      connect(complexToReal.u, powerSensor.y) annotation (Line(points={{50,70},{60,70},{60,68},{69,68}}, color={85,170,255}));
+      connect(powerSensor.currentN, variableConductor.pin_p) annotation (Line(points={{80,50},{80,50},{80,40}},
+                                                                                                        color={85,170,255}));
+      connect(variableConductor.pin_n, ac_n) annotation (Line(points={{80,20},{80,20},{80,-72},{80,-96},{80,-100},{100,-100}}, color={85,170,255}));
+      connect(feedback.y, integrator.u) annotation (Line(points={{-1,30},{8,30},{18,30}}, color={0,0,127}));
+      connect(integrator.y, variableConductor.G_ref) annotation (Line(points={{41,30},{56,30},{69,30}}, color={0,0,127}));
+      connect(powerSensor.voltageP, powerSensor.currentP) annotation (Line(points={{90,60},{90,70},{80,70}}, color={85,170,255}));
+      connect(powerSensor.voltageN, ac_n) annotation (Line(points={{70,60},{60,60},{60,-34},{60,-100},{100,-100}}, color={85,170,255}));
+      connect(gain.u, complexToReal.re) annotation (Line(points={{-10,70},{-10,76},{26,76}}, color={0,0,127}));
+      connect(gain.y, feedback.u2) annotation (Line(points={{-10,47},{-10,38}}, color={0,0,127}));
+      annotation(defaultComponentName="converter",Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Rectangle(extent = {{-100, 100}, {100, -100}}, lineColor = {0, 0, 127}), Line(points = {{-100, -100}, {100, 100}}, color = {0, 0, 127}, smooth = Smooth.None), Text(extent = {{-100, 40}, {-40, -40}}, lineColor={0,0,255},
+              textString="="),                                                                                                                                                                                                        Text(extent = {{40, 40}, {100, -40}}, lineColor={0,0,255},
+              textString="~"),                                                                                                                                                                                                        Text(extent={{-150,150},{150,110}},      lineColor = {0, 0, 255}, textString = "%name"),
+            Text(
+              extent={{20,-100},{80,-140}},
+              lineColor={0,0,255},
+              pattern=LinePattern.Dash,
+              fillColor={0,0,255},
+              fillPattern=FillPattern.Solid,
+              textString="vDCRef"),
+            Text(
+              extent={{-80,80},{20,40}},
+              lineColor={0,0,255},
+              pattern=LinePattern.Dash,
+              fillColor={0,0,255},
+              fillPattern=FillPattern.Solid,
+              textString="load"),
+            Text(
+              extent={{-40,-40},{60,-80}},
+              lineColor={0,0,255},
+              pattern=LinePattern.Dash,
+              fillColor={0,0,255},
+              fillPattern=FillPattern.Solid,
+              textString="src")}),                                                                                                                                                                                                        Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})),
+        Documentation(info="<html>
+<p>This is an ideal DC/DC converter.<p>
+<ul>
+<li><b>side 1</b> must be connected with voltage source</li>
+<li><b>side 2</b> must be connected with load</li>
+</ul>
+<p>Signal input <code>i2</code> is the current flowing into the positive pin of side 2. 
+In order to operate side 2 as a load the signal input current <code>i2</code> must be <b>negative</b>.</p>
+</html>"));
+    end SinglePhaseVoltageControlledConverter;
 
     package Cells "Cells"
       extends Modelica.Icons.Package;
@@ -322,7 +490,7 @@ on the horizontal axis</li>
         IphRef = IsdRef * (exp(moduleData.VmpCellRef / m / moduleData.VtCellRef) - 1) + moduleData.ImpRef;
       equation
         LossPower = diode.LossPower;
-        annotation(defaultComponentName = "cell", Icon(coordinateSystem(initialScale = 0.1), graphics = {Polygon(points = {{-80, 60}, {-60, 80}, {60, 80}, {80, 60}, {80, -60}, {60, -80}, {-60, -80}, {-80, -60}, {-80, 60}}, pattern = LinePattern.None, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid), Line(points = {{-40, 80}, {-40, -80}}, color = {255, 255, 255}), Line(points = {{40, 80}, {40, -80}}, color = {255, 255, 255}), Text(extent = {{-150, -140}, {150, -100}}, textString = "%name", lineColor = {0, 0, 255})}), Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})));
+        annotation(defaultComponentName = "cell", Icon(coordinateSystem(initialScale = 0.1), graphics={  Polygon(points = {{-80, 60}, {-60, 80}, {60, 80}, {80, 60}, {80, -60}, {60, -80}, {-60, -80}, {-80, -60}, {-80, 60}}, pattern = LinePattern.None, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid), Line(points = {{-40, 80}, {-40, -80}}, color = {255, 255, 255}), Line(points = {{40, 80}, {40, -80}}, color = {255, 255, 255}), Text(extent={{-150,-150},{150,-110}},      textString = "%name", lineColor = {0, 0, 255})}), Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})));
       end Simple;
     end Cells;
 
@@ -340,31 +508,100 @@ on the horizontal axis</li>
       equation
         assert(mod(moduleData.ns, moduleData.nb) == 0, "Simple: number of bypassed cells cannot be determined unambiguously");
         LossPower = sum(cell.LossPower);
-// Connect cells to module
+        // Connect cells to module
         connect(p, cell[1].p) annotation(Line(points = {{-100, 0}, {-100, 0}, {-10, 0}}, color = {0, 0, 255}));
         for k in 1:moduleData.ns - 1 loop
           connect(cell[k].n, cell[k + 1].p);
         end for;
-// Inter-module connections
+        // Inter-module connections
         connect(cell[moduleData.ns].n, n) annotation(Line(points = {{10, 0}, {100, 0}}, color = {0, 0, 255}));
         connect(cell.heatPort, collectorModule.port_a) annotation(Line(points = {{0, -10}, {0, -40}}, color = {191, 0, 0}));
         connect(collectorModule.port_b, heatPort) annotation(Line(points = {{0, -60}, {0, -80}, {0, -100}}, color = {191, 0, 0}));
         connect(irradiance, gainReplicator.u) annotation(Line(points = {{0, 70}, {0, 70}, {0, 52}}, color = {0, 0, 127}));
         connect(gainReplicator.y, cell.variableIrradiance) annotation(Line(points = {{-2.22045e-15, 29}, {0, 18.5}, {0, 12}}, color = {0, 0, 127}));
-// Connect bypass diodes
+        // Connect bypass diodes
         for k in 1:moduleData.nb loop
           connect(diode[k].n, cell[(k - 1) * div(moduleData.ns, moduleData.nb) + 1].p) annotation(Line(points = {{-40, -20}, {-50, -20}, {-60, -20}, {-60, 0}, {-10, 0}}, color = {0, 0, 255}));
           connect(diode[k].p, cell[k * div(moduleData.ns, moduleData.nb)].n) annotation(Line(points = {{-20, -20}, {20, -20}, {60, -20}, {60, 0}, {10, 0}}, color = {0, 0, 255}));
         end for;
         connect(collectorByPass.port_a, diode.heatPort) annotation(Line(points = {{-30, -40}, {-30, -30}}, color = {191, 0, 0}));
         connect(collectorByPass.port_b, heatPort) annotation(Line(points = {{-30, -60}, {-30, -60}, {-30, -96}, {-30, -100}, {0, -100}}, color = {191, 0, 0}));
-        annotation(defaultComponentName = "module", Icon(coordinateSystem(preserveAspectRatio = false), graphics = {Rectangle(lineColor = {0, 0, 0}, fillPattern = FillPattern.Solid, extent = {{-80, 80}, {80, -80}}, fillColor = {85, 85, 255}), Line(points = {{-40, 80}, {-40, -80}}, color = {255, 255, 255}), Line(points = {{0, 80}, {0, -80}}, color = {255, 255, 255}), Line(points = {{40, 80}, {40, -80}}, color = {255, 255, 255}), Line(points = {{-80, 40}, {80, 40}}, color = {255, 255, 255}), Line(points = {{-80, 0}, {80, 0}}, color = {255, 255, 255}), Line(points = {{-80, -40}, {80, -40}}, color = {255, 255, 255}), Rectangle(extent = {{-84, 84}, {84, -84}}, lineColor = {0, 0, 0}), Polygon(points = {{-44, 40}, {-40, 44}, {-36, 40}, {-40, 36}, {-44, 40}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-4, 40}, {0, 44}, {4, 40}, {0, 36}, {-4, 40}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{36, 40}, {40, 44}, {44, 40}, {40, 36}, {36, 40}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{76, 80}, {80, 84}, {84, 80}, {80, 76}, {76, 80}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{36, 80}, {40, 84}, {44, 80}, {40, 76}, {36, 80}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-4, 80}, {0, 84}, {4, 80}, {0, 76}, {-4, 80}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-44, 80}, {-40, 84}, {-36, 80}, {-40, 76}, {-44, 80}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, 40}, {-80, 44}, {-76, 40}, {-80, 36}, {-84, 40}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, 0}, {-80, 4}, {-76, 0}, {-80, -4}, {-84, 0}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, -40}, {-80, -36}, {-76, -40}, {-80, -44}, {-84, -40}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, -80}, {-80, -76}, {-76, -80}, {-80, -84}, {-84, -80}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-44, -40}, {-40, -36}, {-36, -40}, {-40, -44}, {-44, -40}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-44, 0}, {-40, 4}, {-36, 0}, {-40, -4}, {-44, 0}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-4, 0}, {0, 4}, {4, 0}, {0, -4}, {-4, 0}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{36, 0}, {40, 4}, {44, 0}, {40, -4}, {36, 0}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{76, 0}, {80, 4}, {84, 0}, {80, -4}, {76, 0}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{76, 40}, {80, 44}, {84, 40}, {80, 36}, {76, 40}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{78, -40}, {82, -36}, {86, -40}, {82, -44}, {78, -40}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{36, -40}, {40, -36}, {44, -40}, {40, -44}, {36, -40}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-4, -40}, {0, -36}, {4, -40}, {0, -44}, {-4, -40}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, 80}, {-80, 84}, {-76, 80}, {-80, 76}, {-84, 80}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-44, -78}, {-40, -74}, {-36, -78}, {-40, -82}, {-44, -78}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-4, -80}, {0, -76}, {4, -80}, {0, -84}, {-4, -80}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{36, -80}, {40, -76}, {44, -80}, {40, -84}, {36, -80}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{76, -80}, {80, -76}, {84, -80}, {80, -84}, {76, -80}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Line(points = {{-68, 80}, {-68, -80}}, color = {255, 255, 255}), Line(points = {{-52, 80}, {-52, -80}}, color = {255, 255, 255}), Line(points = {{-12, 80}, {-12, -80}}, color = {255, 255, 255}), Line(points = {{-28, 80}, {-28, -80}}, color = {255, 255, 255}), Line(points = {{28, 80}, {28, -80}}, color = {255, 255, 255}), Line(points = {{12, 80}, {12, -80}}, color = {255, 255, 255}), Line(points = {{68, 80}, {68, -80}}, color = {255, 255, 255}), Line(points = {{52, 80}, {52, -80}}, color = {255, 255, 255})}), Diagram(coordinateSystem(preserveAspectRatio = false)));
+        annotation(defaultComponentName = "module", Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor = {0, 0, 0}, fillPattern = FillPattern.Solid, extent = {{-80, 80}, {80, -80}}, fillColor = {85, 85, 255}), Line(points = {{-40, 80}, {-40, -80}}, color = {255, 255, 255}), Line(points = {{0, 80}, {0, -80}}, color = {255, 255, 255}), Line(points = {{40, 80}, {40, -80}}, color = {255, 255, 255}), Line(points = {{-80, 40}, {80, 40}}, color = {255, 255, 255}), Line(points = {{-80, 0}, {80, 0}}, color = {255, 255, 255}), Line(points = {{-80, -40}, {80, -40}}, color = {255, 255, 255}), Rectangle(extent = {{-84, 84}, {84, -84}}, lineColor = {0, 0, 0}), Polygon(points = {{-44, 40}, {-40, 44}, {-36, 40}, {-40, 36}, {-44, 40}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-4, 40}, {0, 44}, {4, 40}, {0, 36}, {-4, 40}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{36, 40}, {40, 44}, {44, 40}, {40, 36}, {36, 40}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{76, 80}, {80, 84}, {84, 80}, {80, 76}, {76, 80}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{36, 80}, {40, 84}, {44, 80}, {40, 76}, {36, 80}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-4, 80}, {0, 84}, {4, 80}, {0, 76}, {-4, 80}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-44, 80}, {-40, 84}, {-36, 80}, {-40, 76}, {-44, 80}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, 40}, {-80, 44}, {-76, 40}, {-80, 36}, {-84, 40}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, 0}, {-80, 4}, {-76, 0}, {-80, -4}, {-84, 0}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, -40}, {-80, -36}, {-76, -40}, {-80, -44}, {-84, -40}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, -80}, {-80, -76}, {-76, -80}, {-80, -84}, {-84, -80}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-44, -40}, {-40, -36}, {-36, -40}, {-40, -44}, {-44, -40}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-44, 0}, {-40, 4}, {-36, 0}, {-40, -4}, {-44, 0}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-4, 0}, {0, 4}, {4, 0}, {0, -4}, {-4, 0}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{36, 0}, {40, 4}, {44, 0}, {40, -4}, {36, 0}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{76, 0}, {80, 4}, {84, 0}, {80, -4}, {76, 0}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{76, 40}, {80, 44}, {84, 40}, {80, 36}, {76, 40}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{78, -40}, {82, -36}, {86, -40}, {82, -44}, {78, -40}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{36, -40}, {40, -36}, {44, -40}, {40, -44}, {36, -40}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-4, -40}, {0, -36}, {4, -40}, {0, -44}, {-4, -40}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, 80}, {-80, 84}, {-76, 80}, {-80, 76}, {-84, 80}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-44, -78}, {-40, -74}, {-36, -78}, {-40, -82}, {-44, -78}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-4, -80}, {0, -76}, {4, -80}, {0, -84}, {-4, -80}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{36, -80}, {40, -76}, {44, -80}, {40, -84}, {36, -80}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{76, -80}, {80, -76}, {84, -80}, {80, -84}, {76, -80}}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Line(points = {{-68, 80}, {-68, -80}}, color = {255, 255, 255}), Line(points = {{-52, 80}, {-52, -80}}, color = {255, 255, 255}), Line(points = {{-12, 80}, {-12, -80}}, color = {255, 255, 255}), Line(points = {{-28, 80}, {-28, -80}}, color = {255, 255, 255}), Line(points = {{28, 80}, {28, -80}}, color = {255, 255, 255}), Line(points = {{12, 80}, {12, -80}}, color = {255, 255, 255}), Line(points = {{68, 80}, {68, -80}}, color = {255, 255, 255}), Line(points = {{52, 80}, {52, -80}}, color = {255, 255, 255}),
+                                                                                                                                                                                                        Text(extent={{-150,-150},{150,-110}},      textString = "%name", lineColor = {0, 0, 255})}),                                                                                                                                                                                                        Diagram(coordinateSystem(preserveAspectRatio = false)));
       end Simple;
     end Modules;
   end Components;
 
   package Blocks "Blocks"
     extends Modelica.Icons.Package;
+
+    block MPTracker "Maximum power tracker"
+      extends Modelica.Blocks.Icons.Block;
+      parameter Modelica.SIunits.Time startTime = 0 "Start time";
+      parameter Modelica.SIunits.Time samplePeriod = 1 "Sample period";
+      parameter Modelica.SIunits.Time checkPeriod = 0.1 "Period of checking derivative of power";
+      parameter Modelica.SIunits.Voltage VmpRef "Reference maximum power power of plant";
+      parameter Modelica.SIunits.Current ImpRef "Reference maximum power current of plant";
+      parameter Integer n = 100 "Number of voltage and power discretizations";
+      final parameter Modelica.SIunits.Voltage dv = VmpRef/n "Voltage change and maximum deviation";
+      final parameter Modelica.SIunits.Power dpower = VmpRef*ImpRef/n "Power change and maximum deviation";
+      Boolean firstTrigger "First boolean sample trigger signal";
+      // Boolean secondTrigger "Second boolean sample trigger signal";
+      Boolean sampleTrigger "Boolean sample trigger signal";
+      discrete Integer counter(final start=0) "Sample counter";
+      discrete Real signv(final start=-1) "Sign of voltage change";
+      Modelica.Blocks.Interfaces.RealInput power(final unit="W") "Power" annotation (Placement(transformation(extent={{-140,-20},{-100,20}})));
+      Modelica.Blocks.Interfaces.RealOutput vRef(final unit="V", final start=VmpRef) "Reference DC voltage" annotation (Placement(transformation(extent={{100,-10},{120,10}})));
+
+    algorithm
+      sampleTrigger := sample(startTime, samplePeriod);
+      when sampleTrigger then
+        counter := pre(counter) + 1;
+        firstTrigger := time <= startTime + samplePeriod/2;
+        vRef := pre(vRef) + signv*dv;
+        if not firstTrigger and power < pre(power) then
+          // Change direction of voltage derivative
+          signv :=-pre(signv);
+        end if;
+      end when;
+
+      annotation (defaultComponentName="mpTracker",
+        Documentation(info="<html>
+</html>"),
+        Icon(graphics={Line(
+              points={{-80,-78},{-12,20},{12,50},{30,64},{44,70},{52,68},{60,56},{68,22},{80,-78}},
+              color={0,0,0},
+              smooth=Smooth.Bezier), Ellipse(
+              extent={{34,78},{54,58}},
+              fillColor={255,0,0},
+              fillPattern=FillPattern.Solid,
+              pattern=LinePattern.None),                                                                                                                                                                                                        Polygon(origin={0,-10},    lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}), Line(origin={0,2},     points = {{-80, -80}, {-80, 68}}, color = {192, 192, 192}),
+                                                                                                                                                                                                        Line(origin={10,-78},    points = {{-90, 0}, {68, 0}}, color = {192, 192, 192}),
+                                                                        Polygon(origin={-10,-78},    lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, points = {{90, 0}, {68, 8}, {68, -8}, {90, 0}})}));
+    end MPTracker;
 
     block GainReplicator "Output the product of a gain value with the input signal"
       parameter Integer n "Number of outputs";
@@ -384,7 +621,7 @@ input <i>u</i>:
     y = k * u;
 </pre>
 
-</html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Polygon(points = {{-100, -100}, {-100, 100}, {100, 0}, {-100, -100}}, lineColor = {0, 0, 127}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid), Text(extent = {{-150, -140}, {150, -100}}, lineColor = {0, 0, 0}, textString = "k=%k"), Text(extent = {{-150, 140}, {150, 100}}, textString = "%name", lineColor = {0, 0, 255}), Ellipse(extent = {{-14, 16}, {16, -14}}, lineColor = {0, 0, 0}, fillColor = {0, 0, 127}, fillPattern = FillPattern.Solid), Line(points = {{0, 0}, {100, 10}}, color = {0, 0, 127}), Line(points = {{0, 0}, {100, -10}}, color = {0, 0, 127}), Line(points = {{100, 0}, {-100, 0}}, color = {0, 0, 127})}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Polygon(points = {{-100, -100}, {-100, 100}, {100, 0}, {-100, -100}}, lineColor = {0, 0, 127}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid), Text(extent = {{-76, 38}, {0, -34}}, textString = "k", lineColor = {0, 0, 255})}));
+</html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{-100, -100}, {-100, 100}, {100, 0}, {-100, -100}}, lineColor = {0, 0, 127}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid), Text(extent = {{-150, -140}, {150, -100}}, lineColor = {0, 0, 0}, textString = "k=%k"), Text(extent = {{-150, 140}, {150, 100}}, textString = "%name", lineColor = {0, 0, 255}), Ellipse(extent = {{-14, 16}, {16, -14}}, lineColor = {0, 0, 0}, fillColor = {0, 0, 127}, fillPattern = FillPattern.Solid), Line(points = {{0, 0}, {100, 10}}, color = {0, 0, 127}), Line(points = {{0, 0}, {100, -10}}, color = {0, 0, 127}), Line(points = {{100, 0}, {-100, 0}}, color = {0, 0, 127})}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{-100, -100}, {-100, 100}, {100, 0}, {-100, -100}}, lineColor = {0, 0, 127}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid), Text(extent = {{-76, 38}, {0, -34}}, textString = "k", lineColor = {0, 0, 255})}));
     end GainReplicator;
 
     model Power10
@@ -392,7 +629,7 @@ input <i>u</i>:
       parameter Real k "Gain";
     equation
       y = k * 10 ^ u;
-      annotation(Icon(coordinateSystem(initialScale = 0.1), graphics = {Polygon(origin = {-10, -40}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, points = {{90, 0}, {68, 8}, {68, -8}, {90, 0}}), Line(origin = {10, -40}, points = {{-90, 0}, {68, 0}}, color = {192, 192, 192}), Line(origin = {-18, 14}, rotation = 180, points = {{-79.6, -46}, {-76.8, -21.3}, {-75.2, -11.4}, {-72.8, -1.31}, {-69.5, 8.08}, {-64.7, 17.9}, {-57.5, 28}, {-47, 38.1}, {-31.8, 48.1}, {-10.1, 58}, {22.1, 66}, {62.7, 72.1}}, smooth = Smooth.Bezier), Polygon(origin = {80, -8}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}), Line(origin = {80, 0}, points = {{-80, -80}, {-80, 68}}, color = {192, 192, 192}), Text(origin = {-16, 62}, lineColor = {192, 192, 192}, extent = {{-30, -22}, {60, -70}}, textString = "10^", fontName = "DejaVu Sans Mono")}), Documentation(info = "<html>
+      annotation(Icon(coordinateSystem(initialScale = 0.1), graphics={  Polygon(origin = {-10, -40}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, points = {{90, 0}, {68, 8}, {68, -8}, {90, 0}}), Line(origin = {10, -40}, points = {{-90, 0}, {68, 0}}, color = {192, 192, 192}), Line(origin = {-18, 14}, rotation = 180, points = {{-79.6, -46}, {-76.8, -21.3}, {-75.2, -11.4}, {-72.8, -1.31}, {-69.5, 8.08}, {-64.7, 17.9}, {-57.5, 28}, {-47, 38.1}, {-31.8, 48.1}, {-10.1, 58}, {22.1, 66}, {62.7, 72.1}}, smooth = Smooth.Bezier), Polygon(origin = {80, -8}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}), Line(origin = {80, 0}, points = {{-80, -80}, {-80, 68}}, color = {192, 192, 192}), Text(origin = {-16, 62}, lineColor = {192, 192, 192}, extent = {{-30, -22}, {60, -70}}, textString = "10^", fontName = "DejaVu Sans Mono")}), Documentation(info = "<html>
 <p>This block calculates <code>y = k * 10^u</code> and
 represents thus the inverse of 
 <a href=\"modelica://Modelica.Blocks.Math.Log10\">Log10</a>.
@@ -434,7 +671,7 @@ represents thus the inverse of
       0 = p.i + n.i;
       i = p.i;
       LossPower = 0;
-      annotation(Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Ellipse(extent = {{-50, 50}, {50, -50}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-90, 0}, {-50, 0}}, color = {0, 0, 255}), Line(points = {{50, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{0, -50}, {0, 50}}, color = {0, 0, 255}), Text(extent = {{-150, -90}, {150, -50}}, textString = "%name", lineColor = {0, 0, 255}), Polygon(points = {{90, 0}, {60, 10}, {60, -10}, {90, 0}}, lineColor = {0, 0, 255}, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Ellipse(extent = {{-50, 50}, {50, -50}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid), Line(points = {{-96, 0}, {-50, 0}}, color = {0, 0, 255}), Line(points = {{50, 0}, {96, 0}}, color = {0, 0, 255}), Line(points = {{0, -50}, {0, 50}}, color = {0, 0, 255})}), Documentation(revisions = "<html>
+      annotation(Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Ellipse(extent = {{-50, 50}, {50, -50}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-90, 0}, {-50, 0}}, color = {0, 0, 255}), Line(points = {{50, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{0, -50}, {0, 50}}, color = {0, 0, 255}), Text(extent = {{-150, -90}, {150, -50}}, textString = "%name", lineColor = {0, 0, 255}), Polygon(points = {{90, 0}, {60, 10}, {60, -10}, {90, 0}}, lineColor = {0, 0, 255}, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Ellipse(extent = {{-50, 50}, {50, -50}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid), Line(points = {{-96, 0}, {-50, 0}}, color = {0, 0, 255}), Line(points = {{50, 0}, {96, 0}}, color = {0, 0, 255}), Line(points = {{0, -50}, {0, 50}}, color = {0, 0, 255})}), Documentation(revisions = "<html>
 <ul>
 <li><i> 1998   </i>
        by Martin Otter<br> initially implemented<br>
@@ -454,7 +691,7 @@ represents thus the inverse of
       extends Modelica.Blocks.Interfaces.SO;
     equation
       y = ref * 10 ^ (offset + (if time < startTime then 0 else if time < startTime + duration then (time - startTime) * height / duration else height));
-      annotation(Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Line(points = {{-80, 68}, {-80, -80}}, color = {192, 192, 192}), Polygon(points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid), Line(points = {{-90, -70}, {82, -70}}, color = {192, 192, 192}), Polygon(points = {{90, -70}, {68, -62}, {68, -78}, {90, -70}}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid), Line(points = {{-80, -70}, {-40, -70}, {31, 38}}), Text(extent = {{-150, -150}, {150, -110}}, lineColor = {0, 0, 0}, textString = "duration=%duration"), Line(points = {{31, 38}, {86, 38}})}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Polygon(points = {{-80, 90}, {-86, 68}, {-74, 68}, {-80, 90}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Line(points = {{-80, 68}, {-80, -80}}, color = {95, 95, 95}), Line(points = {{-80, -20}, {-20, -20}, {50, 50}}, color = {0, 0, 255}, thickness = 0.5), Line(points = {{-90, -70}, {82, -70}}, color = {95, 95, 95}), Polygon(points = {{90, -70}, {68, -64}, {68, -76}, {90, -70}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Polygon(points = {{-40, -20}, {-42, -30}, {-38, -30}, {-40, -20}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Line(points = {{-40, -20}, {-40, -70}}, color = {95, 95, 95}), Polygon(points = {{-40, -70}, {-42, -60}, {-38, -60}, {-40, -70}, {-40, -70}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Text(extent = {{-72, -39}, {-34, -50}}, lineColor = {0, 0, 0}, textString = "offset"), Text(extent = {{-38, -72}, {6, -83}}, lineColor = {0, 0, 0}, textString = "startTime"), Text(extent = {{-78, 92}, {-37, 72}}, lineColor = {0, 0, 0}, textString = "y"), Text(extent = {{70, -80}, {94, -91}}, lineColor = {0, 0, 0}, textString = "time"), Line(points = {{-20, -20}, {-20, -70}}, color = {95, 95, 95}), Line(points = {{-19, -20}, {50, -20}}, color = {95, 95, 95}), Line(points = {{50, 50}, {101, 50}}, color = {0, 0, 255}, thickness = 0.5), Line(points = {{50, 50}, {50, -20}}, color = {95, 95, 95}), Polygon(points = {{50, -20}, {42, -18}, {42, -22}, {50, -20}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Polygon(points = {{-20, -20}, {-11, -18}, {-11, -22}, {-20, -20}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Polygon(points = {{50, 50}, {48, 40}, {52, 40}, {50, 50}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Polygon(points = {{50, -20}, {48, -10}, {52, -10}, {50, -20}, {50, -20}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Text(extent = {{53, 23}, {82, 10}}, lineColor = {0, 0, 0}, textString = "height"), Text(extent = {{-2, -21}, {37, -33}}, lineColor = {0, 0, 0}, textString = "duration")}), Documentation(info = "<html>
+      annotation(Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Line(points = {{-80, 68}, {-80, -80}}, color = {192, 192, 192}), Polygon(points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid), Line(points = {{-90, -70}, {82, -70}}, color = {192, 192, 192}), Polygon(points = {{90, -70}, {68, -62}, {68, -78}, {90, -70}}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid), Line(points = {{-80, -70}, {-40, -70}, {31, 38}}), Text(extent = {{-150, -150}, {150, -110}}, lineColor = {0, 0, 0}, textString = "duration=%duration"), Line(points = {{31, 38}, {86, 38}})}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Polygon(points = {{-80, 90}, {-86, 68}, {-74, 68}, {-80, 90}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Line(points = {{-80, 68}, {-80, -80}}, color = {95, 95, 95}), Line(points = {{-80, -20}, {-20, -20}, {50, 50}}, color = {0, 0, 255}, thickness = 0.5), Line(points = {{-90, -70}, {82, -70}}, color = {95, 95, 95}), Polygon(points = {{90, -70}, {68, -64}, {68, -76}, {90, -70}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Polygon(points = {{-40, -20}, {-42, -30}, {-38, -30}, {-40, -20}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Line(points = {{-40, -20}, {-40, -70}}, color = {95, 95, 95}), Polygon(points = {{-40, -70}, {-42, -60}, {-38, -60}, {-40, -70}, {-40, -70}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Text(extent = {{-72, -39}, {-34, -50}}, lineColor = {0, 0, 0}, textString = "offset"), Text(extent = {{-38, -72}, {6, -83}}, lineColor = {0, 0, 0}, textString = "startTime"), Text(extent = {{-78, 92}, {-37, 72}}, lineColor = {0, 0, 0}, textString = "y"), Text(extent = {{70, -80}, {94, -91}}, lineColor = {0, 0, 0}, textString = "time"), Line(points = {{-20, -20}, {-20, -70}}, color = {95, 95, 95}), Line(points = {{-19, -20}, {50, -20}}, color = {95, 95, 95}), Line(points = {{50, 50}, {101, 50}}, color = {0, 0, 255}, thickness = 0.5), Line(points = {{50, 50}, {50, -20}}, color = {95, 95, 95}), Polygon(points = {{50, -20}, {42, -18}, {42, -22}, {50, -20}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Polygon(points = {{-20, -20}, {-11, -18}, {-11, -22}, {-20, -20}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Polygon(points = {{50, 50}, {48, 40}, {52, 40}, {50, 50}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Polygon(points = {{50, -20}, {48, -10}, {52, -10}, {50, -20}, {50, -20}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Text(extent = {{53, 23}, {82, 10}}, lineColor = {0, 0, 0}, textString = "height"), Text(extent = {{-2, -21}, {37, -33}}, lineColor = {0, 0, 0}, textString = "duration")}), Documentation(info = "<html>
 <p>
 The Real output y is a ramp signal:
 </p>
@@ -499,7 +736,7 @@ If parameter duration is set to 0.0, the limiting case of a Step signal is achie
       connect(gain.y, add.u2) annotation(Line(points = {{41, 10}, {44, 10}, {44, 4}, {50, 4}}, color = {0, 0, 127}));
       connect(add.y, step) annotation(Line(points = {{73, 10}, {90, 10}, {90, 60}, {110, 60}}, color = {0, 0, 127}));
       connect(trapezoid.y, triangle) annotation(Line(points = {{81, -60}, {110, -60}}, color = {0, 0, 127}));
-      annotation(Icon(coordinateSystem(preserveAspectRatio = false, initialScale = 0.1), graphics = {Rectangle(lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-100, 100}, {100, -100}}), Line(points = {{-60, 40}, {-20, 40}, {-20, 60}, {20, 60}, {20, 80}, {60, 80}}, color = {0, 0, 255}), Line(points = {{-58, -80}, {-40, -40}, {-20, -80}, {0, -40}, {20, -80}, {40, -40}, {60, -80}}, color = {0, 0, 255}), Text(origin = {1, 130}, lineColor = {0, 0, 255}, extent = {{-149, -20}, {149, 20}}, textString = "%name")}), Documentation(info = "<html>
+      annotation(Icon(coordinateSystem(preserveAspectRatio = false, initialScale = 0.1), graphics={  Rectangle(lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-100, 100}, {100, -100}}), Line(points = {{-60, 40}, {-20, 40}, {-20, 60}, {20, 60}, {20, 80}, {60, 80}}, color = {0, 0, 255}), Line(points = {{-58, -80}, {-40, -40}, {-20, -80}, {0, -40}, {20, -80}, {40, -40}, {60, -80}}, color = {0, 0, 255}), Text(origin = {1, 130}, lineColor = {0, 0, 255}, extent = {{-149, -20}, {149, 20}}, textString = "%name")}), Documentation(info = "<html>
 <p>The step output starts from <code>stepOffset</code> and increases to <code>stepOffset + stepHeight</code> in <code>stepNumber</code>steps. The total duration of all step changes is equal to <code>T</code>. </p>
 <p>During each step the <code>triangle</code> output is increased from
 <code>triangleOffset</code> to <code>triangleOffset + triangleHeight</code>
@@ -508,6 +745,51 @@ and back to <code>triangleOffset</code>.</p>
 stepwise changed variables (<code>step</code>).
 </html>"));
     end TriangleAndStep;
+
+    package QuasiStatic "Quasi static sources"
+      extends Modelica.Icons.Package;
+    end QuasiStatic;
+
+    model VariableUnrootedSinglePhaseCurrentSource "Unrooted variable multi phase AC current source"
+      extends Modelica.Electrical.QuasiStationary.SinglePhase.Interfaces.OnePort;
+      import Modelica.Constants.pi;
+      Modelica.ComplexBlocks.Interfaces.ComplexInput I annotation(Placement(transformation(origin = {0, 100}, extent = {{-20, -20}, {20, 20}}, rotation = 270)));
+    equation
+      i = I;
+      annotation(Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Line(points = {{-60, 60}, {60, 60}}, color = {85, 170, 255}), Polygon(points = {{60, 60}, {30, 70}, {30, 50}, {60, 60}}, lineColor = {0, 0, 255}, fillColor = {0, 0, 255},
+                fillPattern =                                                                                                                                                                                                        FillPattern.Solid), Line(points = {{0, -50}, {0, 50}}, color = {0, 0, 0}), Ellipse(extent = {{-50, 50}, {50, -50}}, lineColor = {0, 0, 0}), Line(points = {{-90, 0}, {-50, 0}}, color = {0, 0, 0}), Line(points = {{50, 0}, {90, 0}}, color = {0, 0, 0})}), Documentation(info = "<html>
+<p>
+This model represents an ideal current source specifying the complex RMS current without root.
+</p>
+</html>"));
+    end VariableUnrootedSinglePhaseCurrentSource;
+
+    model VariableUnrootedMultiPhaseCurrentSource "Unrooted variable multi phase AC current source"
+      extends Modelica.Electrical.QuasiStationary.MultiPhase.Interfaces.OnePort;
+      import Modelica.Constants.pi;
+      Modelica.ComplexBlocks.Interfaces.ComplexInput I[m] annotation(Placement(transformation(origin = {0, 100}, extent = {{-20, -20}, {20, 20}}, rotation = 270)));
+    equation
+      i = I;
+      annotation(Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Line(points = {{-60, 60}, {60, 60}}, color = {85, 170, 255}), Polygon(points = {{60, 60}, {30, 70}, {30, 50}, {60, 60}}, lineColor = {0, 0, 255}, fillColor = {0, 0, 255},
+                fillPattern =                                                                                                                                                                                                        FillPattern.Solid), Line(points = {{0, -50}, {0, 50}}, color = {0, 0, 0}), Ellipse(extent = {{-50, 50}, {50, -50}}, lineColor = {0, 0, 0}), Line(points = {{-90, 0}, {-50, 0}}, color = {0, 0, 0}), Line(points = {{50, 0}, {90, 0}}, color = {0, 0, 0})}), Documentation(info = "<html>
+
+<p>
+This model describes <i>m</i> variable current sources, with <i>m</i> complex signal inputs,
+specifying the complex current by the complex RMS voltage components.
+Additionally, the frequency of the current source is defined by a real signal input.
+<i>m</i> <a href=\"modelica://Modelica.Electrical.QuasiStationary.SinglePhase.Sources.VariableCurrentSource\">single phase VariableCurrentSources</a> are used.
+</p>
+
+<h4>See also</h4>
+
+<p>
+<a href=\"modelica://Modelica.Electrical.QuasiStationary.SinglePhase.Sources.VoltageSource\">SinglePhase.VoltageSource</a>,
+<a href=\"modelica://Modelica.Electrical.QuasiStationary.MultiPhase.Sources.VoltageSource\">VoltageSource</a>,
+<a href=\"modelica://Modelica.Electrical.QuasiStationary.MultiPhase.Sources.VariableVoltageSource\">VariableVoltageSource</a>,
+<a href=\"modelica://Modelica.Electrical.QuasiStationary.MultiPhase.Sources.CurrentSource\">CurrentSource</a>.
+</p>
+</html>"));
+    end VariableUnrootedMultiPhaseCurrentSource;
   end Sources;
 
   package Records "Records"
@@ -535,7 +817,7 @@ stepwise changed variables (<code>step</code>).
                                                   parameter Modelica.SIunits.Resistance RshCell = 1E8 "Shunt resistance of cell" annotation(Dialog(group = "Non-ideal effects"));
                                                   */
       final parameter Modelica.SIunits.Voltage VtCellRef = Modelica.Constants.k * TRef / Q "Reference temperature voltage of cell";
-      annotation(defaultComponentPrefixes = "parameter", Icon(coordinateSystem(preserveAspectRatio = false), graphics = {Text(extent = {{-100, -10}, {100, -30}}, lineColor = {28, 108, 200}, textString = "%moduleType")}), Diagram(coordinateSystem(preserveAspectRatio = false)));
+      annotation(defaultComponentPrefixes = "parameter", Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Text(extent = {{-100, -10}, {100, -30}}, lineColor = {28, 108, 200}, textString = "%moduleType")}), Diagram(coordinateSystem(preserveAspectRatio = false)));
     end ModuleData;
 
     extends Modelica.Icons.Package;
@@ -597,6 +879,30 @@ The original data of this module are taken from
       connect(irradiance, irradiance) annotation(Line(points = {{0, 70}, {0, 70}}, color = {0, 0, 127}));
       annotation(Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})), Icon(coordinateSystem(preserveAspectRatio = false)));
     end PartialComponent;
+
+    package QuasiStatic
+      extends Modelica.Icons.Package;
+      partial model ACpins "Single phase AC pins"
+
+        Modelica.Electrical.QuasiStationary.SinglePhase.Interfaces.PositivePin ac_p "AC positive pin"
+          annotation (Placement(transformation(extent={{90,90},{110,110}})));
+        Modelica.Electrical.QuasiStationary.SinglePhase.Interfaces.NegativePin ac_n "AC negative pin"
+          annotation (Placement(transformation(extent={{90,-110},{110,-90}})));
+        Modelica.SIunits.ComplexVoltage vAC=ac_p.v-ac_n.v "AC potential";
+        Modelica.SIunits.ComplexCurrent iAC=ac_p.i "AC current";
+      end ACpins;
+
+      partial model ACplug "AC multi phase plug"
+        parameter Integer m(final min=3) = 3 "Number of phases";
+        Modelica.Electrical.QuasiStationary.MultiPhase.Interfaces.PositivePlug ac(final m=m)
+          "AC output"
+          annotation (Placement(transformation(extent={{90,-10},{110,10}})));
+        Modelica.SIunits.ComplexVoltage vAC[m]=ac.pin[:].v "AC potential";
+        Modelica.SIunits.ComplexCurrent iAC[m]=ac.pin[:].i "AC current";
+      end ACplug;
+    end QuasiStatic;
   end Interfaces;
-  annotation(Icon(coordinateSystem(initialScale = 0.1), graphics = {Ellipse(origin = {36, 75}, fillColor = {255, 255, 127}, fillPattern = FillPattern.Solid, extent = {{0, 1}, {40, -39}}, endAngle = 360), Rectangle(origin = {-60, -9}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -7}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {-60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -5}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Line(origin = {18, 34}, points = {{4, 10}, {-84, -16}}), Line(origin = {-12, 70}, points = {{34, -6}, {-34, 6}}), Line(points = {{36, 30}, {28, 16}}, color = {28, 108, 200})}), Diagram(coordinateSystem(initialScale = 0.1)), uses(Modelica(version = "3.2.2")));
+  annotation(Icon(coordinateSystem(initialScale = 0.1), graphics={  Ellipse(origin = {36, 75}, fillColor = {255, 255, 127}, fillPattern = FillPattern.Solid, extent = {{0, 1}, {40, -39}}, endAngle = 360), Rectangle(origin = {-60, -9}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -7}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {-60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -5}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
+            fillPattern =                                                                                                                                                                                                        FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Line(origin = {18, 34}, points = {{4, 10}, {-84, -16}}), Line(origin = {-12, 70}, points = {{34, -6}, {-34, 6}}), Line(points = {{36, 30}, {28, 16}}, color = {28, 108, 200})}), Diagram(coordinateSystem(initialScale = 0.1)), uses(Modelica(version = "3.2.2"),
+        WindPowerPlants(version="1.X.X")));
 end PhotoVoltaics;
