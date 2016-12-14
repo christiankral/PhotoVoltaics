@@ -356,6 +356,7 @@ This library provides models for the modeling and simulation of photo voltaic po
     end Cells;
 
     package Modules
+      extends Modelica.Icons.Package;
       model Simple "Simple module consisting of series connected cells"
         extends PhotoVoltaics.Interfaces.PartialComponent;
         parameter Real shadow[moduleData.ns] = zeros(moduleData.ns) "Shadow vecotor based on: 0 = full sun, 1 = full shadow";
