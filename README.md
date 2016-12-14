@@ -9,7 +9,7 @@ risk. The library is released under [Modelica License 1.1](https://www.modelica.
 
 # Development and contribution
 
-The library was developed during a Diploma project at the Technical Engineering College, [TGM](http://www.tgm.ac.at), Wexstraße 19-23, 1200 Vienna, Austria. Library authors are  [Christian Kral](http://christiankral.net), Mohamed Elmoghazy, Ramazan Kavlak, Jovan Brkic, Muaz Ceran.
+The library was developed during a Diploma project at the Technical Engineering College, [TGM](http://www.tgm.ac.at), Wexstraße 19-23, 1200 Vienna, Austria. Library authors are  Jovan Brkic, Muaz Ceran, Mohamed Elmoghazy, Ramazan Kavlak, and [Christian Kral](http://christiankral.net).
 
 # Contact
 
