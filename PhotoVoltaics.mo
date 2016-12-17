@@ -183,14 +183,14 @@ This library provides models for the modeling and simulation of photo voltaic po
       Modelica.Electrical.Analog.Basic.VariableResistor variableResistor annotation(Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {40, 0})));
       PhotoVoltaics.Sources.PowerRamp powerRamp(duration = 0.6, height = 8, offset = -4, ref = moduleData.VmpCellRef / moduleData.ImpRef, startTime = 0.2) annotation(Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
       PhotoVoltaics.Components.Cells.Simple cell(moduleData = moduleData) annotation(Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
-      parameter PhotoVoltaics.Records.NET_NU_S5_E3E moduleData annotation(Placement(visible = true, transformation(origin = {70, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      parameter Records.TSM_200_DC01A moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
     equation
       connect(cell.p, variableResistor.p) annotation(Line(points = {{0, 10}, {0, 20}, {40, 20}, {40, 10}}, color = {0, 0, 255}));
       connect(ground.p, cell.n) annotation(Line(points = {{0, -20}, {0, -10}}, color = {0, 0, 255}));
       /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
       connect(ground.p, variableResistor.n) annotation(Line(points = {{0, -20}, {14, -20}, {40, -20}, {40, -10}}, color = {0, 0, 255}));
       connect(variableResistor.R, powerRamp.y) annotation(Line(points = {{51, -2.22045e-15}, {49.5, -2.22045e-15}, {49.5, 0}, {59, 0}}, color = {0, 0, 127}));
-      annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
+      annotation(defaultComponentName="moduleData", defaultComponentPrefixes = "parameter", Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
     end SimpleCell;
 
     model SimpleCellVoltageSource
@@ -198,8 +198,8 @@ This library provides models for the modeling and simulation of photo voltaic po
       Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       Modelica.Blocks.Sources.Ramp rampCurrent(duration = 0.6, height = moduleData.VocCellRef + moduleData.BvCell, offset = -moduleData.BvCell, startTime = 0.2) annotation(Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
       PhotoVoltaics.Components.Cells.Simple cell(moduleData = moduleData) annotation(Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
-      parameter PhotoVoltaics.Records.NET_NU_S5_E3E moduleData annotation(Placement(visible = true, transformation(origin = {70, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage annotation(Placement(visible = true, transformation(origin = {40, 0}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+      parameter Records.TSM_200_DC01A moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
     equation
       connect(signalVoltage.n, ground.p) annotation(Line(points = {{40, -10}, {40, -10}, {40, -20}, {0, -20}, {0, -20}}, color = {0, 0, 255}));
       connect(signalVoltage.p, cell.p) annotation(Line(points = {{40, 10}, {40, 10}, {40, 20}, {0, 20}, {0, 10}, {0, 10}}, color = {0, 0, 255}));
@@ -214,9 +214,9 @@ This library provides models for the modeling and simulation of photo voltaic po
       Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(visible = true, transformation(origin = {0, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       Modelica.Electrical.Analog.Basic.VariableResistor variableResistor annotation(Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {40, 0})));
       PhotoVoltaics.Components.Cells.Simple cell(useConstantIrradiance = false, moduleData = moduleData) annotation(Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
-      parameter Records.NET_NU_S5_E3E moduleData annotation(Placement(transformation(extent = {{60, 60}, {80, 80}})));
       Sources.TriangleAndStep triangleAndStep(T = 1, stepHeight = 1000, triangleHeight = 8, triangleOffset = -4) annotation(Placement(visible = true, transformation(origin = {-60, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       Blocks.Power10 power10(k = moduleData.VocCellRef / moduleData.IscRef) annotation(Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+      parameter Records.TSM_200_DC01A moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
     equation
       connect(variableResistor.n, ground.p) annotation(Line(points = {{40, -10}, {40, -10}, {40, -20}, {0, -20}, {0, -30}}, color = {0, 0, 255}));
       connect(cell.p, variableResistor.p) annotation(Line(points = {{0, 10}, {0, 10}, {0, 20}, {40, 20}, {40, 10}}, color = {0, 0, 255}));
@@ -243,7 +243,7 @@ on the horizontal axis</li>
       Components.Modules.Simple module(T = 298.15, moduleData = moduleData) annotation(Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
       Sources.PowerRamp powerRamp(duration = 0.6, height = 8, offset = -4, ref = moduleData.VmpCellRef / moduleData.ImpRef, startTime = 0.2) annotation(Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
       Modelica.Electrical.Analog.Basic.VariableResistor variableResistor annotation(Placement(visible = true, transformation(origin = {40, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 270)));
-      parameter Records.NET_NU_S5_E3E moduleData annotation(Placement(transformation(extent = {{60, 60}, {80, 80}})));
+      parameter Records.TSM_200_DC01A moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
     equation
       connect(variableResistor.n, ground.p) annotation(Line(points = {{40, -10}, {40, -20}, {0, -20}}, color = {0, 0, 255}));
       connect(module.p, variableResistor.p) annotation(Line(points = {{0, 10}, {0, 20}, {40, 20}, {40, 10}}, color = {0, 0, 255}));
@@ -256,10 +256,15 @@ on the horizontal axis</li>
     model SimpleModuleShadow
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      Components.Modules.Simple module(T = 298.15, moduleData = moduleData, shadow = cat(1, fill(0.5, 1), fill(0, 47))) annotation(Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
+      Components.Modules.Simple module(            moduleData = moduleData,
+        T=298.15,
+        shadow=cat(
+                1,
+                fill(0.2, 1),
+                fill(0, moduleData.ns - 1)))                                                                            annotation(Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
       Modelica.Electrical.Analog.Basic.VariableResistor variableResistor annotation(Placement(visible = true, transformation(origin = {40, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 270)));
-      parameter Records.NET_NU_S5_E3E moduleData annotation(Placement(transformation(extent = {{60, 60}, {80, 80}})));
       Sources.PowerRamp powerRamp(duration = 0.6, height = 8, offset = -4, ref = moduleData.VmpCellRef / moduleData.ImpRef, startTime = 0.2) annotation(Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+      parameter Records.TSM_200_DC01A moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
     equation
       connect(powerRamp.y, variableResistor.R) annotation(Line(points = {{59, 0}, {51, 0}}, color = {0, 0, 127}));
       connect(variableResistor.n, ground.p) annotation(Line(points = {{40, -10}, {40, -20}, {0, -20}}, color = {0, 0, 255}));
@@ -276,7 +281,6 @@ on the horizontal axis</li>
             extent={{-10,-10},{10,10}},
             rotation=0)));
       Components.Modules.Simple module(moduleData = moduleData,T=298.15,useConstantIrradiance=false) annotation(Placement(visible = true, transformation(origin={-40,0},  extent = {{-10, 10}, {10, -10}}, rotation = -90)));
-      parameter Records.NET_NU_S5_E3E moduleData annotation(Placement(transformation(extent = {{60, 60}, {80, 80}})));
       Modelica.Blocks.Sources.Ramp ramp(
         duration=100,
         startTime=100,
@@ -293,6 +297,7 @@ on the horizontal axis</li>
             rotation=270,
             origin={60,0})));
       Modelica.Electrical.Analog.Sensors.PowerSensor powerSensor annotation (Placement(transformation(extent={{-20,10},{0,30}})));
+      parameter Records.TSM_200_DC01A moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
     equation
       connect(groundDC.p, module.n) annotation (Line(points={{-40,-20},{-40,-10}}, color={0,0,255}));
       /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
@@ -791,55 +796,6 @@ Additionally, the frequency of the current source is defined by a real signal in
     end VariableUnrootedMultiPhaseCurrentSource;
   end Sources;
 
-  package Records "Records"
-    record ModuleData "Data of PV module"
-      extends Modelica.Icons.Record;
-      constant String moduleType = "empty";
-      constant Modelica.SIunits.Charge Q = 1.6021766208E-19 "Elementary charge of electron";
-      parameter Modelica.SIunits.Temperature TRef = 298.15 "Reference temperature" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.Irradiance irradianceRef = 1000 "Reference solar irradiance" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.Voltage VocRef(min = Modelica.Constants.small) = 30.2 "Reference open circuit module voltage > 0 at TRref" annotation(Dialog(group = "Reference data"));
-      final parameter Modelica.SIunits.Voltage VocCellRef = VocRef / ns "Reference open circuit cell voltage > 0 at TRref";
-      parameter Modelica.SIunits.Current IscRef(min = Modelica.Constants.small) = 8.54 "Reference short circuit current > 0 at TRref and irradianceRef" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.Voltage VmpRef(min = Modelica.Constants.small) = 24.0 "Reference maximum power module voltage > 0 at TRref" annotation(Dialog(group = "Reference data"));
-      final parameter Modelica.SIunits.Voltage VmpCellRef = VmpRef / ns "Reference maximum power cell voltage > 0 at TRref";
-      parameter Modelica.SIunits.Current ImpRef(min = Modelica.Constants.small) = 7.71 "Reference maximum power current > 0 at TRref and irradianceRef" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaIsc = +0.00053 "Temperature coefficient of reference short circuit current at TRref" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaVoc = -0.00340 "Temperature coefficient of reference open circuit module voltage at TRref" annotation(Dialog(group = "Reference data"));
-      parameter Integer ns = 48 "Number of series connected cells";
-      parameter Integer nb = 1 "Number of bypass diodes per module";
-      parameter Modelica.SIunits.Voltage BvCell = 18 "Breakthrough cell voltage" annotation(Dialog(group = "Breakthrough data"));
-      parameter Modelica.SIunits.Current Ibv = 1 "Breakthrough knee current" annotation(Dialog(group = "Breakthrough data"));
-      parameter Real Nbv = 0.74 "Breakthrough emission coefficient" annotation(Dialog(group = "Breakthrough data"));
-      /*
-                                                  parameter Modelica.SIunits.Resistance RsCell = 0 "Series resistance of cell" annotation(Dialog(group = "Non-ideal effects"));
-                                                  parameter Modelica.SIunits.Resistance RshCell = 1E8 "Shunt resistance of cell" annotation(Dialog(group = "Non-ideal effects"));
-                                                  */
-      final parameter Modelica.SIunits.Voltage VtCellRef = Modelica.Constants.k * TRef / Q "Reference temperature voltage of cell";
-      annotation(defaultComponentPrefixes = "parameter", Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Text(extent = {{-100, -10}, {100, -30}}, lineColor = {28, 108, 200}, textString = "%moduleType")}));
-    end ModuleData;
-
-    extends Modelica.Icons.Package;
-
-    record NET_NU_S5_E3E "NET NU monocrystalline SI cell 185W"
-      extends ModuleData(moduleType = "NET_NU_S5_E3E", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 30.2, final IscRef = 8.54, final VmpRef = 24.0, final ImpRef = 7.71, final alphaIsc = +0.00053, final alphaVoc = -0.00340, final ns = 48, final nb = 3);
-      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
-The original data of this module are taken from
-<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. An offline version of these data is also
-<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NET_NU_S5_E3E.pdf\">available</a>.
-</html>"));
-    end NET_NU_S5_E3E;
-
-    record NET_NU_S5_E3F "NET NU monocrystalline SI cell 185W"
-      extends ModuleData(moduleType = "NET_NU_S5_E3F", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 30.2, final IscRef = 8.54, final VmpRef = 24.0, final ImpRef = 7.71, final alphaIsc = +0.00053, final alphaVoc = -0.00340, final ns = 48, final nb = 3);
-      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
-The original data of this module are taken from
-<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. An offline version of these data is also
-<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NET_NU_S5_E3E.pdf\">available</a>.
-</html>"));
-    end NET_NU_S5_E3F;
-  end Records;
-
   package Interfaces "Interfaces"
     extends Modelica.Icons.InterfacesPackage;
 
@@ -901,6 +857,156 @@ The original data of this module are taken from
       end ACplug;
     end QuasiStatic;
   end Interfaces;
+
+  package Records "Records"
+    record ModuleData "Data of PV module"
+      extends Modelica.Icons.Record;
+      parameter String moduleName = "Generic";
+      parameter Modelica.SIunits.Temperature TRef = 298.15 "Reference temperature" annotation(Dialog(group = "Reference data"));
+      parameter Modelica.SIunits.Irradiance irradianceRef = 1000 "Reference solar irradiance" annotation(Dialog(group = "Reference data"));
+      parameter Modelica.SIunits.Voltage VocRef(min = Modelica.Constants.small) = 30.2 "Reference open circuit module voltage > 0 at TRref" annotation(Dialog(group = "Reference data"));
+      final parameter Modelica.SIunits.Voltage VocCellRef = VocRef / ns "Reference open circuit cell voltage > 0 at TRref";
+      parameter Modelica.SIunits.Current IscRef(min = Modelica.Constants.small) = 8.54 "Reference short circuit current > 0 at TRref and irradianceRef" annotation(Dialog(group = "Reference data"));
+      parameter Modelica.SIunits.Voltage VmpRef(min = Modelica.Constants.small) = 24.0 "Reference maximum power module voltage > 0 at TRref" annotation(Dialog(group = "Reference data"));
+      final parameter Modelica.SIunits.Voltage VmpCellRef = VmpRef / ns "Reference maximum power cell voltage > 0 at TRref";
+      parameter Modelica.SIunits.Current ImpRef(min = Modelica.Constants.small) = 7.71 "Reference maximum power current > 0 at TRref and irradianceRef" annotation(Dialog(group = "Reference data"));
+      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaIsc = +0.00053 "Temperature coefficient of reference short circuit current at TRref" annotation(Dialog(group = "Reference data"));
+      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaVoc = -0.00340 "Temperature coefficient of reference open circuit module voltage at TRref" annotation(Dialog(group = "Reference data"));
+      parameter Integer ns = 1 "Number of series connected cells";
+      parameter Integer nb = 1 "Number of bypass diodes per module";
+      parameter Modelica.SIunits.Voltage BvCell = 18 "Breakthrough cell voltage" annotation(Dialog(group = "Breakthrough data"));
+      parameter Modelica.SIunits.Current Ibv = 1 "Breakthrough knee current" annotation(Dialog(group = "Breakthrough data"));
+      parameter Real Nbv = 0.74 "Breakthrough emission coefficient" annotation(Dialog(group = "Breakthrough data"));
+      /*
+  parameter Modelica.SIunits.Resistance RsCell = 0 "Series resistance of cell" annotation(Dialog(group = "Non-ideal effects"));
+  parameter Modelica.SIunits.Resistance RshCell = 1E8 "Shunt resistance of cell" annotation(Dialog(group = "Non-ideal effects"));
+  */
+      final parameter Modelica.SIunits.Voltage VtCellRef = Modelica.Constants.k * TRef / Q "Reference temperature voltage of cell";
+      constant Modelica.SIunits.Charge Q = 1.6021766208E-19 "Elementary charge of electron";
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Icon(coordinateSystem(preserveAspectRatio = false), graphics={
+            Text(
+              lineColor={0,0,255},
+              extent={{-200,-150},{200,-110}},
+              textString="%moduleName")}),                                                                                                         Diagram(coordinateSystem(preserveAspectRatio = false)));
+    end ModuleData;
+
+    extends Modelica.Icons.Package;
+
+    record TSM_200_DC01A
+    "Comax monocrystalline SI cell 200W"
+      extends ModuleData(
+      final moduleName = "TSM 200 DC01A",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 46,
+      final IscRef = 5.6,
+      final VmpRef = 37.6,
+      final ImpRef = 5.37,
+      final alphaIsc = +0.0002,
+      final alphaVoc = -0.003,
+      final ns = 60,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"https://d1819pwkf4ncw.cloudfront.net/files/documents/lg300n1c-g4-360889.pdf\">LG</a>. An offline version of these data is also
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG300N1C_G4.pdf\">available</a>.
+</html>"));
+    end TSM_200_DC01A;
+
+    record TSM_230_PC05
+    "Trina polycrystalline SI cell 230W"
+      extends ModuleData(
+      final moduleName = "TSM 223 PC05",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 37,
+      final IscRef = 8.26,
+      final VmpRef = 29.8,
+      final ImpRef = 7.72,
+      final alphaIsc = +0.0005,
+      final alphaVoc = -0.0032,
+      final ns = 60,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"https://d1819pwkf4ncw.cloudfront.net/files/documents/lg300n1c-g4-360889.pdf\">LG</a>. An offline version of these data is also
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG300N1C_G4.pdf\">available</a>.
+</html>"));
+    end TSM_230_PC05;
+
+    record NET_NU_S5_E3E "NET NU monocrystalline SI cell 185W"
+      extends ModuleData(final moduleName = "NET_NU_S5_E3E",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 30.2, final IscRef = 8.54, final VmpRef = 24.0, final ImpRef = 7.71, final alphaIsc = +0.00053, final alphaVoc = -0.00340, final ns = 48, final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. An offline version of these data is also
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NET_NU_S5_E3E.pdf\">available</a>.
+</html>"));
+    end NET_NU_S5_E3E;
+
+    record NET_NU_S0_E3E "NET NU monocrystalline SI cell 180W"
+      extends ModuleData(final moduleName = "NET_NU_S0_E3E",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 30, final IscRef = 8.37, final VmpRef = 23.7, final ImpRef = 7.6, final alphaIsc = +0.00053, final alphaVoc = -0.00350, final ns = 48, final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. An offline version of these data is also
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NET_NU_S0_E3E.pdf\">available</a>.
+</html>"));
+    end NET_NU_S0_E3E;
+
+    record NET_NU_S0_ESZ "NET NU monocrystalline SI cell 180W"
+      extends ModuleData(final moduleName = "NET_NU_S0_ESZ",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 30, final IscRef = 8.37, final VmpRef = 23.7, final ImpRef = 7.6, final alphaIsc = +0.00053, final alphaVoc = -0.00350, final ns = 48, final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. An offline version of these data is also
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NET_NU_S0_ESZ.pdf\">available</a>.
+</html>"));
+    end NET_NU_S0_ESZ;
+
+    record NET_NU_R5_ESZ "NET NU monocrystalline SI cell 175W"
+      extends ModuleData(final moduleName = "NET_NU_R5_ESZ",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 29.8, final IscRef = 8.29, final VmpRef = 23.2, final ImpRef = 7.55, final alphaIsc = +0.00053, final alphaVoc = -0.00350, final ns = 48, final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. An offline version of these data is also
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NET_NU_S0_ESZ.pdf\">available</a>.
+</html>"));
+    end NET_NU_R5_ESZ;
+
+    record NET_NU_R0_E3E "NET NU monocrystalline SI cell 170W"
+      extends ModuleData(final moduleName = "NET_NU_R0_E3E",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 29.4, final IscRef = 8.37, final VmpRef = 22.4, final ImpRef = 7.6, final alphaIsc = +0.00053, final alphaVoc = -0.00350, final ns = 48, final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. An offline version of these data is also
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NET_NU_S0_ESZ.pdf\">available</a>.
+</html>"));
+    end NET_NU_R0_E3E;
+
+    record LG360N2W_B3 "LG monocrystalline SI cell 360W"
+      extends ModuleData(final moduleName = "LG360N2W_B3",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 48.3, final IscRef = 9.84, final VmpRef = 38.4, final ImpRef = 9.39, final alphaIsc = +0.0004, final alphaVoc = -0.003, final ns = 72, final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.lg.com/us/business/download/resources/BT00002151/BT00002151_369.pdf\">LG</a>. An offline version of these data is also
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG360N2W_B3.pdf\">available</a>.
+</html>"));
+    end LG360N2W_B3;
+
+    record LG305N1C_B3 "LG monocrystalline SI cell 305W"
+      extends ModuleData(final moduleName = "LG305N1C_B3",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 40, final IscRef = 10.1, final VmpRef = 32.1, final ImpRef = 9.52, final alphaIsc = +0.0004, final alphaVoc = -0.0029, final ns = 72, final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.lg.com/us/commercial/documents/lg-solar-spec-LG305N1C-B3-032315.pdf\">LG</a>. An offline version of these data is also
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG305N1C_B3.pdf\">available</a>.
+</html>"));
+    end LG305N1C_B3;
+
+    record LG300N1C_G4 "LG monocrystalline SI cell 300W"
+      extends ModuleData(final moduleName = "LG300N1C_G4",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 39.8, final IscRef = 9.9, final VmpRef = 32.2, final ImpRef = 9.34, final alphaIsc = +0.0003, final alphaVoc = -0.0028, final ns = 72, final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"https://d1819pwkf4ncw.cloudfront.net/files/documents/lg300n1c-g4-360889.pdf\">LG</a>. An offline version of these data is also
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG300N1C_G4.pdf\">available</a>.
+</html>"));
+    end LG300N1C_G4;
+
+  end Records;
   annotation(Icon(coordinateSystem,   graphics={  Ellipse(origin = {36, 75}, fillColor = {255, 255, 127}, fillPattern = FillPattern.Solid, extent = {{0, 1}, {40, -39}}, endAngle = 360), Rectangle(origin = {-60, -9}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -7}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {-60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -5}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
             fillPattern =                                                                                                                                                                                                        FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Line(origin = {18, 34}, points = {{4, 10}, {-84, -16}}), Line(origin = {-12, 70}, points = {{34, -6}, {-34, 6}}), Line(points = {{36, 30}, {28, 16}}, color = {28, 108, 200})}), uses(Modelica(version = "3.2.2")));
 end PhotoVoltaics;
