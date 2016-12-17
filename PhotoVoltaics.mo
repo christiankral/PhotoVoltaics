@@ -55,7 +55,10 @@ The software (sources, binaries, etc.) in their original or in a modified form
 <h4>Module Data</h4>
 
 <p>Module data are taken from manufacturer data sheets. The original links and, if possible,
-PDF files of the data sheets are provided througn this library.</p>
+PDF files of the data sheets are provided througn this library. However, the manufacturer PDF files 
+    are not subject to the License of this library; they are original material of the
+    manufacturer, publicly available in the internet.
+    These PDF files are distributed through the library for convenience reasons only. </p>
 </html>"));
     end License;
 
