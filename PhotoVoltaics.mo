@@ -911,7 +911,7 @@ Additionally, the frequency of the current source is defined by a real signal in
       final nb = 3);
       annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"https://d1819pwkf4ncw.cloudfront.net/files/documents/lg300n1c-g4-360889.pdf\">LG</a>. An offline version of these data is also
+<a href=\"https://d1819pwkf4ncw.cloudfront.net/files/documents/lg300n1c-g4-360889.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG300N1C_G4.pdf\">available</a>.
 </html>"));
     end TSM_200_DC01A;
@@ -932,7 +932,7 @@ The original data of this module are taken from
       final nb = 3);
       annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"https://d1819pwkf4ncw.cloudfront.net/files/documents/lg300n1c-g4-360889.pdf\">LG</a>. An offline version of these data is also
+<a href=\"https://d1819pwkf4ncw.cloudfront.net/files/documents/lg300n1c-g4-360889.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG300N1C_G4.pdf\">available</a>.
 </html>"));
     end TSM_230_PC05;
@@ -941,7 +941,7 @@ The original data of this module are taken from
       extends ModuleData(final moduleName = "NET_NU_S5_E3E",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 30.2, final IscRef = 8.54, final VmpRef = 24.0, final ImpRef = 7.71, final alphaIsc = +0.00053, final alphaVoc = -0.00340, final ns = 48, final nb = 3);
       annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. An offline version of these data is also
+<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NET_NU_S5_E3E.pdf\">available</a>.
 </html>"));
     end NET_NU_S5_E3E;
@@ -950,7 +950,7 @@ The original data of this module are taken from
       extends ModuleData(final moduleName = "NET_NU_S0_E3E",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 30, final IscRef = 8.37, final VmpRef = 23.7, final ImpRef = 7.6, final alphaIsc = +0.00053, final alphaVoc = -0.00350, final ns = 48, final nb = 3);
       annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. An offline version of these data is also
+<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NET_NU_S0_E3E.pdf\">available</a>.
 </html>"));
     end NET_NU_S0_E3E;
@@ -959,7 +959,7 @@ The original data of this module are taken from
       extends ModuleData(final moduleName = "NET_NU_S0_ESZ",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 30, final IscRef = 8.37, final VmpRef = 23.7, final ImpRef = 7.6, final alphaIsc = +0.00053, final alphaVoc = -0.00350, final ns = 48, final nb = 3);
       annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. An offline version of these data is also
+<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NET_NU_S0_ESZ.pdf\">available</a>.
 </html>"));
     end NET_NU_S0_ESZ;
@@ -968,7 +968,7 @@ The original data of this module are taken from
       extends ModuleData(final moduleName = "NET_NU_R5_ESZ",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 29.8, final IscRef = 8.29, final VmpRef = 23.2, final ImpRef = 7.55, final alphaIsc = +0.00053, final alphaVoc = -0.00350, final ns = 48, final nb = 3);
       annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. An offline version of these data is also
+<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NET_NU_S0_ESZ.pdf\">available</a>.
 </html>"));
     end NET_NU_R5_ESZ;
@@ -977,7 +977,7 @@ The original data of this module are taken from
       extends ModuleData(final moduleName = "NET_NU_R0_E3E",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 29.4, final IscRef = 8.37, final VmpRef = 22.4, final ImpRef = 7.6, final alphaIsc = +0.00053, final alphaVoc = -0.00350, final ns = 48, final nb = 3);
       annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. An offline version of these data is also
+<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NET_NU_S0_ESZ.pdf\">available</a>.
 </html>"));
     end NET_NU_R0_E3E;
@@ -986,7 +986,7 @@ The original data of this module are taken from
       extends ModuleData(final moduleName = "LG360N2W_B3",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 48.3, final IscRef = 9.84, final VmpRef = 38.4, final ImpRef = 9.39, final alphaIsc = +0.0004, final alphaVoc = -0.003, final ns = 72, final nb = 3);
       annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"http://www.lg.com/us/business/download/resources/BT00002151/BT00002151_369.pdf\">LG</a>. An offline version of these data is also
+<a href=\"http://www.lg.com/us/business/download/resources/BT00002151/BT00002151_369.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG360N2W_B3.pdf\">available</a>.
 </html>"));
     end LG360N2W_B3;
@@ -995,7 +995,7 @@ The original data of this module are taken from
       extends ModuleData(final moduleName = "LG305N1C_B3",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 40, final IscRef = 10.1, final VmpRef = 32.1, final ImpRef = 9.52, final alphaIsc = +0.0004, final alphaVoc = -0.0029, final ns = 72, final nb = 3);
       annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"http://www.lg.com/us/commercial/documents/lg-solar-spec-LG305N1C-B3-032315.pdf\">LG</a>. An offline version of these data is also
+<a href=\"http://www.lg.com/us/commercial/documents/lg-solar-spec-LG305N1C-B3-032315.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG305N1C_B3.pdf\">available</a>.
 </html>"));
     end LG305N1C_B3;
@@ -1004,7 +1004,7 @@ The original data of this module are taken from
       extends ModuleData(final moduleName = "LG300N1C_G4",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 39.8, final IscRef = 9.9, final VmpRef = 32.2, final ImpRef = 9.34, final alphaIsc = +0.0003, final alphaVoc = -0.0028, final ns = 72, final nb = 3);
       annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"https://d1819pwkf4ncw.cloudfront.net/files/documents/lg300n1c-g4-360889.pdf\">LG</a>. An offline version of these data is also
+<a href=\"https://d1819pwkf4ncw.cloudfront.net/files/documents/lg300n1c-g4-360889.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG300N1C_G4.pdf\">available</a>.
 </html>"));
     end LG300N1C_G4;
