@@ -123,26 +123,33 @@ This library provides models for the modeling and simulation of photo voltaic po
   package ComponentTesting "Testing of single components"
     extends Modelica.Icons.ExamplesPackage;
 
-    model TestZener
+    model DiodeCompare
       extends Modelica.Icons.Example;
-      parameter Modelica.SIunits.Voltage Vmin = -5.25;
+      parameter Modelica.SIunits.Voltage Vmin = -5.30;
       parameter Modelica.SIunits.Voltage Vmax = +0.75;
-      Modelica.Electrical.Analog.Semiconductors.ZDiode zDiode(Bv = moduleData.BvCell, Ibv = moduleData.Ibv, Nbv = moduleData.Nbv, useHeatPort = true, R = 1E8, T = 298.15) annotation(Placement(transformation(extent = {{-10, 10}, {10, 30}})));
-      Modelica.Electrical.Analog.Sources.RampVoltage rampVoltage(duration = 1, startTime = 0, V = Vmax - Vmin, offset = Vmin) annotation(Placement(transformation(extent = {{-10, -30}, {10, -10}})));
-      Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(transformation(extent = {{10, -60}, {30, -40}})));
-      PhotoVoltaics.Components.Diode2 diode(m = 40 / 25.69, useHeatPort = true) annotation(Placement(transformation(extent = {{-10, 40}, {10, 60}})));
+      Modelica.Electrical.Analog.Semiconductors.ZDiode zDiode(                                                                    useHeatPort = true, R = 1E8,
+        Maxexp=0.6292/0.04,
+        Ids=1.26092E-6,
+        T=298.15)                                                                                                                                                          annotation(Placement(transformation(extent={{-10,-30},{10,-10}})));
+      Modelica.Electrical.Analog.Sources.RampVoltage rampVoltage(duration = 1, startTime = 0, V = Vmax - Vmin, offset = Vmin) annotation(Placement(transformation(extent={{-10,-70},{10,-50}})));
+      Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(transformation(extent={{10,-100},{30,-80}})));
+      PhotoVoltaics.Components.Diode2 diode(m = 40 / 25.69, useHeatPort = true) annotation(Placement(transformation(extent={{-10,0},{10,20}})));
       parameter PhotoVoltaics.Records.ModuleData moduleData annotation(Placement(transformation(extent = {{-10, 80}, {10, 100}})));
-      Modelica.Thermal.HeatTransfer.Sources.FixedTemperature fixedTemperature(T = 298.15) annotation(Placement(transformation(extent = {{-80, 30}, {-60, 50}})));
+      Modelica.Thermal.HeatTransfer.Sources.FixedTemperature fixedTemperature(T=318.15)   annotation(Placement(transformation(extent={{-80,-10},{-60,10}})));
+      PhotoVoltaics.Components.Diode2x diodex(m=40/25.69, useHeatPort=true) annotation (Placement(transformation(extent={{-10,30},{10,50}})));
     equation
-      connect(rampVoltage.p, zDiode.p) annotation(Line(points = {{-10, -20}, {-20, -20}, {-20, 20}, {-10, 20}}, color = {0, 0, 255}));
-      connect(zDiode.n, rampVoltage.n) annotation(Line(points = {{10, 20}, {20, 20}, {20, -20}, {10, -20}}, color = {0, 0, 255}));
-      connect(ground.p, rampVoltage.n) annotation(Line(points = {{20, -40}, {20, -20}, {10, -20}}, color = {0, 0, 255}));
-      connect(rampVoltage.p, diode.p) annotation(Line(points = {{-10, -20}, {-20, -20}, {-20, 50}, {-10, 50}}, color = {0, 0, 255}));
-      connect(rampVoltage.n, diode.n) annotation(Line(points = {{10, -20}, {14, -20}, {20, -20}, {20, 50}, {10, 50}}, color = {0, 0, 255}));
-      connect(fixedTemperature.port, diode.heatPort) annotation(Line(points = {{-60, 40}, {0, 40}}, color = {191, 0, 0}));
-      connect(fixedTemperature.port, zDiode.heatPort) annotation(Line(points = {{-60, 40}, {-50, 40}, {-40, 40}, {-40, 10}, {0, 10}}, color = {191, 0, 0}));
+      connect(rampVoltage.p, zDiode.p) annotation(Line(points={{-10,-60},{-20,-60},{-20,-20},{-10,-20}},        color = {0, 0, 255}));
+      connect(zDiode.n, rampVoltage.n) annotation(Line(points={{10,-20},{20,-20},{20,-60},{10,-60}},        color = {0, 0, 255}));
+      connect(ground.p, rampVoltage.n) annotation(Line(points={{20,-80},{20,-60},{10,-60}},        color = {0, 0, 255}));
+      connect(rampVoltage.p, diode.p) annotation(Line(points={{-10,-60},{-20,-60},{-20,10},{-10,10}},          color = {0, 0, 255}));
+      connect(rampVoltage.n, diode.n) annotation(Line(points={{10,-60},{14,-60},{20,-60},{20,10},{10,10}},            color = {0, 0, 255}));
+      connect(fixedTemperature.port, diode.heatPort) annotation(Line(points={{-60,0},{0,0}},        color = {191, 0, 0}));
+      connect(fixedTemperature.port, zDiode.heatPort) annotation(Line(points={{-60,0},{-50,0},{-40,0},{-40,-30},{0,-30}},             color = {191, 0, 0}));
+      connect(diodex.p, diode.p) annotation (Line(points={{-10,40},{-20,40},{-20,10},{-10,10}}, color={0,0,255}));
+      connect(diodex.n, diode.n) annotation (Line(points={{10,40},{20,40},{20,10},{10,10}}, color={0,0,255}));
+      connect(diodex.heatPort, diode.heatPort) annotation (Line(points={{0,30},{-40,30},{-40,0},{0,0}}, color={191,0,0}));
       annotation(Icon(coordinateSystem(preserveAspectRatio = false)), Diagram(coordinateSystem(preserveAspectRatio = false)));
-    end TestZener;
+    end DiodeCompare;
 
     model SinglePhaseVoltageControlledConverter "Test of voltage current controlled converter"
       extends Modelica.Icons.Example;
@@ -437,7 +444,7 @@ on the horizontal axis</li>
            <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
 <pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
   i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
-</html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Sphere), Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}), Text(extent = {{-152, 114}, {148, 74}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid), Line(points = {{-99, 0}, {96, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255})}));
+</html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Sphere), Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}), Text(extent = {{-152, 114}, {148, 74}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid), Line(points = {{-99, 0}, {96, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255})}));
     end Diode;
 
     model Diode2 "Diode with two superimposed exponential functions"
@@ -474,6 +481,67 @@ on the horizontal axis</li>
   i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
 </html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}), Text(extent = {{-152, 114}, {148, 74}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-99, 0}, {96, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255})}));
     end Diode2;
+
+    model Diode2x "Diode with two superimposed exponential functions"
+      extends Modelica.Electrical.Analog.Interfaces.OnePort;
+      extends Modelica.Electrical.Analog.Interfaces.ConditionalHeatPort(T = 298.15);
+      constant Modelica.SIunits.Charge Q = 1.6021766208E-19 "Elementary charge of electron";
+      parameter Real m = 1 "Ideality factor of diode";
+      parameter Modelica.SIunits.Resistance R = 1E8 "Parallel ohmic resistance";
+      parameter Modelica.SIunits.Voltage Bv = 5.1 "Breakthrough voltage";
+      parameter Modelica.SIunits.Current Ibv = 0.7 "Breakthrough knee current";
+      parameter Real Nbv = 0.74 "Breakthrough emission coefficient";
+      parameter Modelica.SIunits.Temperature TRef = 298.15 "Reference temperature" annotation(Dialog(group = "Reference data"));
+      parameter Modelica.SIunits.Voltage VRef(min = Modelica.Constants.small) = 0.6292 "Reference voltage > 0 at TRef" annotation(Dialog(group = "Reference data"));
+      parameter Modelica.SIunits.Current IRef(min = Modelica.Constants.small) = 8.540 "Reference current > 0 at TRef" annotation(Dialog(group = "Reference data"));
+      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaI = +0.00053 "Temperature coefficient of reference current at TRef" annotation(Dialog(group = "Reference data"));
+      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaV = -0.00340 "Temperature coefficient of reference voltage at TRef" annotation(Dialog(group = "Reference data"));
+      final parameter Modelica.SIunits.Voltage VtRef = Modelica.Constants.k * TRef / Q "Reference voltage equivalent of temperature";
+      final parameter Modelica.SIunits.Voltage VBv = -m*Nbv*log((IdsRef*Nbv)/Ibv)*VtRef-Bv "Voltage limit of approximation of breakthrough";
+      final parameter Modelica.SIunits.Current IdsRef = IRef / (exp(VRef / m / VtRef) - 1) "Reference saturation current";
+      final parameter Modelica.SIunits.Voltage VNegLin = -VRef/m/VtRef*(Nbv*m*VtRef)-Bv "Limit of linear range left of breakthrough";
+      Modelica.SIunits.Voltage Vt "Voltage equivalent of temperature (k*T/Q)";
+      Modelica.SIunits.Voltage VRefActual "Reference voltage w.r.t. actual temperature";
+      Modelica.SIunits.Current IRefActual "Reference current w.r.t. actual temperature";
+      Modelica.SIunits.Current Ids "Saturation current";
+      Modelica.SIunits.Voltage VNeg "Limit of linear negative voltage range";
+    equation
+      // Temperature dependent voltage
+      Vt = Modelica.Constants.k * T_heatPort / Q;
+      // Re-calculate reference voltage and current with respect to reference temperature
+      VRefActual = VRef * (1 + alphaV * (T_heatPort - TRef));
+      IRefActual = IRef * (1 + alphaI * (T_heatPort - TRef));
+      // Actual temperature dependent saturation current is determined from reference voltage and current
+      Ids = IRefActual / (exp(VRefActual / m / Vt) - 1);
+      // Voltage limit of negative range
+      VNeg = m*Vt*log(Vt/VtRef);
+      // Current approximation
+      i = smooth(1,(if (v>VRef) then
+                      Ids*(exp(VRef/m/Vt)*(1+(v-VRef)/m/Vt) -1) + v/R
+                    elseif v>VNeg then
+                      Ids*(exp(v/m/Vt)-1) + v/R
+                    elseif v>VBv then
+                      Ids*v/m/VtRef + v/R
+                    elseif v>VNegLin then
+                      -Ibv*exp(-(v+Bv)/(Nbv*m*Vt))+Ids*VBv/m/VtRef + v/R
+                    else
+                      Ids*v/m/Vt -Ibv* exp(VRef/m/VtRef)*(1 - (v+Bv)/(Nbv*m*Vt) - VRef/m/VtRef) +v/R));
+
+    /*
+   i = smooth(1, if (v>Maxexp*Vt) then 
+             Ids*( exp(Maxexp)*(1 + v/Vt - Maxexp)-1) + v/R else 
+          if ( (v+Bv)<-Maxexp*(Nbv*Vt)) then 
+             -Ids -Ibv* exp(Maxexp)*(1 - (v+Bv)/(Nbv*Vt) - Maxexp) +v/R else 
+             Ids*(exp(v/Vt)-1) - Ibv*exp(-(v+Bv)/(Nbv*Vt)) + v/R);
+*/
+
+      LossPower = v * i;
+      annotation(defaultComponentName = "diode", Documentation(info = "<html>
+           <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
+<pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
+  i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
+</html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor={0,0,255},     fillColor={255,170,85},      fillPattern=FillPattern.Solid),   Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}), Text(extent = {{-152, 114}, {148, 74}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor={0,0,255},     fillColor={255,170,85},      fillPattern=FillPattern.Solid),   Line(points = {{-99, 0}, {96, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255})}));
+    end Diode2x;
 
     model SinglePhaseVoltageControlledConverter "Ideal current controlled single phase DC/AC converter"
       extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
@@ -1012,7 +1080,13 @@ Additionally, the frequency of the current source is defined by a real signal in
 
     partial model PartialCell "Partial cell model"
       extends PhotoVoltaics.Interfaces.PartialComponent;
-      Components.Diode2 diode(final useHeatPort = useHeatPort, final T = T, final TRef = moduleData.TRef) annotation(Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Components.Diode2x diode(
+        final useHeatPort=useHeatPort,
+        final T=T,
+        final TRef=moduleData.TRef) annotation (Placement(visible=true, transformation(
+            origin={0,0},
+            extent={{-10,-10},{10,10}},
+            rotation=0)));
       Sources.SignalCurrent signalCurrent(final useHeatPort = useHeatPort, final T = T, final TRef = moduleData.TRef) annotation(Placement(visible = true, transformation(origin = {0, 30}, extent = {{-10, 10}, {10, -10}}, rotation = 180)));
     equation
       connect(p, diode.p) annotation(Line(points = {{-100, 0}, {-60, 0}, {-10, 0}}, color = {0, 0, 255}));
