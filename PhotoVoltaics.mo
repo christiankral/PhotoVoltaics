@@ -513,36 +513,16 @@ on the horizontal axis</li>
     end Diode2;
 
     model Diode2x "Diode with two superimposed exponential functions"
-      extends Modelica.Electrical.Analog.Interfaces.OnePort;
-      extends Modelica.Electrical.Analog.Interfaces.ConditionalHeatPort(T = 298.15);
-      constant Modelica.SIunits.Charge Q = 1.6021766208E-19 "Elementary charge of electron";
-      parameter Real m = 1 "Ideality factor of diode";
-      parameter Modelica.SIunits.Resistance R = 1E8 "Parallel ohmic resistance";
+      extends PhotoVoltaics.Interfaces.PartialDiode;
       parameter Modelica.SIunits.Voltage Bv = 5.1 "Breakthrough voltage";
       parameter Modelica.SIunits.Current Ibv = 0.7 "Breakthrough knee current";
       parameter Real Nbv = 0.74 "Breakthrough emission coefficient";
-      parameter Modelica.SIunits.Temperature TRef = 298.15 "Reference temperature" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.Voltage VRef(min = Modelica.Constants.small) = 0.6292 "Reference voltage > 0 at TRef" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.Current IRef(min = Modelica.Constants.small) = 8.540 "Reference current > 0 at TRef" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaI = +0.00053 "Temperature coefficient of reference current at TRef" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaV = -0.00340 "Temperature coefficient of reference voltage at TRef" annotation(Dialog(group = "Reference data"));
       final parameter Modelica.SIunits.Voltage VtRef = Modelica.Constants.k * TRef / Q "Reference voltage equivalent of temperature";
       final parameter Modelica.SIunits.Voltage VBv = -m*Nbv*log((IdsRef*Nbv)/Ibv)*VtRef-Bv "Voltage limit of approximation of breakthrough";
       final parameter Modelica.SIunits.Current IdsRef = IRef / (exp(VRef / m / VtRef) - 1) "Reference saturation current";
       final parameter Modelica.SIunits.Voltage VNegLin = -VRef/m/VtRef*(Nbv*m*VtRef)-Bv "Limit of linear range left of breakthrough";
-      Modelica.SIunits.Voltage Vt "Voltage equivalent of temperature (k*T/Q)";
-      Modelica.SIunits.Voltage VRefActual "Reference voltage w.r.t. actual temperature";
-      Modelica.SIunits.Current IRefActual "Reference current w.r.t. actual temperature";
-      Modelica.SIunits.Current Ids "Saturation current";
       Modelica.SIunits.Voltage VNeg "Limit of linear negative voltage range";
     equation
-      // Temperature dependent voltage
-      Vt = Modelica.Constants.k * T_heatPort / Q;
-      // Re-calculate reference voltage and current with respect to reference temperature
-      VRefActual = VRef * (1 + alphaV * (T_heatPort - TRef));
-      IRefActual = IRef * (1 + alphaI * (T_heatPort - TRef));
-      // Actual temperature dependent saturation current is determined from reference voltage and current
-      Ids = IRefActual / (exp(VRefActual / m / Vt) - 1);
       // Voltage limit of negative range
       VNeg = m*Vt*log(Vt/VtRef);
       // Current approximation
@@ -557,7 +537,6 @@ on the horizontal axis</li>
                     else
                       Ids*v/m/Vt -Ibv* exp(VRef/m/VtRef)*(1 - (v+Bv)/(Nbv*m*Vt) - VRef/m/VtRef) +v/R));
 
-      LossPower = v * i;
       annotation(defaultComponentName = "diode", Documentation(info = "<html>
            <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
 <pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
@@ -565,39 +544,19 @@ on the horizontal axis</li>
 </html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor={0,0,255},     fillColor={255,170,85},      fillPattern=FillPattern.Solid),   Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}), Text(extent = {{-152, 114}, {148, 74}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor={0,0,255},     fillColor={255,170,85},      fillPattern=FillPattern.Solid),   Line(points = {{-99, 0}, {96, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255})}));
     end Diode2x;
 
-    model Diode2xs "Series connected diodes with two superimposed exponential functions"
-      extends Modelica.Electrical.Analog.Interfaces.OnePort;
-      extends Modelica.Electrical.Analog.Interfaces.ConditionalHeatPort(T = 298.15);
-      constant Modelica.SIunits.Charge Q = 1.6021766208E-19 "Elementary charge of electron";
-      parameter Real m = 1 "Ideality factor of diode";
-      parameter Modelica.SIunits.Resistance R = 1E8 "Parallel single diode ohmic resistance";
-      parameter Modelica.SIunits.Voltage Bv = 5.1 "Breakthrough single diode voltage";
-      parameter Modelica.SIunits.Current Ibv = 0.7 "Breakthrough single diode knee current";
+    model Diode2xs
+      extends PhotoVoltaics.Interfaces.PartialDiode;
+      parameter Modelica.SIunits.Voltage Bv = 5.1 "Breakthrough voltage";
+      parameter Modelica.SIunits.Current Ibv = 0.7 "Breakthrough knee current";
       parameter Real Nbv = 0.74 "Breakthrough emission coefficient";
-      parameter Modelica.SIunits.Temperature TRef = 298.15 "Reference temperature" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.Voltage VRef(min = Modelica.Constants.small) = 0.6292 "Reference single diode voltage > 0 at TRef" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.Current IRef(min = Modelica.Constants.small) = 8.540 "Reference single diode current > 0 at TRef" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaI = +0.00053 "Temperature coefficient of reference current at TRef" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaV = -0.00340 "Temperature coefficient of reference voltage at TRef" annotation(Dialog(group = "Reference data"));
       parameter Integer ns = 1 "Number of series connected cells";
       final parameter Modelica.SIunits.Voltage VtRef = Modelica.Constants.k * TRef / Q "Reference voltage equivalent of temperature";
       final parameter Modelica.SIunits.Voltage VBv = -m*Nbv*log((IdsRef*Nbv)/Ibv)*VtRef-Bv "Voltage limit of approximation of breakthrough";
       final parameter Modelica.SIunits.Current IdsRef = IRef / (exp(VRef / m / VtRef) - 1) "Reference saturation current";
       final parameter Modelica.SIunits.Voltage VNegLin = -VRef/m/VtRef*(Nbv*m*VtRef)-Bv "Limit of linear range left of breakthrough";
-      Modelica.SIunits.Voltage Vt "Voltage equivalent of temperature (k*T/Q)";
-      Modelica.SIunits.Voltage VRefActual "Reference voltage w.r.t. actual temperature";
-      Modelica.SIunits.Current IRefActual "Reference current w.r.t. actual temperature";
-      Modelica.SIunits.Current Ids "Saturation current";
       Modelica.SIunits.Voltage VNeg "Limit of linear negative voltage range";
       Modelica.SIunits.Voltage vCell = v/ns "Cell voltage";
     equation
-      // Temperature dependent voltage
-      Vt = Modelica.Constants.k * T_heatPort / Q;
-      // Re-calculate reference voltage and current with respect to reference temperature
-      VRefActual = VRef * (1 + alphaV * (T_heatPort - TRef));
-      IRefActual = IRef * (1 + alphaI * (T_heatPort - TRef));
-      // Actual temperature dependent saturation current is determined from reference voltage and current
-      Ids = IRefActual / (exp(VRefActual / m / Vt) - 1);
       // Voltage limit of negative range
       VNeg = m*Vt*log(Vt/VtRef);
       // Current approximation
@@ -612,7 +571,6 @@ on the horizontal axis</li>
                     else
                       Ids*v/ns/m/Vt -Ibv* exp(VRef/m/VtRef)*(1 - (v/ns+Bv)/(Nbv*m*Vt) - VRef/m/VtRef) +v/ns/R));
 
-      LossPower = v * i;
       annotation(defaultComponentName = "diode", Documentation(info = "<html>
            <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
 <pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
