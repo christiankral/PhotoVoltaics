@@ -268,7 +268,7 @@ This library provides models for the modeling and simulation of photo voltaic po
       annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
     end SimpleCellVoltageSource;
 
-    model SimpleCellCharacteristic "Voltage current characteristic for different irradiances"
+    model SimpleCellIrradianceCharacteristic "Voltage current characteristic for different irradiances"
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(visible = true, transformation(origin = {0, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       Modelica.Electrical.Analog.Basic.VariableResistor variableResistor annotation(Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {40, 0})));
@@ -294,7 +294,42 @@ on the horizontal axis</li>
 on the horizontal axis</li>
 </ul>
 </html>"), experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.0001));
-    end SimpleCellCharacteristic;
+    end SimpleCellIrradianceCharacteristic;
+
+    model SimpleCellTemperatureCharacteristic "Voltage current characteristic for different irradiances"
+      extends Modelica.Icons.Example;
+      Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(visible = true, transformation(origin = {0, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Modelica.Electrical.Analog.Basic.VariableResistor variableResistor annotation(Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {40, 0})));
+      PhotoVoltaics.Components.Cells.Simple cell(                               moduleData = moduleData,
+        useHeatPort=true,
+        useConstantIrradiance=true)                                                                      annotation(Placement(visible = true, transformation(origin = {0, 0}, extent={{-10,-10},{10,10}},      rotation = -90)));
+      Sources.TriangleAndStep triangleAndStep(T = 1,                    triangleHeight = 8, triangleOffset = -4,
+        stepNumber=7,
+        stepHeight=298.15 + 20,
+        stepOffset=298.15 - 40)                                                                                  annotation(Placement(visible = true, transformation(origin={-70,-2},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Blocks.Power10 power10(k = moduleData.VocCellRef / moduleData.IscRef) annotation(Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+      parameter Records.TSM_200_DC01A moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
+      Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature prescribedTemperature annotation (Placement(transformation(extent={{-40,-10},{-20,10}})));
+    equation
+      connect(variableResistor.n, ground.p) annotation(Line(points = {{40, -10}, {40, -10}, {40, -20}, {0, -20}, {0, -30}}, color = {0, 0, 255}));
+      connect(cell.p, variableResistor.p) annotation(Line(points={{0,10},{0,10},{0,20},{40,20},{40,10}},            color = {0, 0, 255}));
+      connect(ground.p, cell.n) annotation(Line(points={{0,-30},{0,-18},{0,-10},{-1.77636e-15,-10}},          color = {0, 0, 255}));
+      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
+      connect(triangleAndStep.triangle, power10.u) annotation(Line(points={{-59,-8},{-50,-8},{-50,-60},{92,-60},{92,0},{82,0}},              color = {0, 0, 127}));
+      connect(variableResistor.R, power10.y) annotation(Line(points = {{51, 0}, {59, 0}}, color = {0, 0, 127}));
+      connect(prescribedTemperature.port, cell.heatPort) annotation (Line(points={{-20,0},{-10,0}}, color={191,0,0}));
+      connect(triangleAndStep.step, prescribedTemperature.T) annotation (Line(points={{-59,4},{-50,4},{-50,0},{-42,0}}, color={0,0,127}));
+      annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), Documentation(info = "<html>
+<p>This example demonstrates the dependency of the voltage current characteristic of photo voltaic cell 
+as a function of irrandiance. Investigate the following plots:</p>
+<ul>
+<li><code>cell.iGenerating</code> on the vertical axis and <code>cell.v</code> 
+on the horizontal axis</li>
+<li><code>cell.power</code> on the vertical axis and <code>cell.v</code> 
+on the horizontal axis</li>
+</ul>
+</html>"), experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.0001));
+    end SimpleCellTemperatureCharacteristic;
 
     model SimpleModule
       extends Modelica.Icons.Example;
@@ -312,11 +347,13 @@ on the horizontal axis</li>
       annotation (experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
     end SimpleModule;
 
-    model SimpleEqualModule
+    model SimpleSymmetricModule "Simple symmetric module without freewheeling diodes"
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      Components.Modules.SimpleEqual
-                                module(T = 298.15, moduleData = moduleData) annotation(Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
+      Components.Modules.SimpleSymmetric module(T=298.15, moduleData=moduleData) annotation (Placement(visible=true, transformation(
+            origin={0,0},
+            extent={{-10,10},{10,-10}},
+            rotation=-90)));
       Sources.PowerRamp powerRamp(duration = 0.6, height = 8, offset = -4, ref = moduleData.VmpCellRef / moduleData.ImpRef, startTime = 0.2) annotation(Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
       Modelica.Electrical.Analog.Basic.VariableResistor variableResistor annotation(Placement(visible = true, transformation(origin = {40, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 270)));
       parameter Records.TSM_200_DC01A moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
@@ -327,7 +364,7 @@ on the horizontal axis</li>
       connect(ground.p, module.n) annotation(Line(points = {{0, -20}, {0, -10}}, color = {0, 0, 255}));
       /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
       annotation (experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
-    end SimpleEqualModule;
+    end SimpleSymmetricModule;
 
     model SimpleModuleShadow
       extends Modelica.Icons.Example;
@@ -356,7 +393,8 @@ on the horizontal axis</li>
             origin={-40,-30},
             extent={{-10,-10},{10,10}},
             rotation=0)));
-      Components.Modules.Simple module(moduleData = moduleData,T=298.15,useConstantIrradiance=false) annotation(Placement(visible = true, transformation(origin={-40,0},  extent = {{-10, 10}, {10, -10}}, rotation = -90)));
+      Components.Modules.SimpleSymmetric
+                                module(moduleData = moduleData,T=298.15,useConstantIrradiance=false) annotation(Placement(visible = true, transformation(origin={-40,0},  extent = {{-10, 10}, {10, -10}}, rotation = -90)));
       Modelica.Blocks.Sources.Ramp ramp(
         duration=100,
         startTime=100,
@@ -400,7 +438,8 @@ on the horizontal axis</li>
             origin={-40,-30},
             extent={{-10,-10},{10,10}},
             rotation=0)));
-      Components.Modules.Simple module(moduleData = moduleData,T=298.15,useConstantIrradiance=false) annotation(Placement(visible = true, transformation(origin={-40,0},  extent = {{-10, 10}, {10, -10}}, rotation = -90)));
+      Components.Modules.SimpleSymmetric
+                                module(moduleData = moduleData,T=298.15,useConstantIrradiance=false) annotation(Placement(visible = true, transformation(origin={-40,0},  extent = {{-10, 10}, {10, -10}}, rotation = -90)));
       Modelica.Blocks.Sources.Ramp ramp(
         duration=100,
         startTime=100,
@@ -869,9 +908,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
       initial equation
         IphRef = IsdRef * (exp(moduleData.VocCellRef / m / moduleData.VtCellRef) - 1);
         IphRef = IsdRef * (exp(moduleData.VmpCellRef / m / moduleData.VtCellRef) - 1) + moduleData.ImpRef;
-      equation
-        LossPower = diode.LossPower;
-        annotation(defaultComponentName = "cell", Icon(coordinateSystem,   graphics={  Polygon(points = {{-80, 60}, {-60, 80}, {60, 80}, {80, 60}, {80, -60}, {60, -80}, {-60, -80}, {-80, -60}, {-80, 60}}, pattern = LinePattern.None, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid), Line(points = {{-40, 80}, {-40, -80}}, color = {255, 255, 255}), Line(points = {{40, 80}, {40, -80}}, color = {255, 255, 255}), Text(extent = {{-150, -140}, {150, -100}}, textString = "%name", lineColor = {0, 0, 255})}));
+        annotation(defaultComponentName = "cell", Icon(coordinateSystem,   graphics={  Polygon(points = {{-80, 60}, {-60, 80}, {60, 80}, {80, 60}, {80, -60}, {60, -80}, {-60, -80}, {-80, -60}, {-80, 60}}, pattern = LinePattern.None, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid), Line(points = {{-40, 80}, {-40, -80}}, color = {255, 255, 255}), Line(points = {{40, 80}, {40, -80}}, color = {255, 255, 255}), Text(extent={{-150,-150},{150,-110}},      textString = "%name", lineColor = {0, 0, 255})}));
       end Simple;
     end Cells;
 
@@ -881,38 +918,35 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
       model Simple "Simple module consisting of series connected cells"
         extends PhotoVoltaics.Interfaces.PartialComponent;
         parameter Real shadow[moduleData.ns] = zeros(moduleData.ns) "Shadow vecotor based on: 0 = full sun, 1 = full shadow";
-        Cells.Simple cell[moduleData.ns](final useHeatPort = fill(useHeatPort, moduleData.ns), final T = fill(T, moduleData.ns), final constantIrradiance = fill(constantIrradiance, moduleData.ns), final moduleData = fill(moduleData, moduleData.ns), final useConstantIrradiance = fill(false, moduleData.ns)) annotation(Placement(transformation(extent = {{-10, -10}, {10, 10}})));
+        Cells.Simple cell[moduleData.ns](final useHeatPort = fill(useHeatPort, moduleData.ns), final T = fill(T, moduleData.ns), final constantIrradiance = fill(constantIrradiance, moduleData.ns), final moduleData = fill(moduleData, moduleData.ns), final useConstantIrradiance = fill(false, moduleData.ns)) annotation(Placement(transformation(extent={{-10,-10},{10,10}})));
         Modelica.Thermal.HeatTransfer.Components.ThermalCollector collectorModule(final m = moduleData.ns) if useHeatPort annotation(Placement(transformation(extent = {{-10, -60}, {10, -40}})));
         Blocks.GainReplicator gainReplicator(final n = moduleData.ns, final k = PhotoVoltaics.Functions.limit(ones(moduleData.ns) - shadow, zeros(moduleData.ns), ones(moduleData.ns))) annotation(Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {0, 40})));
         Diode diode[moduleData.nb](final useHeatPort = fill(useHeatPort, moduleData.nb), final T = fill(T, moduleData.nb), final m = fill(1, moduleData.nb), final R = fill(1E8, moduleData.nb), final TRef = fill(moduleData.TRef, moduleData.nb), final IRef = fill(moduleData.IscRef, moduleData.nb), final alphaI = fill(0, moduleData.nb), final alphaV = fill(0, moduleData.nb), final VRef = fill(0.5, moduleData.nb)) annotation(Placement(transformation(extent = {{-20, -30}, {-40, -10}})));
         Modelica.Thermal.HeatTransfer.Components.ThermalCollector collectorByPass(final m = moduleData.nb) if useHeatPort annotation(Placement(transformation(extent = {{-40, -60}, {-20, -40}})));
       equation
         assert(mod(moduleData.ns, moduleData.nb) == 0, "Simple: number of bypassed cells cannot be determined unambiguously");
-        LossPower = sum(cell.LossPower);
+        //lossPower = sum(cell.lossPower);
         // Connect cells to module
-        connect(p, cell[1].p) annotation(Line(points = {{-100, 0}, {-100, 0}, {-10, 0}}, color = {0, 0, 255}));
+        connect(p, cell[1].p) annotation(Line(points={{-100,0},{-100,0},{-10,0}},        color = {0, 0, 255}));
         for k in 1:moduleData.ns - 1 loop
           connect(cell[k].n, cell[k + 1].p);
         end for;
         // Inter-module connections
         connect(cell[moduleData.ns].n, n) annotation(Line(points = {{10, 0}, {100, 0}}, color = {0, 0, 255}));
-        connect(cell.heatPort, collectorModule.port_a) annotation(Line(points = {{0, -10}, {0, -40}}, color = {191, 0, 0}));
-        connect(collectorModule.port_b, heatPort) annotation(Line(points = {{0, -60}, {0, -80}, {0, -100}}, color = {191, 0, 0}));
+        connect(cell.heatPort, collectorModule.port_a) annotation(Line(points={{-10,-10},{-10,-18},{-10,-30},{0,-30},{0,-40}},
+                                                                                                      color = {191, 0, 0}));
+        connect(collectorModule.port_b, heatPort) annotation(Line(points={{0,-60},{0,-100},{-100,-100}},    color = {191, 0, 0}));
         connect(irradiance, gainReplicator.u) annotation(Line(points = {{0, 70}, {0, 70}, {0, 52}}, color = {0, 0, 127}));
-        connect(gainReplicator.y, cell.variableIrradiance) annotation(Line(points = {{-2.22045e-15, 29}, {0, 18.5}, {0, 12}}, color = {0, 0, 127}));
+        connect(gainReplicator.y, cell.variableIrradiance) annotation(Line(points={{0,29},{0,12}}, color={0,0,127}));
         // Connect bypass diodes
         for k in 1:moduleData.nb loop
           connect(diode[k].n, cell[(k - 1) * div(moduleData.ns, moduleData.nb) + 1].p) annotation(Line(points = {{-40, -20}, {-50, -20}, {-60, -20}, {-60, 0}, {-10, 0}}, color = {0, 0, 255}));
           connect(diode[k].p, cell[k * div(moduleData.ns, moduleData.nb)].n) annotation(Line(points = {{-20, -20}, {20, -20}, {60, -20}, {60, 0}, {10, 0}}, color = {0, 0, 255}));
         end for;
         connect(collectorByPass.port_a, diode.heatPort) annotation(Line(points = {{-30, -40}, {-30, -30}}, color = {191, 0, 0}));
-        connect(collectorByPass.port_b, heatPort) annotation(Line(points = {{-30, -60}, {-30, -60}, {-30, -96}, {-30, -100}, {0, -100}}, color = {191, 0, 0}));
-        annotation(defaultComponentName = "module", Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor = {0, 0, 0}, fillPattern = FillPattern.Solid, extent={{-76,76},{76,-76}},      fillColor = {85, 85, 255}),
-              Polygon(
-                points={{-76,68},{-68,76},{-8,76},{0,68},{0,8},{-8,0},{-68,0},{-76,8},{-76,68}},
-                lineColor={0,0,0},
-                fillPattern=FillPattern.HorizontalCylinder,
-                fillColor={53,53,159}),                                                                                                                                                                                                        Line(points = {{-80, 0}, {80, 0}}, color = {255, 255, 255}),                                                                  Rectangle(extent = {{-84, 84}, {84, -84}}, lineColor = {0, 0, 0}),
+        connect(collectorByPass.port_b, heatPort) annotation(Line(points={{-30,-60},{-30,-60},{-30,-96},{-30,-100},{-100,-100}},         color = {191, 0, 0}));
+        annotation(defaultComponentName = "module", Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor={0,0,0},     fillPattern=FillPattern.VerticalCylinder,
+                                                                                                                                                                                      extent={{-76,76},{76,-76}},      fillColor={85,85,255}),                                                                                                                                                                                                        Line(points = {{-80, 0}, {80, 0}}, color = {255, 255, 255}),                                                                  Rectangle(extent = {{-84, 84}, {84, -84}}, lineColor = {0, 0, 0}),
                                                                                                                                                                                                         Polygon(points={{-84,76},{-76,84},{-68,76},{-76,68},{-84,76}},            fillColor = {255, 255, 255},
                   fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None),                                                                                                                                                                                                    Line(points={{-24,76},{-24,-76}},      color = {255, 255, 255}),
                                                                                                                                                                                                         Polygon(points={{-8,76},{0,84},{8,76},{0,68},{-8,76}},                    fillColor = {255, 255, 255},
@@ -926,10 +960,10 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
                   fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points={{-8,-76},{0,-68},{8,-76},{0,-84},{-8,-76}},               fillColor = {255, 255, 255},
                   fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None),                                                                                                                                                                                                    Line(points={{0,76},{0,-76}},          color = {255, 255, 255}),
                                                                                                                                                                                                         Line(points={{24,76},{24,-76}},        color = {255, 255, 255}),
-                                                                                                                                                                                                        Line(points={{54,76},{54,-76}},        color = {255, 255, 255})}));
+                                                                                                                                                                                                        Line(points={{54,76},{54,-76}},        color = {255, 255, 255}),                                                                                                                                                        Text(extent={{-150,-150},{150,-110}},      textString = "%name", lineColor = {0, 0, 255})}));
       end Simple;
 
-      model SimpleEqual "Simple module consisting of equal series connected cells"
+      model SimpleSymmetric "Simple module consisting of symmetric series connected cells"
         extends PhotoVoltaics.Interfaces.PartialCell(
           redeclare final Diode2xs diode(
             final m=m,
@@ -946,6 +980,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
             final IRef=IphRef,
             final irradianceRef=moduleData.irradianceRef,
             final alphaRef=moduleData.alphaIsc));
+        parameter Real shadow = 0 "Shadow based on: 0 = full sun, 1 = full shadow";
         final parameter Real m(start = 1, fixed = false) "Ideality factor of diode";
         final parameter Modelica.SIunits.Current IsdRef(start = 1E-6, fixed = false) "Reference saturation current of cell";
         final parameter Modelica.SIunits.Current IphRef = moduleData.IscRef "Reference photo current of cell";
@@ -953,7 +988,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
         IphRef = IsdRef * (exp(moduleData.VocCellRef / m / moduleData.VtCellRef) - 1);
         IphRef = IsdRef * (exp(moduleData.VmpCellRef / m / moduleData.VtCellRef) - 1) + moduleData.ImpRef;
       equation
-        LossPower = diode.LossPower;
+        //LossPower = diode.LossPower;
         annotation (Icon(graphics={                                                                                 Rectangle(lineColor = {0, 0, 0}, fillPattern = FillPattern.Solid, extent={{-76,76},{76,-76}},      fillColor = {85, 85, 255}),                                                                                                                                                                                                        Line(points = {{-80, 0}, {80, 0}}, color = {255, 255, 255}),                                                                  Rectangle(extent = {{-84, 84}, {84, -84}}, lineColor = {0, 0, 0}),
                                                                                                                                                                                                         Polygon(points={{-84,76},{-76,84},{-68,76},{-76,68},{-84,76}},            fillColor = {255, 255, 255},
                   fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None),                                                                                                                                                                                                    Line(points={{-24,76},{-24,-76}},      color = {255, 255, 255}),
@@ -968,8 +1003,8 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
                   fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points={{-8,-76},{0,-68},{8,-76},{0,-84},{-8,-76}},               fillColor = {255, 255, 255},
                   fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None),                                                                                                                                                                                                    Line(points={{0,76},{0,-76}},          color = {255, 255, 255}),
                                                                                                                                                                                                         Line(points={{24,76},{24,-76}},        color = {255, 255, 255}),
-                                                                                                                                                                                                        Line(points={{54,76},{54,-76}},        color = {255, 255, 255})}));
-      end SimpleEqual;
+                                                                                                                                                                                                        Line(points={{54,76},{54,-76}},        color = {255, 255, 255}),                                                                                                                                                        Text(extent={{-150,-150},{150,-110}},      textString = "%name", lineColor = {0, 0, 255})}));
+      end SimpleSymmetric;
     end Modules;
   end Components;
 
@@ -1089,7 +1124,7 @@ represents thus the inverse of
       0 = p.i + n.i;
       i = p.i;
       LossPower = 0;
-      annotation(Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Ellipse(extent = {{-50, 50}, {50, -50}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-90, 0}, {-50, 0}}, color = {0, 0, 255}), Line(points = {{50, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{0, -50}, {0, 50}}, color = {0, 0, 255}), Text(extent = {{-150, -90}, {150, -50}}, textString = "%name", lineColor = {0, 0, 255}), Polygon(points = {{90, 0}, {60, 10}, {60, -10}, {90, 0}}, lineColor = {0, 0, 255}, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Ellipse(extent = {{-50, 50}, {50, -50}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid), Line(points = {{-96, 0}, {-50, 0}}, color = {0, 0, 255}), Line(points = {{50, 0}, {96, 0}}, color = {0, 0, 255}), Line(points = {{0, -50}, {0, 50}}, color = {0, 0, 255})}), Documentation(revisions = "<html>
+      annotation(Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Ellipse(extent = {{-50, 50}, {50, -50}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-90, 0}, {-50, 0}}, color = {0, 0, 255}), Line(points = {{50, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{0, -50}, {0, 50}}, color = {0, 0, 255}), Text(extent = {{-150, -90}, {150, -50}}, textString = "%name", lineColor = {0, 0, 255}), Polygon(points = {{90, 0}, {60, 10}, {60, -10}, {90, 0}}, lineColor = {0, 0, 255}, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Ellipse(extent = {{-50, 50}, {50, -50}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid), Line(points = {{-96, 0}, {-50, 0}}, color = {0, 0, 255}), Line(points = {{50, 0}, {96, 0}}, color = {0, 0, 255}), Line(points = {{0, -50}, {0, 50}}, color = {0, 0, 255})}), Documentation(revisions = "<html>
 <ul>
 <li><i> 1998   </i>
        by Martin Otter<br> initially implemented<br>
@@ -1228,15 +1263,15 @@ Additionally, the frequency of the current source is defined by a real signal in
       connect(diode.p, signalCurrent.n) annotation(Line(points = {{-10, 0}, {-20, 0}, {-20, 30}, {-10, 30}}, color = {0, 0, 255}));
       connect(n, diode.n) annotation(Line(points = {{100, 0}, {100, 0}, {10, 0}}, color = {0, 0, 255}));
       connect(diode.n, signalCurrent.p) annotation(Line(points = {{10, 0}, {20, 0}, {20, 30}, {10, 30}}, color = {0, 0, 255}));
-      connect(diode.heatPort, heatPort) annotation(Line(points = {{0, -10}, {0, -10}, {60, -10}, {60, -80}, {0, -80}, {0, -100}}, color = {191, 0, 0}));
-      connect(signalCurrent.heatPort, heatPort) annotation(Line(points = {{-1.33227e-15, 20}, {60, 20}, {60, -80}, {0, -80}, {0, -100}}, color = {191, 0, 0}));
       connect(signalCurrent.irradiance, irradiance) annotation(Line(points = {{8.88178e-16, 37}, {8.88178e-16, 44}, {0, 44}, {0, 70}}, color = {0, 0, 127}));
+      connect(diode.heatPort, internalHeatPort) annotation (Line(points={{0,-10},{-52,-10},{-100,-10},{-100,-80}}, color={191,0,0}));
+      connect(signalCurrent.heatPort, internalHeatPort) annotation (Line(points={{0,20},{-80,20},{-80,-10},{-100,-10},{-100,-80}}, color={191,0,0}));
       annotation(Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})), Icon(coordinateSystem(preserveAspectRatio = false)));
     end PartialCell;
 
     partial model PartialComponent "Partial cell or module"
       extends Modelica.Electrical.Analog.Interfaces.TwoPin;
-      extends Modelica.Electrical.Analog.Interfaces.ConditionalHeatPort(T = 298.15);
+      extends Modelica.Thermal.HeatTransfer.Interfaces.PartialConditionalHeatPort(T=298.15);
       parameter Boolean useConstantIrradiance = true "If false, signal input is used" annotation(Evaluate = true, HideResult = true, choices(checkBox = true));
       parameter Modelica.SIunits.Irradiance constantIrradiance = 1000 "Constant solar irradiance, if useConstantIrradiance = true" annotation(Dialog(enable = useConstantIrradiance));
       parameter Records.ModuleData moduleData "Simple module parameters" annotation(choicesAllMatching = true, Placement(transformation(extent = {{60, 60}, {80, 80}})));
