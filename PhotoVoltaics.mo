@@ -486,35 +486,16 @@ on the horizontal axis</li>
     extends Modelica.Icons.Package;
 
     model Diode "Diode with one exponential function"
-      extends Modelica.Electrical.Analog.Interfaces.OnePort;
-      extends Modelica.Electrical.Analog.Interfaces.ConditionalHeatPort(T = 298.15);
-      constant Modelica.SIunits.Charge Q = 1.6021766208E-19 "Elementary charge of electron";
-      parameter Real m = 1 "Ideality factor of diode";
-      parameter Modelica.SIunits.Resistance R = 1E8 "Parallel ohmic resistance";
-      parameter Modelica.SIunits.Temperature TRef = 298.15 "Reference temperature" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.Voltage VRef(min = Modelica.Constants.small) = 0.6292 "Reference voltage > 0 at TRef" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.Current IRef(min = Modelica.Constants.small) = 8.540 "Reference current > 0 at TRef" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaI = +0.00053 "Temperature coefficient of reference current at TRef" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaV = -0.00340 "Temperature coefficient of reference voltage at TRef*" annotation(Dialog(group = "Reference data"));
-      Modelica.SIunits.Voltage Vt "Voltage equivalent of temperature (k*T/Q)";
-      Modelica.SIunits.Voltage VRefActual "Reference voltage w.r.t. actual temperature";
-      Modelica.SIunits.Current IRefActual "Reference current w.r.t. actual temperature";
-      Modelica.SIunits.Current Ids "Saturation current";
+      extends PhotoVoltaics.Interfaces.PartialDiode;
     equation
-      // Temperature dependent voltage
-      Vt = Modelica.Constants.k * T_heatPort / Q;
-      // Re-calculate reference voltage and current with respect to reference temperature
-      VRefActual = VRef * (1 + alphaV * (T_heatPort - TRef));
-      IRefActual = IRef * (1 + alphaI * (T_heatPort - TRef));
-      // Actual temperature dependent saturation current is determined from reference voltage and current
-      Ids = IRefActual / (exp(VRefActual / m / Vt) - 1);
       i = Ids * (exp(v / m / Vt) - 1) + v / R;
-      LossPower = v * i;
+
       annotation(defaultComponentName = "diode", Documentation(info = "<html>
            <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
 <pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
   i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
-</html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Sphere), Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}), Text(extent = {{-152, 114}, {148, 74}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid), Line(points = {{-99, 0}, {96, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255})}));
+</html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Sphere),                                                          Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}), Text(extent = {{-152, 114}, {148, 74}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot),
+                                                                                                                                                                                                        Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255})}),                                                                                                                                                                                                        Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));
     end Diode;
 
     model Diode2 "Diode with two superimposed exponential functions"
@@ -597,14 +578,6 @@ on the horizontal axis</li>
                     else
                       Ids*v/m/Vt -Ibv* exp(VRef/m/VtRef)*(1 - (v+Bv)/(Nbv*m*Vt) - VRef/m/VtRef) +v/R));
 
-    /*
-   i = smooth(1, if (v>Maxexp*Vt) then 
-             Ids*( exp(Maxexp)*(1 + v/Vt - Maxexp)-1) + v/R else 
-          if ( (v+Bv)<-Maxexp*(Nbv*Vt)) then 
-             -Ids -Ibv* exp(Maxexp)*(1 - (v+Bv)/(Nbv*Vt) - Maxexp) +v/R else 
-             Ids*(exp(v/Vt)-1) - Ibv*exp(-(v+Bv)/(Nbv*Vt)) + v/R);
-*/
-
       LossPower = v * i;
       annotation(defaultComponentName = "diode", Documentation(info = "<html>
            <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
@@ -659,14 +632,6 @@ on the horizontal axis</li>
                       -Ibv*exp(-(v/ns+Bv)/(Nbv*m*Vt))+Ids*VBv/m/VtRef + v/ns/R
                     else
                       Ids*v/ns/m/Vt -Ibv* exp(VRef/m/VtRef)*(1 - (v/ns+Bv)/(Nbv*m*Vt) - VRef/m/VtRef) +v/ns/R));
-
-    /*
-   i = smooth(1, if (v>Maxexp*Vt) then 
-             Ids*( exp(Maxexp)*(1 + v/Vt - Maxexp)-1) + v/R else 
-          if ( (v+Bv)<-Maxexp*(Nbv*Vt)) then 
-             -Ids -Ibv* exp(Maxexp)*(1 - (v+Bv)/(Nbv*Vt) - Maxexp) +v/R else 
-             Ids*(exp(v/Vt)-1) - Ibv*exp(-(v+Bv)/(Nbv*Vt)) + v/R);
-*/
 
       LossPower = v * i;
       annotation(defaultComponentName = "diode", Documentation(info = "<html>
@@ -1268,6 +1233,38 @@ Additionally, the frequency of the current source is defined by a real signal in
       connect(signalCurrent.heatPort, internalHeatPort) annotation (Line(points={{0,20},{-80,20},{-80,-10},{-100,-10},{-100,-80}}, color={191,0,0}));
       annotation(Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})), Icon(coordinateSystem(preserveAspectRatio = false)));
     end PartialCell;
+
+    partial model PartialDiode "Diode with one exponential function"
+      extends Modelica.Electrical.Analog.Interfaces.OnePort;
+      extends Modelica.Electrical.Analog.Interfaces.ConditionalHeatPort(T = 298.15);
+      constant Modelica.SIunits.Charge Q = 1.6021766208E-19 "Elementary charge of electron";
+      parameter Real m = 1 "Ideality factor of diode";
+      parameter Modelica.SIunits.Resistance R = 1E8 "Parallel ohmic resistance";
+      parameter Modelica.SIunits.Temperature TRef = 298.15 "Reference temperature" annotation(Dialog(group = "Reference data"));
+      parameter Modelica.SIunits.Voltage VRef(min = Modelica.Constants.small) = 0.6292 "Reference voltage > 0 at TRef" annotation(Dialog(group = "Reference data"));
+      parameter Modelica.SIunits.Current IRef(min = Modelica.Constants.small) = 8.540 "Reference current > 0 at TRef" annotation(Dialog(group = "Reference data"));
+      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaI = +0.00053 "Temperature coefficient of reference current at TRef" annotation(Dialog(group = "Reference data"));
+      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaV = -0.00340 "Temperature coefficient of reference voltage at TRef*" annotation(Dialog(group = "Reference data"));
+      Modelica.SIunits.Voltage Vt "Voltage equivalent of temperature (k*T/Q)";
+      Modelica.SIunits.Voltage VRefActual "Reference voltage w.r.t. actual temperature";
+      Modelica.SIunits.Current IRefActual "Reference current w.r.t. actual temperature";
+      Modelica.SIunits.Current Ids "Saturation current";
+    equation
+      // Temperature dependent voltage
+      Vt = Modelica.Constants.k * T_heatPort / Q;
+      // Re-calculate reference voltage and current with respect to reference temperature
+      VRefActual = VRef * (1 + alphaV * (T_heatPort - TRef));
+      IRefActual = IRef * (1 + alphaI * (T_heatPort - TRef));
+      // Actual temperature dependent saturation current is determined from reference voltage and current
+      Ids = IRefActual / (exp(VRefActual / m / Vt) - 1);
+
+      LossPower = v * i;
+      annotation(defaultComponentName = "diode", Documentation(info = "<html>
+           <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
+<pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
+  i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
+</html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={                                                                                                                                                                                                        Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}),                                                            Text(extent = {{-152, 114}, {148, 74}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));
+    end PartialDiode;
 
     partial model PartialComponent "Partial cell or module"
       extends Modelica.Electrical.Analog.Interfaces.TwoPin;
