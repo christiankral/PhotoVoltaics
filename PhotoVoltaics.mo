@@ -304,9 +304,9 @@ on the horizontal axis</li>
         useHeatPort=true,
         useConstantIrradiance=true)                                                                      annotation(Placement(visible = true, transformation(origin = {0, 0}, extent={{-10,-10},{10,10}},      rotation = -90)));
       Sources.TriangleAndStep triangleAndStep(T = 1,                    triangleHeight = 8, triangleOffset = -4,
-        stepNumber=7,
-        stepHeight=298.15 + 20,
-        stepOffset=298.15 - 40)                                                                                  annotation(Placement(visible = true, transformation(origin={-70,-2},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+        stepNumber=5,
+        stepOffset=293.15 - 40,
+        stepHeight=60)                                                                                           annotation(Placement(visible = true, transformation(origin={-70,-2},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       Blocks.Power10 power10(k = moduleData.VocCellRef / moduleData.IscRef) annotation(Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
       parameter Records.TSM_200_DC01A moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
       Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature prescribedTemperature annotation (Placement(transformation(extent={{-40,-10},{-20,10}})));
@@ -317,7 +317,7 @@ on the horizontal axis</li>
       /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
       connect(triangleAndStep.triangle, power10.u) annotation(Line(points={{-59,-8},{-50,-8},{-50,-60},{92,-60},{92,0},{82,0}},              color = {0, 0, 127}));
       connect(variableResistor.R, power10.y) annotation(Line(points = {{51, 0}, {59, 0}}, color = {0, 0, 127}));
-      connect(prescribedTemperature.port, cell.heatPort) annotation (Line(points={{-20,0},{-10,0}}, color={191,0,0}));
+      connect(prescribedTemperature.port, cell.heatPort) annotation (Line(points={{-20,0},{-16,0},{-16,10},{-10,10}}, color={191,0,0}));
       connect(triangleAndStep.step, prescribedTemperature.T) annotation (Line(points={{-59,4},{-50,4},{-50,0},{-42,0}}, color={0,0,127}));
       annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), Documentation(info = "<html>
 <p>This example demonstrates the dependency of the voltage current characteristic of photo voltaic cell 
