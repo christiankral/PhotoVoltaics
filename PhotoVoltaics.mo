@@ -499,33 +499,12 @@ on the horizontal axis</li>
     end Diode;
 
     model Diode2 "Diode with two superimposed exponential functions"
-      extends Modelica.Electrical.Analog.Interfaces.OnePort;
-      extends Modelica.Electrical.Analog.Interfaces.ConditionalHeatPort(T = 298.15);
-      constant Modelica.SIunits.Charge Q = 1.6021766208E-19 "Elementary charge of electron";
-      parameter Real m = 1 "Ideality factor of diode";
-      parameter Modelica.SIunits.Resistance R = 1E8 "Parallel ohmic resistance";
+      extends PhotoVoltaics.Interfaces.PartialDiode;
       parameter Modelica.SIunits.Voltage Bv = 5.1 "Breakthrough voltage";
       parameter Modelica.SIunits.Current Ibv = 0.7 "Breakthrough knee current";
       parameter Real Nbv = 0.74 "Breakthrough emission coefficient";
-      parameter Modelica.SIunits.Temperature TRef = 298.15 "Reference temperature" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.Voltage VRef(min = Modelica.Constants.small) = 0.6292 "Reference voltage > 0 at TRef" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.Current IRef(min = Modelica.Constants.small) = 8.540 "Reference current > 0 at TRef" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaI = +0.00053 "Temperature coefficient of reference current at TRef" annotation(Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaV = -0.00340 "Temperature coefficient of reference voltage at TRef*" annotation(Dialog(group = "Reference data"));
-      Modelica.SIunits.Voltage Vt "Voltage equivalent of temperature (k*T/Q)";
-      Modelica.SIunits.Voltage VRefActual "Reference voltage w.r.t. actual temperature";
-      Modelica.SIunits.Current IRefActual "Reference current w.r.t. actual temperature";
-      Modelica.SIunits.Current Ids "Saturation current";
     equation
-      // Temperature dependent voltage
-      Vt = Modelica.Constants.k * T_heatPort / Q;
-      // Re-calculate reference voltage and current with respect to reference temperature
-      VRefActual = VRef * (1 + alphaV * (T_heatPort - TRef));
-      IRefActual = IRef * (1 + alphaI * (T_heatPort - TRef));
-      // Actual temperature dependent saturation current is determined from reference voltage and current
-      Ids = IRefActual / (exp(VRefActual / m / Vt) - 1);
       i = Ids * (exp(v / m / Vt) - 1) - Ibv * exp(-(v + Bv) / (Nbv * m * Vt)) + v / R;
-      LossPower = v * i;
       annotation(defaultComponentName = "diode", Documentation(info = "<html>
            <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
 <pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
