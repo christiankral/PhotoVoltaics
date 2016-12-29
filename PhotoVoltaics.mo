@@ -526,9 +526,7 @@ on the horizontal axis</li>
       // Voltage limit of negative range
       VNeg = m*Vt*log(Vt/VtRef);
       // Current approximation
-      i = smooth(1,(if (v>VRef) then
-                      Ids*(exp(VRef/m/Vt)*(1+(v-VRef)/m/Vt) -1) + v/R
-                    elseif v>VNeg then
+      i = smooth(1,(if v>VNeg then
                       Ids*(exp(v/m/Vt)-1) + v/R
                     elseif v>VBv then
                       Ids*v/m/VtRef + v/R
@@ -560,9 +558,7 @@ on the horizontal axis</li>
       // Voltage limit of negative range
       VNeg = m*Vt*log(Vt/VtRef);
       // Current approximation
-      i = smooth(1,(if (v/ns>VRef) then
-                      Ids*(exp(VRef/m/Vt)*(1+(v/ns-VRef)/m/Vt) -1) + v/ns/R
-                    elseif v/ns>VNeg then
+      i = smooth(1,(if v/ns>VNeg then
                       Ids*(exp(v/ns/m/Vt)-1) + v/ns/R
                     elseif v/ns>VBv then
                       Ids*v/ns/m/VtRef + v/ns/R
