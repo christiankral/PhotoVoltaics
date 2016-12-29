@@ -618,9 +618,9 @@ on the horizontal axis</li>
 <pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
   i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
 </html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={                                                                                                                                                      Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}),                                                            Text(extent = {{-152, 114}, {148, 74}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot),                                                                                                          Polygon(points={{-10,0},{-70,40},{-70,-40},{-10,0}},        lineColor={0,0,255},     fillColor={255,170,85},      fillPattern=FillPattern.Solid),                                                            Line(points={{-10,40},{-10,-40}},    color = {0, 0, 255}),
-                                                                                                                                                                                                        Polygon(points={{70,0},{10,40},{10,-40},{70,0}},            lineColor={0,0,255},     fillColor={255,170,85},      fillPattern=FillPattern.Solid),                                                            Line(points={{70,40},{70,-40}},      color = {0, 0, 255})}),
-                                                                                                                                                                                                        Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points={{-10,0},{-70,40},{-70,-40},{-10,0}},        lineColor={0,0,255},     fillColor={255,170,85},      fillPattern=FillPattern.Solid),   Line(points = {{-99, 0}, {96, 0}}, color = {0, 0, 255}), Line(points={{-10,40},{-10,-40}},    color = {0, 0, 255}),
-                                                                                                                                                                                                        Polygon(points={{70,0},{10,40},{10,-40},{70,0}},            lineColor={0,0,255},     fillColor={255,170,85},      fillPattern=FillPattern.Solid),                                                            Line(points={{70,40},{70,-40}},      color = {0, 0, 255})}));
+ Polygon(points={{70,0},{10,40},{10,-40},{70,0}},            lineColor={0,0,255},     fillColor={255,170,85},      fillPattern=FillPattern.Solid),                                                            Line(points={{70,40},{70,-40}},      color = {0, 0, 255})}),
+ Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points={{-10,0},{-70,40},{-70,-40},{-10,0}},        lineColor={0,0,255},     fillColor={255,170,85},      fillPattern=FillPattern.Solid),   Line(points = {{-99, 0}, {96, 0}}, color = {0, 0, 255}), Line(points={{-10,40},{-10,-40}},    color = {0, 0, 255}),
+ Polygon(points={{70,0},{10,40},{10,-40},{70,0}},            lineColor={0,0,255},     fillColor={255,170,85},      fillPattern=FillPattern.Solid),                                                            Line(points={{70,40},{70,-40}},      color = {0, 0, 255})}));
     end Diode2xs;
 
     model SinglePhaseVoltageControlledConverter "Ideal current controlled single phase DC/AC converter"
@@ -697,8 +697,8 @@ on the horizontal axis</li>
       connect(powerSensor.currentN, variableCurrentSource.pin_n) annotation (Line(points={{90,50},{90,40},{90,40}}, color={85,170,255}));
       connect(variableCurrentSource.pin_p, ac_n) annotation (Line(points={{90,20},{90,-100},{100,-100}}, color={85,170,255}));
       annotation(defaultComponentName="converter",Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Rectangle(extent = {{-100, 100}, {100, -100}}, lineColor = {0, 0, 127}), Line(points = {{-100, -100}, {100, 100}}, color = {0, 0, 127}, smooth = Smooth.None), Text(extent = {{-100, 40}, {-40, -40}}, lineColor={0,0,255},
-              textString="="),                                                                                                                                                                                                        Text(extent = {{40, 40}, {100, -40}}, lineColor={0,0,255},
-              textString="~"),                                                                                                                                                                                                        Text(extent={{-150,150},{150,110}},      lineColor = {0, 0, 255}, textString = "%name"),
+              textString="="), Text(extent = {{40, 40}, {100, -40}}, lineColor={0,0,255},
+              textString="~"), Text(extent={{-150,150},{150,110}},      lineColor = {0, 0, 255}, textString = "%name"),
             Text(
               extent={{20,-100},{80,-140}},
               lineColor={0,0,255},
@@ -719,7 +719,7 @@ on the horizontal axis</li>
               pattern=LinePattern.Dash,
               fillColor={0,0,255},
               fillPattern=FillPattern.Solid,
-              textString="src")}),                                                                                                                                                                                                        Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})),
+              textString="src")}), Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})),
         Documentation(info="<html>
 <p>This is an ideal DC/DC converter.<p>
 <ul>
@@ -807,8 +807,8 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
       connect(gain.u, complexToReal.re) annotation (Line(points={{-10,52},{-10,76},{-2,76}}, color={0,0,127}));
       connect(gain.y, feedback.u2) annotation (Line(points={{-10,29},{-10,0},{-22,0}}, color={0,0,127}));
       annotation(defaultComponentName="converter",Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Rectangle(extent = {{-100, 100}, {100, -100}}, lineColor = {0, 0, 127}), Line(points = {{-100, -100}, {100, 100}}, color = {0, 0, 127}, smooth = Smooth.None), Text(extent = {{-100, 40}, {-40, -40}}, lineColor={0,0,255},
-              textString="="),                                                                                                                                                                                                        Text(extent = {{40, 40}, {100, -40}}, lineColor={0,0,255},
-              textString="~"),                                                                                                                                                                                                        Text(extent={{-150,150},{150,110}},      lineColor = {0, 0, 255}, textString = "%name"),
+              textString="="), Text(extent = {{40, 40}, {100, -40}}, lineColor={0,0,255},
+              textString="~"), Text(extent={{-150,150},{150,110}},      lineColor = {0, 0, 255}, textString = "%name"),
             Text(
               extent={{20,-100},{80,-140}},
               lineColor={0,0,255},
@@ -829,7 +829,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
               pattern=LinePattern.Dash,
               fillColor={0,0,255},
               fillPattern=FillPattern.Solid,
-              textString="src")}),                                                                                                                                                                                                        Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})),
+              textString="src")}), Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})),
         Documentation(info="<html>
 <p>This is an ideal DC/DC converter.<p>
 <ul>
@@ -891,30 +891,57 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
         connect(collectorByPass.port_a, diode.heatPort) annotation(Line(points = {{-30, -40}, {-30, -30}}, color = {191, 0, 0}));
         connect(collectorByPass.port_b, heatPort) annotation(Line(points = {{-30, -60}, {-30, -60}, {-30, -96}, {-30, -100}, {0, -100}}, color = {191, 0, 0}));
         annotation(defaultComponentName = "module", Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor = {0, 0, 0}, fillPattern = FillPattern.Solid, extent = {{-80, 80}, {80, -80}}, fillColor = {85, 85, 255}), Line(points = {{-40, 80}, {-40, -80}}, color = {255, 255, 255}), Line(points = {{0, 80}, {0, -80}}, color = {255, 255, 255}), Line(points = {{40, 80}, {40, -80}}, color = {255, 255, 255}), Line(points = {{-80, 40}, {80, 40}}, color = {255, 255, 255}), Line(points = {{-80, 0}, {80, 0}}, color = {255, 255, 255}), Line(points = {{-80, -40}, {80, -40}}, color = {255, 255, 255}), Rectangle(extent = {{-84, 84}, {84, -84}}, lineColor = {0, 0, 0}), Polygon(points = {{-44, 40}, {-40, 44}, {-36, 40}, {-40, 36}, {-44, 40}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-4, 40}, {0, 44}, {4, 40}, {0, 36}, {-4, 40}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{36, 40}, {40, 44}, {44, 40}, {40, 36}, {36, 40}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{76, 80}, {80, 84}, {84, 80}, {80, 76}, {76, 80}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{36, 80}, {40, 84}, {44, 80}, {40, 76}, {36, 80}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-4, 80}, {0, 84}, {4, 80}, {0, 76}, {-4, 80}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-44, 80}, {-40, 84}, {-36, 80}, {-40, 76}, {-44, 80}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, 40}, {-80, 44}, {-76, 40}, {-80, 36}, {-84, 40}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, 0}, {-80, 4}, {-76, 0}, {-80, -4}, {-84, 0}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, -40}, {-80, -36}, {-76, -40}, {-80, -44}, {-84, -40}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, -80}, {-80, -76}, {-76, -80}, {-80, -84}, {-84, -80}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-44, -40}, {-40, -36}, {-36, -40}, {-40, -44}, {-44, -40}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-44, 0}, {-40, 4}, {-36, 0}, {-40, -4}, {-44, 0}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-4, 0}, {0, 4}, {4, 0}, {0, -4}, {-4, 0}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{36, 0}, {40, 4}, {44, 0}, {40, -4}, {36, 0}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{76, 0}, {80, 4}, {84, 0}, {80, -4}, {76, 0}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{76, 40}, {80, 44}, {84, 40}, {80, 36}, {76, 40}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{78, -40}, {82, -36}, {86, -40}, {82, -44}, {78, -40}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{36, -40}, {40, -36}, {44, -40}, {40, -44}, {36, -40}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-4, -40}, {0, -36}, {4, -40}, {0, -44}, {-4, -40}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, 80}, {-80, 84}, {-76, 80}, {-80, 76}, {-84, 80}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-44, -78}, {-40, -74}, {-36, -78}, {-40, -82}, {-44, -78}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-4, -80}, {0, -76}, {4, -80}, {0, -84}, {-4, -80}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{36, -80}, {40, -76}, {44, -80}, {40, -84}, {36, -80}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{76, -80}, {80, -76}, {84, -80}, {80, -84}, {76, -80}}, fillColor = {255, 255, 255},
-                  fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Line(points = {{-68, 80}, {-68, -80}}, color = {255, 255, 255}), Line(points = {{-52, 80}, {-52, -80}}, color = {255, 255, 255}), Line(points = {{-12, 80}, {-12, -80}}, color = {255, 255, 255}), Line(points = {{-28, 80}, {-28, -80}}, color = {255, 255, 255}), Line(points = {{28, 80}, {28, -80}}, color = {255, 255, 255}), Line(points = {{12, 80}, {12, -80}}, color = {255, 255, 255}), Line(points = {{68, 80}, {68, -80}}, color = {255, 255, 255}), Line(points = {{52, 80}, {52, -80}}, color = {255, 255, 255})}));
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{76, 80}, {80, 84}, {84, 80}, {80, 76}, {76, 80}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{36, 80}, {40, 84}, {44, 80}, {40, 76}, {36, 80}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-4, 80}, {0, 84}, {4, 80}, {0, 76}, {-4, 80}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-44, 80}, {-40, 84}, {-36, 80}, {-40, 76}, {-44, 80}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, 40}, {-80, 44}, {-76, 40}, {-80, 36}, {-84, 40}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, 0}, {-80, 4}, {-76, 0}, {-80, -4}, {-84, 0}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, -40}, {-80, -36}, {-76, -40}, {-80, -44}, {-84, -40}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, -80}, {-80, -76}, {-76, -80}, {-80, -84}, {-84, -80}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-44, -40}, {-40, -36}, {-36, -40}, {-40, -44}, {-44, -40}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-44, 0}, {-40, 4}, {-36, 0}, {-40, -4}, {-44, 0}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-4, 0}, {0, 4}, {4, 0}, {0, -4}, {-4, 0}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{36, 0}, {40, 4}, {44, 0}, {40, -4}, {36, 0}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{76, 0}, {80, 4}, {84, 0}, {80, -4}, {76, 0}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{76, 40}, {80, 44}, {84, 40}, {80, 36}, {76, 40}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{78, -40}, {82, -36}, {86, -40}, {82, -44}, {78, -40}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{36, -40}, {40, -36}, {44, -40}, {40, -44}, {36, -40}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-4, -40}, {0, -36}, {4, -40}, {0, -44}, {-4, -40}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, 80}, {-80, 84}, {-76, 80}, {-80, 76}, {-84, 80}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points={{-44,-80},{-40,-76},{-36,-80},{-40,-84},{-44,-80}},            fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-4, -80}, {0, -76}, {4, -80}, {0, -84}, {-4, -80}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{36, -80}, {40, -76}, {44, -80}, {40, -84}, {36, -80}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{76, -80}, {80, -76}, {84, -80}, {80, -84}, {76, -80}}, fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Line(points = {{-68, 80}, {-68, -80}}, color = {255, 255, 255}), Line(points = {{-52, 80}, {-52, -80}}, color = {255, 255, 255}), Line(points = {{-12, 80}, {-12, -80}}, color = {255, 255, 255}), Line(points = {{-28, 80}, {-28, -80}}, color = {255, 255, 255}), Line(points = {{28, 80}, {28, -80}}, color = {255, 255, 255}), Line(points = {{12, 80}, {12, -80}}, color = {255, 255, 255}), Line(points = {{68, 80}, {68, -80}}, color = {255, 255, 255}), Line(points = {{52, 80}, {52, -80}}, color = {255, 255, 255})}));
       end Simple;
+
+      model SimpleEqual "Simple module consisting of equal series connected cells"
+        extends PhotoVoltaics.Interfaces.PartialCell(redeclare Diode2xs diode);
+        final parameter Real m(start = 1, fixed = false) "Ideality factor of diode";
+        final parameter Modelica.SIunits.Current IsdRef(start = 1E-6, fixed = false) "Reference saturation current of cell";
+        final parameter Modelica.SIunits.Current IphRef = moduleData.IscRef "Reference photo current of cell";
+      initial equation
+        IphRef = IsdRef * (exp(moduleData.VocCellRef / m / moduleData.VtCellRef) - 1);
+        IphRef = IsdRef * (exp(moduleData.VmpCellRef / m / moduleData.VtCellRef) - 1) + moduleData.ImpRef;
+      equation
+        LossPower = diode.LossPower;
+        annotation (Icon(graphics={                                                                                 Rectangle(lineColor = {0, 0, 0}, fillPattern = FillPattern.Solid, extent={{-76,76},{76,-76}},      fillColor = {85, 85, 255}),                                                                                                                                                                                              Line(points = {{-80, 40}, {80, 40}}, color = {255, 255, 255}), Line(points = {{-80, 0}, {80, 0}}, color = {255, 255, 255}), Line(points = {{-80, -40}, {80, -40}}, color = {255, 255, 255}), Rectangle(extent = {{-84, 84}, {84, -84}}, lineColor = {0, 0, 0}),
+ Polygon(points={{-84,76},{-76,84},{-68,76},{-76,68},{-84,76}},            fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None),                                                                                                                                                                                                    Line(points={{-24,76},{-24,-76}},      color = {255, 255, 255}),
+ Polygon(points={{-8,78},{0,86},{8,78},{0,70},{-8,78}},                    fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points={{68,76},{76,84},{84,76},{76,68},{68,76}},                 fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points={{68,2},{76,10},{84,2},{76,-6},{68,2}},                    fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points={{68,-76},{76,-68},{84,-76},{76,-84},{68,-76}},            fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points={{-84,-76},{-76,-68},{-68,-76},{-76,-84},{-84,-76}},       fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None),                                                                                                                                                                                                    Line(points={{-54,76},{-54,-76}},      color = {255, 255, 255}),
+ Polygon(points={{-84,0},{-76,8},{-68,0},{-76,-8},{-84,0}},                fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points={{-8,0},{0,8},{8,0},{0,-8},{-8,0}},                        fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points={{-8,-76},{0,-68},{8,-76},{0,-84},{-8,-76}},               fillColor = {255, 255, 255},
+                  fillPattern = FillPattern.Solid, pattern = LinePattern.None),                                                                                                                                                                                                    Line(points={{0,76},{0,-76}},          color = {255, 255, 255}),
+ Line(points={{24,76},{24,-76}},        color = {255, 255, 255}),
+ Line(points={{54,76},{54,-76}},        color = {255, 255, 255})}));
+      end SimpleEqual;
     end Modules;
   end Components;
 
@@ -961,8 +988,8 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
               extent={{34,78},{54,58}},
               fillColor={255,0,0},
               fillPattern=FillPattern.Solid,
-              pattern=LinePattern.None),                                                                                                                                                                                                        Polygon(origin={0,-10},    lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}), Line(origin={0,2},     points = {{-80, -80}, {-80, 68}}, color = {192, 192, 192}),
-                                                                                                                                                                                                        Line(origin={10,-78},    points = {{-90, 0}, {68, 0}}, color = {192, 192, 192}),
+              pattern=LinePattern.None), Polygon(origin={0,-10},    lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}), Line(origin={0,2},     points = {{-80, -80}, {-80, 68}}, color = {192, 192, 192}),
+ Line(origin={10,-78},    points = {{-90, 0}, {68, 0}}, color = {192, 192, 192}),
                                                                         Polygon(origin={-10,-78},    lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, points = {{90, 0}, {68, 8}, {68, -8}, {90, 0}})}));
     end MPTracker;
 
@@ -1120,7 +1147,7 @@ stepwise changed variables (<code>step</code>).
     equation
       i = I;
       annotation(Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Line(points = {{-60, 60}, {60, 60}}, color = {85, 170, 255}), Polygon(points = {{60, 60}, {30, 70}, {30, 50}, {60, 60}}, lineColor = {0, 0, 255}, fillColor = {0, 0, 255},
-                fillPattern =                                                                                                                                                                                                        FillPattern.Solid), Line(points = {{0, -50}, {0, 50}}, color = {0, 0, 0}), Ellipse(extent = {{-50, 50}, {50, -50}}, lineColor = {0, 0, 0}), Line(points = {{-90, 0}, {-50, 0}}, color = {0, 0, 0}), Line(points = {{50, 0}, {90, 0}}, color = {0, 0, 0})}), Documentation(info = "<html>
+                fillPattern = FillPattern.Solid), Line(points = {{0, -50}, {0, 50}}, color = {0, 0, 0}), Ellipse(extent = {{-50, 50}, {50, -50}}, lineColor = {0, 0, 0}), Line(points = {{-90, 0}, {-50, 0}}, color = {0, 0, 0}), Line(points = {{50, 0}, {90, 0}}, color = {0, 0, 0})}), Documentation(info = "<html>
 <p>
 This model represents an ideal current source specifying the complex RMS current without root.
 </p>
@@ -1134,7 +1161,7 @@ This model represents an ideal current source specifying the complex RMS current
     equation
       i = I;
       annotation(Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Line(points = {{-60, 60}, {60, 60}}, color = {85, 170, 255}), Polygon(points = {{60, 60}, {30, 70}, {30, 50}, {60, 60}}, lineColor = {0, 0, 255}, fillColor = {0, 0, 255},
-                fillPattern =                                                                                                                                                                                                        FillPattern.Solid), Line(points = {{0, -50}, {0, 50}}, color = {0, 0, 0}), Ellipse(extent = {{-50, 50}, {50, -50}}, lineColor = {0, 0, 0}), Line(points = {{-90, 0}, {-50, 0}}, color = {0, 0, 0}), Line(points = {{50, 0}, {90, 0}}, color = {0, 0, 0})}), Documentation(info = "<html>
+                fillPattern = FillPattern.Solid), Line(points = {{0, -50}, {0, 50}}, color = {0, 0, 0}), Ellipse(extent = {{-50, 50}, {50, -50}}, lineColor = {0, 0, 0}), Line(points = {{-90, 0}, {-50, 0}}, color = {0, 0, 0}), Line(points = {{50, 0}, {90, 0}}, color = {0, 0, 0})}), Documentation(info = "<html>
 
 <p>
 This model describes <i>m</i> variable current sources, with <i>m</i> complex signal inputs,
@@ -1160,7 +1187,7 @@ Additionally, the frequency of the current source is defined by a real signal in
 
     partial model PartialCell "Partial cell model"
       extends PhotoVoltaics.Interfaces.PartialComponent;
-      Components.Diode2x diode(
+      replaceable Components.Diode2x diode(
         final useHeatPort=useHeatPort,
         final T=T,
         final TRef=moduleData.TRef) annotation (Placement(visible=true, transformation(
@@ -1373,5 +1400,5 @@ The original data of this module are taken from
 
   end Records;
   annotation(Icon(coordinateSystem,   graphics={  Ellipse(origin = {36, 75}, fillColor = {255, 255, 127}, fillPattern = FillPattern.Solid, extent = {{0, 1}, {40, -39}}, endAngle = 360), Rectangle(origin = {-60, -9}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -7}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {-60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -5}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
-            fillPattern =                                                                                                                                                                                                        FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Line(origin = {18, 34}, points = {{4, 10}, {-84, -16}}), Line(origin = {-12, 70}, points = {{34, -6}, {-34, 6}}), Line(points = {{36, 30}, {28, 16}}, color = {28, 108, 200})}), uses(Modelica(version = "3.2.2")));
+            fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Line(origin = {18, 34}, points = {{4, 10}, {-84, -16}}), Line(origin = {-12, 70}, points = {{34, -6}, {-34, 6}}), Line(points = {{36, 30}, {28, 16}}, color = {28, 108, 200})}), uses(Modelica(version = "3.2.2")));
 end PhotoVoltaics;
