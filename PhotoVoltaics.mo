@@ -135,48 +135,28 @@ This library provides models for the modeling and simulation of photo voltaic po
         Ids=1.26092E-6,
         T=298.15)                                                                                                                                                          annotation(Placement(transformation(extent={{-40,-40},{-20,-20}})));
       Modelica.Electrical.Analog.Sources.RampVoltage rampVoltage(duration = 1, startTime = 0, V = Vmax - Vmin, offset = Vmin) annotation(Placement(transformation(extent={{-40,-70},{-20,-50}})));
-      Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(transformation(extent={{-20,-92},{0,-72}})));
-      PhotoVoltaics.Components.Diode2 diode(m = 40 / 25.69, useHeatPort = true) annotation(Placement(transformation(extent={{-40,-10},{-20,10}})));
+      PhotoVoltaics.Components.Diode2exp diode(m=40/25.69, useHeatPort=true) annotation (Placement(transformation(extent={{-40,-10},{-20,10}})));
       parameter PhotoVoltaics.Records.ModuleData moduleData annotation(Placement(transformation(extent = {{-10, 80}, {10, 100}})));
       Modelica.Thermal.HeatTransfer.Sources.FixedTemperature fixedTemperature(T=318.15)   annotation(Placement(transformation(extent={{-90,-20},{-70,0}})));
-      PhotoVoltaics.Components.Diode2x diodex(m=40/25.69, useHeatPort=true) annotation (Placement(transformation(extent={{-42,20},{-22,40}})));
-      Components.Diode2xs diodexs(m=40/25.69, useHeatPort=true,
-        ns=ns)                                                  annotation (Placement(transformation(extent={{10,20},{30,40}})));
-      Modelica.Electrical.Analog.Sources.RampVoltage rampVoltages(
-                                                                 duration = 1, startTime = 0,
-        V=ns*(Vmax - Vmin),
-        offset=ns*Vmin)                                                                                                       annotation(Placement(transformation(extent={{10,-70},{30,-50}})));
-      Modelica.Electrical.Analog.Basic.Ground grounds
-                                                     annotation(Placement(transformation(extent={{30,-90},{50,-70}})));
       Modelica.Electrical.Analog.Sources.RampVoltage rampVoltagem(
         duration=1,
         startTime=0,
         V=nsModule*ns*(Vmax - Vmin),
         offset=nsModule*ns*Vmin) annotation (Placement(transformation(extent={{60,-70},{80,-50}})));
       Modelica.Electrical.Analog.Basic.Ground groundm annotation (Placement(transformation(extent={{80,-90},{100,-70}})));
-      Components.Diode2xm diodexm(
+      Components.Diode2Module diodexm(
         m=40/25.69,
         useHeatPort=true,
         nsModule=nsModule,
         npModule=npModule,
-        ns=ns)             annotation (Placement(transformation(extent={{60,20},{80,40}})));
+        ns=ns) annotation (Placement(transformation(extent={{60,20},{80,40}})));
     equation
       connect(rampVoltage.p, zDiode.p) annotation(Line(points={{-40,-60},{-50,-60},{-50,-30},{-40,-30}},        color = {0, 0, 255}));
       connect(zDiode.n, rampVoltage.n) annotation(Line(points={{-20,-30},{-10,-30},{-10,-60},{-20,-60}},    color = {0, 0, 255}));
-      connect(ground.p, rampVoltage.n) annotation(Line(points={{-10,-72},{-10,-60},{-20,-60}},     color = {0, 0, 255}));
       connect(rampVoltage.p, diode.p) annotation(Line(points={{-40,-60},{-50,-60},{-50,0},{-40,0}},            color = {0, 0, 255}));
       connect(rampVoltage.n, diode.n) annotation(Line(points={{-20,-60},{-16,-60},{-10,-60},{-10,0},{-20,0}},         color = {0, 0, 255}));
       connect(fixedTemperature.port, diode.heatPort) annotation(Line(points={{-70,-10},{-30,-10}},  color = {191, 0, 0}));
       connect(fixedTemperature.port, zDiode.heatPort) annotation(Line(points={{-70,-10},{-70,-10},{-60,-10},{-60,-40},{-30,-40}},     color = {191, 0, 0}));
-      connect(diodex.p, diode.p) annotation (Line(points={{-42,30},{-50,30},{-50,0},{-40,0}},   color={0,0,255}));
-      connect(diodex.n, diode.n) annotation (Line(points={{-22,30},{-10,30},{-10,0},{-20,0}},
-                                                                                            color={0,0,255}));
-      connect(diodex.heatPort, diode.heatPort) annotation (Line(points={{-32,20},{-60,20},{-60,-10},{-30,-10}},
-                                                                                                        color={191,0,0}));
-      connect(diodexs.heatPort, fixedTemperature.port) annotation (Line(points={{20,20},{-60,20},{-60,-10},{-70,-10}}, color={191,0,0}));
-      connect(rampVoltages.n, grounds.p) annotation (Line(points={{30,-60},{36,-60},{40,-60},{40,-70}}, color={0,0,255}));
-      connect(grounds.p, diodexs.n) annotation (Line(points={{40,-70},{40,-70},{40,30},{30,30}}, color={0,0,255}));
-      connect(diodexs.p, rampVoltages.p) annotation (Line(points={{10,30},{0,30},{0,-60},{10,-60}},   color={0,0,255}));
       connect(rampVoltagem.n, groundm.p) annotation (Line(points={{80,-60},{90,-60},{90,-70}}, color={0,0,255}));
       connect(diodexm.p, rampVoltagem.p) annotation (Line(points={{60,30},{50,30},{50,-60},{60,-60}}, color={0,0,255}));
       connect(diodexm.heatPort, fixedTemperature.port) annotation (Line(points={{70,20},{70,20},{-48,20},{-60,20},{-60,-10},{-70,-10}}, color={191,0,0}));
@@ -518,85 +498,7 @@ on the horizontal axis</li>
                                                                                                                                                                                                         Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255})}),                                                                                                                                                                                                        Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));
     end Diode;
 
-    model Diode2 "Diode with two superimposed exponential functions"
-      extends PhotoVoltaics.Interfaces.PartialDiode;
-      parameter Modelica.SIunits.Voltage Bv = 5.1 "Breakthrough voltage";
-      parameter Modelica.SIunits.Current Ibv = 0.7 "Breakthrough knee current";
-      parameter Real Nbv = 0.74 "Breakthrough emission coefficient";
-    equation
-      i = Ids * (exp(v / m / Vt) - 1) - Ibv * exp(-(v + Bv) / (Nbv * m * Vt)) + v / R;
-      annotation(defaultComponentName = "diode", Documentation(info = "<html>
-           <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
-<pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
-  i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
-</html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}),                                                                                         Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));
-    end Diode2;
-
-    model Diode2x "Diode with two superimposed exponential functions"
-      extends PhotoVoltaics.Interfaces.PartialDiode;
-      parameter Modelica.SIunits.Voltage Bv = 5.1 "Breakthrough voltage";
-      parameter Modelica.SIunits.Current Ibv = 0.7 "Breakthrough knee current";
-      parameter Real Nbv = 0.74 "Breakthrough emission coefficient";
-      final parameter Modelica.SIunits.Voltage VtRef = Modelica.Constants.k * TRef / Q "Reference voltage equivalent of temperature";
-      final parameter Modelica.SIunits.Voltage VBv = -m*Nbv*log((IdsRef*Nbv)/Ibv)*VtRef-Bv "Voltage limit of approximation of breakthrough";
-      final parameter Modelica.SIunits.Current IdsRef = IRef / (exp(VRef / m / VtRef) - 1) "Reference saturation current";
-      final parameter Modelica.SIunits.Voltage VNegLin = -VRef/m/VtRef*(Nbv*m*VtRef)-Bv "Limit of linear range left of breakthrough";
-      Modelica.SIunits.Voltage VNeg "Limit of linear negative voltage range";
-    equation
-      // Voltage limit of negative range
-      VNeg = m*Vt*log(Vt/VtRef);
-      // Current approximation
-      i = smooth(1,(if v>VNeg then
-                      Ids*(exp(v/m/Vt)-1) + v/R
-                    elseif v>VBv then
-                      Ids*v/m/VtRef + v/R
-                    elseif v>VNegLin then
-                      -Ibv*exp(-(v+Bv)/(Nbv*m*Vt))+Ids*VBv/m/VtRef + v/R
-                    else
-                      Ids*v/m/Vt -Ibv* exp(VRef/m/VtRef)*(1 - (v+Bv)/(Nbv*m*Vt) - VRef/m/VtRef) +v/R));
-
-      annotation(defaultComponentName = "diode", Documentation(info = "<html>
-           <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
-<pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
-  i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
-</html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor={0,0,255},     fillColor={255,170,85},      fillPattern=FillPattern.Solid),   Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}),                                                                                         Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));
-    end Diode2x;
-
-    model Diode2xs
-      extends PhotoVoltaics.Interfaces.PartialDiode;
-      parameter Modelica.SIunits.Voltage Bv = 5.1 "Breakthrough voltage";
-      parameter Modelica.SIunits.Current Ibv = 0.7 "Breakthrough knee current";
-      parameter Real Nbv = 0.74 "Breakthrough emission coefficient";
-      parameter Integer ns = 1 "Number of series connected cells";
-      final parameter Modelica.SIunits.Voltage VtRef = Modelica.Constants.k * TRef / Q "Reference voltage equivalent of temperature";
-      final parameter Modelica.SIunits.Voltage VBv = -m*Nbv*log((IdsRef*Nbv)/Ibv)*VtRef-Bv "Voltage limit of approximation of breakthrough";
-      final parameter Modelica.SIunits.Current IdsRef = IRef / (exp(VRef / m / VtRef) - 1) "Reference saturation current";
-      final parameter Modelica.SIunits.Voltage VNegLin = -VRef/m/VtRef*(Nbv*m*VtRef)-Bv "Limit of linear range left of breakthrough";
-      Modelica.SIunits.Voltage VNeg "Limit of linear negative voltage range";
-      Modelica.SIunits.Voltage vCell = v/ns "Cell voltage";
-    equation
-      // Voltage limit of negative range
-      VNeg = m*Vt*log(Vt/VtRef);
-      // Current approximation
-      i = smooth(1,(if v/ns>VNeg then
-                      Ids*(exp(v/ns/m/Vt)-1) + v/ns/R
-                    elseif v/ns>VBv then
-                      Ids*v/ns/m/VtRef + v/ns/R
-                    elseif v/ns>VNegLin then
-                      -Ibv*exp(-(v/ns+Bv)/(Nbv*m*Vt))+Ids*VBv/m/VtRef + v/ns/R
-                    else
-                      Ids*v/ns/m/Vt -Ibv* exp(VRef/m/VtRef)*(1 - (v/ns+Bv)/(Nbv*m*Vt) - VRef/m/VtRef) +v/ns/R));
-
-      annotation(defaultComponentName = "diode", Documentation(info = "<html>
-           <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
-<pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
-  i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
-</html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={                                                                                                                                                      Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}),                                                                                                                                                    Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot),                                                                                                          Polygon(points={{-10,0},{-70,40},{-70,-40},{-10,0}},        lineColor={0,0,255},     fillColor={255,170,85},      fillPattern=FillPattern.Solid),                                                            Line(points={{-10,40},{-10,-40}},    color = {0, 0, 255}),
-                                                                                                                                                                                                        Polygon(points={{70,0},{10,40},{10,-40},{70,0}},            lineColor={0,0,255},     fillColor={255,170,85},      fillPattern=FillPattern.Solid),                                                            Line(points={{70,40},{70,-40}},      color = {0, 0, 255})}),
-                                                                                                                                                                                                        Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));
-    end Diode2xs;
-
-    model Diode2xm
+    model Diode2Module
       extends PhotoVoltaics.Interfaces.PartialDiode;
       parameter Modelica.SIunits.Voltage Bv = 5.1 "Breakthrough voltage";
       parameter Modelica.SIunits.Current Ibv = 0.7 "Breakthrough knee current";
@@ -630,15 +532,29 @@ on the horizontal axis</li>
 <pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
   i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
 </html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={                                                                                                                                                                                                        Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot),
-                                                                                                                                                                                                        Polygon(points={{-8,46},{-68,86},{-68,6},{-8,46}},          lineColor={0,0,255},     fillColor={255,170,85},      fillPattern=FillPattern.Solid),                                                            Line(points={{-8,86},{-8,6}},        color = {0, 0, 255}),
-                                                                                                                                                                                                        Polygon(points={{72,46},{12,86},{12,6},{72,46}},            lineColor={0,0,255},     fillColor={255,170,85},      fillPattern=FillPattern.Solid),                                                            Line(points={{72,86},{72,6}},        color = {0, 0, 255}),
-                                                                                                                                                                                                        Polygon(points={{-8,-46},{-68,-6},{-68,-86},{-8,-46}},      lineColor={0,0,255},     fillColor={255,170,85},      fillPattern=FillPattern.Solid),                                                            Line(points={{-8,-6},{-8,-86}},      color = {0, 0, 255}),
-                                                                                                                                                                                                        Polygon(points={{72,-46},{12,-6},{12,-86},{72,-46}},        lineColor={0,0,255},     fillColor={255,170,85},      fillPattern=FillPattern.Solid),                                                            Line(points={{72,-6},{72,-86}},      color = {0, 0, 255}),
+                                                                                                                                                                                                        Polygon(points={{-8,46},{-68,86},{-68,6},{-8,46}},          lineColor={0,0,255},     fillColor={255,255,170},     fillPattern=FillPattern.Solid),                                                            Line(points={{-8,86},{-8,6}},        color = {0, 0, 255}),
+                                                                                                                                                                                                        Polygon(points={{72,46},{12,86},{12,6},{72,46}},            lineColor={0,0,255},     fillColor={255,255,170},     fillPattern=FillPattern.Solid),                                                            Line(points={{72,86},{72,6}},        color = {0, 0, 255}),
+                                                                                                                                                                                                        Polygon(points={{-8,-46},{-68,-6},{-68,-86},{-8,-46}},      lineColor={0,0,255},     fillColor={255,255,170},     fillPattern=FillPattern.Solid),                                                            Line(points={{-8,-6},{-8,-86}},      color = {0, 0, 255}),
+                                                                                                                                                                                                        Polygon(points={{72,-46},{12,-6},{12,-86},{72,-46}},        lineColor={0,0,255},     fillColor={255,255,170},     fillPattern=FillPattern.Solid),                                                            Line(points={{72,-6},{72,-86}},      color = {0, 0, 255}),
             Line(points={{100,46},{100,-46}}, color={28,108,200}),
             Line(points={{-100,46},{-100,-46}}, color={28,108,200}),                                                                                                                                                                                                        Line(points={{-100,46},{100,46}},  color = {0, 0, 255}),
                                                                                                                                                                                                         Line(points={{-100,-46},{100,-46}},color = {0, 0, 255})}),
                                                                                                                                                                                                         Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));
-    end Diode2xm;
+    end Diode2Module;
+
+    model Diode2exp "Diode with two superimposed exponential functions"
+      extends PhotoVoltaics.Interfaces.PartialDiode;
+      parameter Modelica.SIunits.Voltage Bv = 5.1 "Breakthrough voltage";
+      parameter Modelica.SIunits.Current Ibv = 0.7 "Breakthrough knee current";
+      parameter Real Nbv = 0.74 "Breakthrough emission coefficient";
+    equation
+      i = Ids * (exp(v / m / Vt) - 1) - Ibv * exp(-(v + Bv) / (Nbv * m * Vt)) + v / R;
+      annotation(defaultComponentName = "diode", Documentation(info = "<html>
+           <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
+<pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
+  i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
+</html>"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}),                                                                                         Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));
+    end Diode2exp;
 
     model SinglePhaseVoltageControlledConverter "Ideal current controlled single phase DC/AC converter"
       extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
@@ -862,7 +778,10 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
       extends Modelica.Icons.Package;
 
       model Simple
-        extends PhotoVoltaics.Interfaces.PartialCell(signalCurrent(final irradianceRef = moduleData.irradianceRef, final alphaRef = moduleData.alphaIsc, final IRef = IphRef), diode(final Bv = moduleData.BvCell, final Ibv = moduleData.Ibv, final Nbv = moduleData.Nbv, final VRef = moduleData.VocCellRef, final IRef = moduleData.IscRef, final alphaI = moduleData.alphaIsc, final alphaV = moduleData.alphaVoc, final R = 1E8, final m = m));
+        extends PhotoVoltaics.Interfaces.PartialCell(signalCurrent(final irradianceRef = moduleData.irradianceRef, final alphaRef = moduleData.alphaIsc, final IRef = IphRef), diode(final Bv = moduleData.BvCell, final Ibv = moduleData.Ibv, final Nbv = moduleData.Nbv, final VRef = moduleData.VocCellRef, final IRef = moduleData.IscRef, final alphaI = moduleData.alphaIsc, final alphaV = moduleData.alphaVoc, final R = 1E8, final m = m,
+            final ns=1,
+            final nsModule=1,
+            final npModule=1));
         final parameter Real m(start = 1, fixed = false) "Ideality factor of diode";
         final parameter Modelica.SIunits.Current IsdRef(start = 1E-6, fixed = false) "Reference saturation current of cell";
         final parameter Modelica.SIunits.Current IphRef = moduleData.IscRef "Reference photo current of cell";
@@ -882,7 +801,16 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
         Cells.Simple cell[moduleData.ns](final useHeatPort = fill(useHeatPort, moduleData.ns), final T = fill(T, moduleData.ns), final constantIrradiance = fill(constantIrradiance, moduleData.ns), final moduleData = fill(moduleData, moduleData.ns), final useConstantIrradiance = fill(false, moduleData.ns)) annotation(Placement(transformation(extent={{-10,-10},{10,10}})));
         Modelica.Thermal.HeatTransfer.Components.ThermalCollector collectorModule(final m = moduleData.ns) if useHeatPort annotation(Placement(transformation(extent = {{-10, -60}, {10, -40}})));
         Blocks.GainReplicator gainReplicator(final n = moduleData.ns, final k = PhotoVoltaics.Functions.limit(ones(moduleData.ns) - shadow, zeros(moduleData.ns), ones(moduleData.ns))) annotation(Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {0, 40})));
-        Diode diode[moduleData.nb](final useHeatPort = fill(useHeatPort, moduleData.nb), final T = fill(T, moduleData.nb), final m = fill(1, moduleData.nb), final R = fill(1E8, moduleData.nb), final TRef = fill(moduleData.TRef, moduleData.nb), final IRef = fill(moduleData.IscRef, moduleData.nb), final alphaI = fill(0, moduleData.nb), final alphaV = fill(0, moduleData.nb), final VRef = fill(0.5, moduleData.nb)) annotation(Placement(transformation(extent = {{-20, -30}, {-40, -10}})));
+        Diode diode[moduleData.nb](
+          final useHeatPort=fill(useHeatPort, moduleData.nb),
+          final T=fill(T, moduleData.nb),
+          final m=fill(1, moduleData.nb),
+          final R=fill(1E8, moduleData.nb),
+          final TRef=fill(moduleData.TRef, moduleData.nb),
+          final IRef=fill(moduleData.IscRef, moduleData.nb),
+          final alphaI=fill(0, moduleData.nb),
+          final alphaV=fill(0, moduleData.nb),
+          final VRef=fill(0.5, moduleData.nb)) annotation (Placement(transformation(extent={{-20,-30},{-40,-10}})));
         Modelica.Thermal.HeatTransfer.Components.ThermalCollector collectorByPass(final m = moduleData.nb) if useHeatPort annotation(Placement(transformation(extent = {{-40, -60}, {-20, -40}})));
       equation
         assert(mod(moduleData.ns, moduleData.nb) == 0, "Simple: number of bypassed cells cannot be determined unambiguously");
@@ -926,7 +854,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
 
       model SimpleSymmetric "Simple module consisting of symmetric series connected cells"
         extends PhotoVoltaics.Interfaces.PartialCell(
-          redeclare final Diode2xs diode(
+          diode(
             final m=m,
             final R=1E8,
             final Bv=moduleData.BvCell,
@@ -936,7 +864,9 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
             final alphaI=moduleData.alphaIsc,
             final alphaV=moduleData.alphaVoc,
             final ns=moduleData.ns,
-            final VRef=moduleData.VocCellRef),
+            final VRef=moduleData.VocCellRef,
+            final nsModule=1,
+            final npModule=1),
           signalCurrent(
             final IRef=IphRef,
             final irradianceRef=moduleData.irradianceRef,
@@ -1211,7 +1141,8 @@ Additionally, the frequency of the current source is defined by a real signal in
 
     partial model PartialCell "Partial cell model"
       extends PhotoVoltaics.Interfaces.PartialComponent;
-      replaceable Components.Diode2x diode(
+      Components.Diode2Module
+                         diode(
         final useHeatPort=useHeatPort,
         final T=T,
         final TRef=moduleData.TRef) annotation (Placement(visible=true, transformation(
