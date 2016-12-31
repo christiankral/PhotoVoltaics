@@ -105,11 +105,21 @@ Ramazan Kavlak<br>
 
     class ReleaseNotes "Release Notes"
       extends Modelica.Icons.ReleaseNotes;
-      annotation(preferredView = "info", Documentation(info = "<html>
+      annotation(preferredView = "info", Documentation(info="<html>
 
-<h5>Version X.X.X, 2016-XX-X</h5>
+<h5>Version 0.1.0, 2016-12-31</h5>
 <ul>
-<li>Initial version</li>
+<li>First release version containing</li>
+<ul>
+<li>Simple cell model</li>
+<li>Simple module model</li>
+<li>Simple symmetric module model</li>
+<li>Simple plant model</li>
+<li>Converters</li>
+<li>Sampling maximum power controller</li>
+<li>Examples</li>
+<li>Component testing models</li>
+</ul>
 </ul>
 </html>"));
     end ReleaseNotes;
@@ -123,13 +133,13 @@ This library provides models for the modeling and simulation of photo voltaic po
   package ComponentTesting "Testing of single components"
     extends Modelica.Icons.ExamplesPackage;
 
-    model DiodeCompare
+    model DiodeCompare "Compare different diode models"
       extends Modelica.Icons.Example;
-      parameter Integer ns = 10;
-      parameter Integer nsModule = 2;
-      parameter Integer npModule = 2;
-      parameter Modelica.SIunits.Voltage Vmin = -5.30;
-      parameter Modelica.SIunits.Voltage Vmax = +0.75;
+      parameter Integer ns = 10 "Number of series connceted cells";
+      parameter Integer nsModule = 2 "Number of series connected modules";
+      parameter Integer npModule = 2 "Number of parallel connected modules";
+      parameter Modelica.SIunits.Voltage Vmin = -5.30 "Minimum voltage range";
+      parameter Modelica.SIunits.Voltage Vmax = +0.75 "Maximum voltage range";
       Modelica.Electrical.Analog.Semiconductors.ZDiode zDiode(                                                                    useHeatPort = true, R = 1E8,
         Maxexp=0.6292/0.04,
         Ids=1.26092E-6,
@@ -508,7 +518,7 @@ on the horizontal axis</li>
         height=800,
         offset=200)    annotation (Placement(transformation(extent={{-80,-10},{-60,10}})));
       Components.SinglePhaseVoltageControlledConverter converter annotation (Placement(transformation(extent={{20,-10},{40,10}})));
-      Components.Blocks.MPTracker mpTracker(VmpRef=moduleData.VmpRef, ImpRef=moduleData.ImpRef) annotation (Placement(transformation(extent={{0,-60},{20,-40}})));
+      Components.Blocks.MPTrackerSample mpTracker(VmpRef=moduleData.VmpRef, ImpRef=moduleData.ImpRef) annotation (Placement(transformation(extent={{0,-60},{20,-40}})));
       Modelica.Electrical.QuasiStationary.SinglePhase.Basic.Ground groundAC annotation (Placement(transformation(extent={{70,-40},{90,-20}})));
       Modelica.Electrical.QuasiStationary.SinglePhase.Sources.VoltageSource voltageSource(
         f=50,
@@ -558,7 +568,7 @@ on the horizontal axis</li>
         height=800,
         offset=200)    annotation (Placement(transformation(extent={{-80,-10},{-60,10}})));
       Components.MultiPhaseVoltageControlledConverter  converter annotation (Placement(transformation(extent={{20,-10},{40,10}})));
-      Components.Blocks.MPTracker mpTracker(VmpRef=moduleData.VmpRef, ImpRef=moduleData.ImpRef) annotation (Placement(transformation(extent={{0,-60},{20,-40}})));
+      Components.Blocks.MPTrackerSample mpTracker(VmpRef=moduleData.VmpRef, ImpRef=moduleData.ImpRef) annotation (Placement(transformation(extent={{0,-60},{20,-40}})));
       Modelica.Electrical.QuasiStationary.SinglePhase.Basic.Ground groundAC annotation (Placement(transformation(extent={{70,-70},{90,-50}})));
       Modelica.Electrical.QuasiStationary.MultiPhase.Sources.VoltageSource  voltageSource(
         f=50, V=fill(400/sqrt(3), 3))
@@ -1084,11 +1094,10 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
     package Blocks "Blocks"
       extends Modelica.Icons.Package;
 
-      block MPTracker "Maximum power tracker"
+      block MPTrackerSample "Sampling maximum power tracker"
         extends Modelica.Blocks.Icons.Block;
         parameter Modelica.SIunits.Time startTime = 0 "Start time";
         parameter Modelica.SIunits.Time samplePeriod = 1 "Sample period";
-        parameter Modelica.SIunits.Time checkPeriod = 0.1 "Period of checking derivative of power";
         parameter Modelica.SIunits.Voltage VmpRef "Reference maximum power power of plant";
         parameter Modelica.SIunits.Current ImpRef "Reference maximum power current of plant";
         parameter Integer n = 100 "Number of voltage and power discretizations";
@@ -1126,7 +1135,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
                 pattern=LinePattern.None),                                                                                                                                                                                                        Polygon(origin={0,-10},    lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}), Line(origin={0,2},     points = {{-80, -80}, {-80, 68}}, color = {192, 192, 192}),
                                                                                                                                                                                                         Line(origin={10,-78},    points = {{-90, 0}, {68, 0}}, color = {192, 192, 192}),
                                                                           Polygon(origin={-10,-78},    lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, points = {{90, 0}, {68, 8}, {68, -8}, {90, 0}})}));
-      end MPTracker;
+      end MPTrackerSample;
 
       block GainReplicator "Output the product of a gain value with the input signal"
         parameter Integer n "Number of outputs";
@@ -1391,7 +1400,7 @@ Additionally, the frequency of the current source is defined by a real signal in
       extends Modelica.Thermal.HeatTransfer.Interfaces.PartialConditionalHeatPort(T=298.15);
       parameter Boolean useConstantIrradiance = true "If false, signal input is used" annotation(Evaluate = true, HideResult = true, choices(checkBox = true));
       parameter Modelica.SIunits.Irradiance constantIrradiance = 1000 "Constant solar irradiance, if useConstantIrradiance = true" annotation(Dialog(enable = useConstantIrradiance));
-      parameter Records.ModuleData moduleData "Simple module parameters" annotation(choicesAllMatching = true, Placement(transformation(extent = {{60, 60}, {80, 80}})));
+      parameter Records.ModuleData moduleData "Module parameters" annotation(choicesAllMatching = true, Placement(transformation(extent = {{60, 60}, {80, 80}})));
       Modelica.SIunits.Current i = p.i "Current";
       Modelica.SIunits.Current iGenerating = -i "Negative current (generating)";
       Modelica.SIunits.Power power = v * i "Power";
@@ -1579,6 +1588,11 @@ The original data of this module are taken from
     end LG300N1C_G4;
 
   end Records;
-  annotation(Icon(coordinateSystem,   graphics={  Ellipse(origin = {36, 75}, fillColor = {255, 255, 127}, fillPattern = FillPattern.Solid, extent = {{0, 1}, {40, -39}}, endAngle = 360), Rectangle(origin = {-60, -9}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -7}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {-60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -5}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
-            fillPattern =                                                                                                                                                                                                        FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Line(origin = {18, 34}, points = {{4, 10}, {-84, -16}}), Line(origin = {-12, 70}, points = {{34, -6}, {-34, 6}}), Line(points = {{36, 30}, {28, 16}}, color = {28, 108, 200})}), uses(Modelica(version = "3.2.2")));
+  annotation (
+    version="0.1.0",
+    versionBuild=1,
+    versionDate="2016-12-31",
+    uses(Modelica(version = "3.2.2")),
+    Icon(coordinateSystem,   graphics={  Ellipse(origin = {36, 75}, fillColor = {255, 255, 127}, fillPattern = FillPattern.Solid, extent = {{0, 1}, {40, -39}}, endAngle = 360), Rectangle(origin = {-60, -9}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -7}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {-60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -5}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
+            fillPattern =                                                                                                                                                                                                        FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Line(origin = {18, 34}, points = {{4, 10}, {-84, -16}}), Line(origin = {-12, 70}, points = {{34, -6}, {-34, 6}}), Line(points = {{36, 30}, {28, 16}}, color = {28, 108, 200})}));
 end PhotoVoltaics;
