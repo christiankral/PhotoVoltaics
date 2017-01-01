@@ -240,6 +240,18 @@ This library provides models for the modeling and simulation of photo voltaic po
       connect(converter.ac, voltageSource.plug_p) annotation (Line(points={{10,20},{16,20},{20,20},{40,20},{40,10}}, color={85,170,255}));
       annotation (experiment(StopTime=180));
     end MultiPhaseVoltageControlledConverter;
+
+    model TestIrradiance "Testing irradiance model"
+      extends Modelica.Icons.Example;
+      PhotoVoltaics.Sources.Irradiance.Irradiance irradiance(startMonth=12, startDay=30) annotation (Placement(visible=true, transformation(
+            origin={0,0},
+            extent={{-10,-10},{10,10}},
+            rotation=0)));
+      annotation(experiment(
+          StopTime=3.1536e+07,
+          Interval=60,
+          Tolerance=1e-06));
+    end TestIrradiance;
   end ComponentTesting;
 
   package Examples "Examples"
@@ -1184,10 +1196,143 @@ represents thus the inverse of
     algorithm
       y := if u > uMax then uMax else if u < uMin then uMin else u;
     end limit;
+
+    function rad
+      input Real deg "Angle in degree";
+      output Real rad "Angle in rad";
+    algorithm
+      rad :=deg*Modelica.Constants.pi/180;
+    end rad;
+
+    function degree
+      input Real rad "Angle in rad";
+      output Real degree "Angle in degree";
+    algorithm
+      degree :=rad*180/Modelica.Constants.pi;
+    end degree;
+
+    function dayOfTheYear
+      input Integer day "Day";
+      input Integer month "Month";
+      input Integer year "Year";
+      output Integer dayOfYear "Day of the year indicated by day, month, year";
+    protected
+      Boolean leapYear "Indicates leapyear";
+    algorithm
+      leapYear := if mod(year,4)==0 then true else false;
+      dayOfYear := day;
+      dayOfYear := dayOfYear + (if month>1 then 31 else 0);
+      dayOfYear := dayOfYear + (if month>2 then 28 + (if leapYear then 1 else 0) else 0);
+      dayOfYear := dayOfYear + (if month>3 then 31 else 0);
+      dayOfYear := dayOfYear + (if month>4 then 30 else 0);
+      dayOfYear := dayOfYear + (if month>5 then 31 else 0);
+      dayOfYear := dayOfYear + (if month>6 then 30 else 0);
+      dayOfYear := dayOfYear + (if month>7 then 31 else 0);
+      dayOfYear := dayOfYear + (if month>8 then 31 else 0);
+      dayOfYear := dayOfYear + (if month>9 then 30 else 0);
+      dayOfYear := dayOfYear + (if month>10 then 31 else 0);
+      dayOfYear := dayOfYear + (if month>11 then 30 else 0);
+
+    end dayOfTheYear;
   end Functions;
 
   package Sources "Sources"
     extends Modelica.Icons.Package;
+
+    package Irradiance "Irradiance"
+      extends Modelica.Icons.Package;
+      model Irradiance "Simple solar irradiance without considering weather conditions"
+        import Modelica.Constants.pi;
+        import PhotoVoltaics.Functions.rad;
+        import PhotoVoltaics.Functions.degree;
+        import PhotoVoltaics.Functions.dayOfTheYear;
+        parameter Integer startDay(final min=1,final max=31) = 10 "Day";
+        parameter Integer startMonth(final min=1,final max=12) = 09 "Month";
+        parameter Integer startYear = 2016 "Year";
+        parameter Integer TimeZone = 1 "Time zone";
+
+        parameter Modelica.SIunits.Angle longitude = 16.428*pi/180 "Longitude";
+        parameter Modelica.SIunits.Angle latitude = 48.280*pi/180 "latitude";
+        parameter Modelica.SIunits.Irradiance ERef = 1000 "Reference solar irradiation";
+        parameter Modelica.SIunits.Angle gamma = 0.7854 "Angle of PV modlue with w.r.t. horizontal plane";
+        parameter Modelica.SIunits.Angle azimuth = 0 "Azimuth of the PV module orientation";
+
+        Integer startDayOfYear(start=dayOfTheYear(startDay,startMonth,startYear)) "Start day of year in simulation";
+        Integer dayOfYear(final start=dayOfTheYear(startDay,startMonth,startYear)) "Actual day of year";
+        Integer daysOfYear(final start=dayOfTheYear(31,12,startYear)) "Total number of days of year";
+        Integer year(final start=startYear) "Actual year";
+        Modelica.SIunits.Angle Jprime(final start=dayOfTheYear(startDay,startMonth,startYear)/dayOfTheYear(31,12,startYear)*2*pi) "Equivalent Angle of the day of the year w.r.t. total number of days";
+        Real delta_J;
+        Real timeequation_J;
+        Modelica.SIunits.Conversions.NonSIunits.Time_day LocalTimeDays "Local time in days";
+        Integer LocalDays "Locale day";
+        Modelica.SIunits.Time LocalTime "Local time";
+        Modelica.SIunits.Conversions.NonSIunits.Time_hour LocalTimeHours "Local time in unit hours";
+        Modelica.SIunits.Conversions.NonSIunits.Time_hour LocalMeanTimeHours "Local mean time in unit hours";
+        Modelica.SIunits.Conversions.NonSIunits.Time_hour TrueMeanTimeHours "True mean time in unit hours";
+        Modelica.SIunits.Angle HoursAngle "Hours angle";
+        Modelica.SIunits.Angle SunHeight "Sun height";
+        Modelica.SIunits.Angle SunAzimuth1 "Sun azimuth before 12 p.m.";
+        Modelica.SIunits.Angle SunAzimuth2 "Sun azimuth after 12 p.m.";
+        Modelica.SIunits.Angle SunAzimuth "Suna zimuth";
+        Modelica.SIunits.Angle AngleOfIncidence "Angle of incidence between a vector in sun direction and a normal vector";
+        Modelica.SIunits.Irradiance DirectIrradianceHorizontal "Direct irradiance on the horizontal in W/m^2";
+        Modelica.SIunits.Irradiance DirectIrradianceInclined "Direct irradiance on the inclined plane in w/m^2";
+
+        Modelica.Blocks.Interfaces.RealOutput EGenDir
+          annotation (Placement(transformation(extent={{100,-10},{120,10}})));
+      equation
+
+        // Calculate ratio of day w.r.t. total number of days of a year as equivalent angle
+        when sample(24*3600,24*3600) then
+          dayOfYear = mod(pre(dayOfYear),pre(daysOfYear)) + 1;
+        end when;
+
+        when startDayOfYear+LocalDays==daysOfYear+1 then
+          // One full year is reached
+          // Reset start day of year
+          startDayOfYear = 1;
+          // Increment year
+          year = pre(year)+1;
+          // Determined actual number of total days of year
+          daysOfYear = dayOfTheYear(31,12,year);
+        end when;
+
+        Jprime = dayOfYear/daysOfYear*2*pi;
+        delta_J = rad(0.3948-23.2559*cos((Jprime+rad(9.1)))-0.3915*cos((2*Jprime+rad(5.4)))-0.1764*cos((3*Jprime+rad(26))));
+        timeequation_J = 0.0066+7.3525*cos(Jprime+rad(85.9))+9.9359*cos(2*Jprime+rad(108.9))+0.3387*cos(3*Jprime+rad(105.2));
+
+        // Zeit LZ = time
+        LocalTime = time;
+        // Convert time into unit hours
+        LocalTimeHours = LocalTime / 3600;
+        // Convert time into unit days
+        LocalTimeDays = LocalTimeHours / 24;
+        // Convert time from real days into integer days (floor)
+        LocalDays = integer(floor(LocalTimeDays));
+        // Calculate locale mean time
+        LocalMeanTimeHours = LocalTimeHours - TimeZone+4/60*longitude*180/Modelica.Constants.pi;
+        // cos(lattitude)*tan(...)
+        EGenDir = 0;
+        TrueMeanTimeHours = LocalMeanTimeHours+timeequation_J/60;
+        HoursAngle = rad((12-TrueMeanTimeHours)*15);
+        SunHeight = (degree((asin(cos(HoursAngle)*cos(latitude)*cos(delta_J)+sin(latitude)*sin(delta_J)))))*(Modelica.Constants.pi/180);
+        SunAzimuth1 = Modelica.Constants.pi-(acos((sin(SunHeight)*sin(latitude)-sin(delta_J))/(cos(SunHeight)*cos(latitude))));
+        SunAzimuth2 = Modelica.Constants.pi+(acos((sin(SunHeight)*sin(latitude)-sin(delta_J))/(cos(SunHeight)*cos(latitude))));
+        SunAzimuth = if LocalTimeHours <= 12 then SunAzimuth1 else SunAzimuth2;
+        AngleOfIncidence = acos(-(cos(SunHeight))*(sin(gamma))*(cos(SunAzimuth-azimuth))+(sin(SunHeight))*(cos(gamma)));
+        DirectIrradianceHorizontal = if SunHeight < 0 then 0 else ERef*sin(SunHeight);
+        DirectIrradianceInclined = if AngleOfIncidence > pi/2 then 0 else if abs(sin(SunHeight))<0.01 then 0 else DirectIrradianceHorizontal* ((cos((AngleOfIncidence))/(sin((SunHeight)))));
+
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+              Rectangle(extent={{-100,100},{100,-100}}, lineColor={28,108,200}),
+              Ellipse(extent={{-20,20},{20,-20}}, lineColor={28,108,200}),
+              Line(points={{20,20},{80,80}}, color={28,108,200}),
+              Line(points={{-40,40},{-72,72}}, color={28,108,200}),
+              Line(points={{-28,-30},{-80,-80}}, color={28,108,200})}), Diagram(
+              coordinateSystem(preserveAspectRatio=false)));
+      end Irradiance;
+    end Irradiance;
 
     package Blocks "Block sources"
       extends Modelica.Icons.Package;
