@@ -1264,18 +1264,18 @@ represents thus the inverse of
         Modelica.SIunits.Angle Jprime(final start=dayOfTheYear(startDay,startMonth,startYear)/dayOfTheYear(31,12,startYear)*2*pi) "Equivalent Angle of the day of the year w.r.t. total number of days";
         Real delta_J;
         Real timeequation_J;
-        Modelica.SIunits.Conversions.NonSIunits.Time_day LocalTimeDays "Local time in days";
-        Integer LocalDays "Locale day";
-        Modelica.SIunits.Time LocalTime "Local time";
-        Modelica.SIunits.Conversions.NonSIunits.Time_hour LocalTimeHours "Local time in unit hours";
+        Modelica.SIunits.Conversions.NonSIunits.Time_day localTimeDays "Local time in days";
+        Integer localDays "Locale day";
+        Modelica.SIunits.Time localTime "Local time";
+        Modelica.SIunits.Conversions.NonSIunits.Time_hour localTimeHours "Local time in unit hours";
         Modelica.SIunits.Conversions.NonSIunits.Time_hour LocalMeanTimeHours "Local mean time in unit hours";
-        Modelica.SIunits.Conversions.NonSIunits.Time_hour TrueMeanTimeHours "True mean time in unit hours";
-        Modelica.SIunits.Angle HoursAngle "Hours angle";
-        Modelica.SIunits.Angle SunHeight "Sun height";
-        Modelica.SIunits.Angle SunAzimuth1 "Sun azimuth before 12 p.m.";
-        Modelica.SIunits.Angle SunAzimuth2 "Sun azimuth after 12 p.m.";
-        Modelica.SIunits.Angle SunAzimuth "Suna zimuth";
-        Modelica.SIunits.Angle AngleOfIncidence "Angle of incidence between a vector in sun direction and a normal vector";
+        Modelica.SIunits.Conversions.NonSIunits.Time_hour trueMeanTimeHours "True mean time in unit hours";
+        Modelica.SIunits.Angle hoursAngle "Hours angle";
+        Modelica.SIunits.Angle sunHeight "Sun height";
+        Modelica.SIunits.Angle sunAzimuth1 "Sun azimuth before 12 p.m.";
+        Modelica.SIunits.Angle sunAzimuth2 "Sun azimuth after 12 p.m.";
+        Modelica.SIunits.Angle sunAzimuth "Suna zimuth";
+        Modelica.SIunits.Angle angleOfIncidence "Angle of incidence between a vector in sun direction and a normal vector";
         Modelica.SIunits.Irradiance directIrradianceHorizontal "Direct irradiance on the horizontal in W/m^2";
         Modelica.SIunits.Irradiance directIrradianceInclined "Direct irradiance on the inclined plane in w/m^2";
 
@@ -1287,7 +1287,7 @@ represents thus the inverse of
           dayOfYear = mod(pre(dayOfYear),pre(daysOfYear)) + 1;
         end when;
 
-        when startDayOfYear+LocalDays==daysOfYear+1 then
+        when startDayOfYear+localDays==daysOfYear+1 then
           // One full year is reached
           // Reset start day of year
           startDayOfYear = 1;
@@ -1302,25 +1302,25 @@ represents thus the inverse of
         timeequation_J = 0.0066+7.3525*cos(Jprime+rad(85.9))+9.9359*cos(2*Jprime+rad(108.9))+0.3387*cos(3*Jprime+rad(105.2));
 
         // Zeit LZ = time
-        LocalTime = time;
+        localTime = time;
         // Convert time into unit hours
-        LocalTimeHours = LocalTime / 3600;
+        localTimeHours = localTime / 3600;
         // Convert time into unit days
-        LocalTimeDays = LocalTimeHours / 24;
+        localTimeDays = localTimeHours / 24;
         // Convert time from real days into integer days (floor)
-        LocalDays = integer(floor(LocalTimeDays));
+        localDays = integer(floor(localTimeDays));
         // Calculate locale mean time
-        LocalMeanTimeHours = LocalTimeHours - TimeZone+4/60*longitude*180/Modelica.Constants.pi;
+        LocalMeanTimeHours = localTimeHours - TimeZone+4/60*longitude*180/Modelica.Constants.pi;
         // cos(lattitude)*tan(...)
-        TrueMeanTimeHours = LocalMeanTimeHours+timeequation_J/60;
-        HoursAngle = rad((12-TrueMeanTimeHours)*15);
-        SunHeight = (degree((asin(cos(HoursAngle)*cos(latitude)*cos(delta_J)+sin(latitude)*sin(delta_J)))))*(Modelica.Constants.pi/180);
-        SunAzimuth1 = Modelica.Constants.pi-(acos((sin(SunHeight)*sin(latitude)-sin(delta_J))/(cos(SunHeight)*cos(latitude))));
-        SunAzimuth2 = Modelica.Constants.pi+(acos((sin(SunHeight)*sin(latitude)-sin(delta_J))/(cos(SunHeight)*cos(latitude))));
-        SunAzimuth = if mod(LocalTimeHours,24) <= 12 then SunAzimuth1 else SunAzimuth2;
-        AngleOfIncidence = acos(-(cos(SunHeight))*(sin(gamma))*(cos(SunAzimuth-azimuth))+(sin(SunHeight))*(cos(gamma)));
-        directIrradianceHorizontal = if SunHeight < 0 then 0 else irradianceRef*sin(SunHeight);
-        directIrradianceInclined = if AngleOfIncidence > pi/2 then 0 else if abs(sin(SunHeight))<0.01 then 0 else directIrradianceHorizontal* ((cos((AngleOfIncidence))/(sin((SunHeight)))));
+        trueMeanTimeHours = LocalMeanTimeHours+timeequation_J/60;
+        hoursAngle = rad((12-trueMeanTimeHours)*15);
+        sunHeight = (degree((asin(cos(hoursAngle)*cos(latitude)*cos(delta_J)+sin(latitude)*sin(delta_J)))))*(Modelica.Constants.pi/180);
+        sunAzimuth1 = Modelica.Constants.pi-(acos((sin(sunHeight)*sin(latitude)-sin(delta_J))/(cos(sunHeight)*cos(latitude))));
+        sunAzimuth2 = Modelica.Constants.pi+(acos((sin(sunHeight)*sin(latitude)-sin(delta_J))/(cos(sunHeight)*cos(latitude))));
+        sunAzimuth = if mod(localTimeHours,24) <= 12 then sunAzimuth1 else sunAzimuth2;
+        angleOfIncidence = acos(-(cos(sunHeight))*(sin(gamma))*(cos(sunAzimuth-azimuth))+(sin(sunHeight))*(cos(gamma)));
+        directIrradianceHorizontal = if sunHeight < 0 then 0 else irradianceRef*sin(sunHeight);
+        directIrradianceInclined = if angleOfIncidence > pi/2 then 0 else if abs(sin(sunHeight))<0.01 then 0 else directIrradianceHorizontal* ((cos((angleOfIncidence))/(sin((sunHeight)))));
         irradiance = directIrradianceInclined;
 
         annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
