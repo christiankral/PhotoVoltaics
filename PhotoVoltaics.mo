@@ -1283,22 +1283,27 @@ represents thus the inverse of
         Modelica.SIunits.Irradiance directIrradianceInclined "Direct irradiance on the inclined plane in w/m^2";
 
         Modelica.Blocks.Interfaces.RealOutput irradiance annotation (Placement(transformation(extent={{100,-10},{120,10}})));
-      equation
+      algorithm
 
         // Calculate ratio of day w.r.t. total number of days of a year as equivalent angle
         when sample(24*3600,24*3600) then
-          dayOfYear = mod(pre(dayOfYear),pre(daysOfYear)) + 1;
+          dayOfYear :=mod(pre(dayOfYear), pre(daysOfYear)) + 1;
         end when;
 
         when startDayOfYear+localDays==daysOfYear+1 then
           // One full year is reached
           // Reset start day of year
-          startDayOfYear = 1;
+          startDayOfYear :=1;
           // Increment year
-          year = pre(year)+1;
+          year :=pre(year) + 1;
           // Determined actual number of total days of year
-          daysOfYear = dayOfTheYear(31,12,year);
+          daysOfYear :=dayOfTheYear(
+                  31,
+                  12,
+                  year);
         end when;
+
+      equation
 
         Jprime = dayOfYear/daysOfYear*2*pi;
         delta_J = rad(0.3948-23.2559*cos((Jprime+rad(9.1)))-0.3915*cos((2*Jprime+rad(5.4)))-0.1764*cos((3*Jprime+rad(26))));

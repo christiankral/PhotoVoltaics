@@ -84,7 +84,9 @@ package PhotoVoltaics_TGM
       experiment(
         StopTime=3.1536e+07,
         Interval=60,
-        Tolerance=1e-08),
+        Tolerance=1e-08,
+        __Dymola_Algorithm="Rkfix4",
+        __OpenModelica_simulationFlags(jacobian = "coloredNumerical", s = "dassl", lv = "LOG_STATS")),
       Documentation(revisions="<html>
 </html>", info="<html>
 <p>This example is based on weather data taken from 
@@ -156,7 +158,9 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
       experiment(
         StopTime=3.1536e+07,
         Interval=60,
-        Tolerance=1e-08),
+        Tolerance=1e-08,
+        __Dymola_Algorithm="Rkfix4",
+        __OpenModelica_simulationFlags(jacobian = "coloredNumerical", s = "dassl", lv = "LOG_STATS")),
       Documentation(revisions="<html>
 </html>", info="<html>
 <p>This example is based on weather data taken from 
