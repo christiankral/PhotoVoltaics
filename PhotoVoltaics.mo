@@ -1252,9 +1252,9 @@ represents thus the inverse of
         parameter Integer TimeZone = 1 "Time zone";
 
         parameter Modelica.SIunits.Angle longitude = 16.428*pi/180 "Longitude";
-        parameter Modelica.SIunits.Angle latitude = 48.280*pi/180 "latitude";
-        parameter Modelica.SIunits.Irradiance ERef = 1000 "Reference solar irradiation";
-        parameter Modelica.SIunits.Angle gamma = 0.7854 "Angle of PV modlue with w.r.t. horizontal plane";
+        parameter Modelica.SIunits.Angle latitude = 48.280*pi/180 "Latitude";
+        parameter Modelica.SIunits.Irradiance irradianceRef = 1000 "Reference solar irradiance";
+        parameter Modelica.SIunits.Angle gamma = 10*pi/180 "Angle of PV modlue with w.r.t. horizontal plane";
         parameter Modelica.SIunits.Angle azimuth = 0 "Azimuth of the PV module orientation";
 
         Integer startDayOfYear(start=dayOfTheYear(startDay,startMonth,startYear)) "Start day of year in simulation";
@@ -1276,11 +1276,10 @@ represents thus the inverse of
         Modelica.SIunits.Angle SunAzimuth2 "Sun azimuth after 12 p.m.";
         Modelica.SIunits.Angle SunAzimuth "Suna zimuth";
         Modelica.SIunits.Angle AngleOfIncidence "Angle of incidence between a vector in sun direction and a normal vector";
-        Modelica.SIunits.Irradiance DirectIrradianceHorizontal "Direct irradiance on the horizontal in W/m^2";
-        Modelica.SIunits.Irradiance DirectIrradianceInclined "Direct irradiance on the inclined plane in w/m^2";
+        Modelica.SIunits.Irradiance directIrradianceHorizontal "Direct irradiance on the horizontal in W/m^2";
+        Modelica.SIunits.Irradiance directIrradianceInclined "Direct irradiance on the inclined plane in w/m^2";
 
-        Modelica.Blocks.Interfaces.RealOutput EGenDir
-          annotation (Placement(transformation(extent={{100,-10},{120,10}})));
+        Modelica.Blocks.Interfaces.RealOutput irradiance annotation (Placement(transformation(extent={{100,-10},{120,10}})));
       equation
 
         // Calculate ratio of day w.r.t. total number of days of a year as equivalent angle
@@ -1313,16 +1312,16 @@ represents thus the inverse of
         // Calculate locale mean time
         LocalMeanTimeHours = LocalTimeHours - TimeZone+4/60*longitude*180/Modelica.Constants.pi;
         // cos(lattitude)*tan(...)
-        EGenDir = 0;
         TrueMeanTimeHours = LocalMeanTimeHours+timeequation_J/60;
         HoursAngle = rad((12-TrueMeanTimeHours)*15);
         SunHeight = (degree((asin(cos(HoursAngle)*cos(latitude)*cos(delta_J)+sin(latitude)*sin(delta_J)))))*(Modelica.Constants.pi/180);
         SunAzimuth1 = Modelica.Constants.pi-(acos((sin(SunHeight)*sin(latitude)-sin(delta_J))/(cos(SunHeight)*cos(latitude))));
         SunAzimuth2 = Modelica.Constants.pi+(acos((sin(SunHeight)*sin(latitude)-sin(delta_J))/(cos(SunHeight)*cos(latitude))));
-        SunAzimuth = if LocalTimeHours <= 12 then SunAzimuth1 else SunAzimuth2;
+        SunAzimuth = if mod(LocalTimeHours,24) <= 12 then SunAzimuth1 else SunAzimuth2;
         AngleOfIncidence = acos(-(cos(SunHeight))*(sin(gamma))*(cos(SunAzimuth-azimuth))+(sin(SunHeight))*(cos(gamma)));
-        DirectIrradianceHorizontal = if SunHeight < 0 then 0 else ERef*sin(SunHeight);
-        DirectIrradianceInclined = if AngleOfIncidence > pi/2 then 0 else if abs(sin(SunHeight))<0.01 then 0 else DirectIrradianceHorizontal* ((cos((AngleOfIncidence))/(sin((SunHeight)))));
+        directIrradianceHorizontal = if SunHeight < 0 then 0 else irradianceRef*sin(SunHeight);
+        directIrradianceInclined = if AngleOfIncidence > pi/2 then 0 else if abs(sin(SunHeight))<0.01 then 0 else directIrradianceHorizontal* ((cos((AngleOfIncidence))/(sin((SunHeight)))));
+        irradiance = directIrradianceInclined;
 
         annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
               Rectangle(extent={{-100,100},{100,-100}}, lineColor={28,108,200}),
