@@ -1200,19 +1200,19 @@ represents thus the inverse of
       y := if u > uMax then uMax else if u < uMin then uMin else u;
     end limit;
 
-    function rad
-      input Real deg "Angle in degree";
-      output Real rad "Angle in rad";
-    algorithm
-      rad :=deg*Modelica.Constants.pi/180;
-    end rad;
-
     function degree
       input Real rad "Angle in rad";
       output Real degree "Angle in degree";
     algorithm
       degree :=rad*180/Modelica.Constants.pi;
     end degree;
+
+    function rad
+      input Real deg "Angle in degree";
+      output Real rad "Angle in rad";
+    algorithm
+      rad :=deg*Modelica.Constants.pi/180;
+    end rad;
 
     function dayOfTheYear
       input Integer day "Day";
