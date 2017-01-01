@@ -107,6 +107,13 @@ Ramazan Kavlak<br>
       extends Modelica.Icons.ReleaseNotes;
       annotation(preferredView = "info", Documentation(info="<html>
 
+<h5>Version 0.2.0, 2017-XX-XX</h5>
+<ul>
+<li>Added analytical irradiance model plus auxiliary functions</li>
+<li>Added weather model of Vienna into Resources directory</li>
+<li>Renamed application library into <b>PhotoVoltaics_TGM</b></li>
+</ul>
+
 <h5>Version 0.1.0, 2016-12-31</h5>
 <ul>
 <li>First release version containing</li>
