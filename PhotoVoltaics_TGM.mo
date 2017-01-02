@@ -174,11 +174,11 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
 </html>"));
   end TGM_Comax_Analytical;
   annotation (
-    version="0.2.0",
+    version="0.X.X",
     versionBuild=1,
-    versionDate="2017-01-02",
+    versionDate="2017-XX-XX",
     uses(Modelica(version="3.2.2"),Buildings(version="4.0.0"),
-      PhotoVoltaics(version="0.2.0")),
+      PhotoVoltaics(version="0.X.X")),
     Documentation(info="<html>
 <p>This library is based on the 
 <a href=\"https://github.com/christiankral/PhotoVoltaics\">PhotoVoltaics</a> and the 
