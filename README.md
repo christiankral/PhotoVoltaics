@@ -1,6 +1,6 @@
 # PhotoVoltaics
 
-Modelica library for the simulation of photo voltaic cells and modules
+Modelica library for the simulation of photo voltaic cells, modules and plants
 
 # License
 
