@@ -1644,7 +1644,7 @@ Additionally, the frequency of the current source is defined by a real signal in
       final ImpRef = 5.37,
       final alphaIsc = +0.0002,
       final alphaVoc = -0.003,
-      final ns = 60,
+      final ns = 72,
       final nb = 3);
       annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
 The original data of this module are taken from
@@ -1748,9 +1748,9 @@ The original data of this module are taken from
 
   end Records;
   annotation (
-    version="0.X.X",
-    versionBuild=1,
-    versionDate="2017-XX-XX",
+    version="0.2.0",
+    versionBuild=2,
+    versionDate="2017-01-02",
     uses(Modelica(version = "3.2.2")),
     Icon(coordinateSystem,   graphics={  Ellipse(origin = {36, 75}, fillColor = {255, 255, 127}, fillPattern = FillPattern.Solid, extent = {{0, 1}, {40, -39}}, endAngle = 360), Rectangle(origin = {-60, -9}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -7}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {-60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -5}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
             fillPattern =                                                                                                                                                                                                        FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Line(origin = {18, 34}, points = {{4, 10}, {-84, -16}}), Line(origin = {-12, 70}, points = {{34, -6}, {-34, 6}}), Line(points = {{36, 30}, {28, 16}}, color = {28, 108, 200})}));
