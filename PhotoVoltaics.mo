@@ -1585,7 +1585,6 @@ Additionally, the frequency of the current source is defined by a real signal in
     equation
       connect(irradiance, variableIrradiance) annotation(Line(points = {{0, 70}, {0, 70}, {0, 120}}, color = {0, 0, 127}));
       connect(const.y, irradiance) annotation(Line(points = {{-19, 80}, {-20, 80}, {-20, 80}, {0, 80}, {0, 80}, {0, 70}, {0, 70}}, color = {0, 0, 127}));
-      connect(irradiance, irradiance) annotation(Line(points = {{0, 70}, {0, 70}}, color = {0, 0, 127}));
       annotation(Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})), Icon(coordinateSystem(preserveAspectRatio = false)));
     end PartialComponent;
 
