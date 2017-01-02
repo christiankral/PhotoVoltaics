@@ -178,7 +178,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     versionBuild=1,
     versionDate="2017-01-02",
     uses(Modelica(version="3.2.2"),Buildings(version="4.0.0"),
-      PhotoVoltaics(version="0.1.0")),
+      PhotoVoltaics(version="0.2.0")),
     Documentation(info="<html>
 <p>This library is based on the 
 <a href=\"https://github.com/christiankral/PhotoVoltaics\">PhotoVoltaics</a> and the 
