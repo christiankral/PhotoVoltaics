@@ -107,6 +107,11 @@ Ramazan Kavlak<br>
       extends Modelica.Icons.ReleaseNotes;
       annotation(preferredView = "info", Documentation(info="<html>
 
+<h5>Version 0.X.X, 2017-XX-XX</h5>
+<ul>
+<li>Prevented MP tracker from controlling negative voltages according to #5</li>
+</ul>
+
 <h5>Version 0.2.1, 2017-01-02</h5>
 <ul>
 <li>Fixed number of cells to ns=72 in module TSM_200_DC01A</li>
@@ -1147,6 +1152,10 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
           if not firstTrigger and power < pre(power) then
             // Change direction of voltage derivative
             signv :=-pre(signv);
+          end if;
+          // Do not allow negative voltages
+          if vRef<=3*dv then
+            signv := 1;
           end if;
         end when;
 
