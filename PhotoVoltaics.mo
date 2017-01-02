@@ -1349,7 +1349,7 @@ represents thus the inverse of
         sunAzimuth = if mod(localTimeHours,24) <= 12 then sunAzimuth1 else sunAzimuth2;
         angleOfIncidence = acos(-(cos(sunHeight))*(sin(gamma))*(cos(sunAzimuth-azimuth))+(sin(sunHeight))*(cos(gamma)));
         directIrradianceHorizontal = if sunHeight < 0 then 0 else irradianceRef*sin(sunHeight);
-        directIrradianceInclined = if angleOfIncidence > pi/2 then 0 else if abs(sin(sunHeight))<0.01 then 0 else directIrradianceHorizontal* ((cos((angleOfIncidence))/(sin((sunHeight)))));
+        directIrradianceInclined = if angleOfIncidence > pi/2 then 0 else if abs(sin(sunHeight))<1E-5 then 0 else directIrradianceHorizontal* ((cos((angleOfIncidence))/(sin((sunHeight)))));
         irradiance = directIrradianceInclined;
 
         annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
