@@ -107,7 +107,7 @@ Ramazan Kavlak<br>
       extends Modelica.Icons.ReleaseNotes;
       annotation(preferredView = "info", Documentation(info="<html>
 
-<h5>Version 0.2.0, 2017-XX-XX</h5>
+<h5>Version 0.2.0, 2017-01-02</h5>
 <ul>
 <li>Added analytical irradiance model plus auxiliary functions</li>
 <li>Added weather model of Vienna into Resources directory</li>
@@ -1748,9 +1748,9 @@ The original data of this module are taken from
 
   end Records;
   annotation (
-    version="0.1.0",
+    version="0.2.0",
     versionBuild=1,
-    versionDate="2016-12-31",
+    versionDate="2017-01-02",
     uses(Modelica(version = "3.2.2")),
     Icon(coordinateSystem,   graphics={  Ellipse(origin = {36, 75}, fillColor = {255, 255, 127}, fillPattern = FillPattern.Solid, extent = {{0, 1}, {40, -39}}, endAngle = 360), Rectangle(origin = {-60, -9}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -7}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {-60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -5}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
             fillPattern =                                                                                                                                                                                                        FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Line(origin = {18, 34}, points = {{4, 10}, {-84, -16}}), Line(origin = {-12, 70}, points = {{34, -6}, {-34, 6}}), Line(points = {{36, 30}, {28, 16}}, color = {28, 108, 200})}));
