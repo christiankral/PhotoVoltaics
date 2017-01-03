@@ -298,7 +298,7 @@ This library provides models for the modeling and simulation of photo voltaic po
     equation
       connect(cell.p, variableResistor.p) annotation(Line(points = {{0, 10}, {0, 20}, {40, 20}, {40, 10}}, color = {0, 0, 255}));
       connect(ground.p, cell.n) annotation(Line(points = {{0, -20}, {0, -10}}, color = {0, 0, 255}));
-      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
+      
       connect(ground.p, variableResistor.n) annotation(Line(points = {{0, -20}, {14, -20}, {40, -20}, {40, -10}}, color = {0, 0, 255}));
       connect(variableResistor.R, powerRamp.y) annotation(Line(points = {{51, -2.22045e-15}, {49.5, -2.22045e-15}, {49.5, 0}, {59, 0}}, color = {0, 0, 127}));
       annotation(defaultComponentName="moduleData", defaultComponentPrefixes = "parameter", Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
@@ -318,7 +318,7 @@ This library provides models for the modeling and simulation of photo voltaic po
       connect(signalVoltage.n, ground.p) annotation(Line(points = {{40, -10}, {40, -10}, {40, -20}, {0, -20}, {0, -20}}, color = {0, 0, 255}));
       connect(signalVoltage.p, cell.p) annotation(Line(points = {{40, 10}, {40, 10}, {40, 20}, {0, 20}, {0, 10}, {0, 10}}, color = {0, 0, 255}));
       connect(ground.p, cell.n) annotation(Line(points = {{0, -20}, {0, -10}}, color = {0, 0, 255}));
-      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
+      
       connect(signalVoltage.v, rampCurrent.y) annotation(Line(points = {{47, 0}, {59, 0}, {59, 0}}, color = {0, 0, 127}));
       annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
     end SimpleCellVoltageSource;
@@ -348,7 +348,7 @@ This library provides models for the modeling and simulation of photo voltaic po
       connect(variableResistor.n, ground.p) annotation(Line(points = {{40, -10}, {40, -10}, {40, -20}, {0, -20}, {0, -30}}, color = {0, 0, 255}));
       connect(cell.p, variableResistor.p) annotation(Line(points = {{0, 10}, {0, 10}, {0, 20}, {40, 20}, {40, 10}}, color = {0, 0, 255}));
       connect(ground.p, cell.n) annotation(Line(points = {{0, -30}, {0, -18}, {0, -10}, {-1.77636e-15, -10}}, color = {0, 0, 255}));
-      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
+      
       connect(triangleAndStep.step, cell.variableIrradiance) annotation(Line(points = {{-49, 6}, {-30, 6}, {-30, 0}, {-12, 0}}, color = {0, 0, 127}));
       connect(triangleAndStep.triangle, power10.u) annotation(Line(points = {{-49, -6}, {-30, -6}, {-30, -60}, {92, -60}, {92, 0}, {82, 0}}, color = {0, 0, 127}));
       connect(variableResistor.R, power10.y) annotation(Line(points = {{51, 0}, {59, 0}}, color = {0, 0, 127}));
@@ -395,7 +395,7 @@ on the horizontal axis</li>
       connect(variableResistor.n, ground.p) annotation(Line(points = {{40, -10}, {40, -10}, {40, -20}, {0, -20}, {0, -30}}, color = {0, 0, 255}));
       connect(cell.p, variableResistor.p) annotation(Line(points={{0,10},{0,10},{0,20},{40,20},{40,10}},            color = {0, 0, 255}));
       connect(ground.p, cell.n) annotation(Line(points={{0,-30},{0,-18},{0,-10},{-1.77636e-15,-10}},          color = {0, 0, 255}));
-      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
+      
       connect(triangleAndStep.triangle, power10.u) annotation(Line(points={{-59,-8},{-50,-8},{-50,-60},{92,-60},{92,0},{82,0}},              color = {0, 0, 127}));
       connect(variableResistor.R, power10.y) annotation(Line(points = {{51, 0}, {59, 0}}, color = {0, 0, 127}));
       connect(prescribedTemperature.port, cell.heatPort) annotation (Line(points={{-20,10},{-16,10},{-10,10}},        color={191,0,0}));
@@ -436,7 +436,7 @@ on the horizontal axis</li>
       connect(module.p, variableResistor.p) annotation(Line(points = {{0, 10}, {0, 20}, {40, 20}, {40, 10}}, color = {0, 0, 255}));
       connect(variableResistor.R, powerRamp.y) annotation(Line(points = {{51, 0}, {59, 0}}, color = {0, 0, 127}));
       connect(ground.p, module.n) annotation(Line(points = {{0, -20}, {0, -10}}, color = {0, 0, 255}));
-      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
+      
       annotation (experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
     end SimpleModule;
 
@@ -463,7 +463,7 @@ on the horizontal axis</li>
       connect(module.p, variableResistor.p) annotation(Line(points = {{0, 10}, {0, 20}, {40, 20}, {40, 10}}, color = {0, 0, 255}));
       connect(variableResistor.R, powerRamp.y) annotation(Line(points = {{51, 0}, {59, 0}}, color = {0, 0, 127}));
       connect(ground.p, module.n) annotation(Line(points = {{0, -20}, {0, -10}}, color = {0, 0, 255}));
-      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
+      
       annotation (experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
     end SimpleModuleSymmetric;
 
@@ -527,7 +527,7 @@ on the horizontal axis</li>
       connect(variableResistor.n, ground.p) annotation(Line(points = {{40, -10}, {40, -20}, {0, -20}}, color = {0, 0, 255}));
       connect(module.p, variableResistor.p) annotation(Line(points = {{0, 10}, {0, 20}, {40, 20}, {40, 10}}, color = {0, 0, 255}));
       connect(ground.p, module.n) annotation(Line(points = {{0, -20}, {0, -10}}, color = {0, 0, 255}));
-      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
+      
       annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
     end SimpleModuleShadow;
 
@@ -563,7 +563,7 @@ on the horizontal axis</li>
       parameter Records.NET_NU_S5_E3E moduleData annotation (Placement(transformation(extent={{60,58},{80,80}})));
     equation
       connect(groundDC.p, module.n) annotation (Line(points={{-40,-20},{-40,-10}}, color={0,0,255}));
-      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
+      
       connect(ramp.y, module.variableIrradiance) annotation (Line(points={{-59,0},{-52,0}}, color={0,0,127}));
       connect(groundDC.p, converter.dc_n) annotation (Line(points={{-40,-20},{-40,-20},{20,-20},{20,-10}}, color={0,0,255}));
       connect(mpTracker.vRef, converter.vDCRef) annotation (Line(points={{21,-50},{30,-50},{30,-12}}, color={0,0,127}));
@@ -616,7 +616,7 @@ on the horizontal axis</li>
       parameter Records.NET_NU_S5_E3E moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
     equation
       connect(groundDC.p, module.n) annotation (Line(points={{-40,-20},{-40,-10}}, color={0,0,255}));
-      /* 09.09.2016. Der eRshte VeRshuch wurde mit Werten aus dem Buch Regenerative Energiesysteme von Volker Quaschning durchgeführt. Jedoch ist das Ergebnis nicht das gleiche wie im Buch, deshalb waren wir gezwungen uns im Internet schlau zu machen. --> Zweiter VeRshuch */
+      
       connect(ramp.y, module.variableIrradiance) annotation (Line(points={{-59,0},{-52,0}}, color={0,0,127}));
       connect(groundDC.p, converter.dc_n) annotation (Line(points={{-40,-20},{-40,-20},{20,-20},{20,-10}}, color={0,0,255}));
       connect(mpTracker.vRef, converter.vDCRef) annotation (Line(points={{21,-50},{30,-50},{30,-12}}, color={0,0,127}));
