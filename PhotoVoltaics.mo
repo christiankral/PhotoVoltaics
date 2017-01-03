@@ -354,7 +354,7 @@ This library provides models for the modeling and simulation of photo voltaic po
       connect(variableResistor.R, power10.y) annotation(Line(points = {{51, 0}, {59, 0}}, color = {0, 0, 127}));
       annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), Documentation(info = "<html>
 <p>This example demonstrates the dependency of the voltage current characteristic of photo voltaic cell 
-as a function of irrandiance. Investigate the following plots:</p>
+as a function of irradiance. Investigate the following plots:</p>
 <ul>
 <li><code>cell.iGenerating</code> on the vertical axis and <code>cell.v</code> 
 on the horizontal axis</li>
@@ -364,7 +364,7 @@ on the horizontal axis</li>
 </html>"), experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.0001));
     end SimpleCellIrradianceCharacteristic;
 
-    model SimpleCellTemperatureCharacteristic "Voltage current characteristic for different irradiances"
+    model SimpleCellTemperatureCharacteristic "Voltage current characteristic for different temperatures"
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground ground annotation(Placement(visible = true, transformation(origin = {0, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       Modelica.Electrical.Analog.Basic.VariableResistor variableResistor annotation(Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {40, 0})));
@@ -403,7 +403,7 @@ on the horizontal axis</li>
                                                                                                                         color={0,0,127}));
       annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), Documentation(info = "<html>
 <p>This example demonstrates the dependency of the voltage current characteristic of photo voltaic cell 
-as a function of irrandiance. Investigate the following plots:</p>
+as a function of irradiance. Investigate the following plots:</p>
 <ul>
 <li><code>cell.iGenerating</code> on the vertical axis and <code>cell.v</code> 
 on the horizontal axis</li>
