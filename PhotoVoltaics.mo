@@ -1175,7 +1175,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
 
       block GainReplicator "Output the product of a gain value with the input signal"
         parameter Integer n "Number of outputs";
-        parameter Real k[n](start = ones(n), unit = "1") "Gain value multiplied with input signal";
+        parameter Real k[n](start = ones(n)) "Gain value multiplied with input signal";
       public
         Modelica.Blocks.Interfaces.RealInput u "Input signal connector" annotation(Placement(transformation(extent = {{-140, -20}, {-100, 20}})));
         Modelica.Blocks.Interfaces.RealOutput y[n] "Output signal connectors" annotation(Placement(transformation(extent = {{100, -10}, {120, 10}})));
