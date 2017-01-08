@@ -4,10 +4,10 @@ Modelica library for the simulation of photo voltaic cells, modules and plants. 
  - Simple cell models based on one diode and a irradiance dependent current source including temperature dependence of the open circuit voltage and the short circuit current
  - Simple symmetric modules and non-symmetric module including shading of cells
  - Simple symmetric plant 
- - Data of commercial modules stored in Modelica Records for convinient investigations
+ - Data of commercial modules stored in Modelica Records for convenient investigations
  - Analytical irradiance model without weather conditions
  - Single and three phase quasi static converters
- - Maximum power tracker based on contiuous voltage regulation
+ - Maximum power tracker based on continuous voltage regulation
 
 # License
 
