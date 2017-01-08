@@ -170,7 +170,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
 </html>", info="<html>
 <p>This example is based on weather data taken from 
 <a href=\"https://energyplus.net/weather-location/europe_wmo_region_6/AUT//AUT_Vienna.Schwechat.110360_IWEC\">https://energyplus.net</a>. 
-The EPW file was converted using a java script provided by the 
+The EPW file was converted using a Java script provided by the 
 <a href=\"\">Buildings</a> library.</p>
 <p><code>
 java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/Resources/WeatherData/AUT_Vienna.Schwechat.110360_IWEC.epw
