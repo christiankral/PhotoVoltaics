@@ -55,9 +55,9 @@ The software (sources, binaries, etc.) in their original or in a modified form
 <h4>Module Data</h4>
 
 <p>Module data are taken from manufacturer data sheets. The original links and, if possible,
-PDF files of the data sheets are provided througn this library. However, the manufacturer PDF files 
+PDF files of the data sheets are provided through this library. However, the manufacturer PDF files 
     are not subject to the License of this library; they are original material of the
-    manufacturer, publicly available in the internet.
+    manufacturer, publicly available in the Internet.
     These PDF files are distributed through the library for convenience reasons only. </p>
 </html>"));
     end License;
@@ -152,7 +152,7 @@ This library provides models for the modeling and simulation of photo voltaic po
 
     model DiodeCompare "Compare different diode models"
       extends Modelica.Icons.Example;
-      parameter Integer ns = 10 "Number of series connceted cells";
+      parameter Integer ns = 10 "Number of series connected cells";
       parameter Integer nsModule = 2 "Number of series connected modules";
       parameter Integer npModule = 2 "Number of parallel connected modules";
       parameter Modelica.SIunits.Voltage Vmin = -5.30 "Minimum voltage range";
@@ -655,7 +655,7 @@ on the horizontal axis</li>
 
     model SimpleModule "Simple module consisting of series connected cells"
       extends PhotoVoltaics.Interfaces.PartialComponent;
-      parameter Real shadow[moduleData.ns] = zeros(moduleData.ns) "Shadow vecotor based on: 0 = full sun, 1 = full shadow";
+      parameter Real shadow[moduleData.ns] = zeros(moduleData.ns) "Shadow vector based on: 0 = full sun, 1 = full shadow";
       SimpleCell cell[moduleData.ns](
         final useHeatPort=fill(useHeatPort, moduleData.ns),
         final T=fill(T, moduleData.ns),
@@ -840,7 +840,7 @@ on the horizontal axis</li>
       extends PhotoVoltaics.Interfaces.QuasiStatic.ACpins;
       parameter Modelica.SIunits.Voltage VRef=400/sqrt(3) "Reference voltage";
       parameter Modelica.SIunits.Time T = 1E-6
-        "Internal integtration time constant";
+        "Internal integration time constant";
       Modelica.SIunits.Power powerDC = vDC * iDC "Power of DC side";
       Modelica.SIunits.Power powerAC=Modelica.ComplexMath.real(vAC*Modelica.ComplexMath.conj(iAC)) "Complex apparent power of AC side";
       Modelica.Blocks.Interfaces.RealInput vDCRef(final unit="V") "DC voltage" annotation (Placement(transformation(
@@ -946,7 +946,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
       extends PhotoVoltaics.Interfaces.QuasiStatic.ACplug;
       parameter Modelica.SIunits.Voltage VRef=400 "Reference line to line voltage";
       parameter Modelica.SIunits.Time T = 1E-6
-        "Internal integtration time constant";
+        "Internal integration time constant";
       Modelica.SIunits.Power powerDC = vDC * iDC "Power of DC side";
       Modelica.SIunits.Power powerAC=Modelica.ComplexMath.real(vAC*Modelica.ComplexMath.conj(iAC)) "Complex apparent power of AC side";
       Modelica.Blocks.Interfaces.RealInput vDCRef(final unit="V") "DC voltage" annotation (Placement(transformation(
@@ -1241,7 +1241,7 @@ represents thus the inverse of
       input Integer year "Year";
       output Integer dayOfYear "Day of the year indicated by day, month, year";
     protected
-      Boolean leapYear "Indicates leapyear";
+      Boolean leapYear "Indicates leap year";
     algorithm
       leapYear := if mod(year,4)==0 then true else false;
       dayOfYear := day;
@@ -1278,7 +1278,7 @@ represents thus the inverse of
         parameter Modelica.SIunits.Angle longitude = 16.428*pi/180 "Longitude";
         parameter Modelica.SIunits.Angle latitude = 48.280*pi/180 "Latitude";
         parameter Modelica.SIunits.Irradiance irradianceRef = 1000 "Reference solar irradiance";
-        parameter Modelica.SIunits.Angle gamma = 10*pi/180 "Angle of PV modlue with w.r.t. horizontal plane";
+        parameter Modelica.SIunits.Angle gamma = 10*pi/180 "Angle of PV module with w.r.t. horizontal plane";
         parameter Modelica.SIunits.Angle azimuth = 0 "Azimuth of the PV module orientation";
 
         Integer startDayOfYear(start=dayOfTheYear(startDay,startMonth,startYear)) "Start day of year in simulation";
@@ -1298,7 +1298,7 @@ represents thus the inverse of
         Modelica.SIunits.Angle sunHeight "Sun height";
         Modelica.SIunits.Angle sunAzimuth1 "Sun azimuth before 12 p.m.";
         Modelica.SIunits.Angle sunAzimuth2 "Sun azimuth after 12 p.m.";
-        Modelica.SIunits.Angle sunAzimuth "Suna zimuth";
+        Modelica.SIunits.Angle sunAzimuth "Sun azimuth";
         Modelica.SIunits.Angle angleOfIncidence "Angle of incidence between a vector in sun direction and a normal vector";
         Modelica.SIunits.Irradiance directIrradianceHorizontal "Direct irradiance on the horizontal in W/m^2";
         Modelica.SIunits.Irradiance directIrradianceInclined "Direct irradiance on the inclined plane in w/m^2";
@@ -1340,7 +1340,7 @@ represents thus the inverse of
         localDays = integer(floor(localTimeDays));
         // Calculate locale mean time
         LocalMeanTimeHours = localTimeHours - TimeZone+4/60*longitude*180/Modelica.Constants.pi;
-        // cos(lattitude)*tan(...)
+        // cos(latitude)*tan(...)
         trueMeanTimeHours = LocalMeanTimeHours+timeequation_J/60;
         hoursAngle = rad((12-trueMeanTimeHours)*15);
         sunHeight = (degree((asin(cos(hoursAngle)*cos(latitude)*cos(delta_J)+sin(latitude)*sin(delta_J)))))*(Modelica.Constants.pi/180);
@@ -1396,7 +1396,7 @@ If parameter duration is set to 0.0, the limiting case of a Step signal is achie
         parameter Real stepOffset = 0 "Offset";
         parameter Modelica.SIunits.Time startTime = 0 "Start time";
         parameter Real triangleHeight = 1 "Height of triangle output";
-        parameter Real triangleOffset = 0 "Offsett of triangle output";
+        parameter Real triangleOffset = 0 "Offset of triangle output";
         Modelica.Blocks.Sources.Ramp ramp(final startTime = startTime, final height = stepNumber - 1, final duration = T * (stepNumber - 1) / stepNumber, final offset = 0) annotation(Placement(transformation(extent = {{-100, 0}, {-80, 20}})));
         Modelica.Blocks.Math.RealToInteger realToInteger annotation(Placement(transformation(extent = {{-40, 0}, {-20, 20}})));
         Modelica.Blocks.Math.IntegerToReal integerToReal annotation(Placement(transformation(extent = {{-10, 0}, {10, 20}})));
