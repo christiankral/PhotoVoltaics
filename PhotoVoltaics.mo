@@ -522,7 +522,7 @@ model SimpleModuleShadow
   Modelica.Electrical.Analog.Basic.Ground ground annotation(
     Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Components.SimpleModule module(moduleData = moduleData, T = 298.15,shadow = cat(1, fill(0.2, 1), fill(0, moduleData.ns - 1)),
-    cell(v(start=zeros(moduleData.ns)))) annotation(
+    cell(v(start=zeros(moduleData.ns))),diode(i(start=fill(1E-11,moduleData.nb)))) annotation(
     Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
   Modelica.Electrical.Analog.Basic.VariableResistor variableResistor annotation(
     Placement(visible = true, transformation(origin = {40, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 270)));
