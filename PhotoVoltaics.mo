@@ -1,4 +1,4 @@
-﻿package PhotoVoltaics
+package PhotoVoltaics
   extends Modelica.Icons.Package;
 
   package UsersGuide "User's Guide"
@@ -163,7 +163,7 @@ This library provides models for the modeling and simulation of photo voltaic po
         T=298.15)                                                                                                                                                          annotation(Placement(transformation(extent={{-40,-40},{-20,-20}})));
       Modelica.Electrical.Analog.Sources.RampVoltage rampVoltage(duration = 1, startTime = 0, V = Vmax - Vmin, offset = Vmin) annotation(Placement(transformation(extent={{-40,-70},{-20,-50}})));
       PhotoVoltaics.Components.Diodes.Diode2exp diode(m=40/25.69, useHeatPort=true) annotation (Placement(transformation(extent={{-40,-10},{-20,10}})));
-      parameter PhotoVoltaics.Records.ModuleData moduleData annotation(Placement(transformation(extent = {{-10, 80}, {10, 100}})));
+      parameter Records.ModuleData moduleData annotation (Placement(transformation(extent={{-10,80},{10,100}})));
       Modelica.Thermal.HeatTransfer.Sources.FixedTemperature fixedTemperature(T=318.15)   annotation(Placement(transformation(extent={{-90,-20},{-70,0}})));
       Modelica.Electrical.Analog.Sources.RampVoltage rampVoltagem(
         duration=1,
@@ -298,7 +298,7 @@ This library provides models for the modeling and simulation of photo voltaic po
     equation
       connect(cell.p, variableResistor.p) annotation(Line(points = {{0, 10}, {0, 20}, {40, 20}, {40, 10}}, color = {0, 0, 255}));
       connect(ground.p, cell.n) annotation(Line(points = {{0, -20}, {0, -10}}, color = {0, 0, 255}));
-      
+
       connect(ground.p, variableResistor.n) annotation(Line(points = {{0, -20}, {14, -20}, {40, -20}, {40, -10}}, color = {0, 0, 255}));
       connect(variableResistor.R, powerRamp.y) annotation(Line(points = {{51, -2.22045e-15}, {49.5, -2.22045e-15}, {49.5, 0}, {59, 0}}, color = {0, 0, 127}));
       annotation(defaultComponentName="moduleData", defaultComponentPrefixes = "parameter", Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
@@ -318,7 +318,7 @@ This library provides models for the modeling and simulation of photo voltaic po
       connect(signalVoltage.n, ground.p) annotation(Line(points = {{40, -10}, {40, -10}, {40, -20}, {0, -20}, {0, -20}}, color = {0, 0, 255}));
       connect(signalVoltage.p, cell.p) annotation(Line(points = {{40, 10}, {40, 10}, {40, 20}, {0, 20}, {0, 10}, {0, 10}}, color = {0, 0, 255}));
       connect(ground.p, cell.n) annotation(Line(points = {{0, -20}, {0, -10}}, color = {0, 0, 255}));
-      
+
       connect(signalVoltage.v, rampCurrent.y) annotation(Line(points = {{47, 0}, {59, 0}, {59, 0}}, color = {0, 0, 127}));
       annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
     end SimpleCellVoltageSource;
@@ -348,7 +348,7 @@ This library provides models for the modeling and simulation of photo voltaic po
       connect(variableResistor.n, ground.p) annotation(Line(points = {{40, -10}, {40, -10}, {40, -20}, {0, -20}, {0, -30}}, color = {0, 0, 255}));
       connect(cell.p, variableResistor.p) annotation(Line(points = {{0, 10}, {0, 10}, {0, 20}, {40, 20}, {40, 10}}, color = {0, 0, 255}));
       connect(ground.p, cell.n) annotation(Line(points = {{0, -30}, {0, -18}, {0, -10}, {-1.77636e-15, -10}}, color = {0, 0, 255}));
-      
+
       connect(triangleAndStep.step, cell.variableIrradiance) annotation(Line(points = {{-49, 6}, {-30, 6}, {-30, 0}, {-12, 0}}, color = {0, 0, 127}));
       connect(triangleAndStep.triangle, power10.u) annotation(Line(points = {{-49, -6}, {-30, -6}, {-30, -60}, {92, -60}, {92, 0}, {82, 0}}, color = {0, 0, 127}));
       connect(variableResistor.R, power10.y) annotation(Line(points = {{51, 0}, {59, 0}}, color = {0, 0, 127}));
@@ -395,7 +395,7 @@ on the horizontal axis</li>
       connect(variableResistor.n, ground.p) annotation(Line(points = {{40, -10}, {40, -10}, {40, -20}, {0, -20}, {0, -30}}, color = {0, 0, 255}));
       connect(cell.p, variableResistor.p) annotation(Line(points={{0,10},{0,10},{0,20},{40,20},{40,10}},            color = {0, 0, 255}));
       connect(ground.p, cell.n) annotation(Line(points={{0,-30},{0,-18},{0,-10},{-1.77636e-15,-10}},          color = {0, 0, 255}));
-      
+
       connect(triangleAndStep.triangle, power10.u) annotation(Line(points={{-59,-8},{-50,-8},{-50,-60},{92,-60},{92,0},{82,0}},              color = {0, 0, 127}));
       connect(variableResistor.R, power10.y) annotation(Line(points = {{51, 0}, {59, 0}}, color = {0, 0, 127}));
       connect(prescribedTemperature.port, cell.heatPort) annotation (Line(points={{-20,10},{-16,10},{-10,10}},        color={191,0,0}));
@@ -436,7 +436,7 @@ on the horizontal axis</li>
       connect(module.p, variableResistor.p) annotation(Line(points = {{0, 10}, {0, 20}, {40, 20}, {40, 10}}, color = {0, 0, 255}));
       connect(variableResistor.R, powerRamp.y) annotation(Line(points = {{51, 0}, {59, 0}}, color = {0, 0, 127}));
       connect(ground.p, module.n) annotation(Line(points = {{0, -20}, {0, -10}}, color = {0, 0, 255}));
-      
+
       annotation (experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
     end SimpleModule;
 
@@ -463,7 +463,7 @@ on the horizontal axis</li>
       connect(module.p, variableResistor.p) annotation(Line(points = {{0, 10}, {0, 20}, {40, 20}, {40, 10}}, color = {0, 0, 255}));
       connect(variableResistor.R, powerRamp.y) annotation(Line(points = {{51, 0}, {59, 0}}, color = {0, 0, 127}));
       connect(ground.p, module.n) annotation(Line(points = {{0, -20}, {0, -10}}, color = {0, 0, 255}));
-      
+
       annotation (experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
     end SimpleModuleSymmetric;
 
@@ -527,7 +527,7 @@ on the horizontal axis</li>
       connect(variableResistor.n, ground.p) annotation(Line(points = {{40, -10}, {40, -20}, {0, -20}}, color = {0, 0, 255}));
       connect(module.p, variableResistor.p) annotation(Line(points = {{0, 10}, {0, 20}, {40, 20}, {40, 10}}, color = {0, 0, 255}));
       connect(ground.p, module.n) annotation(Line(points = {{0, -20}, {0, -10}}, color = {0, 0, 255}));
-      
+
       annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(initialScale = 0.1)), experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
     end SimpleModuleShadow;
 
@@ -560,10 +560,10 @@ on the horizontal axis</li>
             rotation=270,
             origin={80,0})));
       Modelica.Electrical.Analog.Sensors.PowerSensor powerSensor annotation (Placement(transformation(extent={{-20,10},{0,30}})));
-      parameter Records.NET_NU_S5_E3E moduleData annotation (Placement(transformation(extent={{60,58},{80,80}})));
+      parameter Records.SHARP_NU_S5_E3E moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
     equation
       connect(groundDC.p, module.n) annotation (Line(points={{-40,-20},{-40,-10}}, color={0,0,255}));
-      
+
       connect(ramp.y, module.variableIrradiance) annotation (Line(points={{-59,0},{-52,0}}, color={0,0,127}));
       connect(groundDC.p, converter.dc_n) annotation (Line(points={{-40,-20},{-40,-20},{20,-20},{20,-10}}, color={0,0,255}));
       connect(mpTracker.vRef, converter.vDCRef) annotation (Line(points={{21,-50},{30,-50},{30,-12}}, color={0,0,127}));
@@ -613,10 +613,10 @@ on the horizontal axis</li>
             extent={{-10,-10},{10,10}},
             rotation=270,
             origin={80,-30})));
-      parameter Records.NET_NU_S5_E3E moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
+      parameter Records.SHARP_NU_S5_E3E moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
     equation
       connect(groundDC.p, module.n) annotation (Line(points={{-40,-20},{-40,-10}}, color={0,0,255}));
-      
+
       connect(ramp.y, module.variableIrradiance) annotation (Line(points={{-59,0},{-52,0}}, color={0,0,127}));
       connect(groundDC.p, converter.dc_n) annotation (Line(points={{-40,-20},{-40,-20},{20,-20},{20,-10}}, color={0,0,255}));
       connect(mpTracker.vRef, converter.vDCRef) annotation (Line(points={{21,-50},{30,-50},{30,-12}}, color={0,0,127}));
@@ -1631,22 +1631,15 @@ Additionally, the frequency of the current source is defined by a real signal in
       parameter Modelica.SIunits.Current Ibv = 1 "Breakthrough knee current" annotation(Dialog(group = "Breakthrough data"));
       parameter Real Nbv = 0.74 "Breakthrough emission coefficient" annotation(Dialog(group = "Breakthrough data"));
       /*
-  parameter Modelica.SIunits.Resistance RsCell = 0 "Series resistance of cell" annotation(Dialog(group = "Non-ideal effects"));
-  parameter Modelica.SIunits.Resistance RshCell = 1E8 "Shunt resistance of cell" annotation(Dialog(group = "Non-ideal effects"));
-  */
+        parameter Modelica.SIunits.Resistance RsCell = 0 "Series resistance of cell" annotation(Dialog(group = "Non-ideal effects"));
+        parameter Modelica.SIunits.Resistance RshCell = 1E8 "Shunt resistance of cell" annotation(Dialog(group = "Non-ideal effects"));
+        */
       final parameter Modelica.SIunits.Voltage VtCellRef = Modelica.Constants.k * TRef / Q "Reference temperature voltage of cell";
       constant Modelica.SIunits.Charge Q = 1.6021766208E-19 "Elementary charge of electron";
-      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Icon(coordinateSystem(preserveAspectRatio = false), graphics={
-            Text(
-              lineColor={0,0,255},
-              extent={{-200,-150},{200,-110}},
-              textString="%moduleName")}),                                                                                                         Diagram(coordinateSystem(preserveAspectRatio = false)));
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Text(lineColor = {0, 0, 255}, extent = {{-200, -150}, {200, -110}}, textString = "%moduleName")}), Diagram(coordinateSystem(preserveAspectRatio = false)));
     end ModuleData;
-
     extends Modelica.Icons.Package;
-
-    record TSM_200_DC01A
-    "Comax monocrystalline SI cell 200W"
+    record TSM_200_DC01A "Comax monocrystalline SI cell 200W"
       extends ModuleData(
       final moduleName = "TSM 200 DC01A",
       final TRef = 298.15,
@@ -1661,79 +1654,22 @@ Additionally, the frequency of the current source is defined by a real signal in
       final nb = 3);
       annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"https://d1819pwkf4ncw.cloudfront.net/files/documents/lg300n1c-g4-360889.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
-<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG300N1C_G4.pdf\">available</a>.
+<a href=\"http://www.elektra.si/uploads/datoteke/trina_tsm-195-200-205-210dc80.08_mono.pdf\">Comax</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/TSM_200_DC01A.pdf\">available</a>.
 </html>"));
     end TSM_200_DC01A;
 
-    record TSM_230_PC05
-    "Trina polycrystalline SI cell 230W"
-      extends ModuleData(
-      final moduleName = "TSM 223 PC05",
-      final TRef = 298.15,
-      final irradianceRef = 1000,
-      final VocRef = 37,
-      final IscRef = 8.26,
-      final VmpRef = 29.8,
-      final ImpRef = 7.72,
-      final alphaIsc = +0.0005,
-      final alphaVoc = -0.0032,
-      final ns = 60,
-      final nb = 3);
+    record TSM_230_PC05 "Trina polycrystalline SI cell 230W"
+      extends ModuleData(final moduleName = "TSM 223 PC05", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 37, final IscRef = 8.26, final VmpRef = 29.8, final ImpRef = 7.72, final alphaIsc = +0.0005, final alphaVoc = -0.0032, final ns = 60, final nb = 3);
       annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"https://d1819pwkf4ncw.cloudfront.net/files/documents/lg300n1c-g4-360889.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
-<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG300N1C_G4.pdf\">available</a>.
+<a href=\"https://http://www.franklin-electric.com.au/media/52578/Trina%20TSM190-200DC01A_WW.pdf\">Trina</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/TSM_230_PC05.pdf\">available</a>.
 </html>"));
     end TSM_230_PC05;
 
-    record NET_NU_S5_E3E "NET NU monocrystalline SI cell 185W"
-      extends ModuleData(final moduleName = "NET_NU_S5_E3E",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 30.2, final IscRef = 8.54, final VmpRef = 24.0, final ImpRef = 7.71, final alphaIsc = +0.00053, final alphaVoc = -0.00340, final ns = 48, final nb = 3);
-      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
-The original data of this module are taken from
-<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
-<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NET_NU_S5_E3E.pdf\">available</a>.
-</html>"));
-    end NET_NU_S5_E3E;
-
-    record NET_NU_S0_E3E "NET NU monocrystalline SI cell 180W"
-      extends ModuleData(final moduleName = "NET_NU_S0_E3E",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 30, final IscRef = 8.37, final VmpRef = 23.7, final ImpRef = 7.6, final alphaIsc = +0.00053, final alphaVoc = -0.00350, final ns = 48, final nb = 3);
-      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
-The original data of this module are taken from
-<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
-<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NET_NU_S0_E3E.pdf\">available</a>.
-</html>"));
-    end NET_NU_S0_E3E;
-
-    record NET_NU_S0_ESZ "NET NU monocrystalline SI cell 180W"
-      extends ModuleData(final moduleName = "NET_NU_S0_ESZ",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 30, final IscRef = 8.37, final VmpRef = 23.7, final ImpRef = 7.6, final alphaIsc = +0.00053, final alphaVoc = -0.00350, final ns = 48, final nb = 3);
-      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
-The original data of this module are taken from
-<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
-<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NET_NU_S0_ESZ.pdf\">available</a>.
-</html>"));
-    end NET_NU_S0_ESZ;
-
-    record NET_NU_R5_ESZ "NET NU monocrystalline SI cell 175W"
-      extends ModuleData(final moduleName = "NET_NU_R5_ESZ",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 29.8, final IscRef = 8.29, final VmpRef = 23.2, final ImpRef = 7.55, final alphaIsc = +0.00053, final alphaVoc = -0.00350, final ns = 48, final nb = 3);
-      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
-The original data of this module are taken from
-<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
-<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NET_NU_S0_ESZ.pdf\">available</a>.
-</html>"));
-    end NET_NU_R5_ESZ;
-
-    record NET_NU_R0_E3E "NET NU monocrystalline SI cell 170W"
-      extends ModuleData(final moduleName = "NET_NU_R0_E3E",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 29.4, final IscRef = 8.37, final VmpRef = 22.4, final ImpRef = 7.6, final alphaIsc = +0.00053, final alphaVoc = -0.00350, final ns = 48, final nb = 3);
-      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
-The original data of this module are taken from
-<a href=\"http://www.neue-energie-technik.net/solarmodule/NU180W-scr.pdf\">Neue Energie Technik</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
-<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NET_NU_S0_ESZ.pdf\">available</a>.
-</html>"));
-    end NET_NU_R0_E3E;
-
     record LG360N2W_B3 "LG monocrystalline SI cell 360W"
-      extends ModuleData(final moduleName = "LG360N2W_B3",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 48.3, final IscRef = 9.84, final VmpRef = 38.4, final ImpRef = 9.39, final alphaIsc = +0.0004, final alphaVoc = -0.003, final ns = 72, final nb = 3);
+      extends ModuleData(final moduleName = "LG360N2W_B3", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 48.3, final IscRef = 9.84, final VmpRef = 38.4, final ImpRef = 9.39, final alphaIsc = +0.0004, final alphaVoc = -0.003, final ns = 72, final nb = 3);
       annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
 The original data of this module are taken from
 <a href=\"http://www.lg.com/us/business/download/resources/BT00002151/BT00002151_369.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
@@ -1742,7 +1678,7 @@ The original data of this module are taken from
     end LG360N2W_B3;
 
     record LG305N1C_B3 "LG monocrystalline SI cell 305W"
-      extends ModuleData(final moduleName = "LG305N1C_B3",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 40, final IscRef = 10.1, final VmpRef = 32.1, final ImpRef = 9.52, final alphaIsc = +0.0004, final alphaVoc = -0.0029, final ns = 72, final nb = 3);
+      extends ModuleData(final moduleName = "LG305N1C_B3", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 40, final IscRef = 10.1, final VmpRef = 32.1, final ImpRef = 9.52, final alphaIsc = +0.0004, final alphaVoc = -0.0029, final ns = 72, final nb = 3);
       annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
 The original data of this module are taken from
 <a href=\"http://www.lg.com/us/commercial/documents/lg-solar-spec-LG305N1C-B3-032315.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
@@ -1751,7 +1687,7 @@ The original data of this module are taken from
     end LG305N1C_B3;
 
     record LG300N1C_G4 "LG monocrystalline SI cell 300W"
-      extends ModuleData(final moduleName = "LG300N1C_G4",final TRef = 298.15, final irradianceRef = 1000, final VocRef = 39.8, final IscRef = 9.9, final VmpRef = 32.2, final ImpRef = 9.34, final alphaIsc = +0.0003, final alphaVoc = -0.0028, final ns = 72, final nb = 3);
+      extends ModuleData(final moduleName = "LG300N1C_G4", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 39.8, final IscRef = 9.9, final VmpRef = 32.2, final ImpRef = 9.34, final alphaIsc = +0.0003, final alphaVoc = -0.0028, final ns = 72, final nb = 3);
       annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
 The original data of this module are taken from
 <a href=\"https://d1819pwkf4ncw.cloudfront.net/files/documents/lg300n1c-g4-360889.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
@@ -1759,6 +1695,630 @@ The original data of this module are taken from
 </html>"));
     end LG300N1C_G4;
 
+    record LG335S2W_G4 "LG monocrystalline SI cell 335W"
+      extends ModuleData(
+      final moduleName = "LG335S2W_G4",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 46.2,
+      final IscRef = 9.48,
+      final VmpRef = 37.5,
+      final ImpRef = 8.94,
+      final alphaIsc = +0.0003,
+      final alphaVoc = -0.003,
+      final ns = 72,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.lg.com/us/business/download/resources/BT00002151/BT00002151_673.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG335S2W_G4.pdf\">available</a>.
+</html>"));
+    end LG335S2W_G4;
+
+    record LG340S2W_G4 "LG monocrystalline SI cell 340W"
+      extends ModuleData(
+      final moduleName = "LG340S2W_G4",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 46.4,
+      final IscRef = 9.54,
+      final VmpRef = 37.7,
+      final ImpRef = 9.02,
+      final alphaIsc = +0.0003,
+      final alphaVoc = -0.003,
+      final ns = 72,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.lg.com/us/business/download/resources/BT00002151/BT00002151_673.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG340S2W_G4.pdf\">available</a>.
+</html>"));
+    end LG340S2W_G4;
+
+    record LG285S1C_G4 "LG monocrystalline SI cell 285W"
+      extends ModuleData(
+      final moduleName = "LG285S1C_G4",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 39,
+      final IscRef = 9.43,
+      final VmpRef = 32.3,
+      final ImpRef = 8.88,
+      final alphaIsc = +0.0003,
+      final alphaVoc = -0.003,
+      final ns = 72,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.lg.com/us/business/download/resources/BT00002151/BT00002151_674.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG285S1C_G4.pdf\">available</a>.
+</html>"));
+    end LG285S1C_G4;
+
+    record LG280S1C_G4 "LG monocrystalline SI cell 280W"
+      extends ModuleData(
+      final moduleName = "LG280S1C_G4",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 39,
+      final IscRef = 9.43,
+      final VmpRef = 32.3,
+      final ImpRef = 8.88,
+      final alphaIsc = +0.0003,
+      final alphaVoc = -0.003,
+      final ns = 72,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.lg.com/us/business/download/resources/BT00002151/BT00002151_674.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG280S1C_G4.pdf\">available</a>.
+</html>"));
+    end LG280S1C_G4;
+
+    record LG275S1C_G4 "LG monocrystalline SI cell 275W"
+      extends ModuleData(
+      final moduleName = "LG275S1C_G4",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 38.7,
+      final IscRef = 9.26,
+      final VmpRef = 31.7,
+      final ImpRef = 8.68,
+      final alphaIsc = +0.0003,
+      final alphaVoc = -0.003,
+      final ns = 72,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.lg.com/us/business/download/resources/BT00002151/BT00002151_674.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG275S1C_G4.pdf\">available</a>.
+</html>"));
+    end LG275S1C_G4;
+
+    record LG375N2W_G4 "LG monocrystalline SI cell 375W"
+      extends ModuleData(
+      final moduleName = "LG375N2W_G4",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 48.3,
+      final IscRef = 10.04,
+      final VmpRef = 39.6,
+      final ImpRef = 9.5,
+      final alphaIsc = +0.0003,
+      final alphaVoc = -0.0028,
+      final ns = 72,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.lg.com/us/business/download/resources/BT00002151/BT00002151_675.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG375N2W_G4.pdf\">available</a>.
+</html>"));
+    end LG375N2W_G4;
+
+    record LG370N2W_G4 "LG monocrystalline SI cell 370W"
+      extends ModuleData(
+      final moduleName = "LG370N2W_G4",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 48,
+      final IscRef = 9.98,
+      final VmpRef = 39.2,
+      final ImpRef = 9.44,
+      final alphaIsc = +0.0003,
+      final alphaVoc = -0.0028,
+      final ns = 72,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.lg.com/us/business/download/resources/BT00002151/BT00002151_675.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG370N2W_G4.pdf\">available</a>.
+</html>"));
+    end LG370N2W_G4;
+
+    record LG365N2W_G4 "LG monocrystalline SI cell 365W"
+      extends ModuleData(
+      final moduleName = "LG365N2W_G4",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 47.7,
+      final IscRef = 9.92,
+      final VmpRef = 38.9,
+      final ImpRef = 9.39,
+      final alphaIsc = +0.0003,
+      final alphaVoc = -0.0028,
+      final ns = 72,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.lg.com/us/business/download/resources/BT00002151/BT00002151_675.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG365N2W_G4.pdf\">available</a>.
+</html>"));
+    end LG365N2W_G4;
+
+    record LG320N1C_G4 "LG monocrystalline SI cell 320W"
+      extends ModuleData(
+      final moduleName = "LG320N1C_G4",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 40.9,
+      final IscRef = 10.05,
+      final VmpRef = 33.8,
+      final ImpRef = 9.53,
+      final alphaIsc = +0.0003,
+      final alphaVoc = -0.0028,
+      final ns = 72,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.lg.com/us/business/download/resources/BT00002151/BT00002151_677.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG320N1C_G4.pdf\">available</a>.
+</html>"));
+    end LG320N1C_G4;
+
+    record LG315N1C_G4 "LG monocrystalline SI cell 315W"
+      extends ModuleData(
+      final moduleName = "LG315N1C_G4",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 40.6,
+      final IscRef = 10.02,
+      final VmpRef = 33.2,
+      final ImpRef = 9.5,
+      final alphaIsc = +0.0003,
+      final alphaVoc = -0.0028,
+      final ns = 72,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.lg.com/us/business/download/resources/BT00002151/BT00002151_677.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG315N1C_G4.pdf\">available</a>.
+</html>"));
+    end LG315N1C_G4;
+
+    record LG310N1C_G4 "LG monocrystalline SI cell 310W"
+      extends ModuleData(
+      final moduleName = "LG310N1C_G4",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 40.4,
+      final IscRef = 9.96,
+      final VmpRef = 32.8,
+      final ImpRef = 9.45,
+      final alphaIsc = +0.0003,
+      final alphaVoc = -0.0028,
+      final ns = 72,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.lg.com/us/business/download/resources/BT00002151/BT00002151_677.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG310N1C_G4.pdf\">available</a>.
+</html>"));
+    end LG310N1C_G4;
+
+    record LG305N1C_G4 "LG monocrystalline SI cell 305W"
+      extends ModuleData(
+      final moduleName = "LG305N1C_G4",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 40.1,
+      final IscRef = 9.93,
+      final VmpRef = 32.5,
+      final ImpRef = 9.39,
+      final alphaIsc = +0.0003,
+      final alphaVoc = -0.0028,
+      final ns = 72,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.lg.com/us/business/download/resources/BT00002151/BT00002151_677.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG305N1C_G4.pdf\">available</a>.
+</html>"));
+    end LG305N1C_G4;
+
+    record SW_250_MONO "Solarworld monocrystalline SI cell 250W"
+      extends ModuleData(
+      final moduleName = "SW_250_MONO",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 37.8,
+      final IscRef = 8.28,
+      final VmpRef = 31.1,
+      final ImpRef = 8.05,
+      final alphaIsc = +0.00004,
+      final alphaVoc = -0.003,
+      final ns = 60,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"https://www.solarworld-usa.com/~/media/www/files/datasheets/sunmodule-plus/sunmodule-solar-panel-250-mono-ds.pdf\">Solarworld</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SW_250_MONO.pdf\">available</a>.
+</html>"));
+    end SW_250_MONO;
+
+    record SW_285_MONO "Solarworld monocrystalline SI cell 285W"
+      extends ModuleData(
+      final moduleName = "SW_285_MONO",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 39.7,
+      final IscRef = 9.84,
+      final VmpRef = 31.3,
+      final ImpRef = 9.2,
+      final alphaIsc = +0.0004,
+      final alphaVoc = -0.003,
+      final ns = 60,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"https://www.solarworld-usa.com/~/media/www/files/datasheets/sunmodule-plus/sunmodule-solar-panel-285-mono-ds.pdf\">Solarworld</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SW_285_MONO.pdf\">available</a>.
+</html>"));
+    end SW_285_MONO;
+
+    record SW_260_POLY "Solarworld polycrystalline SI cell 260W"
+      extends ModuleData(
+      final moduleName = "SW_260_POLY",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 38.4,
+      final IscRef = 8.94,
+      final VmpRef = 31.4,
+      final ImpRef = 8.37,
+      final alphaIsc = +0.00051,
+      final alphaVoc = -0.0031,
+      final ns = 60,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"https://www.eng.sfe-solar.com/wp-content/uploads/2012/01/SolarWorld-SW260Poly-5bb_EN.pdf\">Solarworld</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SW_260_POLY.pdf\">available</a>.
+</html>"));
+    end SW_260_POLY;
+
+    record SW_290_MONO "Solarworld monocrystalline SI cell 290W"
+      extends ModuleData(
+      final moduleName = "SW_290_MONO",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 39.9,
+      final IscRef = 9.97,
+      final VmpRef = 31.4,
+      final ImpRef = 9.33,
+      final alphaIsc = +0.0004,
+      final alphaVoc = -0.003,
+      final ns = 60,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"https://www.eng.sfe-solar.com/wp-content/uploads/2016/11/SolarWorld-SW290-300-Mono_EN.pdf\">Solarworld</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SW_290_MONO.pdf\">available</a>.
+</html>"));
+    end SW_290_MONO;
+
+    record SW_395_MONO "Solarworld monocrystalline SI cell 295W"
+      extends ModuleData(
+      final moduleName = "SW_395_MONO",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 40,
+      final IscRef = 10.1,
+      final VmpRef = 31.4,
+      final ImpRef = 9.45,
+      final alphaIsc = +0.0004,
+      final alphaVoc = -0.003,
+      final ns = 60,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"https://www.eng.sfe-solar.com/wp-content/uploads/2016/11/SolarWorld-SW290-300-Mono_EN.pdf\">Solarworld</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SW_395_MONO.pdf\">available</a>.
+</html>"));
+    end SW_395_MONO;
+
+    record SW_300_MONO "Solarworld monocrystalline SI cell 300W"
+      extends ModuleData(
+      final moduleName = "SW_300_MONO",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 40.1,
+      final IscRef = 10.23,
+      final VmpRef = 31.6,
+      final ImpRef = 9.57,
+      final alphaIsc = +0.0004,
+      final alphaVoc = -0.003,
+      final ns = 60,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"https://www.eng.sfe-solar.com/wp-content/uploads/2016/11/SolarWorld-SW290-300-Mono_EN.pdf\">Solarworld</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SW_300_MONO.pdf\">available</a>.
+</html>"));
+    end SW_300_MONO;
+
+    record NU_RD260 "SHARP monocrystalline SI cell 260W"
+      extends ModuleData(
+      final moduleName = "NU_RD260",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 38.5,
+      final IscRef = 9.07,
+      final VmpRef = 31.3,
+      final ImpRef = 8.37,
+      final alphaIsc = +0.0005,
+      final alphaVoc = -0.0029,
+      final ns = 60,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"https://www.eng.sfe-solar.com/wp-content/uploads/2016/03/Datasheet_NURD260-285W_black_151027.pdf\">SHARP</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NU_RD260.pdf\">available</a>.
+</html>"));
+    end NU_RD260;
+
+    record SC_195_72M "Sunclass monocrystalline SI cell 195W"
+      extends ModuleData(
+      final moduleName = "SC_195_72M",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 45.5,
+      final IscRef = 5.63,
+      final VmpRef = 36.9,
+      final ImpRef = 5.28,
+      final alphaIsc = +0.0004,
+      final alphaVoc = -0.0029,
+      final ns = 72,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.sunclass-solar.com/fileadmin/Download-Center/Solarmodule/SunClass/en/SunClass_SC_Serie_195-205W_72M_1580x808x35_EN.pdf\">Sunclass</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SC_195_72M.pdf\">available</a>.
+</html>"));
+    end SC_195_72M;
+
+    record SC_200_72M "Sunclass monocrystalline SI cell 200W"
+      extends ModuleData(
+      final moduleName = "SC_200_72M",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 45.65,
+      final IscRef = 5.65,
+      final VmpRef = 37.3,
+      final ImpRef = 5.36,
+      final alphaIsc = +0.0004,
+      final alphaVoc = -0.0029,
+      final ns = 72,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.sunclass-solar.com/fileadmin/Download-Center/Solarmodule/SunClass/en/SunClass_SC_Serie_195-205W_72M_1580x808x35_EN.pdf\">Sunclass</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SC_200_72M.pdf\">available</a>.
+</html>"));
+    end SC_200_72M;
+
+    record SC_205_72M "Sunclass monocrystalline SI cell 205W"
+      extends ModuleData(
+      final moduleName = "SC_205_72M",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 45.75,
+      final IscRef = 5.7,
+      final VmpRef = 37.55,
+      final ImpRef = 5.46,
+      final alphaIsc = +0.0004,
+      final alphaVoc = -0.0029,
+      final ns = 72,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.sunclass-solar.com/fileadmin/Download-Center/Solarmodule/SunClass/en/SunClass_SC_Serie_195-205W_72M_1580x808x35_EN.pdf\">Sunclass</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SC_205_72M.pdf\">available</a>.
+</html>"));
+    end SC_205_72M;
+
+    record SHARP_NU_S5_E3E "SHARP NU monocrystalline SI cell 185W"
+      extends ModuleData(
+      final moduleName = "SHARP_NU_S5_E3E",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 30.2,
+      final IscRef = 8.54,
+      final VmpRef = 24.0,
+      final ImpRef = 7.71,
+      final alphaIsc = +0.00053,
+      final alphaVoc = -0.00340,
+      final ns = 48,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.smartgreenenergycompany.com/Resources/sharp-solar-nu-series.pdf\">SHARP</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SHARP_NU_S5_E3E.pdf\">available</a>.
+</html>"));
+    end SHARP_NU_S5_E3E;
+
+    record SHARP_NU_S0_E3E "SHARP NU monocrystalline SI cell 180W"
+      extends ModuleData(
+      final moduleName = "SHARP_NU_S0_E3E",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 30,
+      final IscRef = 8.37,
+      final VmpRef = 23.7,
+      final ImpRef = 7.6,
+      final alphaIsc = +0.00053,
+      final alphaVoc = -0.00350,
+      final ns = 48,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.smartgreenenergycompany.com/Resources/sharp-solar-nu-series.pdf\">SHARP</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SHARP_NU_S0_E3E.pdf\">available</a>.
+</html>"));
+    end SHARP_NU_S0_E3E;
+
+    record SHARP_NU_S0_ESZ "SHARP NU monocrystalline SI cell 180W"
+      extends ModuleData(
+      final moduleName = "SHARP_NU_S0_ESZ",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 30,
+      final IscRef = 8.23,
+      final VmpRef = 23.7,
+      final ImpRef = 7.6,
+      final alphaIsc = +0.00053,
+      final alphaVoc = -0.00350,
+      final ns = 48,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.smartgreenenergycompany.com/Resources/sharp-solar-nu-series.pdf\">SHARP</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SHARP_NU_S0_ESZ.pdf\">available</a>.
+</html>"));
+    end SHARP_NU_S0_ESZ;
+
+    record SHARP_NU_R5_ESZ "SHARP NU monocrystalline SI cell 175W"
+      extends ModuleData(final moduleName = "SHARP_NU_R5_ESZ", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 29.8, final IscRef = 8.29, final VmpRef = 23.2, final ImpRef = 7.55, final alphaIsc = +0.00053, final alphaVoc = -0.00350, final ns = 48, final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.smartgreenenergycompany.com/Resources/sharp-solar-nu-series.pdf\">SHARP</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SHARP_NU_R5_ESZ.pdf\">available</a>.
+</html>"));
+    end SHARP_NU_R5_ESZ;
+
+    record SHARP_NU_R0_E3E "SHARP NU monocrystalline SI cell 170W"
+      extends ModuleData(final moduleName = "SHARP_NU_R0_E3E", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 29.4, final IscRef = 8.37, final VmpRef = 22.4, final ImpRef = 7.6, final alphaIsc = +0.00053, final alphaVoc = -0.00350, final ns = 48, final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"http://www.smartgreenenergycompany.com/Resources/sharp-solar-nu-series.pdf\">SHARP</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SHARP_NU_R0_E3E.pdf\">available</a>.
+</html>"));
+    end SHARP_NU_R0_E3E;
+
+    record SHARP_NU_RD285 "SHARP monocrystalline SI cell 285W"
+      extends ModuleData(final moduleName = "SHARP_NU_RD285", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 39.2, final IscRef = 9.37, final VmpRef = 31.3, final ImpRef = 9.1, final alphaIsc = +0.0005, final alphaVoc = -0.0029, final ns = 60, final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"https://www.eng.sfe-solar.com/wp-content/uploads/2016/03/Datasheet_NURD260-285W_black_151027.pdf\">SHARP</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SHARP_NU_RD285.pdf\">available</a>.
+</html>"));
+    end SHARP_NU_RD285;
+
+    record SHARP_NU_RD280 "SHARP monocrystalline SI cell 280W"
+      extends ModuleData(final moduleName = "NU_RD280", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 39.2, final IscRef = 9.67, final VmpRef = 31.2, final ImpRef = 8.97, final alphaIsc = +0.0005, final alphaVoc = -0.0029, final ns = 60, final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"https://www.eng.sfe-solar.com/wp-content/uploads/2016/03/Datasheet_NURD260-285W_black_151027.pdf\">SHARP</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/NU_RD280.pdf\">available</a>.
+</html>"));
+    end SHARP_NU_RD280;
+
+    record SHARP_NU_RD260 "SHARP monocrystalline SI cell 260W"
+      extends ModuleData(final moduleName = "SHARP_NU_RD260", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 38.5, final IscRef = 9.07, final VmpRef = 31.3, final ImpRef = 8.37, final alphaIsc = +0.0005, final alphaVoc = -0.0029, final ns = 60, final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"https://www.eng.sfe-solar.com/wp-content/uploads/2016/03/Datasheet_NURD260-285W_black_151027.pdf\">SHARP</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SHARP_NU_RD260.pdf\">available</a>.
+</html>"));
+    end SHARP_NU_RD260;
+
+    record SPR_E20_327 "Sunpower monocrystalline SI cell 260W"
+      extends ModuleData(
+      final moduleName = "SPR_E20_327",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 64.9,
+      final IscRef = 6.46,
+      final VmpRef = 54.7,
+      final ImpRef = 5.98,
+      final alphaIsc = +0.00054,
+      final alphaVoc = -0.00272,
+      final ns = 96,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"https://us.sunpower.com/sites/sunpower/files/media-library/data-sheets/e-series-home-solar-panels-comparison.pdf\">Sunpower</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SPR_E20_327.pdf\">available</a>.
+</html>"));
+    end SPR_E20_327;
+
+    record SPR_E19_320 "Sunpower monocrystalline SI cell 320W"
+      extends ModuleData(
+      final moduleName = "SPR_E19_320",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 64.8,
+      final IscRef = 6.26,
+      final VmpRef = 54.7,
+      final ImpRef = 5.86,
+      final alphaIsc = +0.00056,
+      final alphaVoc = -0.00273,
+      final ns = 96,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"https://us.sunpower.com/sites/sunpower/files/media-library/data-sheets/e-series-home-solar-panels-comparison.pdf\">Sunpower</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SPR_E19_320.pdf\">available</a>.
+</html>"));
+    end SPR_E19_320;
+
+    record KPV_235_PE "Kioto polycrystalline SI cell 235W"
+      extends ModuleData(
+      final moduleName = "KPV_235_PE",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 37.24,
+      final IscRef = 8.61,
+      final VmpRef = 29.82,
+      final ImpRef = 7.97,
+      final alphaIsc = +0.0005,
+      final alphaVoc = -0.0031,
+      final ns = 60,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"https://www.enfsolar.com/Product/pdf/Crystalline/559ce7298807b.pdf\">Kioto</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/KPV_235_PE.pdf\">available</a>.
+</html>"));
+    end KPV_235_PE;
+
+    record KPV_240_PE "Kioto polycrystalline SI cell 240W"
+      extends ModuleData(
+      final moduleName = "KPV_240_PE",
+      final TRef = 298.15,
+      final irradianceRef = 1000,
+      final VocRef = 37.33,
+      final IscRef = 8.78,
+      final VmpRef = 29.87,
+      final ImpRef = 8.04,
+      final alphaIsc = +0.0005,
+      final alphaVoc = -0.0031,
+      final ns = 60,
+      final nb = 3);
+      annotation(defaultComponentName = "moduleData", defaultComponentPrefixes = "parameter", Documentation(info = "<html>
+The original data of this module are taken from
+<a href=\"https://www.enfsolar.com/Product/pdf/Crystalline/559ce7298807b.pdf\">Kioto</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"modelica://PhotoVoltaics/Resources/DataSheets/KPV_240_PE.pdf\">available</a>.
+</html>"));
+    end KPV_240_PE;
   end Records;
   annotation (
     version="0.X.X",
