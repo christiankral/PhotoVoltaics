@@ -321,7 +321,8 @@ This library provides models for the modeling and simulation of photo voltaic po
         defaultComponentPrefixes = "parameter",
         Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
         Diagram(coordinateSystem(initialScale = 0.1)),
-        experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
+        experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001),
+  __OpenModelica_simulationFlags(jacobian = "coloredNumerical", nls = "newton", s = "dassl", lv = "LOG_STATS"));
     end SimpleCell;
 
     model SimpleCellVoltageSource
@@ -348,7 +349,8 @@ This library provides models for the modeling and simulation of photo voltaic po
       annotation(
         Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
         Diagram(coordinateSystem(initialScale = 0.1)),
-        experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
+        experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001),
+  __OpenModelica_simulationFlags(jacobian = "coloredNumerical", nls = "newton", s = "dassl", lv = "LOG_STATS"));
     end SimpleCellVoltageSource;
 
     model SimpleCellIrradianceCharacteristic "Voltage current characteristic for different irradiances"
@@ -391,7 +393,8 @@ on the horizontal axis</li>
 on the horizontal axis</li>
 </ul>
 </html>"),
-        experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.0001));
+        experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.0001),
+  __OpenModelica_simulationFlags(jacobian = "coloredNumerical", nls = "newton", s = "dassl", lv = "LOG_STATS"));
     end SimpleCellIrradianceCharacteristic;
 
     model SimpleCellTemperatureCharacteristic "Voltage current characteristic for different temperatures"
@@ -438,7 +441,8 @@ on the horizontal axis</li>
 on the horizontal axis</li>
 </ul>
 </html>"),
-        experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.0001));
+        experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.0001),
+  __OpenModelica_simulationFlags(jacobian = "coloredNumerical", nls = "newton", s = "dassl", lv = "LOG_STATS"));
     end SimpleCellTemperatureCharacteristic;
 
     model SimpleModule
@@ -464,7 +468,8 @@ on the horizontal axis</li>
       connect(variableResistor.R, powerRamp.y) annotation(
         Line(points = {{51, 0}, {59, 0}}, color = {0, 0, 127}));
       annotation(
-        experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
+        experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001),
+        __OpenModelica_simulationFlags(jacobian = "coloredNumerical", nls = "newton", s = "dassl", lv = "LOG_STATS"));
     end SimpleModule;
 
     model SimpleModuleSymmetric "Simple symmetric module without freewheeling diodes"
@@ -489,7 +494,8 @@ on the horizontal axis</li>
       connect(ground.p, module.n) annotation(
         Line(points = {{0, -20}, {0, -10}}, color = {0, 0, 255}));
       annotation(
-        experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
+        experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001),
+        __OpenModelica_simulationFlags(jacobian = "coloredNumerical", nls = "newton", s = "dassl", lv = "LOG_STATS"));
     end SimpleModuleSymmetric;
 
     model SimplePlantSymmetric "Simple symmetric plant"
@@ -514,7 +520,8 @@ on the horizontal axis</li>
       connect(ground.p, plant.n) annotation(
         Line(points = {{0, -20}, {0, -10}}, color = {0, 0, 255}));
       annotation(
-        experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
+        experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001),
+        __OpenModelica_simulationFlags(jacobian = "coloredNumerical", nls = "newton", s = "dassl", lv = "LOG_STATS"));
     end SimplePlantSymmetric;
 
 model SimpleModuleShadow
@@ -528,8 +535,9 @@ model SimpleModuleShadow
     Placement(visible = true, transformation(origin = {40, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 270)));
   Sources.Blocks.PowerRamp powerRamp(duration = 0.6, height = 8, offset = -4, ref = moduleData.VmpCellRef / moduleData.ImpRef, startTime = 0.2) annotation(
     Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-parameter PhotoVoltaics.Records.SHARP_NU_S5_E3E moduleData annotation(
-    Placement(visible = true, transformation(origin = {70, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  parameter PhotoVoltaics.Records.SHARP_NU_S5_E3E moduleData annotation(
+        Placement(visible = true, transformation(origin = {70, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+
 equation
   connect(powerRamp.y, variableResistor.R) annotation(
     Line(points = {{59, 0}, {51, 0}}, color = {0, 0, 127}));
@@ -542,7 +550,8 @@ equation
   annotation(
     Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
     Diagram(coordinateSystem(initialScale = 0.1)),
-    experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001));
+    experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.001),
+  __OpenModelica_simulationFlags(jacobian = "coloredNumerical", nls = "newton", s = "dassl", lv = "LOG_STATS"));
 end SimpleModuleShadow;
 
     model SimpleModuleMP
@@ -593,7 +602,8 @@ end SimpleModuleShadow;
       annotation(
         Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
         Diagram(coordinateSystem(initialScale = 0.1)),
-        experiment(StopTime = 300, Interval = 0.1, Tolerance = 1e-06));
+        experiment(StopTime = 300, Interval = 0.1, Tolerance = 1e-06, StartTime = 0),
+  __OpenModelica_simulationFlags(jacobian = "coloredNumerical", nls = "newton", s = "dassl", lv = "LOG_STATS"));
     end SimpleModuleMP;
 
     model SimpleModuleMP3
@@ -646,7 +656,8 @@ end SimpleModuleShadow;
       annotation(
         Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
         Diagram(coordinateSystem(initialScale = 0.1)),
-        experiment(StopTime = 300, Interval = 0.1, Tolerance = 1e-06));
+        experiment(StopTime = 300, Interval = 0.1, Tolerance = 1e-06, StartTime = 0),
+  __OpenModelica_simulationFlags(jacobian = "coloredNumerical", nls = "newton", s = "dassl", lv = "LOG_STATS"));
     end SimpleModuleMP3;
     annotation(
       Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
