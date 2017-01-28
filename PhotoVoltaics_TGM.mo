@@ -109,7 +109,8 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     Modelica.Blocks.Continuous.Integrator integrator(y(unit = "J")) annotation (
       Placement(transformation(extent = {{-50, -70}, {-70, -50}})));
     PhotoVoltaics.Sources.Irradiance.Irradiance irradiance(startDay = 29, startMonth = 6,
-      startYear=2016)                                                                     annotation (
+      startYear=2016,
+      TimeZone=2)                                                                         annotation (
       Placement(visible = true, transformation(origin = {-90, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     WriteCSV writeCSV(                                                                                                                    samplePeriod = 60, inputQuantity = "power(W)",
       fileName=Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Analytical_20160629_power.csv"))                                                                annotation (
@@ -183,7 +184,8 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     PhotoVoltaics.Sources.Irradiance.Irradiance irradiance(
       startDay=04,
       startMonth=7,
-      startYear=2016)                                                                     annotation (
+      startYear=2016,
+      TimeZone=2)                                                                         annotation (
       Placement(visible = true, transformation(origin = {-90, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     WriteCSV writeCSV(                                                                                                                    samplePeriod = 60, inputQuantity = "power(W)",
       fileName=Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Analytical_20160704_power.csv"))                                                                annotation (
@@ -257,7 +259,8 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     PhotoVoltaics.Sources.Irradiance.Irradiance irradiance(
       startDay=8,
       startMonth=8,
-      startYear=2016)                                                                     annotation (
+      startYear=2016,
+      TimeZone=2)                                                                         annotation (
       Placement(visible = true, transformation(origin = {-90, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     WriteCSV writeCSV(                                                                                                                    samplePeriod = 60, inputQuantity = "power(W)",
       fileName=Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Analytical_20160808_power.csv"))                                                                annotation (
@@ -563,7 +566,9 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
       Placement(transformation(extent = {{-30, 0}, {-10, 20}})));
     Modelica.Blocks.Continuous.Integrator integrator(y(unit = "J")) annotation (
       Placement(transformation(extent = {{-50, -70}, {-70, -50}})));
-    PhotoVoltaics.Sources.Irradiance.Irradiance irradiance(startDay = 29, startMonth = 6) annotation (
+    PhotoVoltaics.Sources.Irradiance.Irradiance irradiance(startDay = 29, startMonth = 6,
+      TimeZone=2,
+      startYear=2016)                                                                     annotation (
       Placement(visible = true, transformation(origin = {-90, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     PhotoVoltaics_TGM.WriteCSV writeCSV(                                                                                                                    samplePeriod = 60, inputQuantity = "power(W)",
       fileName=Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Trina_Analytical_20160629_power.csv"))                                                                                  annotation (
@@ -634,7 +639,9 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
       Placement(transformation(extent = {{-30, 0}, {-10, 20}})));
     Modelica.Blocks.Continuous.Integrator integrator(y(unit = "J")) annotation (
       Placement(transformation(extent = {{-50, -70}, {-70, -50}})));
-    PhotoVoltaics.Sources.Irradiance.Irradiance irradiance(startDay = 29, startMonth = 6) annotation (
+    PhotoVoltaics.Sources.Irradiance.Irradiance irradiance(startDay = 29, startMonth = 6,
+      startYear=2016,
+      TimeZone=2)                                                                         annotation (
       Placement(visible = true, transformation(origin = {-90, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     PhotoVoltaics_TGM.WriteCSV writeCSV(                                                                                                                    samplePeriod = 60, inputQuantity = "power(W)",
       fileName=Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Trina_Analytical_20160704_power.csv"))                                                                                  annotation (
@@ -705,7 +712,9 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
       Placement(transformation(extent = {{-30, 0}, {-10, 20}})));
     Modelica.Blocks.Continuous.Integrator integrator(y(unit = "J")) annotation (
       Placement(transformation(extent = {{-50, -70}, {-70, -50}})));
-    PhotoVoltaics.Sources.Irradiance.Irradiance irradiance(startDay = 29, startMonth = 6) annotation (
+    PhotoVoltaics.Sources.Irradiance.Irradiance irradiance(startDay = 29, startMonth = 6,
+      startYear=2016,
+      TimeZone=2)                                                                         annotation (
       Placement(visible = true, transformation(origin = {-90, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     PhotoVoltaics_TGM.WriteCSV writeCSV(                                                                                                                    samplePeriod = 60, inputQuantity = "power(W)",
       fileName=Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Trina_Analytical_20160808_power.csv"))                                                                                  annotation (
