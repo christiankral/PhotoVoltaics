@@ -69,16 +69,16 @@ PDF files of the data sheets are provided through this library. However, the man
       extends Modelica.Icons.Contact;
       annotation (
         preferredView = "info",
-        Documentation(info = "<html>
+        Documentation(info="<html>
 <p>
 This library was developed during a diploma thesis at the
 <a href=\"http://www.tgm.ac.at\">TGM</a>
-by Jovan Brkic, Muaz Ceran, Mohamed Elmoghazy and Ramazan Kavlak under the supervision of Christian Kral.
+by Jovan Brkic, Muaz Ceran, Mohamed Elmoghazy and Ramazan Kavlak under the supervision of Christian Kral. 
+The library is hosted at <a href=\"https://github.com/christiankral/PhotoVoltaics\">GitHub</a>.
 </p>
 
 <p>
-<img src=\"modelica://PhotoVoltaics/Resources/Images/tgm.png\"
-           alt=\"tgm.png\">
+<img src=\"modelica://PhotoVoltaics/Resources/Images/tgm.png\" alt=\"tgm.png\">
 </p>
 
 <h4>Contact</h4>
@@ -114,11 +114,15 @@ Ramazan Kavlak<br>
       extends Modelica.Icons.ReleaseNotes;
       annotation (
         preferredView = "info",
-        Documentation(info = "<html>
+        Documentation(info="<html>
 
 <h5>Version 0.X.X, 2017-XX-XX</h5>
 <ul>
 <li>Prevented MP tracker from controlling negative voltages according to #5</li>
+<li>Tuned simulation settings to have most simulations run in OpenModelica</li>
+<li>Added simulation models including measurement data to 
+    <a href=\"modelica://PhotoVoltaics_TGM\">PhotoVoltaics_TGM</a></li> 
+<li>Fixed bug in string of one parameter record</li>
 </ul>
 
 <h5>Version 0.2.1, 2017-01-02</h5>
