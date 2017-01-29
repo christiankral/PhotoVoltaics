@@ -529,7 +529,11 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
       Line(points = {{-12, -90}, {-28, -90}, {-28, -1}}, color = {0, 0, 127}));
     connect(irradianceTable.y[1], plant.variableIrradiance) annotation (Line(points={{-79,-10},{-70.5,-10},{-62,-10}}, color={0,0,127}));
     annotation (
-      experiment(StopTime = 86400, Interval = 60, Tolerance = 1e-08, __Dymola_Algorithm = "Rkfix4"),
+      experiment(
+        StopTime=5.8752e+06,
+        Interval=60,
+        Tolerance=1e-08,
+        __Dymola_Algorithm="Rkfix4"),
       Documentation(revisions = "<html>
 </html>", info = "<html>
 <p>This example is based on weather data taken from 
