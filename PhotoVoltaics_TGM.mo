@@ -34,8 +34,7 @@ package PhotoVoltaics_TGM
       Placement(transformation(extent = {{-30, 0}, {-10, 20}})));
     Modelica.Blocks.Continuous.Integrator integrator(y(unit = "J")) annotation (
       Placement(transformation(extent = {{-50, -70}, {-70, -50}})));
-    WriteCSV writeCSV(                                                                                                                       inputQuantity = "energy(Ws)", fileName=csvFileName)
-                                                                                                                                                                          annotation (
+    WriteCSV writeCSV(inputQuantity = "energy(Ws)", fileName=csvFileName) annotation (
       Placement(transformation(extent = {{-80, -70}, {-100, -50}})));
   equation
     connect(HDirTil.H, G.u2) annotation (
@@ -1505,10 +1504,10 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
       Diagram(coordinateSystem(preserveAspectRatio = false)));
   end WriteCSV;
   annotation (
-    version = "0.X.X",
+    version = "0.3.0",
     versionBuild = 1,
-    versionDate = "2017-XX-XX",
-    uses(Modelica(version = "3.2.2"), Buildings(version = "4.0.0"), PhotoVoltaics(version = "0.X.X"), PhotoVoltaics_TGM(version = "0.X.X")),
+    versionDate = "2017-01-29",
+    uses(Modelica(version = "3.2.2"), Buildings(version = "4.0.0"), PhotoVoltaics(version = "0.3.0")),
     Documentation(info="<html>
 <p>This library is based on the 
 <a href=\"https://github.com/christiankral/PhotoVoltaics\">PhotoVoltaics</a> and the 
