@@ -191,7 +191,7 @@ This library provides models for the modeling and simulation of photo voltaic po
         Placement(transformation(extent = {{60, -70}, {80, -50}})));
       Modelica.Electrical.Analog.Basic.Ground groundm annotation (
         Placement(transformation(extent = {{80, -90}, {100, -70}})));
-      Components.Diodes.Diode2Module diodexm(m = 40 / 25.69, useHeatPort = true, nsModule = nsModule, npModule = npModule, ns = ns) annotation (
+      PhotoVoltaics.Components.Diodes.Diode2Module diodexm(m = 40 / 25.69, useHeatPort = true, nsModule = nsModule, npModule = npModule, ns = ns) annotation (
         Placement(transformation(extent = {{60, 20}, {80, 40}})));
     equation
       connect(rampVoltage.p, zDiode.p) annotation (
@@ -221,7 +221,7 @@ This library provides models for the modeling and simulation of photo voltaic po
 
     model SinglePhaseVoltageControlledConverter "Test of voltage current controlled converter"
       extends Modelica.Icons.Example;
-      Components.SinglePhaseVoltageControlledConverter converter annotation (
+      PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
         Placement(transformation(extent = {{-10, -10}, {10, 10}})));
       Modelica.Electrical.Analog.Sources.ConstantCurrent constantCurrent(I = 1) annotation (
         Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin = {-40, 0})));
@@ -254,7 +254,7 @@ This library provides models for the modeling and simulation of photo voltaic po
 
     model MultiPhaseVoltageControlledConverter "Test of voltage current controlled converter"
       extends Modelica.Icons.Example;
-      Components.MultiPhaseVoltageControlledConverter converter annotation (
+      PhotoVoltaics.Components.MultiPhaseVoltageControlledConverter converter annotation (
         Placement(transformation(extent = {{-10, 10}, {10, 30}})));
       Modelica.Electrical.Analog.Sources.ConstantCurrent constantCurrent(I = 1) annotation (
         Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin = {-40, 20})));
@@ -300,6 +300,7 @@ This library provides models for the modeling and simulation of photo voltaic po
         experiment(StopTime = 3.1536e+07, Interval = 60, Tolerance = 1e-06));
     end TestIrradiance;
   end ComponentTesting;
+
 
   package Examples "Examples"
     extends Modelica.Icons.ExamplesPackage;
@@ -372,7 +373,7 @@ This library provides models for the modeling and simulation of photo voltaic po
         Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
       Sources.Blocks.TriangleAndStep triangleAndStep(T = 1, stepHeight = 1000, triangleHeight = 8, triangleOffset = -4) annotation (
         Placement(visible = true, transformation(origin = {-60, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      Components.Blocks.Power10 power10(k = moduleData.VocCellRef / moduleData.IscRef) annotation (
+      PhotoVoltaics.Components.Blocks.Power10 power10(k = moduleData.VocCellRef / moduleData.IscRef) annotation (
         Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
       parameter PhotoVoltaics.Records.SHARP_NU_S5_E3E moduleData annotation (
         Placement(visible = true, transformation(origin = {70, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -416,7 +417,7 @@ on the horizontal axis</li>
         Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
       Sources.Blocks.TriangleAndStep triangleAndStep(T = 1, triangleHeight = 8, triangleOffset = -4, stepNumber = 5, stepOffset = 293.15 - 40, stepHeight = 60) annotation (
         Placement(visible = true, transformation(origin = {-70, -2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      Components.Blocks.Power10 power10(k = moduleData.VocCellRef / moduleData.IscRef) annotation (
+      PhotoVoltaics.Components.Blocks.Power10 power10(k = moduleData.VocCellRef / moduleData.IscRef) annotation (
         Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
       Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature prescribedTemperature annotation (
         Placement(transformation(extent = {{-40, 0}, {-20, 20}})));
@@ -484,7 +485,7 @@ on the horizontal axis</li>
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground ground annotation (
         Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      Components.SimpleModuleSymmetric module(T = 298.15, moduleData = moduleData) annotation (
+      PhotoVoltaics.Components.SimpleModuleSymmetric module(T = 298.15, moduleData = moduleData) annotation (
         Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
       Sources.Blocks.PowerRamp powerRamp(duration = 0.6, height = 8, offset = -4, ref = moduleData.VmpCellRef / moduleData.ImpRef, startTime = 0.2) annotation (
         Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
@@ -510,7 +511,7 @@ on the horizontal axis</li>
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground ground annotation (
         Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      Components.SimplePlantSymmetric plant(moduleData = moduleData, T = 298.15, nsModule = 10, npModule = 2) annotation (
+      PhotoVoltaics.Components.SimplePlantSymmetric plant(moduleData = moduleData, T = 298.15, nsModule = 10, npModule = 2) annotation (
         Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
       Sources.Blocks.PowerRamp powerRamp(duration = 0.6, height = 8, offset = -4, ref = moduleData.VmpCellRef / moduleData.ImpRef, startTime = 0.2) annotation (
         Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
@@ -536,7 +537,7 @@ on the horizontal axis</li>
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground ground annotation (
         Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      Components.SimpleModule module(moduleData = moduleData, T = 298.15, shadow = cat(1, fill(0.2, 1), fill(0, moduleData.ns - 1)), cell(v(start = zeros(moduleData.ns))), diode(i(start = fill(1E-11, moduleData.nb)))) annotation (
+      PhotoVoltaics.Components.SimpleModule module(moduleData = moduleData, T = 298.15, shadow = cat(1, fill(0.2, 1), fill(0, moduleData.ns - 1)), cell(v(start = zeros(moduleData.ns))), diode(i(start = fill(1E-11, moduleData.nb)))) annotation (
         Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
       Modelica.Electrical.Analog.Basic.VariableResistor variableResistor annotation (
         Placement(visible = true, transformation(origin = {40, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 270)));
@@ -564,13 +565,13 @@ on the horizontal axis</li>
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground groundDC annotation (
         Placement(visible = true, transformation(origin = {-40, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      Components.SimpleModuleSymmetric module(moduleData = moduleData, T = 298.15, useConstantIrradiance = false) annotation (
+      PhotoVoltaics.Components.SimpleModuleSymmetric module(moduleData = moduleData, T = 298.15, useConstantIrradiance = false) annotation (
         Placement(visible = true, transformation(origin = {-40, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
       Modelica.Blocks.Sources.Ramp ramp(duration = 100, startTime = 100, height = 800, offset = 200) annotation (
         Placement(transformation(extent = {{-80, -10}, {-60, 10}})));
-      Components.SinglePhaseVoltageControlledConverter converter annotation (
+      PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
         Placement(transformation(extent = {{20, -10}, {40, 10}})));
-      Components.Blocks.MPTrackerSample mpTracker(VmpRef = moduleData.VmpRef, ImpRef = moduleData.ImpRef) annotation (
+      PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = moduleData.VmpRef, ImpRef = moduleData.ImpRef) annotation (
         Placement(transformation(extent = {{0, -60}, {20, -40}})));
       Modelica.Electrical.QuasiStationary.SinglePhase.Basic.Ground groundAC annotation (
         Placement(transformation(extent = {{70, -40}, {90, -20}})));
@@ -616,13 +617,13 @@ on the horizontal axis</li>
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground groundDC annotation (
         Placement(visible = true, transformation(origin = {-40, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      Components.SimpleModuleSymmetric module(moduleData = moduleData, T = 298.15, useConstantIrradiance = false) annotation (
+      PhotoVoltaics.Components.SimpleModuleSymmetric module(moduleData = moduleData, T = 298.15, useConstantIrradiance = false) annotation (
         Placement(visible = true, transformation(origin = {-40, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
       Modelica.Blocks.Sources.Ramp ramp(duration = 100, startTime = 100, height = 800, offset = 200) annotation (
         Placement(transformation(extent = {{-80, -10}, {-60, 10}})));
-      Components.MultiPhaseVoltageControlledConverter converter annotation (
+      PhotoVoltaics.Components.MultiPhaseVoltageControlledConverter converter annotation (
         Placement(transformation(extent = {{20, -10}, {40, 10}})));
-      Components.Blocks.MPTrackerSample mpTracker(VmpRef = moduleData.VmpRef, ImpRef = moduleData.ImpRef) annotation (
+      PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = moduleData.VmpRef, ImpRef = moduleData.ImpRef) annotation (
         Placement(transformation(extent = {{0, -60}, {20, -40}})));
       Modelica.Electrical.QuasiStationary.SinglePhase.Basic.Ground groundAC annotation (
         Placement(transformation(extent = {{70, -70}, {90, -50}})));
@@ -669,6 +670,7 @@ on the horizontal axis</li>
       Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
       Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})));
   end Examples;
+
 
   package Components "Components"
     extends Modelica.Icons.Package;
