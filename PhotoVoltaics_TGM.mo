@@ -87,6 +87,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
 </html>"));
   end TGM_Comax_WeatherData_OneYear;
 
+
   model TGM_Comax_Analytical_20160629 "Analytical sun model on 2016-06-29; Comax modules at TGM building in Vienna, Austria"
     extends Modelica.Icons.Example;
     parameter Integer nsModule = 6 "Number of series connected modules";
@@ -357,7 +358,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     connect(writeCSV.u, integrator.y) annotation(
       Line(points = {{-78, -60}, {-71, -60}}, color = {0, 0, 127}));
     annotation(
-      experiment(StopTime = 3.1536e+07, Interval = 60, Tolerance = 1e-06, StartTime = 0),
+      experiment(StopTime = 3.1536e+07, Interval = 900, Tolerance = 1e-06, StartTime = 0),
       Documentation(revisions = "<html>
 </html>", info = "<html>
 <p>This example is based on weather data taken from 
@@ -371,6 +372,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
 </html>"),
   __OpenModelica_simulationFlags(cpu = "()", jacobian = "coloredNumerical", s = "dassl", lv = "LOG_STATS"));
   end TGM_Comax_Analytical_2016;
+
 
   model TGM_Comax_Measurement_20160629 "Measured irradiance model on 2016-06-29; Comax modules at TGM building in Vienna, Austria"
     extends Modelica.Icons.Example;
@@ -1036,7 +1038,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     connect(writeCSV.u, integrator.y) annotation(
       Line(points = {{-78, -60}, {-71, -60}}, color = {0, 0, 127}));
     annotation(
-      experiment(StopTime = 3.1536e+07, Interval = 60, Tolerance = 1e-06, StartTime = 0),
+      experiment(StopTime = 3.1536e+07, Interval = 900, Tolerance = 1e-06, StartTime = 0),
       Documentation(revisions = "<html>
 </html>", info = "<html>
 <p>This example is based on weather data taken from 
@@ -1050,6 +1052,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
 </html>"),
   __OpenModelica_simulationFlags(cpu = "()", jacobian = "coloredNumerical", s = "dassl", lv = "LOG_STATS"));
   end TGM_Trina_Analytical_2016;
+
 
   model TGM_Trina_Measurement_20160629 "Measured irradiance model on 2016-06-29; Trina modules at TGM building in Vienna, Austria"
     extends Modelica.Icons.Example;

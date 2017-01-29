@@ -114,7 +114,14 @@ Ramazan Kavlak<br>
       extends Modelica.Icons.ReleaseNotes;
       annotation (
         preferredView = "info",
-        Documentation(info="<html>
+        Documentation(info= "<html>
+
+<h5>Version 0.X.X, 2017-XX-XX</h5>
+<ul>
+<li>Used full qualified Modelica class names in examples</li>
+<li>Reduced tolerance of analytical models in PhotoVoltaics_TGM to avoid
+    numerical problems</li>
+</ul>
 
 <h5>Version 0.3.1, 2017-01-29</h5>
 <ul>
