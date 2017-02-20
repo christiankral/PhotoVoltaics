@@ -1,3 +1,4 @@
+within ;
 package PhotoVoltaics
   extends Modelica.Icons.Package;
 
@@ -228,7 +229,8 @@ This library provides models for the modeling and simulation of photo voltaic po
         Diagram(coordinateSystem(preserveAspectRatio = false)));
     end DiodeCompare;
 
-    model SinglePhaseVoltageControlledConverter "Test of voltage current controlled converter"
+    model SinglePhaseVoltageControlledConverter
+      "Test of voltage current controlled converter"
       extends Modelica.Icons.Example;
       PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
         Placement(transformation(extent = {{-10, -10}, {10, 10}})));
@@ -261,7 +263,8 @@ This library provides models for the modeling and simulation of photo voltaic po
         experiment(StopTime = 180));
     end SinglePhaseVoltageControlledConverter;
 
-    model MultiPhaseVoltageControlledConverter "Test of voltage current controlled converter"
+    model MultiPhaseVoltageControlledConverter
+      "Test of voltage current controlled converter"
       extends Modelica.Icons.Example;
       PhotoVoltaics.Components.MultiPhaseVoltageControlledConverter converter annotation (
         Placement(transformation(extent = {{-10, 10}, {10, 30}})));
@@ -309,7 +312,6 @@ This library provides models for the modeling and simulation of photo voltaic po
         experiment(StopTime = 3.1536e+07, Interval = 60, Tolerance = 1e-06));
     end TestIrradiance;
   end ComponentTesting;
-
 
   package Examples "Examples"
     extends Modelica.Icons.ExamplesPackage;
@@ -372,7 +374,8 @@ This library provides models for the modeling and simulation of photo voltaic po
         __OpenModelica_simulationFlags(jacobian = "coloredNumerical", nls = "newton", s = "dassl", lv = "LOG_STATS"));
     end SimpleCellVoltageSource;
 
-    model SimpleCellIrradianceCharacteristic "Voltage current characteristic for different irradiances"
+    model SimpleCellIrradianceCharacteristic
+      "Voltage current characteristic for different irradiances"
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground ground annotation (
         Placement(visible = true, transformation(origin = {0, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -416,7 +419,8 @@ on the horizontal axis</li>
         __OpenModelica_simulationFlags(jacobian = "coloredNumerical", nls = "newton", s = "dassl", lv = "LOG_STATS"));
     end SimpleCellIrradianceCharacteristic;
 
-    model SimpleCellTemperatureCharacteristic "Voltage current characteristic for different temperatures"
+    model SimpleCellTemperatureCharacteristic
+      "Voltage current characteristic for different temperatures"
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground ground annotation (
         Placement(visible = true, transformation(origin = {0, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -490,7 +494,8 @@ on the horizontal axis</li>
         __OpenModelica_simulationFlags(jacobian = "coloredNumerical", nls = "newton", s = "dassl", lv = "LOG_STATS"));
     end SimpleModule;
 
-    model SimpleModuleSymmetric "Simple symmetric module without freewheeling diodes"
+    model SimpleModuleSymmetric
+      "Simple symmetric module without freewheeling diodes"
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground ground annotation (
         Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -732,33 +737,129 @@ on the horizontal axis</li>
         experiment(StopTime = 300, Interval = 0.1, Tolerance = 1e-06, StartTime = 0),
         __OpenModelica_simulationFlags(jacobian = "coloredNumerical", nls = "newton", s = "dassl", lv = "LOG_STATS"));
     end SimpleModuleMP3;
+
+    model SimpleModuleMultiPhase
+
+      extends Modelica.Icons.Example;
+    final constant Real pi=2*Modelica.Math.asin(1.0);
+
+      Modelica.Electrical.Analog.Basic.Ground groundDC annotation (
+        Placement(visible = true, transformation(origin={-60,-30},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      PhotoVoltaicsbackup.Components.SimpleModuleSymmetric module(
+        moduleData=moduleData,
+        T=298.15,
+        useConstantIrradiance=false) annotation (Placement(visible=true,
+            transformation(
+            origin={-60,0},
+            extent={{-10,10},{10,-10}},
+            rotation=-90)));
+      PhotoVoltaicsbackup.Components.Blocks.MPTrackerSample mpTracker(VmpRef=
+            moduleData.VmpRef, ImpRef=moduleData.ImpRef)
+        annotation (Placement(transformation(extent={{-30,-60},{-10,-40}})));
+      Modelica.Electrical.Analog.Sensors.PowerSensor powerSensor annotation (
+        Placement(transformation(extent={{-40,10},{-20,30}})));
+      parameter PhotoVoltaicsbackup.Records.SHARP_NU_S5_E3E moduleData
+        annotation (Placement(transformation(extent={{40,62},{60,82}})));
+      Modelica.Electrical.MultiPhase.Basic.Star star annotation (Placement(
+            transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={66,-50})));
+      Modelica.Electrical.Analog.Basic.Ground ground
+        annotation (Placement(transformation(extent={{56,-86},{76,-66}})));
+      Modelica.Electrical.MultiPhase.Basic.Resistor resistor(R={10,10,10})
+        annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={90,-20})));
+      Modelica.Electrical.MultiPhase.Sources.CosineVoltage cosineVoltage(
+        V={400*sqrt(2)/sqrt(3),400*sqrt(2)/sqrt(3),400*sqrt(2)/sqrt(3)},
+        freqHz={50,50,50},
+        phase={0,-pi*2/3,pi*2/3})                      annotation (Placement(
+            transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={66,-20})));
+      Modelica.Blocks.Sources.Ramp ramp(duration = 100, startTime = 100, height = 800, offset = 200) annotation (
+        Placement(transformation(extent={{-98,-10},{-78,10}})));
+      PhotoVoltaicsbackup.Components.MultiPhaseConverter converter
+        annotation (Placement(transformation(extent={{0,-10},{20,10}})));
+      Modelica.Electrical.MultiPhase.Sensors.PowerSensor powerSensor1
+        annotation (Placement(transformation(extent={{30,-10},{50,10}})));
+      Modelica.Blocks.Sources.Constant powerfactor(k=0.9)
+        annotation (Placement(transformation(extent={{-10,-90},{10,-70}})));
+    equation
+      connect(groundDC.p,module. n) annotation (
+        Line(points={{-60,-20},{-60,-10}},      color = {0, 0, 255}));
+      connect(module.p,powerSensor. pc) annotation (
+        Line(points={{-60,10},{-60,10},{-60,20},{-40,20}},          color = {0, 0, 255}));
+      connect(mpTracker.power,powerSensor. power) annotation (
+        Line(points={{-32,-50},{-32,-50},{-38,-50},{-38,9}},        color = {0, 0, 127}));
+      connect(powerSensor.pc,powerSensor. pv) annotation (
+        Line(points={{-40,20},{-40,30},{-30,30}},        color = {0, 0, 255}));
+      connect(powerSensor.nv,groundDC. p) annotation (
+        Line(points={{-30,10},{-30,10},{-30,-18},{-30,-20},{-60,-20}},            color = {0, 0, 255}));
+      connect(ground.p,star. pin_n)
+        annotation (Line(points={{66,-66},{66,-60}},        color={0,0,255}));
+      connect(cosineVoltage.plug_n,star. plug_p)
+        annotation (Line(points={{66,-30},{66,-36},{66,-40}}, color={0,0,255}));
+      connect(module.variableIrradiance, ramp.y) annotation (Line(points={{-72,
+              2.22045e-015},{-73.5,2.22045e-015},{-73.5,0},{-77,0}}, color={0,0,127}));
+      connect(powerSensor.nc, converter.dc_p) annotation (Line(points={{-20,20},{
+              -10,20},{0,20},{0,10}}, color={0,0,255}));
+      connect(converter.dc_n, groundDC.p)
+        annotation (Line(points={{0,-10},{0,-20},{-60,-20}}, color={0,0,255}));
+      connect(converter.vDCRef, mpTracker.vRef)
+        annotation (Line(points={{4,-12},{4,-50},{-9,-50}},   color={0,0,127}));
+      connect(converter.ac, powerSensor1.pc)
+        annotation (Line(points={{20,0},{24,0},{30,0}}, color={0,0,255}));
+      connect(powerSensor1.nc, cosineVoltage.plug_p) annotation (Line(points={{50,0},
+              {50,0},{64,0},{66,0},{66,-10}}, color={0,0,255}));
+      connect(powerSensor1.pv, cosineVoltage.plug_p)
+        annotation (Line(points={{40,10},{66,10},{66,-10}}, color={0,0,255}));
+      connect(resistor.plug_n, star.plug_p)
+        annotation (Line(points={{90,-30},{90,-40},{66,-40}}, color={0,0,255}));
+      connect(powerSensor1.nv, star.plug_p) annotation (Line(points={{40,-10},{40,
+              -10},{40,-32},{40,-40},{66,-40}}, color={0,0,255}));
+      connect(powerfactor.y, converter.powerfactor)
+        annotation (Line(points={{11,-80},{16,-80},{16,-12}}, color={0,0,127}));
+      connect(resistor.plug_p, cosineVoltage.plug_p) annotation (Line(points={{90,-10},
+              {90,0},{66,0},{66,-10}}, color={0,0,255}));
+      annotation (
+          Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,
+                100}})));
+    end SimpleModuleMultiPhase;
     annotation (
       Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
       Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})));
   end Examples;
-
 
   package Components "Components"
     extends Modelica.Icons.Package;
 
     model SimpleCell
       extends PhotoVoltaics.Interfaces.PartialCell(signalCurrent(final irradianceRef = moduleData.irradianceRef, final alphaRef = moduleData.alphaIsc, final IRef = IphRef), diode(final Bv = moduleData.BvCell, final Ibv = moduleData.Ibv, final Nbv = moduleData.Nbv, final VRef = moduleData.VocCellRef, final IRef = moduleData.IscRef, final alphaI = moduleData.alphaIsc, final alphaV = moduleData.alphaVoc, final R = 1E8, final m = m, final ns = 1, final nsModule = 1, final npModule = 1));
-      final parameter Real m(start = 2, fixed = false) "Ideality factor of diode";
-      final parameter Modelica.SIunits.Current IsdRef(start = 1E-4, fixed = false) "Reference saturation current of cell";
-      final parameter Modelica.SIunits.Current IphRef = moduleData.IscRef "Reference photo current of cell";
+      final parameter Real m(start = 2, fixed = false)
+        "Ideality factor of diode";
+      final parameter Modelica.SIunits.Current IsdRef(start = 1E-4, fixed = false)
+        "Reference saturation current of cell";
+      final parameter Modelica.SIunits.Current IphRef = moduleData.IscRef
+        "Reference photo current of cell";
     initial equation
       IphRef = IsdRef * (exp(moduleData.VocCellRef / m / moduleData.VtCellRef) - 1);
       IphRef = IsdRef * (exp(moduleData.VmpCellRef / m / moduleData.VtCellRef) - 1) + moduleData.ImpRef;
       annotation (
         defaultComponentName = "cell",
-        Icon(coordinateSystem, graphics={  Polygon(points = {{-80, 60}, {-60, 80}, {60, 80}, {80, 60}, {80, -60}, {60, -80}, {-60, -80}, {-80, -60}, {-80, 60}}, pattern = LinePattern.None, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid), Line(points = {{-40, 80}, {-40, -80}}, color = {255, 255, 255}), Line(points = {{40, 80}, {40, -80}}, color = {255, 255, 255}), Text(extent = {{-150, -150}, {150, -110}}, textString = "%name", lineColor = {0, 0, 255})}));
+        Icon(coordinateSystem, graphics={  Polygon(points = {{-80, 60}, {-60, 80}, {60, 80}, {80, 60}, {80, -60}, {60, -80}, {-60, -80}, {-80, -60}, {-80, 60}}, pattern = LinePattern.None, fillColor = {85, 85, 255},
+                fillPattern =                                                                                                    FillPattern.Solid), Line(points = {{-40, 80}, {-40, -80}}, color = {255, 255, 255}), Line(points = {{40, 80}, {40, -80}}, color = {255, 255, 255}), Text(extent = {{-150, -150}, {150, -110}}, textString = "%name", lineColor = {0, 0, 255})}));
     end SimpleCell;
 
     model SimpleModule "Simple module consisting of series connected cells"
       extends PhotoVoltaics.Interfaces.PartialComponent;
-      parameter Real shadow[moduleData.ns] = zeros(moduleData.ns) "Shadow vector based on: 0 = full sun, 1 = full shadow";
+      parameter Real shadow[moduleData.ns] = zeros(moduleData.ns)
+        "Shadow vector based on: 0 = full sun, 1 = full shadow";
       SimpleCell cell[moduleData.ns](final useHeatPort = fill(useHeatPort, moduleData.ns), final T = fill(T, moduleData.ns), final constantIrradiance = fill(constantIrradiance, moduleData.ns), final moduleData = fill(moduleData, moduleData.ns), final useConstantIrradiance = fill(false, moduleData.ns),
-        final shadow=shadow)                                                                                                                                                                                                         annotation (
+        final shadow=shadow)                                                                                                     annotation (
         Placement(transformation(extent = {{-10, -10}, {10, 10}})));
       Modelica.Thermal.HeatTransfer.Components.ThermalCollector collectorModule(final m = moduleData.ns) if useHeatPort annotation (
         Placement(transformation(extent = {{-10, -60}, {10, -40}})));
@@ -800,73 +901,106 @@ on the horizontal axis</li>
       connect(replicator.y, cell.variableIrradiance) annotation (Line(points={{0,29},{0,20.5},{0,12}}, color={0,0,127}));
       annotation (
         defaultComponentName = "module",
-        Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor = {0, 0, 0}, fillPattern = FillPattern.VerticalCylinder, extent = {{-76, 76}, {76, -76}}, fillColor = {85, 85, 255}), Line(points = {{-80, 0}, {80, 0}}, color = {255, 255, 255}), Rectangle(extent = {{-84, 84}, {84, -84}}, lineColor = {0, 0, 0}), Polygon(points = {{-84, 76}, {-76, 84}, {-68, 76}, {-76, 68}, {-84, 76}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Line(points = {{-24, 76}, {-24, -76}}, color = {255, 255, 255}), Polygon(points = {{-8, 76}, {0, 84}, {8, 76}, {0, 68}, {-8, 76}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{68, 76}, {76, 84}, {84, 76}, {76, 68}, {68, 76}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{68, 0}, {76, 8}, {84, 0}, {76, -8}, {68, 0}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{68, -76}, {76, -68}, {84, -76}, {76, -84}, {68, -76}}, fillColor = {255, 255, 255},
-                fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, -76}, {-76, -68}, {-68, -76}, {-76, -84}, {-84, -76}}, fillColor = {255, 255, 255},
-                fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Line(points = {{-54, 76}, {-54, -76}}, color = {255, 255, 255}), Polygon(points = {{-84, 0}, {-76, 8}, {-68, 0}, {-76, -8}, {-84, 0}}, fillColor = {255, 255, 255},
-                fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-8, 0}, {0, 8}, {8, 0}, {0, -8}, {-8, 0}}, fillColor = {255, 255, 255},
-                fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-8, -76}, {0, -68}, {8, -76}, {0, -84}, {-8, -76}}, fillColor = {255, 255, 255},
-                fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Line(points = {{0, 76}, {0, -76}}, color = {255, 255, 255}), Line(points = {{24, 76}, {24, -76}}, color = {255, 255, 255}), Line(points = {{54, 76}, {54, -76}}, color = {255, 255, 255}), Text(extent = {{-150, -150}, {150, -110}}, textString = "%name", lineColor = {0, 0, 255})}));
+        Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor = {0, 0, 0},
+                fillPattern =                                                                                          FillPattern.VerticalCylinder, extent = {{-76, 76}, {76, -76}}, fillColor = {85, 85, 255}), Line(points = {{-80, 0}, {80, 0}}, color = {255, 255, 255}), Rectangle(extent = {{-84, 84}, {84, -84}}, lineColor = {0, 0, 0}), Polygon(points = {{-84, 76}, {-76, 84}, {-68, 76}, {-76, 68}, {-84, 76}}, fillColor = {255, 255, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, pattern = LinePattern.None), Line(points = {{-24, 76}, {-24, -76}}, color = {255, 255, 255}), Polygon(points = {{-8, 76}, {0, 84}, {8, 76}, {0, 68}, {-8, 76}}, fillColor = {255, 255, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{68, 76}, {76, 84}, {84, 76}, {76, 68}, {68, 76}}, fillColor = {255, 255, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{68, 0}, {76, 8}, {84, 0}, {76, -8}, {68, 0}}, fillColor = {255, 255, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{68, -76}, {76, -68}, {84, -76}, {76, -84}, {68, -76}}, fillColor = {255, 255, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, -76}, {-76, -68}, {-68, -76}, {-76, -84}, {-84, -76}}, fillColor = {255, 255, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, pattern = LinePattern.None), Line(points = {{-54, 76}, {-54, -76}}, color = {255, 255, 255}), Polygon(points = {{-84, 0}, {-76, 8}, {-68, 0}, {-76, -8}, {-84, 0}}, fillColor = {255, 255, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-8, 0}, {0, 8}, {8, 0}, {0, -8}, {-8, 0}}, fillColor = {255, 255, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-8, -76}, {0, -68}, {8, -76}, {0, -84}, {-8, -76}}, fillColor = {255, 255, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, pattern = LinePattern.None), Line(points = {{0, 76}, {0, -76}}, color = {255, 255, 255}), Line(points = {{24, 76}, {24, -76}}, color = {255, 255, 255}), Line(points = {{54, 76}, {54, -76}}, color = {255, 255, 255}), Text(extent = {{-150, -150}, {150, -110}}, textString = "%name", lineColor = {0, 0, 255})}));
     end SimpleModule;
 
-    model SimpleModuleSymmetric "Simple module consisting of symmetric series connected cells"
+    model SimpleModuleSymmetric
+      "Simple module consisting of symmetric series connected cells"
       extends PhotoVoltaics.Interfaces.PartialCell(diode(final m = m, final R = 1E8, final Bv = moduleData.BvCell, final Ibv = moduleData.Ibv, final Nbv = moduleData.Nbv, final IRef = moduleData.IscRef, final alphaI = moduleData.alphaIsc, final alphaV = moduleData.alphaVoc, final ns = moduleData.ns, final VRef = moduleData.VocCellRef, final nsModule = 1, final npModule = 1), signalCurrent(final IRef = IphRef, final irradianceRef = moduleData.irradianceRef, final alphaRef = moduleData.alphaIsc));
 
-      final parameter Real m(start = 2, fixed = false) "Ideality factor of diode";
-      final parameter Modelica.SIunits.Current IsdRef(start = 1E-4, fixed = false) "Reference saturation current of cell";
-      final parameter Modelica.SIunits.Current IphRef = moduleData.IscRef "Reference photo current of cell";
+      final parameter Real m(start = 2, fixed = false)
+        "Ideality factor of diode";
+      final parameter Modelica.SIunits.Current IsdRef(start = 1E-4, fixed = false)
+        "Reference saturation current of cell";
+      final parameter Modelica.SIunits.Current IphRef = moduleData.IscRef
+        "Reference photo current of cell";
       Modelica.SIunits.Voltage vCell = v / moduleData.ns "Cell voltage";
       Modelica.SIunits.Current iCell = i "Cell current";
-      Modelica.SIunits.Current iCellGenerating = -iCell "Negative cell current (generating)";
+      Modelica.SIunits.Current iCellGenerating = -iCell
+        "Negative cell current (generating)";
       Modelica.SIunits.Power powerCell = vCell * iCell "Cell power";
-      Modelica.SIunits.Power powerCellGenerating = vCell * iCellGenerating "Negative power consumption (generating)";
+      Modelica.SIunits.Power powerCellGenerating = vCell * iCellGenerating
+        "Negative power consumption (generating)";
     initial equation
       IphRef = IsdRef * (exp(moduleData.VocCellRef / m / moduleData.VtCellRef) - 1);
       IphRef = IsdRef * (exp(moduleData.VmpCellRef / m / moduleData.VtCellRef) - 1) + moduleData.ImpRef;
       annotation (
         defaultComponentName = "module",
-        Icon(graphics={  Rectangle(lineColor = {0, 0, 0}, fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}, fillColor = {85, 85, 255}), Line(points = {{-80, 0}, {80, 0}}, color = {255, 255, 255}), Rectangle(extent = {{-84, 84}, {84, -84}}, lineColor = {0, 0, 0}), Polygon(points = {{-84, 76}, {-76, 84}, {-68, 76}, {-76, 68}, {-84, 76}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Line(points = {{-24, 76}, {-24, -76}}, color = {255, 255, 255}), Polygon(points = {{-8, 76}, {0, 84}, {8, 76}, {0, 68}, {-8, 76}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{68, 76}, {76, 84}, {84, 76}, {76, 68}, {68, 76}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{68, 0}, {76, 8}, {84, 0}, {76, -8}, {68, 0}}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{68, -76}, {76, -68}, {84, -76}, {76, -84}, {68, -76}}, fillColor = {255, 255, 255},
-                fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, -76}, {-76, -68}, {-68, -76}, {-76, -84}, {-84, -76}}, fillColor = {255, 255, 255},
-                fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Line(points = {{-54, 76}, {-54, -76}}, color = {255, 255, 255}), Polygon(points = {{-84, 0}, {-76, 8}, {-68, 0}, {-76, -8}, {-84, 0}}, fillColor = {255, 255, 255},
-                fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-8, 0}, {0, 8}, {8, 0}, {0, -8}, {-8, 0}}, fillColor = {255, 255, 255},
-                fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-8, -76}, {0, -68}, {8, -76}, {0, -84}, {-8, -76}}, fillColor = {255, 255, 255},
-                fillPattern =                                                                                                                                                                                                        FillPattern.Solid, pattern = LinePattern.None), Line(points = {{0, 76}, {0, -76}}, color = {255, 255, 255}), Line(points = {{24, 76}, {24, -76}}, color = {255, 255, 255}), Line(points = {{54, 76}, {54, -76}}, color = {255, 255, 255}), Text(extent = {{-150, -150}, {150, -110}}, textString = "%name", lineColor = {0, 0, 255})}));
+        Icon(graphics={  Rectangle(lineColor = {0, 0, 0}, fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}, fillColor = {85, 85, 255}), Line(points = {{-80, 0}, {80, 0}}, color = {255, 255, 255}), Rectangle(extent = {{-84, 84}, {84, -84}}, lineColor = {0, 0, 0}), Polygon(points = {{-84, 76}, {-76, 84}, {-68, 76}, {-76, 68}, {-84, 76}}, fillColor = {255, 255, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, pattern = LinePattern.None), Line(points = {{-24, 76}, {-24, -76}}, color = {255, 255, 255}), Polygon(points = {{-8, 76}, {0, 84}, {8, 76}, {0, 68}, {-8, 76}}, fillColor = {255, 255, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{68, 76}, {76, 84}, {84, 76}, {76, 68}, {68, 76}}, fillColor = {255, 255, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{68, 0}, {76, 8}, {84, 0}, {76, -8}, {68, 0}}, fillColor = {255, 255, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{68, -76}, {76, -68}, {84, -76}, {76, -84}, {68, -76}}, fillColor = {255, 255, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-84, -76}, {-76, -68}, {-68, -76}, {-76, -84}, {-84, -76}}, fillColor = {255, 255, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, pattern = LinePattern.None), Line(points = {{-54, 76}, {-54, -76}}, color = {255, 255, 255}), Polygon(points = {{-84, 0}, {-76, 8}, {-68, 0}, {-76, -8}, {-84, 0}}, fillColor = {255, 255, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-8, 0}, {0, 8}, {8, 0}, {0, -8}, {-8, 0}}, fillColor = {255, 255, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, pattern = LinePattern.None), Polygon(points = {{-8, -76}, {0, -68}, {8, -76}, {0, -84}, {-8, -76}}, fillColor = {255, 255, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, pattern = LinePattern.None), Line(points = {{0, 76}, {0, -76}}, color = {255, 255, 255}), Line(points = {{24, 76}, {24, -76}}, color = {255, 255, 255}), Line(points = {{54, 76}, {54, -76}}, color = {255, 255, 255}), Text(extent = {{-150, -150}, {150, -110}}, textString = "%name", lineColor = {0, 0, 255})}));
     end SimpleModuleSymmetric;
 
-
-    model SimplePlantSymmetric "Simple plant consisting of symmetric series and parallel connected modules"
+    model SimplePlantSymmetric
+      "Simple plant consisting of symmetric series and parallel connected modules"
       extends PhotoVoltaics.Interfaces.PartialCell(diode(final m = m, final R = 1E8, final Bv = moduleData.BvCell, final Ibv = moduleData.Ibv, final Nbv = moduleData.Nbv, final IRef = moduleData.IscRef, final alphaI = moduleData.alphaIsc, final alphaV = moduleData.alphaVoc, final ns = moduleData.ns, final VRef = moduleData.VocCellRef, final nsModule = nsModule, final npModule = npModule), signalCurrent(final irradianceRef = moduleData.irradianceRef, final alphaRef = moduleData.alphaIsc, final IRef = npModule * IphRef));
-      parameter Integer nsModule(final min = 1) = 1 "Number of series connected modules";
-      parameter Integer npModule(final min = 1) = 1 "Number of parallel connected modules";
-      final parameter Real m(start = 2, fixed = false) "Ideality factor of diode";
-      final parameter Modelica.SIunits.Current IsdRef(start = 1E-4, fixed = false) "Reference saturation current of cell";
-      final parameter Modelica.SIunits.Current IphRef = moduleData.IscRef "Reference photo current of cell";
-      Modelica.SIunits.Voltage vCell = v / moduleData.ns / nsModule "Cell voltage";
+      parameter Integer nsModule(final min = 1) = 1
+        "Number of series connected modules";
+      parameter Integer npModule(final min = 1) = 1
+        "Number of parallel connected modules";
+      final parameter Real m(start = 2, fixed = false)
+        "Ideality factor of diode";
+      final parameter Modelica.SIunits.Current IsdRef(start = 1E-4, fixed = false)
+        "Reference saturation current of cell";
+      final parameter Modelica.SIunits.Current IphRef = moduleData.IscRef
+        "Reference photo current of cell";
+      Modelica.SIunits.Voltage vCell = v / moduleData.ns / nsModule
+        "Cell voltage";
       Modelica.SIunits.Current iCell = i / npModule "Cell current";
-      Modelica.SIunits.Current iCellGenerating = -iCell "Negative cell current (generating)";
+      Modelica.SIunits.Current iCellGenerating = -iCell
+        "Negative cell current (generating)";
       Modelica.SIunits.Power powerCell = vCell * iCell "Cell power";
-      Modelica.SIunits.Power powerCellGenerating = vCell * iCellGenerating "Negative power consumption (generating)";
+      Modelica.SIunits.Power powerCellGenerating = vCell * iCellGenerating
+        "Negative power consumption (generating)";
       Modelica.SIunits.Voltage vModule = v / nsModule "Module voltage";
       Modelica.SIunits.Current iModule = i / npModule "Modile current";
-      Modelica.SIunits.Current iModuleGenerating = -iModule "Negative module current (generating)";
+      Modelica.SIunits.Current iModuleGenerating = -iModule
+        "Negative module current (generating)";
       Modelica.SIunits.Power powerModule = vModule * iModule "Module power";
-      Modelica.SIunits.Power powerModuleGenerating = vModule * iModuleGenerating "Negative module power (generating)";
+      Modelica.SIunits.Power powerModuleGenerating = vModule * iModuleGenerating
+        "Negative module power (generating)";
     initial equation
       IphRef = IsdRef * (exp(moduleData.VocCellRef / m / moduleData.VtCellRef) - 1);
       IphRef = IsdRef * (exp(moduleData.VmpCellRef / m / moduleData.VtCellRef) - 1) + moduleData.ImpRef;
       annotation (
-        Icon(graphics={  Rectangle(extent = {{-84, 82}, {-8, 8}}, lineColor = {0, 0, 0}), Text(extent = {{-150, -150}, {150, -110}}, textString = "%name", lineColor = {0, 0, 255}), Rectangle(extent = {{-76, 74}, {-16, 16}}, lineColor = {255, 255, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid), Line(points = {{-46, 76}, {-46, 16}}, color = {255, 255, 255}), Line(points = {{-76, 46}, {-16, 46}}, color = {255, 255, 255}), Rectangle(extent = {{8, 82}, {84, 8}}, lineColor = {0, 0, 0}), Rectangle(extent = {{16, 74}, {76, 16}}, lineColor = {255, 255, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid), Line(points = {{46, 76}, {46, 16}}, color = {255, 255, 255}), Line(points = {{16, 46}, {76, 46}}, color = {255, 255, 255}), Rectangle(extent = {{-84, -8}, {-8, -82}}, lineColor = {0, 0, 0}), Rectangle(extent = {{-76, -16}, {-16, -74}}, lineColor = {255, 255, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid), Line(points = {{-46, -14}, {-46, -74}}, color = {255, 255, 255}), Line(points = {{-76, -44}, {-16, -44}}, color = {255, 255, 255}), Rectangle(extent = {{8, -8}, {84, -82}}, lineColor = {0, 0, 0}), Rectangle(extent = {{16, -16}, {76, -74}}, lineColor = {255, 255, 255}, fillColor = {85, 85, 255},
-                fillPattern =                                                                                                                                                                                                        FillPattern.Solid), Line(points = {{46, -16}, {46, -74}}, color = {255, 255, 255}), Line(points = {{16, -44}, {76, -44}}, color = {255, 255, 255})}));
+        Icon(graphics={  Rectangle(extent = {{-84, 82}, {-8, 8}}, lineColor = {0, 0, 0}), Text(extent = {{-150, -150}, {150, -110}}, textString = "%name", lineColor = {0, 0, 255}), Rectangle(extent = {{-76, 74}, {-16, 16}}, lineColor = {255, 255, 255}, fillColor = {85, 85, 255},
+                fillPattern =                                                                                                    FillPattern.Solid), Line(points = {{-46, 76}, {-46, 16}}, color = {255, 255, 255}), Line(points = {{-76, 46}, {-16, 46}}, color = {255, 255, 255}), Rectangle(extent = {{8, 82}, {84, 8}}, lineColor = {0, 0, 0}), Rectangle(extent = {{16, 74}, {76, 16}}, lineColor = {255, 255, 255}, fillColor = {85, 85, 255},
+                fillPattern =                                                                                                    FillPattern.Solid), Line(points = {{46, 76}, {46, 16}}, color = {255, 255, 255}), Line(points = {{16, 46}, {76, 46}}, color = {255, 255, 255}), Rectangle(extent = {{-84, -8}, {-8, -82}}, lineColor = {0, 0, 0}), Rectangle(extent = {{-76, -16}, {-16, -74}}, lineColor = {255, 255, 255}, fillColor = {85, 85, 255},
+                fillPattern =                                                                                                    FillPattern.Solid), Line(points = {{-46, -14}, {-46, -74}}, color = {255, 255, 255}), Line(points = {{-76, -44}, {-16, -44}}, color = {255, 255, 255}), Rectangle(extent = {{8, -8}, {84, -82}}, lineColor = {0, 0, 0}), Rectangle(extent = {{16, -16}, {76, -74}}, lineColor = {255, 255, 255}, fillColor = {85, 85, 255},
+                fillPattern =                                                                                                    FillPattern.Solid), Line(points = {{46, -16}, {46, -74}}, color = {255, 255, 255}), Line(points = {{16, -44}, {76, -44}}, color = {255, 255, 255})}));
     end SimplePlantSymmetric;
 
-
-    model DCVoltageControlledConverter "DC controlled single phase DC/AC converter"
+    model DCVoltageControlledConverter
+      "DC controlled single phase DC/AC converter"
       extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
 
-      parameter Modelica.SIunits.Voltage VRef = 48 "Reference DC source voltage";
-      parameter Modelica.SIunits.Time T = 1E-6 "Internal integration time constant";
-      Modelica.SIunits.Power powerDC = vDC * iDC "Power of photovoltaics DC side";
-      Modelica.SIunits.Power powerDCsource = (dc_psource.v-dc_nsource.v)*dc_psource.i "Power of source DC side";
-      Modelica.Blocks.Interfaces.RealInput vDCRef(final unit = "V") "DC voltage" annotation (
+      parameter Modelica.SIunits.Voltage VRef = 48
+        "Reference DC source voltage";
+      parameter Modelica.SIunits.Time T = 1E-6
+        "Internal integration time constant";
+      Modelica.SIunits.Power powerDC = vDC * iDC
+        "Power of photovoltaics DC side";
+      Modelica.SIunits.Power powerDCsource = (dc_psource.v-dc_nsource.v)*dc_psource.i
+        "Power of source DC side";
+      Modelica.Blocks.Interfaces.RealInput vDCRef(final unit = "V")
+        "DC voltage"                                                             annotation (
         Placement(transformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin = {0, -120}), iconTransformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin = {0, -120})));
       Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage annotation (
         Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {-90, 0})));
@@ -884,8 +1018,10 @@ on the horizontal axis</li>
         Placement(transformation(extent = {{-30, -60}, {-10, -40}})));
       Modelica.Blocks.Math.Gain gain(final k = -1) annotation (
         Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {-10, 50})));
-      Modelica.Electrical.Analog.Interfaces.PositivePin dc_psource "Positive DC source" annotation (Placement(transformation(extent={{90,110},{110,90}})));
-      Modelica.Electrical.Analog.Interfaces.NegativePin dc_nsource "Negative DC source" annotation (Placement(transformation(extent={{90,-110},{110,-90}})));
+      Modelica.Electrical.Analog.Interfaces.PositivePin dc_psource
+        "Positive DC source"                                                            annotation (Placement(transformation(extent={{90,110},{110,90}})));
+      Modelica.Electrical.Analog.Interfaces.NegativePin dc_nsource
+        "Negative DC source"                                                            annotation (Placement(transformation(extent={{90,-110},{110,-90}})));
     equation
       connect(signalVoltage.n, dc_n) annotation (
         Line(points = {{-90, -10}, {-90, -70}, {-90, -100}, {-100, -100}}, color = {0, 0, 255}));
@@ -914,10 +1050,13 @@ on the horizontal axis</li>
       connect(powerSensor.nv, dc_nsource) annotation (Line(points={{80,70},{70,70},{60,70},{60,-100},{100,-100}}, color={0,0,255}));
       annotation (
         defaultComponentName = "converter",
-        Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Rectangle(extent = {{-100, 100}, {100, -100}}, lineColor = {0, 0, 127}), Line(points = {{-100, -100}, {100, 100}}, color = {0, 0, 127}, smooth = Smooth.None), Text(extent={{-100,40},{-40,-40}},      lineColor = {0, 0, 255}, textString = "="),                                                                                   Text(extent = {{-150, 150}, {150, 110}}, lineColor = {0, 0, 255}, textString = "%name"), Text(extent = {{20, -100}, {80, -140}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "vDCRef"), Text(extent = {{-80, 80}, {20, 40}}, lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=FillPattern.Solid,
-              textString="PV"),                                                                                                                                                                                                        Text(extent = {{-40, -40}, {60, -80}}, lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=
+        Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Rectangle(extent = {{-100, 100}, {100, -100}}, lineColor = {0, 0, 127}), Line(points = {{-100, -100}, {100, 100}}, color = {0, 0, 127}, smooth = Smooth.None), Text(extent={{-100,40},{-40,-40}},      lineColor = {0, 0, 255}, textString = "="),                                                                                   Text(extent = {{-150, 150}, {150, 110}}, lineColor = {0, 0, 255}, textString = "%name"), Text(extent = {{20, -100}, {80, -140}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, textString = "vDCRef"), Text(extent = {{-80, 80}, {20, 40}}, lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},
+                fillPattern =                                                                                                    FillPattern.Solid,
+              textString="PV"),                                                                                                    Text(extent = {{-40, -40}, {60, -80}}, lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},
+                fillPattern=
                   FillPattern.Solid,
-              textString="bat"),                                                                                                                                                                                                        Text(extent={{40,40},{100,-40}},        lineColor = {0, 0, 255}, textString = "=")}),
+              textString="bat"),                                                                                                    Text(extent={{40,40},{100,-40}},        lineColor = {0, 0, 255}, textString = "=")}),
         Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})),
         Documentation(info = "<html>
 <p>This is an ideal DC/DC converter.<p>
@@ -930,14 +1069,19 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
 </html>"));
     end DCVoltageControlledConverter;
 
-    model SinglePhaseVoltageControlledConverter "Ideal current controlled single phase DC/AC converter"
+    model SinglePhaseVoltageControlledConverter
+      "Ideal current controlled single phase DC/AC converter"
       extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
       extends PhotoVoltaics.Interfaces.QuasiStatic.ACpins;
-      parameter Modelica.SIunits.Voltage VRef = 400 / sqrt(3) "Reference voltage";
-      parameter Modelica.SIunits.Time T = 1E-6 "Internal integration time constant";
+      parameter Modelica.SIunits.Voltage VRef = 400 / sqrt(3)
+        "Reference voltage";
+      parameter Modelica.SIunits.Time T = 1E-6
+        "Internal integration time constant";
       Modelica.SIunits.Power powerDC = vDC * iDC "Power of DC side";
-      Modelica.SIunits.Power powerAC = Modelica.ComplexMath.real(vAC * Modelica.ComplexMath.conj(iAC)) "Complex apparent power of AC side";
-      Modelica.Blocks.Interfaces.RealInput vDCRef(final unit = "V") "DC voltage" annotation (
+      Modelica.SIunits.Power powerAC = Modelica.ComplexMath.real(vAC * Modelica.ComplexMath.conj(iAC))
+        "Complex apparent power of AC side";
+      Modelica.Blocks.Interfaces.RealInput vDCRef(final unit = "V")
+        "DC voltage"                                                             annotation (
         Placement(transformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin = {0, -120}), iconTransformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin = {0, -120})));
       Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage annotation (
         Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {-90, 0})));
@@ -1010,8 +1154,11 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
         Line(points = {{90, 20}, {90, -100}, {100, -100}}, color = {85, 170, 255}));
       annotation (
         defaultComponentName = "converter",
-        Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Rectangle(extent = {{-100, 100}, {100, -100}}, lineColor = {0, 0, 127}), Line(points = {{-100, -100}, {100, 100}}, color = {0, 0, 127}, smooth = Smooth.None), Text(extent = {{-100, 40}, {-40, -40}}, lineColor = {0, 0, 255}, textString = "="), Text(extent = {{40, 40}, {100, -40}}, lineColor = {0, 0, 255}, textString = "~"), Text(extent = {{-150, 150}, {150, 110}}, lineColor = {0, 0, 255}, textString = "%name"), Text(extent = {{20, -100}, {80, -140}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "vDCRef"), Text(extent = {{-80, 80}, {20, 40}}, lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=FillPattern.Solid,
-              textString="PV"),                                                                                                                                                                                                        Text(extent = {{-40, -40}, {60, -80}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "src")}),
+        Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Rectangle(extent = {{-100, 100}, {100, -100}}, lineColor = {0, 0, 127}), Line(points = {{-100, -100}, {100, 100}}, color = {0, 0, 127}, smooth = Smooth.None), Text(extent = {{-100, 40}, {-40, -40}}, lineColor = {0, 0, 255}, textString = "="), Text(extent = {{40, 40}, {100, -40}}, lineColor = {0, 0, 255}, textString = "~"), Text(extent = {{-150, 150}, {150, 110}}, lineColor = {0, 0, 255}, textString = "%name"), Text(extent = {{20, -100}, {80, -140}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, textString = "vDCRef"), Text(extent = {{-80, 80}, {20, 40}}, lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},
+                fillPattern =                                                                                                    FillPattern.Solid,
+              textString="PV"),                                                                                                    Text(extent = {{-40, -40}, {60, -80}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, textString = "src")}),
         Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})),
         Documentation(info = "<html>
 <p>This is an ideal DC/DC converter.<p>
@@ -1024,14 +1171,19 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
 </html>"));
     end SinglePhaseVoltageControlledConverter;
 
-    model MultiPhaseVoltageControlledConverter "Ideal current controlled multi phase DC/AC converter"
+    model MultiPhaseVoltageControlledConverter
+      "Ideal current controlled multi phase DC/AC converter"
       extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
       extends PhotoVoltaics.Interfaces.QuasiStatic.ACplug;
-      parameter Modelica.SIunits.Voltage VRef = 400 "Reference line to line voltage";
-      parameter Modelica.SIunits.Time T = 1E-6 "Internal integration time constant";
+      parameter Modelica.SIunits.Voltage VRef = 400
+        "Reference line to line voltage";
+      parameter Modelica.SIunits.Time T = 1E-6
+        "Internal integration time constant";
       Modelica.SIunits.Power powerDC = vDC * iDC "Power of DC side";
-      Modelica.SIunits.Power powerAC = Modelica.ComplexMath.real(vAC * Modelica.ComplexMath.conj(iAC)) "Complex apparent power of AC side";
-      Modelica.Blocks.Interfaces.RealInput vDCRef(final unit = "V") "DC voltage" annotation (
+      Modelica.SIunits.Power powerAC = Modelica.ComplexMath.real(vAC * Modelica.ComplexMath.conj(iAC))
+        "Complex apparent power of AC side";
+      Modelica.Blocks.Interfaces.RealInput vDCRef(final unit = "V")
+        "DC voltage"                                                             annotation (
         Placement(transformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin = {0, -120}), iconTransformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin = {0, -120})));
       Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage annotation (
         Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {-90, 0})));
@@ -1116,8 +1268,11 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
         Line(points = {{-10, 29}, {-10, 0}, {-22, 0}}, color = {0, 0, 127}));
       annotation (
         defaultComponentName = "converter",
-        Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Rectangle(extent = {{-100, 100}, {100, -100}}, lineColor = {0, 0, 127}), Line(points = {{-100, -100}, {100, 100}}, color = {0, 0, 127}, smooth = Smooth.None), Text(extent = {{-100, 40}, {-40, -40}}, lineColor = {0, 0, 255}, textString = "="), Text(extent = {{40, 40}, {100, -40}}, lineColor = {0, 0, 255}, textString = "~"), Text(extent = {{-150, 150}, {150, 110}}, lineColor = {0, 0, 255}, textString = "%name"), Text(extent = {{20, -100}, {80, -140}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "vDCRef"), Text(extent = {{-80, 80}, {20, 40}}, lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=FillPattern.Solid,
-              textString="PV"),                                                                                                                                                                                                        Text(extent = {{-40, -40}, {60, -80}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "src")}),
+        Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Rectangle(extent = {{-100, 100}, {100, -100}}, lineColor = {0, 0, 127}), Line(points = {{-100, -100}, {100, 100}}, color = {0, 0, 127}, smooth = Smooth.None), Text(extent = {{-100, 40}, {-40, -40}}, lineColor = {0, 0, 255}, textString = "="), Text(extent = {{40, 40}, {100, -40}}, lineColor = {0, 0, 255}, textString = "~"), Text(extent = {{-150, 150}, {150, 110}}, lineColor = {0, 0, 255}, textString = "%name"), Text(extent = {{20, -100}, {80, -140}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, textString = "vDCRef"), Text(extent = {{-80, 80}, {20, 40}}, lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},
+                fillPattern =                                                                                                    FillPattern.Solid,
+              textString="PV"),                                                                                                    Text(extent = {{-40, -40}, {60, -80}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255},
+                fillPattern =                                                                                                    FillPattern.Solid, textString = "src")}),
         Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})),
         Documentation(info = "<html>
 <p>This is an ideal DC/DC converter.<p>
@@ -1130,13 +1285,237 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
 </html>"));
     end MultiPhaseVoltageControlledConverter;
 
+    model MultiPhaseConverter
+      "Ideal current controlled multi phase DC/AC converter"
+
+    final constant Real pi=2*Modelica.Math.asin(1.0);
+
+      extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
+      Modelica.Electrical.MultiPhase.Interfaces.PositivePlug ac "AC output"
+        annotation (Placement(transformation(extent={{90,-10},{110,10}})));
+      Modelica.Blocks.Interfaces.RealInput vDCRef(final unit = "V")
+        "DC voltage"                                                             annotation (
+        Placement(transformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin={-60,-120}),  iconTransformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin={-60,-120})));
+
+      parameter Modelica.SIunits.Voltage VRef = 400
+        "Reference line to line voltage";
+      parameter Modelica.SIunits.Time T = 1E-6
+        "Internal integration time constant";
+      Modelica.SIunits.Power powerDC = vDC * iDC "Power of DC side";
+
+      Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage annotation (
+        Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin={-100,0})));
+      Modelica.Electrical.Analog.Sensors.CurrentSensor currentSensor annotation (
+        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 270, origin={-100,60})));
+      Modelica.Blocks.Math.Product product annotation (
+        Placement(transformation(extent={{-80,70},{-60,90}})));
+      Modelica.Blocks.Math.Feedback feedback annotation (
+        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 270, origin={-40,60})));
+      Modelica.Electrical.Machines.SpacePhasors.Blocks.FromPolar fromPolar annotation (
+        Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation=0,    origin={-40,-10})));
+      Modelica.Blocks.Continuous.Integrator integrator(k = sqrt(3) / VRef / T) annotation (
+        Placement(transformation(extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={-60,20})));
+      Modelica.Blocks.Math.Gain gain(final k=3)    annotation (
+        Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation=180,   origin={-10,60})));
+      Modelica.Electrical.Machines.SpacePhasors.Blocks.FromSpacePhasor fromSpacePhasor(m=3)
+        annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=90,
+            origin={20,18})));
+      Modelica.Blocks.Sources.Constant const(k=0) annotation (Placement(
+            transformation(
+            extent={{8,-8},{-8,8}},
+            rotation=270,
+            origin={28,-20})));
+      Modelica.Electrical.MultiPhase.Sources.SignalCurrent signalCurrent
+        annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=90,
+            origin={60,30})));
+      Modelica.Electrical.MultiPhase.Basic.Star star annotation (Placement(
+            transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={60,0})));
+      Modelica.Electrical.Analog.Basic.Ground ground
+        annotation (Placement(transformation(extent={{50,-34},{70,-14}})));
+      Modelica.Electrical.MultiPhase.Sensors.PotentialSensor potentialSensor
+        annotation (Placement(transformation(extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={80,-14})));
+      Modelica.Blocks.Math.MatrixGain matrixGain(K=[sqrt(2)/sqrt(3),0,0; 0,sqrt(2)/
+            sqrt(3),0; 0,0,sqrt(2)/sqrt(3)]) annotation (Placement(transformation(
+            extent={{-6,-6},{6,6}},
+            rotation=270,
+            origin={80,-40})));
+      Modelica.Blocks.Sources.Constant const2(
+                                             k=2*pi*50)
+        annotation (Placement(transformation(extent={{-44,-50},{-24,-30}})));
+      Modelica.Blocks.Math.RectangularToPolar rectangularToPolar
+        annotation (Placement(transformation(extent={{40,-80},{20,-60}})));
+
+      Modelica.Electrical.MultiPhase.Sensors.CurrentQuasiRMSSensor
+        currentQuasiRMSSensor
+        annotation (Placement(transformation(extent={{70,80},{90,100}})));
+      Modelica.Electrical.MultiPhase.Sensors.VoltageQuasiRMSSensor
+        voltageQuasiRMSSensor annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={80,60})));
+      Modelica.Blocks.Math.Product product1
+        annotation (Placement(transformation(extent={{40,50},{20,70}})));
+      Modelica.Blocks.Math.Add add
+        annotation (Placement(transformation(extent={{-22,-80},{-42,-60}})));
+      Modelica.Blocks.Interfaces.RealInput powerfactor "cos phi" annotation (
+          Placement(transformation(
+            extent={{-20,-20},{20,20}},
+            rotation=90,
+            origin={60,-120}), iconTransformation(
+            extent={{-20,-20},{20,20}},
+            rotation=90,
+            origin={60,-120})));
+      Modelica.Blocks.Math.Acos acos
+        annotation (Placement(transformation(extent={{48,-96},{36,-84}})));
+      Modelica.Blocks.Math.Gain gain1(final k=-1)  annotation (
+        Placement(transformation(extent={{-6,-6},{6,6}},          rotation=180,   origin={20,-90})));
+
+      Modelica.Blocks.Math.UnitConversions.To_deg to_deg
+        annotation (Placement(transformation(extent={{-64,-76},{-76,-64}})));
+      Modelica.Blocks.Continuous.Integrator integrator2(k=1)                   annotation (
+        Placement(transformation(extent={{-6,-6},{6,6}},
+            rotation=0,
+            origin={-10,-40})));
+      PhotoVoltaicsbackup.Components.Blocks.Park park
+        annotation (Placement(transformation(extent={{74,-80},{54,-60}})));
+      PhotoVoltaicsbackup.Components.Blocks.Rotation_dq rot_dq annotation (
+          Placement(transformation(
+            extent={{10,-10},{-10,10}},
+            rotation=180,
+            origin={2,-10})));
+    equation
+      connect(currentSensor.n,signalVoltage. p) annotation (
+        Line(points={{-100,50},{-100,50},{-100,10}},     color = {0, 0, 255}));
+      connect(signalVoltage.v,vDCRef)  annotation (
+        Line(points={{-93,-1.33227e-015},{-86,-1.33227e-015},{-86,-90},{-60,-90},{-60,
+              -120}},                                                        color = {0, 0, 127}));
+      connect(dc_p, currentSensor.p) annotation (Line(points={{-100,100},{-100,70}},
+                         color={0,0,255}));
+      connect(dc_n, signalVoltage.n) annotation (Line(points={{-100,-100},{-100,
+              -10}},       color={0,0,255}));
+      connect(product.y,feedback. u1) annotation (
+        Line(points={{-59,80},{-40,80},{-40,68}},       color = {0, 0, 127}));
+      connect(feedback.y,integrator. u) annotation (
+        Line(points={{-40,51},{-40,32},{-60,32}},                                             color = {0, 0, 127}));
+      connect(gain.y,feedback. u2) annotation (
+        Line(points={{-21,60},{-21,60},{-32,60}},      color = {0, 0, 127}));
+      connect(product.u1, currentSensor.i) annotation (Line(points={{-82,86},{
+              -90,86},{-90,60}},          color={0,0,127}));
+      connect(product.u2, vDCRef) annotation (Line(points={{-82,74},{-86,74},{-86,-10},
+              {-86,-90},{-60,-90},{-60,-120}},      color={0,0,127}));
+      connect(star.plug_p, signalCurrent.plug_p)
+        annotation (Line(points={{60,10},{60,20}}, color={0,0,255}));
+      connect(ground.p, star.pin_n)
+        annotation (Line(points={{60,-14},{60,-12},{60,-10}},
+                                                           color={0,0,255}));
+      connect(fromSpacePhasor.y, signalCurrent.i) annotation (Line(points={{20,29},{
+              20,30},{26,30},{38,30},{53,30}},
+                                            color={0,0,127}));
+      connect(matrixGain.u,potentialSensor. phi) annotation (Line(points={{80,
+              -32.8},{80,-25}},              color={0,0,127}));
+      connect(potentialSensor.plug_p, ac) annotation (Line(points={{80,-4},{80,
+              -4},{80,0},{100,0}}, color={0,0,255}));
+      connect(fromSpacePhasor.zero, const.y)
+        annotation (Line(points={{28,6},{28,-11.2}},color={0,0,127}));
+      connect(integrator.y, fromPolar.u[1]) annotation (Line(points={{-60,9},{
+              -60,0},{-60,-11},{-52,-11}},
+                                         color={0,0,127}));
+      connect(currentQuasiRMSSensor.plug_n, ac)
+        annotation (Line(points={{90,90},{100,90},{100,0}}, color={0,0,255}));
+      connect(voltageQuasiRMSSensor.plug_n, star.plug_p)
+        annotation (Line(points={{80,50},{80,10},{60,10}}, color={0,0,255}));
+      connect(currentQuasiRMSSensor.I, product1.u1)
+        annotation (Line(points={{80,80},{42,80},{42,66}}, color={0,0,127}));
+      connect(voltageQuasiRMSSensor.V, product1.u2) annotation (Line(points={{70,60},
+              {70,60},{70,54},{42,54}}, color={0,0,127}));
+      connect(voltageQuasiRMSSensor.plug_p, ac)
+        annotation (Line(points={{80,70},{100,70},{100,0}}, color={0,0,255}));
+      connect(currentQuasiRMSSensor.plug_p, signalCurrent.plug_n)
+        annotation (Line(points={{70,90},{60,90},{60,40}}, color={0,0,255}));
+      connect(gain.u, product1.y)
+        annotation (Line(points={{2,60},{10,60},{19,60}}, color={0,0,127}));
+      connect(rectangularToPolar.y_arg, add.u1) annotation (Line(points={{19,-76},{12,
+              -76},{12,-64},{-20,-64}}, color={0,0,127}));
+      connect(add.y, fromPolar.u[2]) annotation (Line(points={{-43,-70},{-43,-70},{-60,
+              -70},{-60,-9},{-52,-9}}, color={0,0,127}));
+      connect(powerfactor, acos.u) annotation (Line(points={{60,-120},{60,-90},
+              {49.2,-90}}, color={0,0,127}));
+      connect(acos.y, gain1.u)
+        annotation (Line(points={{35.4,-90},{27.2,-90}}, color={0,0,127}));
+      connect(gain1.y, add.u2) annotation (Line(points={{13.4,-90},{0,-90},{0,-76},{
+              -20,-76}}, color={0,0,127}));
+      connect(add.y, to_deg.u)
+        annotation (Line(points={{-43,-70},{-62.8,-70}}, color={0,0,127}));
+      connect(const2.y, integrator2.u)
+        annotation (Line(points={{-23,-40},{-17.2,-40}}, color={0,0,127}));
+      connect(park.u, matrixGain.y) annotation (Line(points={{74,-70},{80,-70},
+              {80,-46.6}}, color={0,0,127}));
+      connect(park.y[1], rectangularToPolar.u_re) annotation (Line(points={{54,
+              -70.6667},{54,-64},{42,-64}}, color={0,0,127}));
+      connect(park.y[2], rectangularToPolar.u_im) annotation (Line(points={{54,
+              -70},{54,-76},{42,-76}}, color={0,0,127}));
+      connect(rot_dq.u, fromPolar.y) annotation (Line(points={{-8,-10},{-29,-10},
+              {-29,-10}}, color={0,0,127}));
+      connect(rot_dq.y, fromSpacePhasor.u)
+        annotation (Line(points={{12,-10},{20,-10},{20,6}}, color={0,0,127}));
+      connect(rot_dq.theta, integrator2.y) annotation (Line(points={{2,-20},{2,
+              -40},{-3.4,-40}}, color={0,0,127}));
+      connect(park.theta, integrator2.y) annotation (Line(points={{64,-60},{64,
+              -40},{-3.4,-40}}, color={0,0,127}));
+      annotation (
+    defaultComponentName = "converter",
+        Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},
+                {100,100}})),
+        Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}}),
+             graphics={                                                                                      Rectangle(extent={{
+                  -100,100},{100,-100}},                                                                                                    lineColor = {0, 0, 127}), Line(points={{
+                  -100,-100},{100,100}},                                                                                                    color = {0, 0, 127}, smooth = Smooth.None), Text(extent={{
+                  -100,40},{-40,-40}},                                                                                                    lineColor = {0, 0, 255}, textString = "="), Text(extent={{
+                  40,40},{100,-40}},                                                                                                    lineColor = {0, 0, 255}, textString = "~"), Text(extent={{
+                  -150,150},{150,110}},                                                                                                    lineColor = {0, 0, 255}, textString = "%name"),
+                                                                                                    Text(extent={{
+                  -80,80},{20,40}},                                                                                                    lineColor=
+                  {0,0,255},                                                                                                    pattern=
+                  LinePattern.Dash,                                                                                                    fillColor=
+                  {0,0,255},
+                fillPattern=FillPattern.Solid,
+              textString="DC"),                                                                                                    Text(extent={{
+                  -22,-40},{78,-80}},                                                                                                    lineColor=
+                  {0,0,255},                                                                                                    pattern=
+                  LinePattern.Dash,                                                                                                    fillColor=
+                  {0,0,255},
+                fillPattern=FillPattern.Solid,
+              textString="3ph AC")}),                                                                                                    Documentation(info = "<html>
+<p>This is an ideal DC/DC converter.<p>
+<ul>
+<li><b>side 1</b> must be connected with voltage source</li>
+<li><b>side 2</b> must be connected with load</li>
+</ul>
+<p>Signal input <code>i2</code> is the current flowing into the positive pin of side 2. 
+In order to operate side 2 as a load the signal input current <code>i2</code> must be <b>negative</b>.</p>
+</html>"));
+    end MultiPhaseConverter;
+
     model IdealBattery "Re-chargeable ideal battery without loss"
       parameter Integer ns(min = 1) = 1 "Number of series cells";
       parameter Integer np(min = 1) = 1 "Number of parallel cells";
       parameter Modelica.SIunits.Voltage V1Cell "Maximum cell voltage > V0Cell";
       parameter Modelica.SIunits.Voltage V0Cell "Minimum cell voltage < V1Cell";
-      final parameter Modelica.SIunits.Voltage V1 = V1Cell*ns "Maximum battery voltage > V0";
-      final parameter Modelica.SIunits.Voltage V0 = V0Cell*ns "Maximum battery voltage < V1";
+      final parameter Modelica.SIunits.Voltage V1 = V1Cell*ns
+        "Maximum battery voltage > V0";
+      final parameter Modelica.SIunits.Voltage V0 = V0Cell*ns
+        "Maximum battery voltage < V1";
       parameter Boolean allowOvercharge = false
         "Allows overcharging without error";
       parameter Boolean allowUndercharge = false
@@ -1145,7 +1524,8 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
         "Total cell energy between V0Cell and V1Cell";
       final parameter Modelica.SIunits.Capacitance CCell = 2 * ECell / (V1Cell ^ 2 - V0Cell ^ 2)
         "Total charge of battery";
-      parameter Modelica.SIunits.Voltage ViniCell = V1Cell "Initial cell voltage";
+      parameter Modelica.SIunits.Voltage ViniCell = V1Cell
+        "Initial cell voltage";
       Modelica.SIunits.Voltage v = pin_p.v - pin_n.v "Battery voltage";
       Modelica.SIunits.Voltage vCell = v / ns "Cell voltage";
       Modelica.SIunits.Current i = capacitor.i "Battery current";
@@ -1184,22 +1564,29 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
            <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
 <pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
   i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
-</html>"),Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Sphere), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot), Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255})}),
+</html>"),Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points=  {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor=  {0, 0, 255}, fillColor=  {255, 255, 255}, fillPattern=  FillPattern.Sphere), Line(points=  {{40, 0}, {90, 0}}, color=  {0, 0, 255}), Line(points=  {{30, 40}, {30, -40}}, color=  {0, 0, 255}), Line(visible=  useHeatPort, points=  {{0, -101}, {0, -20}}, color=  {127, 0, 0}, pattern=  LinePattern.Dot), Line(points=  {{-90, 0}, {40, 0}}, color=  {0, 0, 255})}),
           Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));
       end Diode;
 
       model Diode2Module
         extends PhotoVoltaics.Interfaces.PartialDiode;
         parameter Modelica.SIunits.Voltage Bv = 5.1 "Breakthrough voltage";
-        parameter Modelica.SIunits.Current Ibv = 0.7 "Breakthrough knee current";
+        parameter Modelica.SIunits.Current Ibv = 0.7
+          "Breakthrough knee current";
         parameter Real Nbv = 0.74 "Breakthrough emission coefficient";
         parameter Integer ns = 1 "Number of series connected cells per module";
-        parameter Integer nsModule(final min = 1) = 1 "Number of series connected modules";
-        parameter Integer npModule(final min = 1) = 1 "Number of parallel connected modules";
-        final parameter Modelica.SIunits.Voltage VtRef = Modelica.Constants.k * TRef / Q "Reference voltage equivalent of temperature";
-        final parameter Modelica.SIunits.Voltage VBv = (-m * Nbv * log(IdsRef * Nbv / Ibv) * VtRef) - Bv "Voltage limit of approximation of breakthrough";
-        final parameter Modelica.SIunits.Current IdsRef = IRef / (exp(VRef / m / VtRef) - 1) "Reference saturation current";
-        final parameter Modelica.SIunits.Voltage VNegLin = (-VRef / m / VtRef * (Nbv * m * VtRef)) - Bv "Limit of linear range left of breakthrough";
+        parameter Integer nsModule(final min = 1) = 1
+          "Number of series connected modules";
+        parameter Integer npModule(final min = 1) = 1
+          "Number of parallel connected modules";
+        final parameter Modelica.SIunits.Voltage VtRef = Modelica.Constants.k * TRef / Q
+          "Reference voltage equivalent of temperature";
+        final parameter Modelica.SIunits.Voltage VBv = (-m * Nbv * log(IdsRef * Nbv / Ibv) * VtRef) - Bv
+          "Voltage limit of approximation of breakthrough";
+        final parameter Modelica.SIunits.Current IdsRef = IRef / (exp(VRef / m / VtRef) - 1)
+          "Reference saturation current";
+        final parameter Modelica.SIunits.Voltage VNegLin = (-VRef / m / VtRef * (Nbv * m * VtRef)) - Bv
+          "Limit of linear range left of breakthrough";
         Modelica.SIunits.Voltage VNeg "Limit of linear negative voltage range";
         Modelica.SIunits.Voltage vCell = v / ns / nsModule "Cell voltage";
         Modelica.SIunits.Voltage vModule = v / nsModule "Module voltage";
@@ -1216,14 +1603,15 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
            <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
 <pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
   i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
-</html>"),Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot), Polygon(points = {{-8, 46}, {-68, 86}, {-68, 6}, {-8, 46}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-8, 86}, {-8, 6}}, color = {0, 0, 255}), Polygon(points = {{72, 46}, {12, 86}, {12, 6}, {72, 46}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{72, 86}, {72, 6}}, color = {0, 0, 255}), Polygon(points = {{-8, -46}, {-68, -6}, {-68, -86}, {-8, -46}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-8, -6}, {-8, -86}}, color = {0, 0, 255}), Polygon(points = {{72, -46}, {12, -6}, {12, -86}, {72, -46}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{72, -6}, {72, -86}}, color = {0, 0, 255}), Line(points = {{100, 46}, {100, -46}}, color = {28, 108, 200}), Line(points = {{-100, 46}, {-100, -46}}, color = {28, 108, 200}), Line(points = {{-100, 46}, {100, 46}}, color = {0, 0, 255}), Line(points = {{-100, -46}, {100, -46}}, color = {0, 0, 255})}),
+</html>"),Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Line(visible=  useHeatPort, points=  {{0, -101}, {0, -20}}, color=  {127, 0, 0}, pattern=  LinePattern.Dot), Polygon(points=  {{-8, 46}, {-68, 86}, {-68, 6}, {-8, 46}}, lineColor=  {0, 0, 255}, fillColor=  {255, 255, 170}, fillPattern=  FillPattern.Solid), Line(points=  {{-8, 86}, {-8, 6}}, color=  {0, 0, 255}), Polygon(points=  {{72, 46}, {12, 86}, {12, 6}, {72, 46}}, lineColor=  {0, 0, 255}, fillColor=  {255, 255, 170}, fillPattern=  FillPattern.Solid), Line(points=  {{72, 86}, {72, 6}}, color=  {0, 0, 255}), Polygon(points=  {{-8, -46}, {-68, -6}, {-68, -86}, {-8, -46}}, lineColor=  {0, 0, 255}, fillColor=  {255, 255, 170}, fillPattern=  FillPattern.Solid), Line(points=  {{-8, -6}, {-8, -86}}, color=  {0, 0, 255}), Polygon(points=  {{72, -46}, {12, -6}, {12, -86}, {72, -46}}, lineColor=  {0, 0, 255}, fillColor=  {255, 255, 170}, fillPattern=  FillPattern.Solid), Line(points=  {{72, -6}, {72, -86}}, color=  {0, 0, 255}), Line(points=  {{100, 46}, {100, -46}}, color=  {28, 108, 200}), Line(points=  {{-100, 46}, {-100, -46}}, color=  {28, 108, 200}), Line(points=  {{-100, 46}, {100, 46}}, color=  {0, 0, 255}), Line(points=  {{-100, -46}, {100, -46}}, color=  {0, 0, 255})}),
           Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));
       end Diode2Module;
 
       model Diode2exp "Diode with two superimposed exponential functions"
         extends PhotoVoltaics.Interfaces.PartialDiode;
         parameter Modelica.SIunits.Voltage Bv = 5.1 "Breakthrough voltage";
-        parameter Modelica.SIunits.Current Ibv = 0.7 "Breakthrough knee current";
+        parameter Modelica.SIunits.Current Ibv = 0.7
+          "Breakthrough knee current";
         parameter Real Nbv = 0.74 "Breakthrough emission coefficient";
       equation
         i = Ids * (exp(v / m / Vt) - 1) - Ibv * exp(-(v + Bv) / (Nbv * m * Vt)) + v / R;
@@ -1233,7 +1621,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
            <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
 <pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
   i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
-</html>"),Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}),
+</html>"),Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points=  {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor=  {0, 0, 255}, fillColor=  {255, 255, 170}, fillPattern=  FillPattern.Solid), Line(points=  {{-90, 0}, {40, 0}}, color=  {0, 0, 255}), Line(points=  {{40, 0}, {90, 0}}, color=  {0, 0, 255}), Line(points=  {{30, 40}, {30, -40}}, color=  {0, 0, 255}), Line(visible=  useHeatPort, points=  {{0, -101}, {0, -20}}, color=  {127, 0, 0}, pattern=  LinePattern.Dot)}),
           Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));
       end Diode2exp;
     end Diodes;
@@ -1245,11 +1633,15 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
         extends Modelica.Blocks.Icons.Block;
         parameter Modelica.SIunits.Time startTime = 0 "Start time";
         parameter Modelica.SIunits.Time samplePeriod = 1 "Sample period";
-        parameter Modelica.SIunits.Voltage VmpRef "Reference maximum power power of plant";
-        parameter Modelica.SIunits.Current ImpRef "Reference maximum power current of plant";
+        parameter Modelica.SIunits.Voltage VmpRef
+          "Reference maximum power power of plant";
+        parameter Modelica.SIunits.Current ImpRef
+          "Reference maximum power current of plant";
         parameter Integer n = 100 "Number of voltage and power discretizations";
-        final parameter Modelica.SIunits.Voltage dv = VmpRef / n "Voltage change and maximum deviation";
-        final parameter Modelica.SIunits.Power dpower = VmpRef * ImpRef / n "Power change and maximum deviation";
+        final parameter Modelica.SIunits.Voltage dv = VmpRef / n
+          "Voltage change and maximum deviation";
+        final parameter Modelica.SIunits.Power dpower = VmpRef * ImpRef / n
+          "Power change and maximum deviation";
         Boolean firstTrigger "First boolean sample trigger signal";
         // Boolean secondTrigger "Second boolean sample trigger signal";
         Boolean sampleTrigger "Boolean sample trigger signal";
@@ -1257,7 +1649,8 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
         discrete Real signv(final start = -1) "Sign of voltage change";
         Modelica.Blocks.Interfaces.RealInput power(final unit = "W") "Power" annotation (
           Placement(transformation(extent = {{-140, -20}, {-100, 20}})));
-        Modelica.Blocks.Interfaces.RealOutput vRef(final unit = "V", final start = VmpRef) "Reference DC voltage" annotation (
+        Modelica.Blocks.Interfaces.RealOutput vRef(final unit = "V", final start = VmpRef)
+          "Reference DC voltage"                                                                                  annotation (
           Placement(transformation(extent = {{100, -10}, {120, 10}})));
       algorithm
         sampleTrigger := sample(startTime, samplePeriod);
@@ -1277,12 +1670,17 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
         annotation (
           defaultComponentName = "mpTracker",
           Documentation(info = "<html>
-</html>"),Icon(graphics={  Line(points = {{-80, -78}, {-12, 20}, {12, 50}, {30, 64}, {44, 70}, {52, 68}, {60, 56}, {68, 22}, {80, -78}}, color = {0, 0, 0}, smooth = Smooth.Bezier), Ellipse(extent = {{34, 78}, {54, 58}}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(origin = {0, -10}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}), Line(origin = {0, 2}, points = {{-80, -80}, {-80, 68}}, color = {192, 192, 192}), Line(origin = {10, -78}, points = {{-90, 0}, {68, 0}}, color = {192, 192, 192}), Polygon(origin = {-10, -78}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, points = {{90, 0}, {68, 8}, {68, -8}, {90, 0}})}));
+</html>"),Icon(graphics={  Line(points = {{-80, -78}, {-12, 20}, {12, 50}, {30, 64}, {44, 70}, {52, 68}, {60, 56}, {68, 22}, {80, -78}}, color = {0, 0, 0}, smooth = Smooth.Bezier), Ellipse(extent = {{34, 78}, {54, 58}}, fillColor = {255, 0, 0},
+                  fillPattern =                                                                                                    FillPattern.Solid, pattern = LinePattern.None), Polygon(origin = {0, -10}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192},
+                  fillPattern =                                                                                                    FillPattern.Solid, points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}), Line(origin = {0, 2}, points = {{-80, -80}, {-80, 68}}, color = {192, 192, 192}), Line(origin = {10, -78}, points = {{-90, 0}, {68, 0}}, color = {192, 192, 192}), Polygon(origin = {-10, -78}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192},
+                  fillPattern =                                                                                                    FillPattern.Solid, points = {{90, 0}, {68, 8}, {68, -8}, {90, 0}})}));
       end MPTrackerSample;
 
-      block GainReplicator "Output the product of a gain value with the input signal"
+      block GainReplicator
+        "Output the product of a gain value with the input signal"
         parameter Integer n "Number of outputs";
-        parameter Real k[n](start = ones(n)) "Gain value multiplied with input signal";
+        parameter Real k[n](start = ones(n))
+          "Gain value multiplied with input signal";
       public
         Modelica.Blocks.Interfaces.RealInput u "Input signal connector" annotation (
           Placement(transformation(extent = {{-140, -20}, {-100, 20}})));
@@ -1301,8 +1699,10 @@ input <i>u</i>:
     y = k * u;
 </pre>
 
-</html>"),Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{-100, -100}, {-100, 100}, {100, 0}, {-100, -100}}, lineColor = {0, 0, 127}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid), Text(extent = {{-150, -140}, {150, -100}}, lineColor = {0, 0, 0}, textString = "k=%k"), Text(extent = {{-150, 140}, {150, 100}}, textString = "%name", lineColor = {0, 0, 255}), Ellipse(extent = {{-14, 16}, {16, -14}}, lineColor = {0, 0, 0}, fillColor = {0, 0, 127}, fillPattern = FillPattern.Solid), Line(points = {{0, 0}, {100, 10}}, color = {0, 0, 127}), Line(points = {{0, 0}, {100, -10}}, color = {0, 0, 127}), Line(points = {{100, 0}, {-100, 0}}, color = {0, 0, 127})}),
-          Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{-100, -100}, {-100, 100}, {100, 0}, {-100, -100}}, lineColor = {0, 0, 127}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid), Text(extent = {{-76, 38}, {0, -34}}, textString = "k", lineColor = {0, 0, 255})}));
+</html>"),Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{-100, -100}, {-100, 100}, {100, 0}, {-100, -100}}, lineColor = {0, 0, 127}, fillColor = {255, 255, 255},
+                  fillPattern =                                                                                                    FillPattern.Solid), Text(extent = {{-150, -140}, {150, -100}}, lineColor = {0, 0, 0}, textString = "k=%k"), Text(extent = {{-150, 140}, {150, 100}}, textString = "%name", lineColor = {0, 0, 255}), Ellipse(extent = {{-14, 16}, {16, -14}}, lineColor = {0, 0, 0}, fillColor = {0, 0, 127},
+                  fillPattern =                                                                                                    FillPattern.Solid), Line(points = {{0, 0}, {100, 10}}, color = {0, 0, 127}), Line(points = {{0, 0}, {100, -10}}, color = {0, 0, 127}), Line(points = {{100, 0}, {-100, 0}}, color = {0, 0, 127})}),
+          Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points=  {{-100, -100}, {-100, 100}, {100, 0}, {-100, -100}}, lineColor=  {0, 0, 127}, fillColor=  {255, 255, 255}, fillPattern=  FillPattern.Solid), Text(extent=  {{-76, 38}, {0, -34}}, textString=  "k", lineColor=  {0, 0, 255})}));
       end GainReplicator;
 
       model Power10
@@ -1311,13 +1711,179 @@ input <i>u</i>:
       equation
         y = k * 10 ^ u;
         annotation (
-          Icon(coordinateSystem, graphics={  Polygon(origin = {-10, -40}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, points = {{90, 0}, {68, 8}, {68, -8}, {90, 0}}), Line(origin = {10, -40}, points = {{-90, 0}, {68, 0}}, color = {192, 192, 192}), Line(origin = {-18, 14}, rotation = 180, points = {{-79.6, -46}, {-76.8, -21.3}, {-75.2, -11.4}, {-72.8, -1.31}, {-69.5, 8.08}, {-64.7, 17.9}, {-57.5, 28}, {-47, 38.1}, {-31.8, 48.1}, {-10.1, 58}, {22.1, 66}, {62.7, 72.1}}, smooth = Smooth.Bezier), Polygon(origin = {80, -8}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}), Line(origin = {80, 0}, points = {{-80, -80}, {-80, 68}}, color = {192, 192, 192}), Text(origin = {-16, 62}, lineColor = {192, 192, 192}, extent = {{-30, -22}, {60, -70}}, textString = "10^")}),
+          Icon(coordinateSystem, graphics={  Polygon(origin = {-10, -40}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192},
+                  fillPattern =                                                                                                    FillPattern.Solid, points = {{90, 0}, {68, 8}, {68, -8}, {90, 0}}), Line(origin = {10, -40}, points = {{-90, 0}, {68, 0}}, color = {192, 192, 192}), Line(origin = {-18, 14}, rotation = 180, points = {{-79.6, -46}, {-76.8, -21.3}, {-75.2, -11.4}, {-72.8, -1.31}, {-69.5, 8.08}, {-64.7, 17.9}, {-57.5, 28}, {-47, 38.1}, {-31.8, 48.1}, {-10.1, 58}, {22.1, 66}, {62.7, 72.1}}, smooth = Smooth.Bezier), Polygon(origin = {80, -8}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192},
+                  fillPattern =                                                                                                    FillPattern.Solid, points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}), Line(origin = {80, 0}, points = {{-80, -80}, {-80, 68}}, color = {192, 192, 192}), Text(origin = {-16, 62}, lineColor = {192, 192, 192}, extent = {{-30, -22}, {60, -70}}, textString = "10^")}),
           Documentation(info = "<html>
 <p>This block calculates <code>y = k * 10^u</code> and
 represents thus the inverse of 
 <a href=\"modelica://Modelica.Blocks.Math.Log10\">Log10</a>.
 </html>"),Diagram);
       end Power10;
+
+      partial block MIMO
+        extends PhotoVoltaicsbackup.Components.Blocks.Icons.Block0;
+
+        Modelica.Blocks.Interfaces.RealInput u[nin] "input signal-vector"
+          annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
+        Modelica.Blocks.Interfaces.RealOutput y[nout] "output signal vector"
+          annotation (Placement(transformation(extent={{90,-10},{110,10}})));
+        parameter Integer nin=1 "dim of input signal-vector";
+        parameter Integer nout=1 "dim of output signal-vector";
+        annotation (
+          Documentation(
+                  info="<html>
+</html>"));
+      end MIMO;
+
+      block Park "Park-transform of input signal-vector"
+        extends PhotoVoltaicsbackup.Components.Blocks.MIMO(final nin=3, final
+            nout=3);
+
+        Modelica.Blocks.Interfaces.RealInput theta "transformation angle"
+          annotation (Placement(transformation(
+              origin={0,100},
+              extent={{-10,-10},{10,10}},
+              rotation=270)));
+      protected
+        constant Real s13=sqrt(1/3);
+        constant Real s23=sqrt(2/3);
+        constant Real dph_b=2*Modelica.Constants.pi
+                                /3;
+        constant Real dph_c=4*Modelica.Constants.pi
+                                /3;
+        Real[3] c;
+        Real[3] s;
+
+      equation
+        c =  cos({theta, theta - dph_b, theta - dph_c});
+        s =  sin({theta, theta - dph_b, theta - dph_c});
+        y = transpose([s23*c, -s23*s, {s13, s13, s13}])*u;
+        annotation (defaultComponentName = "park",
+          Icon(coordinateSystem(
+              preserveAspectRatio=false,
+              extent={{-100,-100},{100,100}},
+              grid={2,2}), graphics={Text(
+                extent={{-80,40},{80,-40}},
+                lineColor={128,128,128},
+                textString=
+                     "park")}),
+          Documentation(info="<html>
+<p>The block <tt>Park</tt> transforms abc variables (u) into dq0 variables (y) with arbitrary angular orientation
+<pre>  y = P*u</pre>
+<tt>P</tt> can be factorised into a constant, angle independent orthogonal matrix <tt>P0</tt> and an angle-dependent rotation <tt>R</tt></p>
+<pre>
+  P(theta) = R'(theta)*P0
+</pre>
+<p>Using the definition</p>
+<pre>
+  c_k = cos(theta - k*2*pi/3),  k=0,1,2 (phases a, b, c)
+  s_k = sin(theta - k*2*pi/3),  k=0,1,2 (phases a, b, c)
+</pre>
+<p>it takes the form
+<pre>
+                       [ c_0,  c_1, c_2]
+  P(theta) = sqrt(2/3)*[-s_0, -s_1,-s_2]
+                       [ w,    w,   w  ]
+</pre>
+with
+<pre>
+                        [ 1,      -1/2,       -1/2]
+  P0 = P(0) = sqrt(2/3)*[ 0, sqrt(3)/2, -sqrt(3)/2]
+                        [ w,         w,          w]
+</pre>
+and
+<pre>
+             [c_0, -s_0, 0]
+  R(theta) = [s_0,  c_0, 0]
+             [  0,  0,   1]
+</pre></p>
+</html>"));
+      end Park;
+
+      block Rotation_dq "Rotation of input signal-vector"
+        extends PhotoVoltaicsbackup.Components.Blocks.MIMO(final nin=2, final
+            nout=2);
+
+        Modelica.Blocks.Interfaces.RealInput theta "rotation angle"
+          annotation (Placement(transformation(
+              origin={0,100},
+              extent={{-10,-10},{10,10}},
+              rotation=270)));
+      protected
+        Real c;
+        Real s;
+
+      equation
+        c =   cos(theta);
+        s =   sin(theta);
+        y = [c, -s; s, c]*u;
+        annotation (defaultComponentName = "rot_dq",
+          Icon(coordinateSystem(
+              preserveAspectRatio=false,
+              extent={{-100,-100},{100,100}},
+              grid={2,2}), graphics={Text(
+                extent={{-75,40},{75,-40}},
+                lineColor={128,128,128},
+                textString=
+                     "rot_dq")}),
+          Documentation(info="<html>
+<p>The block <tt>Rotation_dq</tt> rotates u by an arbitrary angle <tt>theta</tt> into y according to
+<pre>  y = R_dq*u</pre>
+<tt>R_dq</tt> is the restriction of <tt>R_dq0</tt> from dq0 to dq.</p>
+<p>The matrix <tt>R_dq0</tt> rotates dq0 variables around the o-axis in dq0-space with arbitrary angle <tt>theta</tt>.
+<p>It takes the form
+<pre>
+                 [cos(theta), -sin(theta), 0]
+  R_dq0(theta) = [sin(theta),  cos(theta), 0]
+                 [  0,           0,        1]
+</pre>
+and has the real eigenvector
+<pre>  {0, 0, 1}</pre>
+in the dq0 reference-frame.</p>
+<p>Coefficient matrices of the form (symmetrical systems)
+<pre>
+      [x, 0, 0 ]
+  X = [0, x, 0 ]
+      [0, 0, xo]
+</pre>
+are invariant under transformations R_dq0</p>
+<p>The connection between R_dq0 and R_abc is the following
+<pre>  R_dq0 = P0*R_abc*P0'.</pre>
+with P0 the orthogonal transform 'Transforms.P0'.</p>
+</html>
+"));
+      end Rotation_dq;
+
+      package Icons
+
+          partial block Block0 "Block icon 0"
+            extends Block;
+            annotation (
+          Documentation(info="
+"),       Icon(coordinateSystem(
+                  preserveAspectRatio=false,
+                  extent={{-100,-100},{100,100}},
+                  grid={2,2}), graphics={Text(
+                    extent={{-100,-80},{100,-120}},
+                    lineColor={0,0,0},
+                    textString="%name")}));
+          end Block0;
+
+          partial block Block "Block icon"
+
+            annotation (
+          Documentation(info="
+"),       Icon(coordinateSystem(
+                  preserveAspectRatio=false,
+                  extent={{-100,-100},{100,100}},
+                  grid={2,2}), graphics={Rectangle(
+                    extent={{-80,60},{80,-60}},
+                    lineColor={0,0,127},
+                    fillColor={255,255,255},
+                    fillPattern=FillPattern.Solid)}));
+          end Block;
+      end Icons;
     end Blocks;
   end Components;
 
@@ -1378,7 +1944,8 @@ represents thus the inverse of
     package Irradiance "Irradiance"
       extends Modelica.Icons.Package;
 
-      model Irradiance "Simple solar irradiance without considering weather conditions"
+      model Irradiance
+        "Simple solar irradiance without considering weather conditions"
         import Modelica.Constants.pi;
         import PhotoVoltaics.Functions.rad;
         import PhotoVoltaics.Functions.degree;
@@ -1387,32 +1954,48 @@ represents thus the inverse of
         parameter Integer startMonth(final min = 1, final max = 12) = 9 "Month";
         parameter Integer startYear = 2016 "Year";
         parameter Integer TimeZone = 1 "Time zone";
-        parameter Modelica.SIunits.Angle longitude = 16.428 * pi / 180 "Longitude";
-        parameter Modelica.SIunits.Angle latitude = 48.280 * pi / 180 "Latitude";
-        parameter Modelica.SIunits.Irradiance irradianceRef = 1000 "Reference solar irradiance";
-        parameter Modelica.SIunits.Angle gamma = 10 * pi / 180 "Angle of PV module with w.r.t. horizontal plane";
-        parameter Modelica.SIunits.Angle azimuth = 0 "Azimuth of the PV module orientation";
-        Integer startDayOfYear(start = dayOfTheYear(startDay, startMonth, startYear)) "Start day of year in simulation";
-        Integer dayOfYear(final start = dayOfTheYear(startDay, startMonth, startYear)) "Actual day of year";
-        Integer daysOfYear(final start = dayOfTheYear(31, 12, startYear)) "Total number of days of year";
+        parameter Modelica.SIunits.Angle longitude = 16.428 * pi / 180
+          "Longitude";
+        parameter Modelica.SIunits.Angle latitude = 48.280 * pi / 180
+          "Latitude";
+        parameter Modelica.SIunits.Irradiance irradianceRef = 1000
+          "Reference solar irradiance";
+        parameter Modelica.SIunits.Angle gamma = 10 * pi / 180
+          "Angle of PV module with w.r.t. horizontal plane";
+        parameter Modelica.SIunits.Angle azimuth = 0
+          "Azimuth of the PV module orientation";
+        Integer startDayOfYear(start = dayOfTheYear(startDay, startMonth, startYear))
+          "Start day of year in simulation";
+        Integer dayOfYear(final start = dayOfTheYear(startDay, startMonth, startYear))
+          "Actual day of year";
+        Integer daysOfYear(final start = dayOfTheYear(31, 12, startYear))
+          "Total number of days of year";
         Integer year(final start = startYear) "Actual year";
-        Modelica.SIunits.Angle Jprime(final start = dayOfTheYear(startDay, startMonth, startYear) / dayOfTheYear(31, 12, startYear) * 2 * pi) "Equivalent Angle of the day of the year w.r.t. total number of days";
+        Modelica.SIunits.Angle Jprime(final start = dayOfTheYear(startDay, startMonth, startYear) / dayOfTheYear(31, 12, startYear) * 2 * pi)
+          "Equivalent Angle of the day of the year w.r.t. total number of days";
         Real delta_J;
         Real timeequation_J;
-        Modelica.SIunits.Conversions.NonSIunits.Time_day localTimeDays "Local time in days";
+        Modelica.SIunits.Conversions.NonSIunits.Time_day localTimeDays
+          "Local time in days";
         Integer localDays "Locale day";
         Modelica.SIunits.Time localTime "Local time";
-        Modelica.SIunits.Conversions.NonSIunits.Time_hour localTimeHours "Local time in unit hours";
-        Modelica.SIunits.Conversions.NonSIunits.Time_hour LocalMeanTimeHours "Local mean time in unit hours";
-        Modelica.SIunits.Conversions.NonSIunits.Time_hour trueMeanTimeHours "True mean time in unit hours";
+        Modelica.SIunits.Conversions.NonSIunits.Time_hour localTimeHours
+          "Local time in unit hours";
+        Modelica.SIunits.Conversions.NonSIunits.Time_hour LocalMeanTimeHours
+          "Local mean time in unit hours";
+        Modelica.SIunits.Conversions.NonSIunits.Time_hour trueMeanTimeHours
+          "True mean time in unit hours";
         Modelica.SIunits.Angle hoursAngle "Hours angle";
         Modelica.SIunits.Angle sunHeight "Sun height";
         Modelica.SIunits.Angle sunAzimuth1 "Sun azimuth before 12 p.m.";
         Modelica.SIunits.Angle sunAzimuth2 "Sun azimuth after 12 p.m.";
         Modelica.SIunits.Angle sunAzimuth "Sun azimuth";
-        Modelica.SIunits.Angle angleOfIncidence "Angle of incidence between a vector in sun direction and a normal vector";
-        Modelica.SIunits.Irradiance directIrradianceHorizontal "Direct irradiance on the horizontal in W/m^2";
-        Modelica.SIunits.Irradiance directIrradianceInclined "Direct irradiance on the inclined plane in w/m^2";
+        Modelica.SIunits.Angle angleOfIncidence
+          "Angle of incidence between a vector in sun direction and a normal vector";
+        Modelica.SIunits.Irradiance directIrradianceHorizontal
+          "Direct irradiance on the horizontal in W/m^2";
+        Modelica.SIunits.Irradiance directIrradianceInclined
+          "Direct irradiance on the inclined plane in w/m^2";
         Modelica.Blocks.Interfaces.RealOutput irradiance annotation (
           Placement(transformation(extent = {{100, -10}, {120, 10}})));
       algorithm
@@ -1455,7 +2038,7 @@ represents thus the inverse of
         directIrradianceInclined = if angleOfIncidence > pi / 2 then 0 else if abs(sin(sunHeight)) < 1E-5 then 0 else directIrradianceHorizontal * (cos(angleOfIncidence) / sin(sunHeight));
         irradiance = directIrradianceInclined;
         annotation (
-          Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(extent={{-100,100},{100,-100}},      lineColor = {28, 108, 200}),
+          Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(extent={{-100,100},{100,-100}},      lineColor=  {28, 108, 200}),
               Ellipse(
                 extent={{-40,40},{40,-40}},
                 lineColor={0,0,0},
@@ -1515,16 +2098,19 @@ represents thus the inverse of
 
       block PowerRamp "Generate ramp signal based logarithmic range"
         parameter Real height = 1 "Height of ramps";
-        parameter Modelica.SIunits.Time duration(min = 0.0, start = 2) "Duration of ramp (= 0.0 gives a Step)";
+        parameter Modelica.SIunits.Time duration(min = 0.0, start = 2)
+          "Duration of ramp (= 0.0 gives a Step)";
         parameter Real offset = 0 "Offset of output signal";
-        parameter Modelica.SIunits.Time startTime = 0 "Output = offset for time < startTime";
-        parameter Real ref = 1 "Reference value, determined by ref * 10 ^ (ramp function)";
+        parameter Modelica.SIunits.Time startTime = 0
+          "Output = offset for time < startTime";
+        parameter Real ref = 1
+          "Reference value, determined by ref * 10 ^ (ramp function)";
         extends Modelica.Blocks.Interfaces.SO;
       equation
         y = ref * 10 ^ (offset + (if time < startTime then 0 else if time < startTime + duration then (time - startTime) * height / duration else height));
         annotation (
-          Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Line(points = {{-80, 68}, {-80, -80}}, color = {192, 192, 192}), Polygon(points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid), Line(points = {{-90, -70}, {82, -70}}, color = {192, 192, 192}), Polygon(points = {{90, -70}, {68, -62}, {68, -78}, {90, -70}}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid), Line(points = {{-80, -70}, {-40, -70}, {31, 38}}), Text(extent = {{-150, -150}, {150, -110}}, lineColor = {0, 0, 0}, textString = "duration=%duration"), Line(points = {{31, 38}, {86, 38}})}),
-          Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Polygon(points = {{-80, 90}, {-86, 68}, {-74, 68}, {-80, 90}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Line(points = {{-80, 68}, {-80, -80}}, color = {95, 95, 95}), Line(points = {{-80, -20}, {-20, -20}, {50, 50}}, color = {0, 0, 255}, thickness = 0.5), Line(points = {{-90, -70}, {82, -70}}, color = {95, 95, 95}), Polygon(points = {{90, -70}, {68, -64}, {68, -76}, {90, -70}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Polygon(points = {{-40, -20}, {-42, -30}, {-38, -30}, {-40, -20}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Line(points = {{-40, -20}, {-40, -70}}, color = {95, 95, 95}), Polygon(points = {{-40, -70}, {-42, -60}, {-38, -60}, {-40, -70}, {-40, -70}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Text(extent = {{-72, -39}, {-34, -50}}, lineColor = {0, 0, 0}, textString = "offset"), Text(extent = {{-38, -72}, {6, -83}}, lineColor = {0, 0, 0}, textString = "startTime"), Text(extent = {{-78, 92}, {-37, 72}}, lineColor = {0, 0, 0}, textString = "y"), Text(extent = {{70, -80}, {94, -91}}, lineColor = {0, 0, 0}, textString = "time"), Line(points = {{-20, -20}, {-20, -70}}, color = {95, 95, 95}), Line(points = {{-19, -20}, {50, -20}}, color = {95, 95, 95}), Line(points = {{50, 50}, {101, 50}}, color = {0, 0, 255}, thickness = 0.5), Line(points = {{50, 50}, {50, -20}}, color = {95, 95, 95}), Polygon(points = {{50, -20}, {42, -18}, {42, -22}, {50, -20}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Polygon(points = {{-20, -20}, {-11, -18}, {-11, -22}, {-20, -20}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Polygon(points = {{50, 50}, {48, 40}, {52, 40}, {50, 50}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Polygon(points = {{50, -20}, {48, -10}, {52, -10}, {50, -20}, {50, -20}}, lineColor = {95, 95, 95}, fillColor = {95, 95, 95}, fillPattern = FillPattern.Solid), Text(extent = {{53, 23}, {82, 10}}, lineColor = {0, 0, 0}, textString = "height"), Text(extent = {{-2, -21}, {37, -33}}, lineColor = {0, 0, 0}, textString = "duration")}),
+          Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Line(points=  {{-80, 68}, {-80, -80}}, color=  {192, 192, 192}), Polygon(points=  {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}, lineColor=  {192, 192, 192}, fillColor=  {192, 192, 192}, fillPattern=  FillPattern.Solid), Line(points=  {{-90, -70}, {82, -70}}, color=  {192, 192, 192}), Polygon(points=  {{90, -70}, {68, -62}, {68, -78}, {90, -70}}, lineColor=  {192, 192, 192}, fillColor=  {192, 192, 192}, fillPattern=  FillPattern.Solid), Line(points=  {{-80, -70}, {-40, -70}, {31, 38}}), Text(extent=  {{-150, -150}, {150, -110}}, lineColor=  {0, 0, 0}, textString=  "duration=%duration"), Line(points=  {{31, 38}, {86, 38}})}),
+          Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Polygon(points=  {{-80, 90}, {-86, 68}, {-74, 68}, {-80, 90}}, lineColor=  {95, 95, 95}, fillColor=  {95, 95, 95}, fillPattern=  FillPattern.Solid), Line(points=  {{-80, 68}, {-80, -80}}, color=  {95, 95, 95}), Line(points=  {{-80, -20}, {-20, -20}, {50, 50}}, color=  {0, 0, 255}, thickness=  0.5), Line(points=  {{-90, -70}, {82, -70}}, color=  {95, 95, 95}), Polygon(points=  {{90, -70}, {68, -64}, {68, -76}, {90, -70}}, lineColor=  {95, 95, 95}, fillColor=  {95, 95, 95}, fillPattern=  FillPattern.Solid), Polygon(points=  {{-40, -20}, {-42, -30}, {-38, -30}, {-40, -20}}, lineColor=  {95, 95, 95}, fillColor=  {95, 95, 95}, fillPattern=  FillPattern.Solid), Line(points=  {{-40, -20}, {-40, -70}}, color=  {95, 95, 95}), Polygon(points=  {{-40, -70}, {-42, -60}, {-38, -60}, {-40, -70}, {-40, -70}}, lineColor=  {95, 95, 95}, fillColor=  {95, 95, 95}, fillPattern=  FillPattern.Solid), Text(extent=  {{-72, -39}, {-34, -50}}, lineColor=  {0, 0, 0}, textString=  "offset"), Text(extent=  {{-38, -72}, {6, -83}}, lineColor=  {0, 0, 0}, textString=  "startTime"), Text(extent=  {{-78, 92}, {-37, 72}}, lineColor=  {0, 0, 0}, textString=  "y"), Text(extent=  {{70, -80}, {94, -91}}, lineColor=  {0, 0, 0}, textString=  "time"), Line(points=  {{-20, -20}, {-20, -70}}, color=  {95, 95, 95}), Line(points=  {{-19, -20}, {50, -20}}, color=  {95, 95, 95}), Line(points=  {{50, 50}, {101, 50}}, color=  {0, 0, 255}, thickness=  0.5), Line(points=  {{50, 50}, {50, -20}}, color=  {95, 95, 95}), Polygon(points=  {{50, -20}, {42, -18}, {42, -22}, {50, -20}}, lineColor=  {95, 95, 95}, fillColor=  {95, 95, 95}, fillPattern=  FillPattern.Solid), Polygon(points=  {{-20, -20}, {-11, -18}, {-11, -22}, {-20, -20}}, lineColor=  {95, 95, 95}, fillColor=  {95, 95, 95}, fillPattern=  FillPattern.Solid), Polygon(points=  {{50, 50}, {48, 40}, {52, 40}, {50, 50}}, lineColor=  {95, 95, 95}, fillColor=  {95, 95, 95}, fillPattern=  FillPattern.Solid), Polygon(points=  {{50, -20}, {48, -10}, {52, -10}, {50, -20}, {50, -20}}, lineColor=  {95, 95, 95}, fillColor=  {95, 95, 95}, fillPattern=  FillPattern.Solid), Text(extent=  {{53, 23}, {82, 10}}, lineColor=  {0, 0, 0}, textString=  "height"), Text(extent=  {{-2, -21}, {37, -33}}, lineColor=  {0, 0, 0}, textString=  "duration")}),
           Documentation(info = "<html>
 <p>
 The Real output y is a ramp signal:
@@ -1591,7 +2177,7 @@ If parameter duration is set to 0.0, the limiting case of a Step signal is achie
         connect(trapezoid.y, triangle) annotation (
           Line(points = {{81, -60}, {110, -60}}, color = {0, 0, 127}));
         annotation (
-          Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-100, 100}, {100, -100}}), Line(points = {{-60, 40}, {-20, 40}, {-20, 60}, {20, 60}, {20, 80}, {60, 80}}, color = {0, 0, 255}), Line(points = {{-58, -80}, {-40, -40}, {-20, -80}, {0, -40}, {20, -80}, {40, -40}, {60, -80}}, color = {0, 0, 255}), Text(origin = {1, 130}, lineColor = {0, 0, 255}, extent = {{-149, -20}, {149, 20}}, textString = "%name")}),
+          Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor=  {0, 0, 255}, fillColor=  {255, 255, 255}, fillPattern=  FillPattern.Solid, extent=  {{-100, 100}, {100, -100}}), Line(points=  {{-60, 40}, {-20, 40}, {-20, 60}, {20, 60}, {20, 80}, {60, 80}}, color=  {0, 0, 255}), Line(points=  {{-58, -80}, {-40, -40}, {-20, -80}, {0, -40}, {20, -80}, {40, -40}, {60, -80}}, color=  {0, 0, 255}), Text(origin=  {1, 130}, lineColor=  {0, 0, 255}, extent=  {{-149, -20}, {149, 20}}, textString=  "%name")}),
           Documentation(info = "<html>
 <p>The step output starts from <code>stepOffset</code> and increases to <code>stepOffset + stepHeight</code> in <code>stepNumber</code>steps. The total duration of all step changes is equal to <code>T</code>. </p>
 <p>During each step the <code>triangle</code> output is increased from
@@ -1610,19 +2196,27 @@ stepwise changed variables (<code>step</code>).
     package Electrical "Electrical sources"
       extends Modelica.Icons.Package;
 
-      model SignalCurrent "Generic current source using the input signal as source current"
+      model SignalCurrent
+        "Generic current source using the input signal as source current"
         extends Modelica.Electrical.Analog.Interfaces.ConditionalHeatPort(T = 298.15);
-        parameter Modelica.SIunits.Temperature TRef = 298.15 "Reference temperature";
-        parameter Modelica.SIunits.Current IRef = 1 "Reference current at reference irradiance and reference temperature";
-        parameter Modelica.SIunits.Irradiance irradianceRef = 1000 "Reference solar irradiance";
-        parameter Modelica.SIunits.LinearTemperatureCoefficient alphaRef = 0 "Temperature coefficient of reference current at TRref";
+        parameter Modelica.SIunits.Temperature TRef = 298.15
+          "Reference temperature";
+        parameter Modelica.SIunits.Current IRef = 1
+          "Reference current at reference irradiance and reference temperature";
+        parameter Modelica.SIunits.Irradiance irradianceRef = 1000
+          "Reference solar irradiance";
+        parameter Modelica.SIunits.LinearTemperatureCoefficient alphaRef = 0
+          "Temperature coefficient of reference current at TRref";
         Modelica.Electrical.Analog.Interfaces.PositivePin p annotation (
           Placement(transformation(extent = {{-110, -10}, {-90, 10}})));
         Modelica.Electrical.Analog.Interfaces.NegativePin n annotation (
           Placement(transformation(extent = {{110, -10}, {90, 10}})));
-        Modelica.SIunits.Voltage v "Voltage drop between the two pins (= p.v - n.v)";
-        Modelica.SIunits.Current i "Current flowing from pin p to pin n as input signal";
-        Modelica.Blocks.Interfaces.RealInput irradiance(unit = "W/m2") "Irradiance" annotation (
+        Modelica.SIunits.Voltage v
+          "Voltage drop between the two pins (= p.v - n.v)";
+        Modelica.SIunits.Current i
+          "Current flowing from pin p to pin n as input signal";
+        Modelica.Blocks.Interfaces.RealInput irradiance(unit = "W/m2")
+          "Irradiance"                                                              annotation (
           Placement(transformation(origin = {0, 70}, extent = {{-20, -20}, {20, 20}}, rotation = 270)));
       equation
         i = IRef * (irradiance / irradianceRef + alphaRef * (T_heatPort - TRef));
@@ -1631,8 +2225,8 @@ stepwise changed variables (<code>step</code>).
         i = p.i;
         LossPower = 0;
         annotation (
-          Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Ellipse(extent = {{-50, 50}, {50, -50}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-90, 0}, {-50, 0}}, color = {0, 0, 255}), Line(points = {{50, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{0, -50}, {0, 50}}, color = {0, 0, 255}), Text(extent = {{-150, -90}, {150, -50}}, textString = "%name", lineColor = {0, 0, 255}), Polygon(points = {{90, 0}, {60, 10}, {60, -10}, {90, 0}}, lineColor = {0, 0, 255}, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid)}),
-          Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Ellipse(extent = {{-50, 50}, {50, -50}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid), Line(points = {{-96, 0}, {-50, 0}}, color = {0, 0, 255}), Line(points = {{50, 0}, {96, 0}}, color = {0, 0, 255}), Line(points = {{0, -50}, {0, 50}}, color = {0, 0, 255})}),
+          Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Ellipse(extent=  {{-50, 50}, {50, -50}}, lineColor=  {0, 0, 255}, fillColor=  {255, 255, 170}, fillPattern=  FillPattern.Solid), Line(points=  {{-90, 0}, {-50, 0}}, color=  {0, 0, 255}), Line(points=  {{50, 0}, {90, 0}}, color=  {0, 0, 255}), Line(points=  {{0, -50}, {0, 50}}, color=  {0, 0, 255}), Text(extent=  {{-150, -90}, {150, -50}}, textString=  "%name", lineColor=  {0, 0, 255}), Polygon(points=  {{90, 0}, {60, 10}, {60, -10}, {90, 0}}, lineColor=  {0, 0, 255}, fillColor=  {0, 0, 255}, fillPattern=  FillPattern.Solid)}),
+          Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Ellipse(extent=  {{-50, 50}, {50, -50}}, lineColor=  {0, 0, 255}, fillColor=  {255, 255, 255}, fillPattern=  FillPattern.Solid), Line(points=  {{-96, 0}, {-50, 0}}, color=  {0, 0, 255}), Line(points=  {{50, 0}, {96, 0}}, color=  {0, 0, 255}), Line(points=  {{0, -50}, {0, 50}}, color=  {0, 0, 255})}),
           Documentation(revisions = "<html>
 <ul>
 <li><i> 1998   </i>
@@ -1644,15 +2238,17 @@ stepwise changed variables (<code>step</code>).
 </html>"));
       end SignalCurrent;
 
-      model VariableUnrootedSinglePhaseCurrentSource "Unrooted variable multi phase AC current source"
-        extends Modelica.Electrical.QuasiStationary.SinglePhase.Interfaces.OnePort;
+      model VariableUnrootedSinglePhaseCurrentSource
+        "Unrooted variable multi phase AC current source"
+        extends
+          Modelica.Electrical.QuasiStationary.SinglePhase.Interfaces.OnePort;
         import Modelica.Constants.pi;
         Modelica.ComplexBlocks.Interfaces.ComplexInput I annotation (
           Placement(transformation(origin = {0, 100}, extent = {{-20, -20}, {20, 20}}, rotation = 270)));
       equation
         i = I;
         annotation (
-          Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Line(points = {{-60, 60}, {60, 60}}, color = {85, 170, 255}), Polygon(points = {{60, 60}, {30, 70}, {30, 50}, {60, 60}}, lineColor = {0, 0, 255}, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid), Line(points = {{0, -50}, {0, 50}}, color = {0, 0, 0}), Ellipse(extent = {{-50, 50}, {50, -50}}, lineColor = {0, 0, 0}), Line(points = {{-90, 0}, {-50, 0}}, color = {0, 0, 0}), Line(points = {{50, 0}, {90, 0}}, color = {0, 0, 0})}),
+          Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Line(points=  {{-60, 60}, {60, 60}}, color=  {85, 170, 255}), Polygon(points=  {{60, 60}, {30, 70}, {30, 50}, {60, 60}}, lineColor=  {0, 0, 255}, fillColor=  {0, 0, 255}, fillPattern=  FillPattern.Solid), Line(points=  {{0, -50}, {0, 50}}, color=  {0, 0, 0}), Ellipse(extent=  {{-50, 50}, {50, -50}}, lineColor=  {0, 0, 0}), Line(points=  {{-90, 0}, {-50, 0}}, color=  {0, 0, 0}), Line(points=  {{50, 0}, {90, 0}}, color=  {0, 0, 0})}),
           Documentation(info = "<html>
 <p>
 This model represents an ideal current source specifying the complex RMS current without root.
@@ -1660,15 +2256,17 @@ This model represents an ideal current source specifying the complex RMS current
 </html>"));
       end VariableUnrootedSinglePhaseCurrentSource;
 
-      model VariableUnrootedMultiPhaseCurrentSource "Unrooted variable multi phase AC current source"
-        extends Modelica.Electrical.QuasiStationary.MultiPhase.Interfaces.OnePort;
+      model VariableUnrootedMultiPhaseCurrentSource
+        "Unrooted variable multi phase AC current source"
+        extends
+          Modelica.Electrical.QuasiStationary.MultiPhase.Interfaces.OnePort;
         import Modelica.Constants.pi;
         Modelica.ComplexBlocks.Interfaces.ComplexInput I[m] annotation (
           Placement(transformation(origin = {0, 100}, extent = {{-20, -20}, {20, 20}}, rotation = 270)));
       equation
         i = I;
         annotation (
-          Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Line(points = {{-60, 60}, {60, 60}}, color = {85, 170, 255}), Polygon(points = {{60, 60}, {30, 70}, {30, 50}, {60, 60}}, lineColor = {0, 0, 255}, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid), Line(points = {{0, -50}, {0, 50}}, color = {0, 0, 0}), Ellipse(extent = {{-50, 50}, {50, -50}}, lineColor = {0, 0, 0}), Line(points = {{-90, 0}, {-50, 0}}, color = {0, 0, 0}), Line(points = {{50, 0}, {90, 0}}, color = {0, 0, 0})}),
+          Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Line(points=  {{-60, 60}, {60, 60}}, color=  {85, 170, 255}), Polygon(points=  {{60, 60}, {30, 70}, {30, 50}, {60, 60}}, lineColor=  {0, 0, 255}, fillColor=  {0, 0, 255}, fillPattern=  FillPattern.Solid), Line(points=  {{0, -50}, {0, 50}}, color=  {0, 0, 0}), Ellipse(extent=  {{-50, 50}, {50, -50}}, lineColor=  {0, 0, 0}), Line(points=  {{-90, 0}, {-50, 0}}, color=  {0, 0, 0}), Line(points=  {{50, 0}, {90, 0}}, color=  {0, 0, 0})}),
           Documentation(info = "<html>
 
 <p>
@@ -1696,7 +2294,8 @@ Additionally, the frequency of the current source is defined by a real signal in
 
     partial model PartialCell "Partial cell model"
       extends PhotoVoltaics.Interfaces.PartialComponent;
-      parameter Real shadow = 0 "Shadow based on: 0 = full sun, 1 = full shadow";
+      parameter Real shadow = 0
+        "Shadow based on: 0 = full sun, 1 = full shadow";
       PhotoVoltaics.Components.Diodes.Diode2Module diode(final useHeatPort = useHeatPort, final T = T, final TRef = moduleData.TRef) annotation (
         Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       PhotoVoltaics.Sources.Electrical.SignalCurrent signalCurrent(final useHeatPort = useHeatPort, final T = T, final TRef = moduleData.TRef) annotation (
@@ -1725,27 +2324,33 @@ Additionally, the frequency of the current source is defined by a real signal in
         Icon(coordinateSystem(preserveAspectRatio = false)));
     end PartialCell;
 
-
-
     partial model PartialDiode "Diode with one exponential function"
       extends Modelica.Electrical.Analog.Interfaces.OnePort;
       extends Modelica.Electrical.Analog.Interfaces.ConditionalHeatPort(T = 298.15);
-      constant Modelica.SIunits.Charge Q = 1.6021766208E-19 "Elementary charge of electron";
+      constant Modelica.SIunits.Charge Q = 1.6021766208E-19
+        "Elementary charge of electron";
       parameter Real m = 1 "Ideality factor of diode";
       parameter Modelica.SIunits.Resistance R = 1E8 "Parallel ohmic resistance";
-      parameter Modelica.SIunits.Temperature TRef = 298.15 "Reference temperature" annotation (
+      parameter Modelica.SIunits.Temperature TRef = 298.15
+        "Reference temperature"                                                    annotation (
         Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.Voltage VRef(min = Modelica.Constants.small) = 0.6292 "Reference voltage > 0 at TRef" annotation (
+      parameter Modelica.SIunits.Voltage VRef(min = Modelica.Constants.small) = 0.6292
+        "Reference voltage > 0 at TRef"                                                                                annotation (
         Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.Current IRef(min = Modelica.Constants.small) = 8.540 "Reference current > 0 at TRef" annotation (
+      parameter Modelica.SIunits.Current IRef(min = Modelica.Constants.small) = 8.540
+        "Reference current > 0 at TRef"                                                                               annotation (
         Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaI = +0.00053 "Temperature coefficient of reference current at TRef" annotation (
+      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaI = +0.00053
+        "Temperature coefficient of reference current at TRef"                                                                         annotation (
         Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaV = -0.00340 "Temperature coefficient of reference voltage at TRef*" annotation (
+      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaV = -0.00340
+        "Temperature coefficient of reference voltage at TRef*"                                                                         annotation (
         Dialog(group = "Reference data"));
       Modelica.SIunits.Voltage Vt "Voltage equivalent of temperature (k*T/Q)";
-      Modelica.SIunits.Voltage VRefActual "Reference voltage w.r.t. actual temperature";
-      Modelica.SIunits.Current IRefActual "Reference current w.r.t. actual temperature";
+      Modelica.SIunits.Voltage VRefActual
+        "Reference voltage w.r.t. actual temperature";
+      Modelica.SIunits.Current IRefActual
+        "Reference current w.r.t. actual temperature";
       Modelica.SIunits.Current Ids "Saturation current";
     equation
       // Temperature dependent voltage
@@ -1763,18 +2368,21 @@ Additionally, the frequency of the current source is defined by a real signal in
 <pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
   i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
 </html>"),
-        Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Text(extent = {{-150, 150}, {150, 110}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}),
+        Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Text(extent=  {{-150, 150}, {150, 110}}, textString=  "%name", lineColor=  {0, 0, 255}), Line(visible=  useHeatPort, points=  {{0, -101}, {0, -20}}, color=  {127, 0, 0}, pattern=  LinePattern.Dot)}),
         Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));
     end PartialDiode;
 
     partial model PartialComponent "Partial cell or module"
       extends Modelica.Electrical.Analog.Interfaces.TwoPin;
-      extends Modelica.Thermal.HeatTransfer.Interfaces.PartialConditionalHeatPort(T = 298.15);
-      parameter Boolean useConstantIrradiance = true "If false, signal input is used" annotation (
+      extends
+        Modelica.Thermal.HeatTransfer.Interfaces.PartialConditionalHeatPort(      T = 298.15);
+      parameter Boolean useConstantIrradiance = true
+        "If false, signal input is used"                                              annotation (
         Evaluate = true,
         HideResult = true,
         choices(checkBox = true));
-      parameter Modelica.SIunits.Irradiance constantIrradiance = 1000 "Constant solar irradiance, if useConstantIrradiance = true" annotation (
+      parameter Modelica.SIunits.Irradiance constantIrradiance = 1000
+        "Constant solar irradiance, if useConstantIrradiance = true"                                                               annotation (
         Dialog(enable = useConstantIrradiance));
       parameter Records.ModuleData moduleData "Module parameters" annotation (
         choicesAllMatching = true,
@@ -1782,13 +2390,16 @@ Additionally, the frequency of the current source is defined by a real signal in
       Modelica.SIunits.Current i = p.i "Current";
       Modelica.SIunits.Current iGenerating = -i "Negative current (generating)";
       Modelica.SIunits.Power power = v * i "Power";
-      Modelica.SIunits.Power powerGenerating = v * iGenerating "Negative power consumption (generating)";
-      Modelica.Blocks.Interfaces.RealInput variableIrradiance(unit = "W/m2") if not useConstantIrradiance "Solar irradiance" annotation (
+      Modelica.SIunits.Power powerGenerating = v * iGenerating
+        "Negative power consumption (generating)";
+      Modelica.Blocks.Interfaces.RealInput variableIrradiance(unit = "W/m2") if not useConstantIrradiance
+        "Solar irradiance"                                                                                                   annotation (
         Placement(transformation(extent = {{20, -20}, {-20, 20}}, rotation = 90, origin = {0, 120}), iconTransformation(extent = {{20, -20}, {-20, 20}}, rotation = 90, origin = {0, 120})));
       Modelica.Blocks.Sources.Constant const(final k = constantIrradiance) if useConstantIrradiance annotation (
         Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 0, origin = {-30, 80})));
     protected
-      Modelica.Blocks.Interfaces.RealInput irradiance(unit = "W/m2") "Solar irradiance (either constant or signal input)" annotation (
+      Modelica.Blocks.Interfaces.RealInput irradiance(unit = "W/m2")
+        "Solar irradiance (either constant or signal input)"                                                              annotation (
         Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin = {0, 70})));
     equation
       connect(irradiance, variableIrradiance) annotation (
@@ -1804,9 +2415,11 @@ Additionally, the frequency of the current source is defined by a real signal in
       extends Modelica.Icons.Package;
 
       partial model ACpins "Single phase AC pins"
-        Modelica.Electrical.QuasiStationary.SinglePhase.Interfaces.PositivePin ac_p "AC positive pin" annotation (
+        Modelica.Electrical.QuasiStationary.SinglePhase.Interfaces.PositivePin ac_p
+          "AC positive pin"                                                                           annotation (
           Placement(transformation(extent = {{90, 90}, {110, 110}})));
-        Modelica.Electrical.QuasiStationary.SinglePhase.Interfaces.NegativePin ac_n "AC negative pin" annotation (
+        Modelica.Electrical.QuasiStationary.SinglePhase.Interfaces.NegativePin ac_n
+          "AC negative pin"                                                                           annotation (
           Placement(transformation(extent = {{90, -110}, {110, -90}})));
         Modelica.SIunits.ComplexVoltage vAC = ac_p.v - ac_n.v "AC potential";
         Modelica.SIunits.ComplexCurrent iAC = ac_p.i "AC current";
@@ -1814,7 +2427,8 @@ Additionally, the frequency of the current source is defined by a real signal in
 
       partial model ACplug "AC multi phase plug"
         parameter Integer m(final min = 3) = 3 "Number of phases";
-        Modelica.Electrical.QuasiStationary.MultiPhase.Interfaces.PositivePlug ac(final m = m) "AC output" annotation (
+        Modelica.Electrical.QuasiStationary.MultiPhase.Interfaces.PositivePlug ac(final m = m)
+          "AC output"                                                                                      annotation (
           Placement(transformation(extent = {{90, -10}, {110, 10}})));
         Modelica.SIunits.ComplexVoltage vAC[m] = ac.pin[:].v "AC potential";
         Modelica.SIunits.ComplexCurrent iAC[m] = ac.pin[:].i "AC current";
@@ -1826,27 +2440,39 @@ Additionally, the frequency of the current source is defined by a real signal in
     record ModuleData "Data of PV module"
       extends Modelica.Icons.Record;
       parameter String moduleName = "Generic";
-      parameter Modelica.SIunits.Temperature TRef = 298.15 "Reference temperature" annotation (
+      parameter Modelica.SIunits.Temperature TRef = 298.15
+        "Reference temperature"                                                    annotation (
         Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.Irradiance irradianceRef = 1000 "Reference solar irradiance" annotation (
+      parameter Modelica.SIunits.Irradiance irradianceRef = 1000
+        "Reference solar irradiance"                                                          annotation (
         Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.Voltage VocRef(min = Modelica.Constants.small) = 30.2 "Reference open circuit module voltage > 0 at TRref" annotation (
+      parameter Modelica.SIunits.Voltage VocRef(min = Modelica.Constants.small) = 30.2
+        "Reference open circuit module voltage > 0 at TRref"                                                                                annotation (
         Dialog(group = "Reference data"));
-      final parameter Modelica.SIunits.Voltage VocCellRef = VocRef / ns "Reference open circuit cell voltage > 0 at TRref";
-      parameter Modelica.SIunits.Current IscRef(min = Modelica.Constants.small) = 8.54 "Reference short circuit current > 0 at TRref and irradianceRef" annotation (
+      final parameter Modelica.SIunits.Voltage VocCellRef = VocRef / ns
+        "Reference open circuit cell voltage > 0 at TRref";
+      parameter Modelica.SIunits.Current IscRef(min = Modelica.Constants.small) = 8.54
+        "Reference short circuit current > 0 at TRref and irradianceRef"                                                                                annotation (
         Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.Voltage VmpRef(min = Modelica.Constants.small) = 24.0 "Reference maximum power module voltage > 0 at TRref" annotation (
+      parameter Modelica.SIunits.Voltage VmpRef(min = Modelica.Constants.small) = 24.0
+        "Reference maximum power module voltage > 0 at TRref"                                                                                annotation (
         Dialog(group = "Reference data"));
-      final parameter Modelica.SIunits.Voltage VmpCellRef = VmpRef / ns "Reference maximum power cell voltage > 0 at TRref";
-      parameter Modelica.SIunits.Current ImpRef(min = Modelica.Constants.small) = 7.71 "Reference maximum power current > 0 at TRref and irradianceRef" annotation (
+      final parameter Modelica.SIunits.Voltage VmpCellRef = VmpRef / ns
+        "Reference maximum power cell voltage > 0 at TRref";
+      parameter Modelica.SIunits.Current ImpRef(min = Modelica.Constants.small) = 7.71
+        "Reference maximum power current > 0 at TRref and irradianceRef"                                                                                annotation (
         Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaIsc = +0.00053 "Temperature coefficient of reference short circuit current at TRref" annotation (
+      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaIsc = +0.00053
+        "Temperature coefficient of reference short circuit current at TRref"                                                                           annotation (
         Dialog(group = "Reference data"));
-      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaVoc = -0.00340 "Temperature coefficient of reference open circuit module voltage at TRref" annotation (
+      parameter Modelica.SIunits.LinearTemperatureCoefficient alphaVoc = -0.00340
+        "Temperature coefficient of reference open circuit module voltage at TRref"
+                                                                                                            annotation (
         Dialog(group = "Reference data"));
       parameter Integer ns = 1 "Number of series connected cells";
       parameter Integer nb = 1 "Number of bypass diodes per module";
-      parameter Modelica.SIunits.Voltage BvCell = 18 "Breakthrough cell voltage" annotation (
+      parameter Modelica.SIunits.Voltage BvCell = 18
+        "Breakthrough cell voltage"                                              annotation (
         Dialog(group = "Breakthrough data"));
       parameter Modelica.SIunits.Current Ibv = 1 "Breakthrough knee current" annotation (
         Dialog(group = "Breakthrough data"));
@@ -1856,12 +2482,14 @@ Additionally, the frequency of the current source is defined by a real signal in
                     parameter Modelica.SIunits.Resistance RsCell = 0 "Series resistance of cell" annotation(Dialog(group = "Non-ideal effects"));
                     parameter Modelica.SIunits.Resistance RshCell = 1E8 "Shunt resistance of cell" annotation(Dialog(group = "Non-ideal effects"));
                     */
-      final parameter Modelica.SIunits.Voltage VtCellRef = Modelica.Constants.k * TRef / Q "Reference temperature voltage of cell";
-      constant Modelica.SIunits.Charge Q = 1.6021766208E-19 "Elementary charge of electron";
+      final parameter Modelica.SIunits.Voltage VtCellRef = Modelica.Constants.k * TRef / Q
+        "Reference temperature voltage of cell";
+      constant Modelica.SIunits.Charge Q = 1.6021766208E-19
+        "Elementary charge of electron";
       annotation (
         defaultComponentName = "moduleData",
         defaultComponentPrefixes = "parameter",
-        Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Text(lineColor = {0, 0, 255}, extent = {{-200, -150}, {200, -110}}, textString = "%moduleName")}),
+        Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Text(lineColor=  {0, 0, 255}, extent=  {{-200, -150}, {200, -110}}, textString=  "%moduleName")}),
         Diagram(coordinateSystem(preserveAspectRatio = false)));
     end ModuleData;
 
@@ -2339,7 +2967,13 @@ The original data of this module are taken from
     version = "0.X.X",
     versionBuild = 1,
     versionDate = "2017-XX-XX",
-    uses(Modelica(version = "3.2.2")),
-    Icon(coordinateSystem, graphics={  Ellipse(origin = {36, 75}, fillColor = {255, 255, 127}, fillPattern = FillPattern.Solid, extent = {{0, 1}, {40, -39}}, endAngle = 360), Rectangle(origin = {-60, -9}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -7}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {-60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -5}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
+    uses(Modelica(version = "3.2.2"), PhotoVoltaicsbackup(version="0.X.X")),
+    Icon(coordinateSystem, graphics={  Ellipse(origin = {36, 75}, fillColor = {255, 255, 127},
+            fillPattern =                                                                                    FillPattern.Solid, extent = {{0, 1}, {40, -39}}, endAngle = 360), Rectangle(origin = {-60, -9}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
+            fillPattern =                                                                                                    FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -7}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
+            fillPattern =                                                                                                    FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {-60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
+            fillPattern =                                                                                                    FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
+            fillPattern =                                                                                                    FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
+            fillPattern =                                                                                                    FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -5}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
             fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Line(origin = {18, 34}, points = {{4, 10}, {-84, -16}}), Line(origin = {-12, 70}, points = {{34, -6}, {-34, 6}}), Line(points = {{36, 30}, {28, 16}}, color = {28, 108, 200})}));
 end PhotoVoltaics;
