@@ -745,33 +745,20 @@ on the horizontal axis</li>
 
       Modelica.Electrical.Analog.Basic.Ground groundDC annotation (
         Placement(visible = true, transformation(origin={-60,-30},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      PhotoVoltaicsbackup.Components.SimpleModuleSymmetric module(
-        moduleData=moduleData,
-        T=298.15,
-        useConstantIrradiance=false) annotation (Placement(visible=true,
-            transformation(
-            origin={-60,0},
-            extent={{-10,10},{10,-10}},
-            rotation=-90)));
-      PhotoVoltaicsbackup.Components.Blocks.MPTrackerSample mpTracker(VmpRef=
-            moduleData.VmpRef, ImpRef=moduleData.ImpRef)
-        annotation (Placement(transformation(extent={{-30,-60},{-10,-40}})));
       Modelica.Electrical.Analog.Sensors.PowerSensor powerSensor annotation (
         Placement(transformation(extent={{-40,10},{-20,30}})));
-      parameter PhotoVoltaicsbackup.Records.SHARP_NU_S5_E3E moduleData
-        annotation (Placement(transformation(extent={{40,62},{60,82}})));
       Modelica.Electrical.MultiPhase.Basic.Star star annotation (Placement(
             transformation(
             extent={{-10,-10},{10,10}},
             rotation=270,
-            origin={66,-50})));
+            origin={40,-50})));
       Modelica.Electrical.Analog.Basic.Ground ground
-        annotation (Placement(transformation(extent={{56,-86},{76,-66}})));
+        annotation (Placement(transformation(extent={{30,-86},{50,-66}})));
       Modelica.Electrical.MultiPhase.Basic.Resistor resistor(R={10,10,10})
         annotation (Placement(transformation(
             extent={{-10,-10},{10,10}},
             rotation=270,
-            origin={90,-20})));
+            origin={60,-20})));
       Modelica.Electrical.MultiPhase.Sources.CosineVoltage cosineVoltage(
         V={400*sqrt(2)/sqrt(3),400*sqrt(2)/sqrt(3),400*sqrt(2)/sqrt(3)},
         freqHz={50,50,50},
@@ -779,55 +766,58 @@ on the horizontal axis</li>
             transformation(
             extent={{-10,-10},{10,10}},
             rotation=270,
-            origin={66,-20})));
+            origin={40,-20})));
       Modelica.Blocks.Sources.Ramp ramp(duration = 100, startTime = 100, height = 800, offset = 200) annotation (
         Placement(transformation(extent={{-98,-10},{-78,10}})));
-      PhotoVoltaicsbackup.Components.MultiPhaseConverter converter
-        annotation (Placement(transformation(extent={{0,-10},{20,10}})));
-      Modelica.Electrical.MultiPhase.Sensors.PowerSensor powerSensor1
-        annotation (Placement(transformation(extent={{30,-10},{50,10}})));
       Modelica.Blocks.Sources.Constant powerfactor(k=0.9)
         annotation (Placement(transformation(extent={{-10,-90},{10,-70}})));
+      Components.SimpleModuleSymmetric module(
+        moduleData=moduleData,
+        useConstantIrradiance=false,
+        T=298.15) annotation (Placement(visible=true, transformation(
+            origin={-60,0},
+            extent={{-10,10},{10,-10}},
+            rotation=-90)));
+      Components.Blocks.MPTrackerSample               mpTracker(VmpRef = moduleData.VmpRef, ImpRef = moduleData.ImpRef) annotation (
+        Placement(transformation(extent={{-20,-50},{0,-30}})));
+      Components.MultiPhaseConverter converter
+        annotation (Placement(transformation(extent={{0,-10},{20,10}})));
+      parameter Records.SHARP_NU_S5_E3E moduleData annotation (
+        Placement(transformation(extent={{60,64},{80,84}})));
     equation
-      connect(groundDC.p,module. n) annotation (
-        Line(points={{-60,-20},{-60,-10}},      color = {0, 0, 255}));
-      connect(module.p,powerSensor. pc) annotation (
-        Line(points={{-60,10},{-60,10},{-60,20},{-40,20}},          color = {0, 0, 255}));
-      connect(mpTracker.power,powerSensor. power) annotation (
-        Line(points={{-32,-50},{-32,-50},{-38,-50},{-38,9}},        color = {0, 0, 127}));
       connect(powerSensor.pc,powerSensor. pv) annotation (
         Line(points={{-40,20},{-40,30},{-30,30}},        color = {0, 0, 255}));
       connect(powerSensor.nv,groundDC. p) annotation (
         Line(points={{-30,10},{-30,10},{-30,-18},{-30,-20},{-60,-20}},            color = {0, 0, 255}));
       connect(ground.p,star. pin_n)
-        annotation (Line(points={{66,-66},{66,-60}},        color={0,0,255}));
+        annotation (Line(points={{40,-66},{40,-60}},        color={0,0,255}));
       connect(cosineVoltage.plug_n,star. plug_p)
-        annotation (Line(points={{66,-30},{66,-36},{66,-40}}, color={0,0,255}));
+        annotation (Line(points={{40,-30},{40,-36},{40,-40}}, color={0,0,255}));
+      connect(resistor.plug_n, star.plug_p)
+        annotation (Line(points={{60,-30},{60,-40},{40,-40}}, color={0,0,255}));
+      connect(resistor.plug_p, cosineVoltage.plug_p) annotation (Line(points={{60,-10},
+              {60,0},{40,0},{40,-10}}, color={0,0,255}));
       connect(module.variableIrradiance, ramp.y) annotation (Line(points={{-72,
-              2.22045e-015},{-73.5,2.22045e-015},{-73.5,0},{-77,0}}, color={0,0,127}));
-      connect(powerSensor.nc, converter.dc_p) annotation (Line(points={{-20,20},{
-              -10,20},{0,20},{0,10}}, color={0,0,255}));
+              2.22045e-015},{-76,2.22045e-015},{-76,0},{-77,0}}, color={0,0,127}));
+      connect(module.n, groundDC.p) annotation (Line(points={{-60,-10},{-60,-15},
+              {-60,-20}}, color={0,0,255}));
+      connect(module.p, powerSensor.pc) annotation (Line(points={{-60,10},{-60,
+              20},{-40,20}}, color={0,0,255}));
+      connect(converter.dc_p, powerSensor.nc)
+        annotation (Line(points={{0,10},{0,20},{-20,20}}, color={0,0,255}));
       connect(converter.dc_n, groundDC.p)
         annotation (Line(points={{0,-10},{0,-20},{-60,-20}}, color={0,0,255}));
-      connect(converter.vDCRef, mpTracker.vRef)
-        annotation (Line(points={{4,-12},{4,-50},{-9,-50}},   color={0,0,127}));
-      connect(converter.ac, powerSensor1.pc)
-        annotation (Line(points={{20,0},{24,0},{30,0}}, color={0,0,255}));
-      connect(powerSensor1.nc, cosineVoltage.plug_p) annotation (Line(points={{50,0},
-              {50,0},{64,0},{66,0},{66,-10}}, color={0,0,255}));
-      connect(powerSensor1.pv, cosineVoltage.plug_p)
-        annotation (Line(points={{40,10},{66,10},{66,-10}}, color={0,0,255}));
-      connect(resistor.plug_n, star.plug_p)
-        annotation (Line(points={{90,-30},{90,-40},{66,-40}}, color={0,0,255}));
-      connect(powerSensor1.nv, star.plug_p) annotation (Line(points={{40,-10},{40,
-              -10},{40,-32},{40,-40},{66,-40}}, color={0,0,255}));
-      connect(powerfactor.y, converter.powerfactor)
-        annotation (Line(points={{11,-80},{16,-80},{16,-12}}, color={0,0,127}));
-      connect(resistor.plug_p, cosineVoltage.plug_p) annotation (Line(points={{90,-10},
-              {90,0},{66,0},{66,-10}}, color={0,0,255}));
+      connect(mpTracker.power, powerSensor.power) annotation (Line(points={{-22,
+              -40},{-38,-40},{-38,9}}, color={0,0,127}));
+      connect(mpTracker.vRef, converter.vDCRef)
+        annotation (Line(points={{1,-40},{4,-40},{4,-12}}, color={0,0,127}));
+      connect(powerfactor.y, converter.powerfactor) annotation (Line(points={{
+              11,-80},{16,-80},{16,-12}}, color={0,0,127}));
+      connect(converter.ac, cosineVoltage.plug_p)
+        annotation (Line(points={{20,0},{40,0},{40,-10}}, color={0,0,255}));
       annotation (
-          Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,
-                100}})));
+          Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
+                -100},{100,100}})));
     end SimpleModuleMultiPhase;
     annotation (
       Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
@@ -1387,13 +1377,12 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
         Placement(transformation(extent={{-6,-6},{6,6}},
             rotation=0,
             origin={-10,-40})));
-      PhotoVoltaicsbackup.Components.Blocks.Park park
-        annotation (Placement(transformation(extent={{74,-80},{54,-60}})));
-      PhotoVoltaicsbackup.Components.Blocks.Rotation_dq rot_dq annotation (
-          Placement(transformation(
+      Blocks.Rotation_dq rot_dq1 annotation (Placement(transformation(
             extent={{10,-10},{-10,10}},
             rotation=180,
-            origin={2,-10})));
+            origin={0,-10})));
+      Blocks.Park park
+        annotation (Placement(transformation(extent={{78,-80},{58,-60}})));
     equation
       connect(currentSensor.n,signalVoltage. p) annotation (
         Line(points={{-100,50},{-100,50},{-100,10}},     color = {0, 0, 255}));
@@ -1459,20 +1448,20 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
         annotation (Line(points={{-43,-70},{-62.8,-70}}, color={0,0,127}));
       connect(const2.y, integrator2.u)
         annotation (Line(points={{-23,-40},{-17.2,-40}}, color={0,0,127}));
-      connect(park.u, matrixGain.y) annotation (Line(points={{74,-70},{80,-70},
+      connect(rot_dq1.u, fromPolar.y)
+        annotation (Line(points={{-10,-10},{-29,-10}}, color={0,0,127}));
+      connect(rot_dq1.y, fromSpacePhasor.u)
+        annotation (Line(points={{10,-10},{20,-10},{20,6}}, color={0,0,127}));
+      connect(rot_dq1.theta, integrator2.y) annotation (Line(points={{0,-20},{0,
+              -40},{-3.4,-40}}, color={0,0,127}));
+      connect(park.u, matrixGain.y) annotation (Line(points={{78,-70},{80,-70},
               {80,-46.6}}, color={0,0,127}));
-      connect(park.y[1], rectangularToPolar.u_re) annotation (Line(points={{54,
-              -70.6667},{54,-64},{42,-64}}, color={0,0,127}));
-      connect(park.y[2], rectangularToPolar.u_im) annotation (Line(points={{54,
-              -70},{54,-76},{42,-76}}, color={0,0,127}));
-      connect(rot_dq.u, fromPolar.y) annotation (Line(points={{-8,-10},{-29,-10},
-              {-29,-10}}, color={0,0,127}));
-      connect(rot_dq.y, fromSpacePhasor.u)
-        annotation (Line(points={{12,-10},{20,-10},{20,6}}, color={0,0,127}));
-      connect(rot_dq.theta, integrator2.y) annotation (Line(points={{2,-20},{2,
+      connect(park.theta, integrator2.y) annotation (Line(points={{68,-60},{68,
               -40},{-3.4,-40}}, color={0,0,127}));
-      connect(park.theta, integrator2.y) annotation (Line(points={{64,-60},{64,
-              -40},{-3.4,-40}}, color={0,0,127}));
+      connect(park.y[1], rectangularToPolar.u_re) annotation (Line(points={{58,
+              -70.6667},{58,-64},{42,-64}}, color={0,0,127}));
+      connect(park.y[2], rectangularToPolar.u_im) annotation (Line(points={{58,
+              -70},{58,-76},{42,-76}}, color={0,0,127}));
       annotation (
     defaultComponentName = "converter",
         Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},
@@ -1722,7 +1711,7 @@ represents thus the inverse of
       end Power10;
 
       partial block MIMO
-        extends PhotoVoltaicsbackup.Components.Blocks.Icons.Block0;
+        extends PhotoVoltaics.Components.Blocks.Icons.Block0;
 
         Modelica.Blocks.Interfaces.RealInput u[nin] "input signal-vector"
           annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
@@ -1737,7 +1726,7 @@ represents thus the inverse of
       end MIMO;
 
       block Park "Park-transform of input signal-vector"
-        extends PhotoVoltaicsbackup.Components.Blocks.MIMO(final nin=3, final
+        extends PhotoVoltaics.Components.Blocks.MIMO(final nin=3, final
             nout=3);
 
         Modelica.Blocks.Interfaces.RealInput theta "transformation angle"
@@ -1802,7 +1791,7 @@ and
       end Park;
 
       block Rotation_dq "Rotation of input signal-vector"
-        extends PhotoVoltaicsbackup.Components.Blocks.MIMO(final nin=2, final
+        extends PhotoVoltaics.Components.Blocks.MIMO(final nin=2, final
             nout=2);
 
         Modelica.Blocks.Interfaces.RealInput theta "rotation angle"
@@ -2489,7 +2478,7 @@ Additionally, the frequency of the current source is defined by a real signal in
       annotation (
         defaultComponentName = "moduleData",
         defaultComponentPrefixes = "parameter",
-        Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Text(lineColor=  {0, 0, 255}, extent=  {{-200, -150}, {200, -110}}, textString=  "%moduleName")}),
+        Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Text(lineColor = {0, 0, 255}, extent = {{-200, -150}, {200, -110}}, textString = "%moduleName")}),
         Diagram(coordinateSystem(preserveAspectRatio = false)));
     end ModuleData;
 
