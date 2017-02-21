@@ -750,9 +750,9 @@ on the horizontal axis</li>
       Modelica.Electrical.Analog.Basic.Ground ground
         annotation (Placement(transformation(extent={{50,-86},{70,-66}})));
       Modelica.Electrical.MultiPhase.Sources.CosineVoltage cosineVoltage(
-        freqHz={50,50,50},
-        phase={0,-pi*2/3,pi*2/3},
-        V={400*sqrt(2)/sqrt(3),0.95*400*sqrt(2)/sqrt(3),0.99*400*sqrt(2)/sqrt(3)})
+        freqHz=fill(50, 3),
+        V=fill(400*sqrt(2/3), 3),
+        phase=-Modelica.Electrical.MultiPhase.Functions.symmetricOrientation(3))
                                                        annotation (Placement(
             transformation(
             extent={{-10,-10},{10,10}},
@@ -764,7 +764,7 @@ on the horizontal axis</li>
         offset=1000,
         startTime=1)                                                                                 annotation (
         Placement(transformation(extent={{-100,-10},{-80,10}})));
-      Modelica.Blocks.Sources.Constant powerfactor(k=0.9)
+      Modelica.Blocks.Sources.Constant powerfactor(k=0.5)
         annotation (Placement(transformation(extent={{-10,-90},{10,-70}})));
       PhotoVoltaics.Components.SimpleModuleSymmetric module(
         moduleData=moduleData,
@@ -809,7 +809,7 @@ on the horizontal axis</li>
       connect(powerSensorGrid.nv, cosineVoltage.plug_n) annotation (Line(points={{40,-10},{40,-10},{40,-30},{60,-30}}, color={0,0,255}));
       annotation (
           Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
-                -100},{100,100}})), experiment);
+                -100},{100,100}})), experiment(Interval=0.0001));
     end SimpleModuleMultiPhase;
     annotation (
       Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
@@ -1211,16 +1211,17 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
 
     model MultiPhaseConverter "Ideal current controlled multi phase DC/AC converter"
 
-    final constant Real pi=2*Modelica.Math.asin(1.0);
+      import Modelica.Constants.pi;
 
       extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
-      extends Modelica.Icons.UnderConstruction;
+
       Modelica.Electrical.MultiPhase.Interfaces.PositivePlug ac "AC output"
         annotation (Placement(transformation(extent={{90,-10},{110,10}})));
       Modelica.Blocks.Interfaces.RealInput vDCRef(final unit = "V")
         "DC voltage"                                                             annotation (
         Placement(transformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin={-60,-120}),  iconTransformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin={-60,-120})));
 
+      parameter Modelica.SIunits.Frequency f = 50 "Frequency";
       parameter Modelica.SIunits.Voltage VRef = 400
         "Reference line to line voltage";
       parameter Modelica.SIunits.Time T = 1E-6
@@ -1241,7 +1242,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
         Placement(transformation(extent={{-10,-10},{10,10}},
             rotation=270,
             origin={-60,28})));
-      Modelica.Blocks.Math.Gain gain(final k=3)    annotation (
+      Modelica.Blocks.Math.Gain gain(final k=1)    annotation (
         Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation=180,   origin={-10,60})));
       Modelica.Electrical.Machines.SpacePhasors.Blocks.FromSpacePhasor fromSpacePhasor(m=3)
         annotation (Placement(transformation(
@@ -1269,22 +1270,17 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
         annotation (Placement(transformation(extent={{-10,-10},{10,10}},
             rotation=270,
             origin={80,-14})));
-      Modelica.Blocks.Sources.Constant const2(
-                                             k=2*pi*50)
+      Modelica.Blocks.Sources.Constant const2(final k=2*pi*f)
         annotation (Placement(transformation(extent={{-44,-50},{-24,-30}})));
       Modelica.Blocks.Math.RectangularToPolar rectangularToPolar
         annotation (Placement(transformation(extent={{20,-80},{0,-60}})));
 
-      Modelica.Electrical.MultiPhase.Sensors.CurrentQuasiRMSSensor
-        currentQuasiRMSSensor
-        annotation (Placement(transformation(extent={{80,80},{100,100}})));
-      Modelica.Electrical.MultiPhase.Sensors.VoltageQuasiRMSSensor
-        voltageQuasiRMSSensor annotation (Placement(transformation(
+      Modelica.Electrical.MultiPhase.Sensors.CurrentSensor currentSensorAC(final m=3) annotation (Placement(transformation(extent={{80,80},{100,100}})));
+      Modelica.Electrical.MultiPhase.Sensors.VoltageSensor voltageSensorAC(final m=3) annotation (Placement(transformation(
             extent={{-10,-10},{10,10}},
             rotation=270,
             origin={90,60})));
-      Modelica.Blocks.Math.Product product1
-        annotation (Placement(transformation(extent={{40,60},{20,80}})));
+      Modelica.Blocks.Math.Product productPower[3] annotation (Placement(transformation(extent={{60,60},{40,80}})));
       Modelica.Blocks.Math.Add add
         annotation (Placement(transformation(extent={{-22,-80},{-42,-60}})));
       Modelica.Blocks.Interfaces.RealInput powerfactor "cos phi" annotation (
@@ -1314,6 +1310,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
             origin={6,-28})));
       Modelica.Electrical.Machines.SpacePhasors.Blocks.ToSpacePhasor toSpacePhasor annotation (Placement(transformation(extent={{90,-80},{70,-60}})));
       Modelica.Electrical.Machines.SpacePhasors.Blocks.Rotator rotatorIn annotation (Placement(transformation(extent={{60,-60},{40,-80}})));
+      Modelica.Blocks.Math.Sum sum3(nin=3) annotation (Placement(transformation(extent={{32,60},{12,80}})));
     equation
       connect(currentSensor.n,signalVoltage. p) annotation (
         Line(points={{-100,50},{-100,50},{-100,10}},     color = {0, 0, 255}));
@@ -1347,21 +1344,10 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
                                                     color={0,0,127}));
       connect(integrator.y, fromPolar.u[1]) annotation (Line(points={{-60,17},{-60,-4},{-52,-4}},
                                          color={0,0,127}));
-      connect(currentQuasiRMSSensor.plug_n, ac)
-        annotation (Line(points={{100,90},{100,90},{100,0}},color={0,0,255}));
-      connect(voltageQuasiRMSSensor.plug_n, star.plug_p)
-        annotation (Line(points={{90,50},{90,10},{60,10}}, color={0,0,255}));
-      connect(currentQuasiRMSSensor.I, product1.u1)
-        annotation (Line(points={{90,80},{42,80},{42,76}}, color={0,0,127}));
-      connect(voltageQuasiRMSSensor.V, product1.u2) annotation (Line(points={{80,60},{80,60},{80,64},{42,64}},
-                                        color={0,0,127}));
-      connect(voltageQuasiRMSSensor.plug_p, ac)
-        annotation (Line(points={{90,70},{100,70},{100,0}}, color={0,0,255}));
-      connect(currentQuasiRMSSensor.plug_p, signalCurrent.plug_n)
-        annotation (Line(points={{80,90},{70,90},{70,40}}, color={0,0,255}));
-      connect(gain.u, product1.y)
-        annotation (Line(points={{2,60},{12,60},{12,70},{12,70},{20,70},{20,70},{19,70}},
-                                                          color={0,0,127}));
+      connect(currentSensorAC.plug_n, ac) annotation (Line(points={{100,90},{100,90},{100,0}}, color={0,0,255}));
+      connect(voltageSensorAC.plug_n, star.plug_p) annotation (Line(points={{90,50},{90,10},{60,10}}, color={0,0,255}));
+      connect(voltageSensorAC.plug_p, ac) annotation (Line(points={{90,70},{100,70},{100,0}}, color={0,0,255}));
+      connect(currentSensorAC.plug_p, signalCurrent.plug_n) annotation (Line(points={{80,90},{70,90},{70,40}}, color={0,0,255}));
       connect(rectangularToPolar.y_arg, add.u1) annotation (Line(points={{-1,-76},{-6,-76},{-6,-64},{-20,-64}},
                                         color={0,0,127}));
       connect(add.y, fromPolar.u[2]) annotation (Line(points={{-43,-70},{-43,-70},{-60,-70},{-60,-4},{-52,-4}},
@@ -1387,6 +1373,10 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
       connect(rotatorOut.y, fromSpacePhasor.u) annotation (Line(points={{1,-4},{8,-4},{20,-4},{20,2}}, color={0,0,127}));
       connect(rectangularToPolar.u_re, rotatorIn.y[1]) annotation (Line(points={{22,-64},{22,-64},{34,-64},{34,-70},{39,-70}}, color={0,0,127}));
       connect(rectangularToPolar.u_im, rotatorIn.y[2]) annotation (Line(points={{22,-76},{34,-76},{34,-70},{39,-70}}, color={0,0,127}));
+      connect(sum3.y, gain.u) annotation (Line(points={{11,70},{8,70},{8,60},{2,60}}, color={0,0,127}));
+      connect(productPower.u1, currentSensorAC.i) annotation (Line(points={{62,76},{74,76},{90,76},{90,79}}, color={0,0,127}));
+      connect(productPower.u2, voltageSensorAC.v) annotation (Line(points={{62,64},{68,64},{74,64},{74,60},{79,60}}, color={0,0,127}));
+      connect(sum3.u, productPower.y) annotation (Line(points={{34,70},{39,70},{39,70}}, color={0,0,127}));
       annotation (
     defaultComponentName = "converter",
         Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},
