@@ -758,7 +758,11 @@ on the horizontal axis</li>
             extent={{-10,-10},{10,10}},
             rotation=270,
             origin={60,-20})));
-      Modelica.Blocks.Sources.Ramp ramp(duration = 100, startTime = 100, height = 800, offset = 200) annotation (
+      Modelica.Blocks.Sources.Ramp ramp(
+        height=-100,
+        duration=2,
+        offset=1000,
+        startTime=1)                                                                                 annotation (
         Placement(transformation(extent={{-100,-10},{-80,10}})));
       Modelica.Blocks.Sources.Constant powerfactor(k=0.9)
         annotation (Placement(transformation(extent={{-10,-90},{10,-70}})));
@@ -769,9 +773,11 @@ on the horizontal axis</li>
             origin={-60,0},
             extent={{-10,10},{10,-10}},
             rotation=-90)));
-      PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef=moduleData.VmpRef, ImpRef=moduleData.ImpRef) annotation (Placement(transformation(extent={{-20,-50},{0,-30}})));
+      PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef=moduleData.VmpRef, ImpRef=moduleData.ImpRef,
+        samplePeriod=0.1)                                                                                           annotation (Placement(transformation(extent={{-20,-50},{0,-30}})));
       PhotoVoltaics.Components.MultiPhaseConverter converter annotation (Placement(transformation(extent={{0,-10},{20,10}})));
       parameter PhotoVoltaics.Records.SHARP_NU_S5_E3E moduleData annotation (Placement(transformation(extent={{60,64},{80,84}})));
+      Modelica.Electrical.MultiPhase.Sensors.PowerSensor powerSensorGrid annotation (Placement(transformation(extent={{30,-10},{50,10}})));
     equation
       connect(powerSensor.pc,powerSensor. pv) annotation (
         Line(points={{-40,20},{-40,30},{-30,30}},        color = {0, 0, 255}));
@@ -797,10 +803,13 @@ on the horizontal axis</li>
         annotation (Line(points={{1,-40},{4,-40},{4,-12}}, color={0,0,127}));
       connect(powerfactor.y, converter.powerfactor) annotation (Line(points={{11,-80},{16,-80},{16,-12}},
                                           color={0,0,127}));
-      connect(converter.ac, cosineVoltage.plug_p) annotation (Line(points={{20,0},{20,0},{60,0},{60,-10}}, color={0,0,255}));
+      connect(converter.ac, powerSensorGrid.pc) annotation (Line(points={{20,0},{26,0},{30,0}}, color={0,0,255}));
+      connect(powerSensorGrid.nc, cosineVoltage.plug_p) annotation (Line(points={{50,0},{60,0},{60,-10}}, color={0,0,255}));
+      connect(powerSensorGrid.pv, powerSensorGrid.pc) annotation (Line(points={{40,10},{30,10},{30,0}}, color={0,0,255}));
+      connect(powerSensorGrid.nv, cosineVoltage.plug_n) annotation (Line(points={{40,-10},{40,-10},{40,-30},{60,-30}}, color={0,0,255}));
       annotation (
           Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
-                -100},{100,100}})), experiment(StopTime=0.1));
+                -100},{100,100}})), experiment);
     end SimpleModuleMultiPhase;
     annotation (
       Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
@@ -2621,7 +2630,7 @@ The original data of this module are taken from
     version = "0.X.X",
     versionBuild = 1,
     versionDate = "2017-XX-XX",
-    uses(Modelica(version = "3.2.2"), PhotoVoltaicsPull(version="0.X.X")),
+    uses(Modelica(version = "3.2.2")),
     Icon(coordinateSystem, graphics={  Ellipse(origin = {36, 75}, fillColor = {255, 255, 127}, fillPattern = FillPattern.Solid, extent = {{0, 1}, {40, -39}}, endAngle = 360), Rectangle(origin = {-60, -9}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -7}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {-60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -5}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
             fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Line(origin = {18, 34}, points = {{4, 10}, {-84, -16}}), Line(origin = {-12, 70}, points = {{34, -6}, {-34, 6}}), Line(points = {{36, 30}, {28, 16}}, color = {28, 108, 200})}));
 end PhotoVoltaics;
