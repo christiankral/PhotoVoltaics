@@ -230,8 +230,7 @@ This library provides models for the modeling and simulation of photo voltaic po
 
     model SinglePhaseVoltageControlledConverter "Test of voltage current controlled converter"
       extends Modelica.Icons.Example;
-      PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
-        Placement(transformation(extent = {{-10, -10}, {10, 10}})));
+      PhotoVoltaics.Components.QuasiStaticSinglePhaseConverter converter annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
       Modelica.Electrical.Analog.Sources.ConstantCurrent constantCurrent(I = 1) annotation (
         Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin = {-40, 0})));
       Modelica.Electrical.Analog.Basic.Ground groundDC annotation (
@@ -263,8 +262,7 @@ This library provides models for the modeling and simulation of photo voltaic po
 
     model MultiPhaseVoltageControlledConverter "Test of voltage current controlled converter"
       extends Modelica.Icons.Example;
-      PhotoVoltaics.Components.MultiPhaseVoltageControlledConverter converter annotation (
-        Placement(transformation(extent = {{-10, 10}, {10, 30}})));
+      PhotoVoltaics.Components.QuasiStaticMultiPhaseConverter converter annotation (Placement(transformation(extent={{-10,10},{10,30}})));
       Modelica.Electrical.Analog.Sources.ConstantCurrent constantCurrent(I = 1) annotation (
         Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin = {-40, 20})));
       Modelica.Electrical.Analog.Basic.Ground groundDC annotation (
@@ -576,8 +574,7 @@ on the horizontal axis</li>
         Placement(visible = true, transformation(origin = {-40, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       PhotoVoltaics.Components.SimpleModuleSymmetric module(moduleData = moduleData, T = 298.15, useConstantIrradiance = false) annotation (
         Placement(visible = true, transformation(origin = {-40, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
-      Components.DCVoltageControlledConverter                        converter annotation (
-        Placement(transformation(extent = {{20, -10}, {40, 10}})));
+      Components.DCConverter converter annotation (Placement(transformation(extent={{20,-10},{40,10}})));
       PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = moduleData.VmpRef, ImpRef = moduleData.ImpRef,
         samplePeriod=10)                                                                                                annotation (
         Placement(transformation(extent = {{0, -60}, {20, -40}})));
@@ -635,8 +632,7 @@ on the horizontal axis</li>
         Placement(visible = true, transformation(origin = {-40, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
       Modelica.Blocks.Sources.Ramp ramp(duration = 100, startTime = 100, height = 800, offset = 200) annotation (
         Placement(transformation(extent = {{-80, -10}, {-60, 10}})));
-      PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
-        Placement(transformation(extent = {{20, -10}, {40, 10}})));
+      PhotoVoltaics.Components.QuasiStaticSinglePhaseConverter converter annotation (Placement(transformation(extent={{20,-10},{40,10}})));
       PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = moduleData.VmpRef, ImpRef = moduleData.ImpRef) annotation (
         Placement(transformation(extent = {{0, -60}, {20, -40}})));
       Modelica.Electrical.QuasiStationary.SinglePhase.Basic.Ground groundAC annotation (
@@ -687,8 +683,7 @@ on the horizontal axis</li>
         Placement(visible = true, transformation(origin = {-40, 0}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
       Modelica.Blocks.Sources.Ramp ramp(duration = 100, startTime = 100, height = 800, offset = 200) annotation (
         Placement(transformation(extent = {{-80, -10}, {-60, 10}})));
-      PhotoVoltaics.Components.MultiPhaseVoltageControlledConverter converter annotation (
-        Placement(transformation(extent = {{20, -10}, {40, 10}})));
+      PhotoVoltaics.Components.QuasiStaticMultiPhaseConverter converter annotation (Placement(transformation(extent={{20,-10},{40,10}})));
       PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = moduleData.VmpRef, ImpRef = moduleData.ImpRef) annotation (
         Placement(transformation(extent = {{0, -60}, {20, -40}})));
       Modelica.Electrical.QuasiStationary.SinglePhase.Basic.Ground groundAC annotation (
@@ -764,8 +759,8 @@ on the horizontal axis</li>
         offset=1000,
         startTime=1)                                                                                 annotation (
         Placement(transformation(extent={{-100,-10},{-80,10}})));
-      Modelica.Blocks.Sources.Constant powerfactor(k=0.5)
-        annotation (Placement(transformation(extent={{-10,-90},{10,-70}})));
+      Modelica.Blocks.Sources.Constant powerfactor(k=0.9)
+        annotation (Placement(transformation(extent={{-10,-88},{10,-68}})));
       PhotoVoltaics.Components.SimpleModuleSymmetric module(
         moduleData=moduleData,
         useConstantIrradiance=false,
@@ -801,7 +796,7 @@ on the horizontal axis</li>
               -40},{-38,-40},{-38,9}}, color={0,0,127}));
       connect(mpTracker.vRef, converter.vDCRef)
         annotation (Line(points={{1,-40},{4,-40},{4,-12}}, color={0,0,127}));
-      connect(powerfactor.y, converter.powerfactor) annotation (Line(points={{11,-80},{16,-80},{16,-12}},
+      connect(powerfactor.y, converter.powerfactor) annotation (Line(points={{11,-78},{16,-78},{16,-12}},
                                           color={0,0,127}));
       connect(converter.ac, powerSensorGrid.pc) annotation (Line(points={{20,0},{26,0},{30,0}}, color={0,0,255}));
       connect(powerSensorGrid.nc, cosineVoltage.plug_p) annotation (Line(points={{50,0},{60,0},{60,-10}}, color={0,0,255}));
@@ -938,8 +933,9 @@ on the horizontal axis</li>
     end SimplePlantSymmetric;
 
 
-    model DCVoltageControlledConverter "DC controlled single phase DC/AC converter"
-      extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
+    model DCConverter "DC controlled single phase DC/AC converter"
+      extends Modelica.Electrical.PowerConverters.Interfaces.DCDC.DCtwoPin1;
+      extends Modelica.Electrical.PowerConverters.Interfaces.DCDC.DCtwoPin2;
 
       parameter Modelica.SIunits.Voltage VRef = 48 "Reference DC source voltage";
       parameter Modelica.SIunits.Time T = 1E-6 "Internal integration time constant";
@@ -950,7 +946,7 @@ on the horizontal axis</li>
       Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage annotation (
         Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {-90, 0})));
       Modelica.Electrical.Analog.Sensors.CurrentSensor currentSensor annotation (
-        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 270, origin = {-90, 60})));
+        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 270, origin={-90,36})));
       Modelica.Blocks.Math.Product product annotation (
         Placement(transformation(extent = {{-60, 20}, {-40, 40}})));
       Modelica.Blocks.Math.Feedback feedback annotation (
@@ -968,14 +964,12 @@ on the horizontal axis</li>
     equation
       connect(signalVoltage.n, dc_n) annotation (
         Line(points = {{-90, -10}, {-90, -70}, {-90, -100}, {-100, -100}}, color = {0, 0, 255}));
-      connect(currentSensor.p, dc_p) annotation (
-        Line(points = {{-90, 70}, {-90, 70}, {-90, 76}, {-90, 100}, {-100, 100}}, color = {0, 0, 255}));
       connect(currentSensor.n, signalVoltage.p) annotation (
-        Line(points = {{-90, 50}, {-90, 50}, {-90, 10}}, color = {0, 0, 255}));
+        Line(points={{-90,26},{-90,26},{-90,10}},        color = {0, 0, 255}));
       connect(signalVoltage.v, vDCRef) annotation (
         Line(points = {{-83, 0}, {-70, 0}, {-70, -80}, {0, -80}, {0, -120}}, color = {0, 0, 127}));
       connect(currentSensor.i, product.u1) annotation (
-        Line(points = {{-80, 60}, {-76, 60}, {-70, 60}, {-70, 36}, {-62, 36}}, color = {0, 0, 127}));
+        Line(points={{-80,36},{-80,36},{-70,36},{-62,36}},                     color = {0, 0, 127}));
       connect(vDCRef, product.u2) annotation (
         Line(points = {{0, -120}, {0, -120}, {0, -94}, {0, -94}, {0, -80}, {-70, -80}, {-70, 24}, {-62, 24}}, color = {0, 0, 127}));
       connect(product.y, feedback.u1) annotation (
@@ -1007,9 +1001,9 @@ on the horizontal axis</li>
 <p>Signal input <code>i2</code> is the current flowing into the positive pin of side 2. 
 In order to operate side 2 as a load the signal input current <code>i2</code> must be <b>negative</b>.</p>
 </html>"));
-    end DCVoltageControlledConverter;
+    end DCConverter;
 
-    model SinglePhaseVoltageControlledConverter "Ideal current controlled single phase DC/AC converter"
+    model QuasiStaticSinglePhaseConverter "Ideal quasi static single phase DC/AC converter"
       extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
       extends PhotoVoltaics.Interfaces.QuasiStatic.ACpins;
       parameter Modelica.SIunits.Voltage VRef = 400 / sqrt(3) "Reference voltage";
@@ -1101,9 +1095,9 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
 <p>Signal input <code>i2</code> is the current flowing into the positive pin of side 2. 
 In order to operate side 2 as a load the signal input current <code>i2</code> must be <b>negative</b>.</p>
 </html>"));
-    end SinglePhaseVoltageControlledConverter;
+    end QuasiStaticSinglePhaseConverter;
 
-    model MultiPhaseVoltageControlledConverter "Ideal current controlled multi phase DC/AC converter"
+    model QuasiStaticMultiPhaseConverter "Ideal quasi stastic multi phase DC/AC converter"
       extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
       extends PhotoVoltaics.Interfaces.QuasiStatic.ACplug;
       parameter Modelica.SIunits.Voltage VRef = 400 "Reference line to line voltage";
@@ -1207,12 +1201,11 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
 <p>Signal input <code>i2</code> is the current flowing into the positive pin of side 2. 
 In order to operate side 2 as a load the signal input current <code>i2</code> must be <b>negative</b>.</p>
 </html>"));
-    end MultiPhaseVoltageControlledConverter;
+    end QuasiStaticMultiPhaseConverter;
 
-    model MultiPhaseConverter "Ideal current controlled multi phase DC/AC converter"
+    model MultiPhaseConverter "Ideal multi phase DC/AC converter"
 
       import Modelica.Constants.pi;
-
       extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
 
       Modelica.Electrical.MultiPhase.Interfaces.PositivePlug ac "AC output"
