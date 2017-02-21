@@ -933,9 +933,308 @@ on the horizontal axis</li>
     end SimplePlantSymmetric;
 
 
+    model SolarPyramid "Solar pyramid "
+
+      Modelica.Blocks.Math.Add add1 annotation(Placement(visible = true, transformation(origin={-50,50},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+      Modelica.Blocks.Sources.Constant const(k=Modelica.Constants.pi/2)
+                                                                       annotation(Placement(visible = true, transformation(origin={-70,-80},   extent = {{-10, -10}, {10, 10}}, rotation=90)));
+      Modelica.Blocks.Math.Add add2 annotation(Placement(visible = true, transformation(origin={-50,10},     extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+      Modelica.Blocks.Math.Add add3 annotation(Placement(visible = true, transformation(origin={-50,-30},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+      PhotoVoltaicsDropbox.Components.SimpleModuleSymmetric module1(useConstantIrradiance=false) annotation (Placement(visible=true, transformation(
+            origin={20,80},
+            extent={{10,-10},{-10,10}},
+            rotation=90)));
+      PhotoVoltaicsDropbox.Components.SimpleModuleSymmetric module2(useConstantIrradiance=false) annotation (Placement(visible=true, transformation(
+            origin={20,40},
+            extent={{10,-10},{-10,10}},
+            rotation=90)));
+      PhotoVoltaicsDropbox.Components.SimpleModuleSymmetric module3(useConstantIrradiance=false) annotation (Placement(visible=true, transformation(
+            origin={20,0},
+            extent={{10,-10},{-10,10}},
+            rotation=90)));
+      PhotoVoltaicsDropbox.Components.SimpleModuleSymmetric module4(useConstantIrradiance=false) annotation (Placement(visible=true, transformation(
+            origin={20,-40},
+            extent={{10,-10},{-10,10}},
+            rotation=90)));
+      Sources.Irradiance.IrradianceFixedSun irradianceParameter1(sunAzimuth(displayUnit="rad") = 3.6, sunHeight(displayUnit="rad") = 1.3) annotation (Placement(visible=true, transformation(
+            origin={-10,80},
+            extent={{-10,-10},{10,10}},
+            rotation=0)));
+      Sources.Irradiance.IrradianceFixedSun irradianceParameter2(sunAzimuth(displayUnit="rad") = 3.6, sunHeight(displayUnit="rad") = 1.3) annotation (Placement(visible=true, transformation(
+            origin={-10,40},
+            extent={{-10,-10},{10,10}},
+            rotation=0)));
+      Sources.Irradiance.IrradianceFixedSun irradianceParameter3(sunAzimuth(displayUnit="rad") = 3.6, sunHeight(displayUnit="rad") = 1.3) annotation (Placement(visible=true, transformation(
+            origin={-10,0},
+            extent={{-10,-10},{10,10}},
+            rotation=0)));
+      Sources.Irradiance.IrradianceFixedSun irradianceParameter4(sunAzimuth(displayUnit="rad") = 3.6, sunHeight(displayUnit="rad") = 1.3) annotation (Placement(visible=true, transformation(
+            origin={-10,-40},
+            extent={{-10,-10},{10,10}},
+            rotation=0)));
+      Modelica.Electrical.Analog.Interfaces.PositivePin p1 "Positive pin of PV panel 1"
+                                                                                      annotation (Placement(transformation(extent={{90,90},{110,110}})));
+      Modelica.Electrical.Analog.Interfaces.PositivePin p2 "Positive pin of PV panel 2"
+                                                                                      annotation (Placement(transformation(extent={{90,50},{110,70}})));
+      Modelica.Electrical.Analog.Interfaces.PositivePin p3 "Positive pin of PV panel 3"
+                                                                                      annotation (Placement(transformation(extent={{90,10},{110,30}}), iconTransformation(extent={{90,10},{110,30}})));
+      Modelica.Electrical.Analog.Interfaces.PositivePin p4 "Positive pin of PV panel 4"
+                                                                                      annotation (Placement(transformation(extent={{90,-30},{110,-10}}), iconTransformation(extent={{90,-30},{110,-10}})));
+      Modelica.Electrical.Analog.Interfaces.NegativePin n "Common negative pin of all four PV panels"
+                                                                         annotation (Placement(transformation(extent={{90,-110},{110,-90}})));
+      Modelica.Blocks.Interfaces.RealInput azimuth "Azimuth of one solar panel" annotation (Placement(transformation(extent={{-140,-80},{-100,-40}})));
+      Modelica.Blocks.Interfaces.RealInput gamma "Angle of inclination of each solar panel" annotation (Placement(transformation(extent={{-140,40},{-100,80}})));
+    equation
+      connect(const.y,add1. u2) annotation(Line(points={{-70,-69},{-70,-69},{-70,70},{-56,70},{-56,62}},
+                                                                                            color = {0, 0, 127}));
+      connect(const.y,add2. u2) annotation(Line(points={{-70,-69},{-70,-69},{-70,30},{-56,30},{-56,22}},           color = {0, 0, 127}));
+      connect(const.y,add3. u2) annotation(Line(points={{-70,-69},{-70,-69},{-70,-10},{-56,-10},{-56,-18}},          color = {0, 0, 127}));
+      connect(irradianceParameter3.gamma,irradianceParameter4. gamma) annotation(Line(points={{-22,6},{-30,6},{-30,-34},{-32,-34},{-22,-34}},                    color = {0, 0, 127}));
+      connect(irradianceParameter2.gamma,irradianceParameter3. gamma) annotation(Line(points={{-22,46},{-30,46},{-30,6},{-22,6}},                     color = {0, 0, 127}));
+      connect(irradianceParameter1.gamma,irradianceParameter2. gamma) annotation(Line(points={{-22,86},{-30,86},{-30,46},{-22,46}},              color = {0, 0, 127}));
+      connect(add3.y,irradianceParameter4. azimuth) annotation(Line(points={{-50,-41},{-50,-42},{-50,-46},{-22,-46}},                                          color = {0, 0, 127}));
+      connect(add2.y,irradianceParameter3. azimuth) annotation(Line(points={{-50,-1},{-50,-2},{-50,-6},{-22,-6}},                                            color = {0, 0, 127}));
+      connect(add1.y,irradianceParameter2. azimuth) annotation(Line(points={{-50,39},{-50,39},{-50,34},{-50,34},{-22,34}},                            color = {0, 0, 127}));
+      connect(irradianceParameter4.irradiance,module4. variableIrradiance) annotation(Line(points={{1,-40},{1,-40},{8,-40}},                      color = {0, 0, 127}));
+      connect(irradianceParameter3.irradiance,module3. variableIrradiance) annotation(Line(points={{1,0},{6,0},{6,6.66134e-16},{8,6.66134e-16}},  color = {0, 0, 127}));
+      connect(irradianceParameter2.irradiance,module2. variableIrradiance) annotation(Line(points={{1,40},{8,40}},                                      color = {0, 0, 127}));
+      connect(irradianceParameter1.irradiance, module1.variableIrradiance) annotation (Line(points={{1,80},{1,80},{8,80}},    color={0,0,127}));
+      connect(add3.u1,add2. y) annotation(Line(points={{-44,-18},{-44,-6},{-50,-6},{-50,-1}},                                     color = {0, 0, 127}));
+      connect(add2.u1,add1. y) annotation(Line(points={{-44,22},{-44,22},{-44,34},{-50,34},{-50,39}},                       color = {0, 0, 127}));
+      connect(module1.p, p1) annotation (Line(points={{20,90},{20,90},{20,100},{100,100}}, color={0,0,255}));
+      connect(module2.p, p2) annotation (Line(points={{20,50},{20,50},{20,52},{20,60},{100,60}},
+                                                                                         color={0,0,255}));
+      connect(module3.p, p3) annotation (Line(points={{20,10},{20,20},{100,20}}, color={0,0,255}));
+      connect(module4.p, p4) annotation (Line(points={{20,-30},{20,-30},{20,-22},{20,-20},{100,-20}},  color={0,0,255}));
+      connect(module4.n, n) annotation (Line(points={{20,-50},{20,-50},{20,-56},{40,-56},{40,-100},{100,-100}},
+                                                                                                       color={0,0,255}));
+      connect(irradianceParameter1.azimuth, azimuth) annotation (Line(points={{-22,74},{-80,74},{-80,-60},{-120,-60}},          color={0,0,127}));
+      connect(azimuth, add1.u1) annotation (Line(points={{-120,-60},{-80,-60},{-80,74},{-50,74},{-44,74},{-44,62}}, color={0,0,127}));
+      connect(irradianceParameter1.gamma, gamma) annotation (Line(points={{-22,86},{-92,86},{-92,60},{-120,60}},color={0,0,127}));
+      connect(module3.n, n) annotation (Line(points={{20,-10},{20,-10},{20,-16},{40,-16},{40,-100},{100,-100}}, color={0,0,255}));
+      connect(module2.n, n) annotation (Line(points={{20,30},{20,30},{20,24},{40,24},{40,-100},{100,-100}}, color={0,0,255}));
+      connect(module1.n, n) annotation (Line(points={{20,70},{20,70},{20,64},{40,64},{40,-100},{100,-100}}, color={0,0,255}));
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+            Polygon(
+              points={{-88,80},{-8,0},{-88,-80},{-88,80}},
+              lineColor={0,0,127},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Polygon(
+              points={{90,80},{10,0},{90,-80},{90,80}},
+              lineColor={0,0,127},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Polygon(
+              points={{0,-8},{-80,-88},{80,-88},{0,-8}},
+              lineColor={0,0,127},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Polygon(
+              points={{0,10},{-80,90},{80,90},{0,10}},
+              lineColor={0,0,127},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-42,10},{-22,-10}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-62,30},{-42,10}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-62,10},{-42,-10}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-62,-10},{-42,-30}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-82,50},{-62,30}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-82,30},{-62,10}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-82,10},{-62,-10}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-82,-10},{-62,-30}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-82,-30},{-62,-50}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-10,44},{10,24}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-30,64},{-10,44}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-10,64},{10,44}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{10,44},{30,64}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-50,84},{-30,64}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-30,84},{-10,64}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-10,64},{10,84}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{10,64},{30,84}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{30,64},{50,84}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{24,-10},{44,10}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{44,10},{64,30}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{44,-10},{64,10}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{44,-30},{64,-10}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{64,-50},{84,-30}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{64,-30},{84,-10}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{64,-10},{84,10}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{64,10},{84,30}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{64,30},{84,50}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-10,-42},{10,-22}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-30,-62},{-10,-42}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-10,-62},{10,-42}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{10,-62},{30,-42}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-50,-82},{-30,-62}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-30,-82},{-10,-62}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{-10,-82},{10,-62}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{10,-82},{30,-62}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Rectangle(
+              extent={{30,-82},{50,-62}},
+              lineColor={255,255,255},
+              fillColor={85,85,255},
+              fillPattern=FillPattern.Solid),
+            Ellipse(
+              extent={{-8,10},{10,-8}},
+              lineColor={255,255,255},
+              fillColor={0,0,0},
+              fillPattern=FillPattern.Solid)}),                      Diagram(coordinateSystem(preserveAspectRatio=false)),
+        Documentation(info="<html>
+Model of a symmetric solar pyramid as used for a 
+<a href=\"https://images.sciencedaily.com/2011/04/110425081301-medium.jpg\">Mars rover</a>
+prototype. This model consists of four symmetrical photovoltaic panels. 
+The center position of can be moved vertically, such that the four panels are moved altogether. 
+The angle of inclination of each panel, <code>gamma</code>, is an input to this model.
+The second input is the azimuth of one of the fore panels. The remaining three panels are 
+displaced by 90 degrees, each.
+</html>"));
+    end SolarPyramid;
+
     model DCConverter "DC controlled single phase DC/AC converter"
-      extends Modelica.Electrical.PowerConverters.Interfaces.DCDC.DCtwoPin1;
-      extends Modelica.Electrical.PowerConverters.Interfaces.DCDC.DCtwoPin2;
+      extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
+      //extends Modelica.Electrical.PowerConverters.Interfaces.DCDC.DCtwoPin1;
+      //extends Modelica.Electrical.PowerConverters.Interfaces.DCDC.DCtwoPin2;
 
       parameter Modelica.SIunits.Voltage VRef = 48 "Reference DC source voltage";
       parameter Modelica.SIunits.Time T = 1E-6 "Internal integration time constant";
@@ -985,6 +1284,7 @@ on the horizontal axis</li>
       connect(integrator.y, variableCurrentSource.i) annotation (Line(points={{-9,-50},{83,-50},{83,-50}}, color={0,0,127}));
       connect(powerSensor.pv, powerSensor.pc) annotation (Line(points={{100,70},{100,70},{100,80},{90,80}}, color={0,0,255}));
       connect(powerSensor.nv, dc_nsource) annotation (Line(points={{80,70},{70,70},{60,70},{60,-100},{100,-100}}, color={0,0,255}));
+      connect(currentSensor.p, dc_p) annotation (Line(points={{-90,46},{-90,46},{-90,96},{-90,100},{-100,100}}, color={0,0,255}));
       annotation (
         defaultComponentName = "converter",
         Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Rectangle(extent = {{-100, 100}, {100, -100}}, lineColor = {0, 0, 127}), Line(points = {{-100, -100}, {100, 100}}, color = {0, 0, 127}, smooth = Smooth.None), Text(extent={{-100,40},{-40,-40}},      lineColor = {0, 0, 255}, textString = "="),                                                                                   Text(extent = {{-150, 150}, {150, 110}}, lineColor = {0, 0, 255}, textString = "%name"), Text(extent = {{20, -100}, {80, -140}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "vDCRef"), Text(extent = {{-80, 80}, {20, 40}}, lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=FillPattern.Solid,
@@ -1732,56 +2032,348 @@ represents thus the inverse of
           Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(extent={{-100,100},{100,-100}},      lineColor = {28, 108, 200}),
               Ellipse(
                 extent={{-40,40},{40,-40}},
-                lineColor={0,0,0},
+                lineColor={255,170,85},
                 fillColor={255,255,0},
                 fillPattern=FillPattern.Solid),
               Polygon(
                 points={{30,48},{80,80},{38,36},{30,48}},
-                lineColor={0,0,0},
+                lineColor={255,170,85},
                 fillColor={255,255,0},
                 fillPattern=FillPattern.Solid),
               Polygon(
                 points={{48,-14},{90,-48},{40,-28},{48,-14}},
-                lineColor={0,0,0},
+                lineColor={255,170,85},
                 fillColor={255,255,0},
                 fillPattern=FillPattern.Solid),
               Polygon(
                 points={{34,-38},{84,-92},{22,-48},{34,-38}},
-                lineColor={0,0,0},
+                lineColor={255,170,85},
                 fillColor={255,255,0},
                 fillPattern=FillPattern.Solid),
               Polygon(
                 points={{-10,50},{0,80},{12,50},{-10,50}},
-                lineColor={0,0,0},
+                lineColor={255,170,85},
                 fillColor={255,255,0},
                 fillPattern=FillPattern.Solid),
               Polygon(
                 points={{-42,30},{-84,78},{-30,42},{-42,30}},
-                lineColor={0,0,0},
+                lineColor={255,170,85},
                 fillColor={255,255,0},
                 fillPattern=FillPattern.Solid),
               Polygon(
                 points={{-54,-6},{-86,10},{-52,12},{-54,-6}},
-                lineColor={0,0,0},
+                lineColor={255,170,85},
                 fillColor={255,255,0},
                 fillPattern=FillPattern.Solid),
               Polygon(
                 points={{-40,-34},{-92,-62},{-50,-18},{-40,-34}},
-                lineColor={0,0,0},
+                lineColor={255,170,85},
                 fillColor={255,255,0},
                 fillPattern=FillPattern.Solid),
               Polygon(
                 points={{-4,-48},{-28,-92},{-22,-42},{-4,-48}},
-                lineColor={0,0,0},
+                lineColor={255,170,85},
                 fillColor={255,255,0},
                 fillPattern=FillPattern.Solid),
               Polygon(
                 points={{46,20},{92,24},{50,6},{46,20}},
-                lineColor={0,0,0},
+                lineColor={255,170,85},
                 fillColor={255,255,0},
                 fillPattern=FillPattern.Solid)}),
           Diagram(coordinateSystem(preserveAspectRatio = false)));
       end Irradiance;
+
+      model IrradianceVariableLocation "Simple solar irradiance without considering weather conditions"
+        import Modelica.Constants.pi;
+        import PhotoVoltaicsDropbox.Functions.rad;
+        import PhotoVoltaicsDropbox.Functions.degree;
+        import PhotoVoltaicsDropbox.Functions.dayOfTheYear;
+        parameter Integer startDay(final min = 1, final max = 31) = 10 "Day";
+        parameter Integer startMonth(final min = 1, final max = 12) = 9 "Month";
+        parameter Integer startYear = 2016 "Year";
+        parameter Integer TimeZone = 1 "Time zone";
+        parameter Modelica.SIunits.Angle longitude = 16.428 * pi / 180 "Longitude";
+        parameter Modelica.SIunits.Angle latitude = 48.280 * pi / 180 "Latitude";
+        parameter Modelica.SIunits.Irradiance irradianceRef = 1000 "Reference solar irradiance";
+        //parameter Modelica.SIunits.Angle gamma = 10 * pi / 180 "Angle of PV module with w.r.t. horizontal plane";
+        //parameter Modelica.SIunits.Angle azimuth = 0 "Azimuth of the PV module orientation";
+        Integer startDayOfYear(start = dayOfTheYear(startDay, startMonth, startYear)) "Start day of year in simulation";
+        Integer dayOfYear(final start = dayOfTheYear(startDay, startMonth, startYear)) "Actual day of year";
+        Integer daysOfYear(final start = dayOfTheYear(31, 12, startYear)) "Total number of days of year";
+        Integer year(final start = startYear) "Actual year";
+        Modelica.SIunits.Angle Jprime(final start = dayOfTheYear(startDay, startMonth, startYear) / dayOfTheYear(31, 12, startYear) * 2 * pi) "Equivalent Angle of the day of the year w.r.t. total number of days";
+        Real delta_J;
+        Real timeequation_J;
+        Modelica.SIunits.Conversions.NonSIunits.Time_day localTimeDays "Local time in days";
+        Integer localDays "Locale day";
+        Modelica.SIunits.Time localTime "Local time";
+        Modelica.SIunits.Conversions.NonSIunits.Time_hour localTimeHours "Local time in unit hours";
+        Modelica.SIunits.Conversions.NonSIunits.Time_hour LocalMeanTimeHours "Local mean time in unit hours";
+        Modelica.SIunits.Conversions.NonSIunits.Time_hour trueMeanTimeHours "True mean time in unit hours";
+        Modelica.SIunits.Angle hoursAngle "Hours angle";
+        Modelica.SIunits.Angle sunHeight "Sun height";
+        Modelica.SIunits.Angle sunAzimuth1 "Sun azimuth before 12 p.m.";
+        Modelica.SIunits.Angle sunAzimuth2 "Sun azimuth after 12 p.m.";
+        Modelica.SIunits.Angle sunAzimuth "Sun azimuth";
+        Modelica.SIunits.Angle angleOfIncidence "Angle of incidence between a vector in sun direction and a normal vector";
+        Modelica.SIunits.Irradiance directIrradianceHorizontal "Direct irradiance on the horizontal in W/m^2";
+        Modelica.SIunits.Irradiance directIrradianceInclined "Direct irradiance on the inclined plane in w/m^2";
+        Modelica.Blocks.Interfaces.RealOutput irradiance annotation(Placement(transformation(extent = {{100, -10}, {120, 10}})));
+        Modelica.Blocks.Interfaces.RealInput gamma annotation (Placement(
+            visible=true,
+            transformation(
+              origin={-120,60},
+              extent={{-20,-20},{20,20}},
+              rotation=0),
+            iconTransformation(
+              origin={-120,60},
+              extent={{-20,-20},{20,20}},
+              rotation=0)));
+        Modelica.Blocks.Interfaces.RealInput azimuth annotation (Placement(
+            visible=true,
+            transformation(
+              origin={-120,-60},
+              extent={{-20,-20},{20,20}},
+              rotation=0),
+            iconTransformation(
+              origin={-120,-60},
+              extent={{-20,-20},{20,20}},
+              rotation=0)));
+      algorithm
+        // Calculate ratio of day w.r.t. total number of days of a year as equivalent angle
+        when sample(24 * 3600, 24 * 3600) then
+          dayOfYear := mod(pre(dayOfYear), pre(daysOfYear)) + 1;
+        end when;
+        when startDayOfYear + localDays == daysOfYear + 1 then
+          startDayOfYear := 1;
+          year := pre(year) + 1;
+          daysOfYear := dayOfTheYear(31, 12, year);
+        end when;
+        // One full year is reached
+        // Reset start day of year
+        // Increment year
+        // Determined actual number of total days of year
+      equation
+        Jprime = dayOfYear / daysOfYear * 2 * pi;
+        delta_J = rad(0.3948 - 23.2559 * cos(Jprime + rad(9.1)) - 0.3915 * cos(2 * Jprime + rad(5.4)) - 0.1764 * cos(3 * Jprime + rad(26)));
+        timeequation_J = 0.0066 + 7.3525 * cos(Jprime + rad(85.9)) + 9.9359 * cos(2 * Jprime + rad(108.9)) + 0.3387 * cos(3 * Jprime + rad(105.2));
+        // Zeit LZ = time
+        localTime = time;
+        // Convert time into unit hours
+        localTimeHours = localTime / 3600;
+        // Convert time into unit days
+        localTimeDays = localTimeHours / 24;
+        // Convert time from real days into integer days (floor)
+        localDays = integer(floor(localTimeDays));
+        // Calculate locale mean time
+        LocalMeanTimeHours = localTimeHours - TimeZone + 4 / 60 * longitude * 180 / Modelica.Constants.pi;
+        // cos(latitude)*tan(...)
+        trueMeanTimeHours = LocalMeanTimeHours + timeequation_J / 60;
+        hoursAngle = rad((12 - trueMeanTimeHours) * 15);
+        sunHeight = degree(asin(cos(hoursAngle) * cos(latitude) * cos(delta_J) + sin(latitude) * sin(delta_J))) * (Modelica.Constants.pi / 180);
+        sunAzimuth1 = Modelica.Constants.pi - acos((sin(sunHeight) * sin(latitude) - sin(delta_J)) / (cos(sunHeight) * cos(latitude)));
+        sunAzimuth2 = Modelica.Constants.pi + acos((sin(sunHeight) * sin(latitude) - sin(delta_J)) / (cos(sunHeight) * cos(latitude)));
+        sunAzimuth = if mod(localTimeHours, 24) <= 12 then sunAzimuth1 else sunAzimuth2;
+        angleOfIncidence = acos((-cos(sunHeight) * sin(gamma) * cos(sunAzimuth - azimuth)) + sin(sunHeight) * cos(gamma));
+        directIrradianceHorizontal = if sunHeight < 0 then 0 else irradianceRef * sin(sunHeight);
+        directIrradianceInclined = if angleOfIncidence > pi / 2 then 0 else if abs(sin(sunHeight)) < 1E-5 then 0 else directIrradianceHorizontal * (cos(angleOfIncidence) / sin(sunHeight));
+        irradiance = directIrradianceInclined;
+        annotation(Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(extent = {{-100, 100}, {100, -100}}, lineColor = {28, 108, 200}),
+              Ellipse(
+                extent={{-40,40},{40,-40}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{30,48},{80,80},{38,36},{30,48}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{48,-14},{90,-48},{40,-28},{48,-14}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{34,-38},{84,-92},{22,-48},{34,-38}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{-10,50},{0,80},{12,50},{-10,50}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{-42,30},{-84,78},{-30,42},{-42,30}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{-54,-6},{-86,10},{-52,12},{-54,-6}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{-40,-34},{-92,-62},{-50,-18},{-40,-34}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{-4,-48},{-28,-92},{-22,-42},{-4,-48}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{46,20},{92,24},{50,6},{46,20}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid)}),                                                                                                                                                                                                        Diagram(coordinateSystem(preserveAspectRatio = false)));
+      end IrradianceVariableLocation;
+
+      model IrradianceFixedSun "Simple solar irradiance with fixed sun position"
+        import Modelica.Constants.pi;
+        parameter Modelica.SIunits.Irradiance irradianceRef = 1000 "Reference solar irradiance";
+        parameter Modelica.SIunits.Angle sunHeight "Sun height";
+        parameter Modelica.SIunits.Angle sunAzimuth "Sun azimuth";
+        Modelica.SIunits.Angle angleOfIncidence "Angle of incidence between a vector in sun direction and a normal vector";
+        Modelica.SIunits.Irradiance directIrradianceHorizontal "Direct irradiance on the horizontal";
+        Modelica.SIunits.Irradiance directIrradianceInclined "Direct irradiance on the inclined plane";
+        Modelica.Blocks.Interfaces.RealOutput irradiance annotation(Placement(transformation(extent = {{100, -10}, {120, 10}})));
+        Modelica.Blocks.Interfaces.RealInput gamma annotation(Placement(visible = true, transformation(origin={-120,60},    extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin={-120,60},    extent = {{-20, -20}, {20, 20}}, rotation = 0)));
+        Modelica.Blocks.Interfaces.RealInput azimuth annotation(Placement(visible = true, transformation(origin={-120,-60},    extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin={-120,-60},    extent = {{-20, -20}, {20, 20}}, rotation = 0)));
+      equation
+        angleOfIncidence = acos((-cos(sunHeight) * sin(gamma) * cos(sunAzimuth - azimuth)) + sin(sunHeight) * cos(gamma));
+        directIrradianceHorizontal = if sunHeight < 0 then 0 else irradianceRef * sin(sunHeight);
+        directIrradianceInclined = if angleOfIncidence > pi / 2 then 0 else if abs(sin(sunHeight)) < 1E-5 then 0 else directIrradianceHorizontal * (cos(angleOfIncidence) / sin(sunHeight));
+        irradiance = directIrradianceInclined;
+        annotation(Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(extent = {{-100, 100}, {100, -100}}, lineColor = {28, 108, 200}),
+              Ellipse(
+                extent={{-40,40},{40,-40}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{30,48},{80,80},{38,36},{30,48}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{48,-14},{90,-48},{40,-28},{48,-14}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{34,-38},{84,-92},{22,-48},{34,-38}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{-10,50},{0,80},{12,50},{-10,50}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{-42,30},{-84,78},{-30,42},{-42,30}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{-54,-6},{-86,10},{-52,12},{-54,-6}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{-40,-34},{-92,-62},{-50,-18},{-40,-34}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{-4,-48},{-28,-92},{-22,-42},{-4,-48}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid),
+              Polygon(
+                points={{46,20},{92,24},{50,6},{46,20}},
+                lineColor={255,170,85},
+                fillColor={255,255,0},
+                fillPattern=FillPattern.Solid),
+              Line(
+                points={{0,100},{0,-100}},
+                color={0,0,0},
+                pattern=LinePattern.Dash),
+              Line(
+                points={{60,100},{60,-100}},
+                color={0,0,0},
+                pattern=LinePattern.Dash),
+              Line(
+                points={{-60,100},{-60,-100}},
+                color={0,0,0},
+                pattern=LinePattern.Dash),
+              Line(
+                points={{-100,0},{100,0}},
+                color={0,0,0},
+                pattern=LinePattern.Dash),
+              Line(
+                points={{-100,60},{100,60}},
+                color={0,0,0},
+                pattern=LinePattern.Dash),
+              Line(
+                points={{-100,-60},{100,-60}},
+                color={0,0,0},
+                pattern=LinePattern.Dash)}),                                                                                                                                                                                                        Diagram(coordinateSystem(preserveAspectRatio = false)));
+      end IrradianceFixedSun;
+      annotation (Icon(graphics={
+            Ellipse(
+              extent={{-40,40},{40,-40}},
+              lineColor={255,170,85},
+              fillColor={255,255,0},
+              fillPattern=FillPattern.Solid),
+            Polygon(
+              points={{30,48},{80,80},{38,36},{30,48}},
+              lineColor={255,170,85},
+              fillColor={255,255,0},
+              fillPattern=FillPattern.Solid),
+            Polygon(
+              points={{48,-14},{90,-48},{40,-28},{48,-14}},
+              lineColor={255,170,85},
+              fillColor={255,255,0},
+              fillPattern=FillPattern.Solid),
+            Polygon(
+              points={{34,-38},{84,-92},{22,-48},{34,-38}},
+              lineColor={255,170,85},
+              fillColor={255,255,0},
+              fillPattern=FillPattern.Solid),
+            Polygon(
+              points={{-10,50},{0,80},{12,50},{-10,50}},
+              lineColor={255,170,85},
+              fillColor={255,255,0},
+              fillPattern=FillPattern.Solid),
+            Polygon(
+              points={{-42,30},{-84,78},{-30,42},{-42,30}},
+              lineColor={255,170,85},
+              fillColor={255,255,0},
+              fillPattern=FillPattern.Solid),
+            Polygon(
+              points={{-54,-6},{-86,10},{-52,12},{-54,-6}},
+              lineColor={255,170,85},
+              fillColor={255,255,0},
+              fillPattern=FillPattern.Solid),
+            Polygon(
+              points={{-40,-34},{-92,-62},{-50,-18},{-40,-34}},
+              lineColor={255,170,85},
+              fillColor={255,255,0},
+              fillPattern=FillPattern.Solid),
+            Polygon(
+              points={{-4,-48},{-28,-92},{-22,-42},{-4,-48}},
+              lineColor={255,170,85},
+              fillColor={255,255,0},
+              fillPattern=FillPattern.Solid),
+            Polygon(
+              points={{46,20},{92,24},{50,6},{46,20}},
+              lineColor={255,170,85},
+              fillColor={255,255,0},
+              fillPattern=FillPattern.Solid)}));
     end Irradiance;
 
     package Blocks "Block sources"
