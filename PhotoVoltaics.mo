@@ -337,7 +337,7 @@ This library provides models for the modeling and simulation of photo voltaic po
         Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {40, 0})));
       PhotoVoltaics.Sources.Blocks.PowerRamp powerRamp(duration = 0.6, height = 8, offset = -4, ref = moduleData.VmpCellRef / moduleData.ImpRef, startTime = 0.2) annotation (
         Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-      PhotoVoltaics.Components.PV.SimpleCell cell(moduleData=moduleData) annotation (Placement(visible=true, transformation(
+      PhotoVoltaics.Components.PhotoVoltaics.SimpleCell cell(moduleData=moduleData) annotation (Placement(visible=true, transformation(
             origin={0,0},
             extent={{-10,10},{10,-10}},
             rotation=-90)));
@@ -367,7 +367,7 @@ This library provides models for the modeling and simulation of photo voltaic po
         Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       Modelica.Blocks.Sources.Ramp rampCurrent(duration = 0.6, height = moduleData.VocCellRef + moduleData.BvCell, offset = -moduleData.BvCell, startTime = 0.2) annotation (
         Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-      PhotoVoltaics.Components.PV.SimpleCell cell(moduleData=moduleData) annotation (Placement(visible=true, transformation(
+      PhotoVoltaics.Components.PhotoVoltaics.SimpleCell cell(moduleData=moduleData) annotation (Placement(visible=true, transformation(
             origin={0,0},
             extent={{-10,10},{10,-10}},
             rotation=-90)));
@@ -397,7 +397,7 @@ This library provides models for the modeling and simulation of photo voltaic po
         Placement(visible = true, transformation(origin = {0, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       Modelica.Electrical.Analog.Basic.VariableResistor variableResistor annotation (
         Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {40, 0})));
-      PhotoVoltaics.Components.PV.SimpleCell cell(useConstantIrradiance=false, moduleData=moduleData) annotation (Placement(visible=true, transformation(
+      PhotoVoltaics.Components.PhotoVoltaics.SimpleCell cell(useConstantIrradiance=false, moduleData=moduleData) annotation (Placement(visible=true, transformation(
             origin={0,0},
             extent={{-10,10},{10,-10}},
             rotation=-90)));
@@ -443,7 +443,7 @@ on the horizontal axis</li>
         Placement(visible = true, transformation(origin = {0, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       Modelica.Electrical.Analog.Basic.VariableResistor variableResistor annotation (
         Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {40, 0})));
-      PhotoVoltaics.Components.PV.SimpleCell cell(
+      PhotoVoltaics.Components.PhotoVoltaics.SimpleCell cell(
         moduleData=moduleData,
         useHeatPort=true,
         useConstantIrradiance=true) annotation (Placement(visible=true, transformation(
@@ -494,7 +494,7 @@ on the horizontal axis</li>
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground ground annotation (
         Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      PhotoVoltaics.Components.PV.SimpleModule module(
+      PhotoVoltaics.Components.PhotoVoltaics.SimpleModule module(
         T=298.15,
         moduleData=moduleData,
         cell(v(start=zeros(moduleData.ns)))) annotation (Placement(visible=true, transformation(
@@ -525,7 +525,7 @@ on the horizontal axis</li>
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground ground annotation (
         Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      PhotoVoltaics.Components.PV.SimpleModuleSymmetric module(T=298.15, moduleData=moduleData) annotation (Placement(visible=true, transformation(
+      PhotoVoltaics.Components.PhotoVoltaics.SimpleModuleSymmetric module(T=298.15, moduleData=moduleData) annotation (Placement(visible=true, transformation(
             origin={0,0},
             extent={{-10,10},{10,-10}},
             rotation=-90)));
@@ -553,7 +553,7 @@ on the horizontal axis</li>
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground ground annotation (
         Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      PhotoVoltaics.Components.PV.SimplePlantSymmetric plant(
+      PhotoVoltaics.Components.PhotoVoltaics.SimplePlantSymmetric plant(
         moduleData=moduleData,
         T=298.15,
         nsModule=10,
@@ -585,7 +585,7 @@ on the horizontal axis</li>
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground ground annotation (
         Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      PhotoVoltaics.Components.PV.SimpleModule module(
+      PhotoVoltaics.Components.PhotoVoltaics.SimpleModule module(
         moduleData=moduleData,
         T=298.15,
         shadow=cat(
@@ -623,7 +623,7 @@ on the horizontal axis</li>
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground groundDC annotation (
         Placement(visible = true, transformation(origin = {-40, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      PhotoVoltaics.Components.PV.SimpleModuleSymmetric module(
+      PhotoVoltaics.Components.PhotoVoltaics.SimpleModuleSymmetric module(
         moduleData=moduleData,
         T=298.15,
         useConstantIrradiance=false) annotation (Placement(visible=true, transformation(
@@ -682,7 +682,7 @@ on the horizontal axis</li>
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground groundDC annotation (
         Placement(visible = true, transformation(origin = {-40, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      PhotoVoltaics.Components.PV.SimpleModuleSymmetric module(
+      PhotoVoltaics.Components.PhotoVoltaics.SimpleModuleSymmetric module(
         moduleData=moduleData,
         T=298.15,
         useConstantIrradiance=false) annotation (Placement(visible=true, transformation(
@@ -738,7 +738,7 @@ on the horizontal axis</li>
       extends Modelica.Icons.Example;
       Modelica.Electrical.Analog.Basic.Ground groundDC annotation (
         Placement(visible = true, transformation(origin = {-40, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      PhotoVoltaics.Components.PV.SimpleModuleSymmetric module(
+      PhotoVoltaics.Components.PhotoVoltaics.SimpleModuleSymmetric module(
         moduleData=moduleData,
         T=298.15,
         useConstantIrradiance=false) annotation (Placement(visible=true, transformation(
@@ -826,7 +826,7 @@ on the horizontal axis</li>
         Placement(transformation(extent={{-100,20},{-80,40}})));
       Modelica.Blocks.Sources.Constant powerfactor(k=0.9)
         annotation (Placement(transformation(extent={{-30,-50},{-10,-30}})));
-      PhotoVoltaics.Components.PV.SimpleModuleSymmetric module(
+      PhotoVoltaics.Components.PhotoVoltaics.SimpleModuleSymmetric module(
         moduleData=moduleData,
         useConstantIrradiance=false,
         T=298.15) annotation (Placement(visible=true, transformation(
@@ -909,7 +909,7 @@ on the horizontal axis</li>
       import Modelica.Constants.pi;
       extends Modelica.Icons.Example;
 
-      Components.PV.SolarPyramidDCConverter solarPyramid(
+      Components.PhotoVoltaics.SolarPyramidDCConverter solarPyramid(
         moduleData=moduleData,
         VRef=moduleData.VmpRef,
         VmpRef=moduleData.VmpRef,
@@ -950,7 +950,7 @@ on the horizontal axis</li>
   package Components "Components"
     extends Modelica.Icons.Package;
 
-    package PV "Photovoltaic cells, modules and plants"
+    package PhotoVoltaics "Photovoltaic cells, modules and plants"
       extends Modelica.Icons.Package;
       model SimpleCell
         extends .PhotoVoltaics.Interfaces.PartialCell(signalCurrent(
@@ -983,7 +983,7 @@ on the horizontal axis</li>
       model SimpleModule "Simple module consisting of series connected cells"
         extends .PhotoVoltaics.Interfaces.PartialComponent;
         parameter Real shadow[moduleData.ns] = zeros(moduleData.ns) "Shadow vector based on: 0 = full sun, 1 = full shadow";
-        PV.SimpleCell cell[moduleData.ns](
+        SimpleCell cell[moduleData.ns](
           final useHeatPort=fill(useHeatPort, moduleData.ns),
           final T=fill(T, moduleData.ns),
           final constantIrradiance=fill(constantIrradiance, moduleData.ns),
@@ -1128,28 +1128,28 @@ on the horizontal axis</li>
         Modelica.Blocks.Math.Add add1 annotation(Placement(visible = true, transformation(origin={-50,50},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
         Modelica.Blocks.Math.Add add2 annotation(Placement(visible = true, transformation(origin={-50,10},     extent = {{-10, -10}, {10, 10}}, rotation = -90)));
         Modelica.Blocks.Math.Add add3 annotation(Placement(visible = true, transformation(origin={-50,-30},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-        PV.SimpleModuleSymmetric module1(
+        SimpleModuleSymmetric module1(
           final useConstantIrradiance=false,
           final moduleData=moduleData,
           final useHeatPort=useHeatPort) annotation (Placement(visible=true, transformation(
               origin={20,80},
               extent={{10,-10},{-10,10}},
               rotation=90)));
-        PV.SimpleModuleSymmetric module2(
+        SimpleModuleSymmetric module2(
           final useConstantIrradiance=false,
           final moduleData=moduleData,
           final useHeatPort=useHeatPort) annotation (Placement(visible=true, transformation(
               origin={20,40},
               extent={{10,-10},{-10,10}},
               rotation=90)));
-        PV.SimpleModuleSymmetric module3(
+        SimpleModuleSymmetric module3(
           final useConstantIrradiance=false,
           final moduleData=moduleData,
           final useHeatPort=useHeatPort) annotation (Placement(visible=true, transformation(
               origin={20,0},
               extent={{10,-10},{-10,10}},
               rotation=90)));
-        PV.SimpleModuleSymmetric module4(
+        SimpleModuleSymmetric module4(
           final useConstantIrradiance=false,
           final moduleData=moduleData,
           final useHeatPort=useHeatPort) annotation (Placement(visible=true, transformation(
@@ -1491,33 +1491,32 @@ displaced by 90 degrees, each.
         parameter Modelica.SIunits.Current ImpRef "Reference maximum power current of plant" annotation(Dialog(group="MP tracker"));
         parameter Integer n = 100 "Number of voltage and power discretizations" annotation(Dialog(group="MP tracker"));
 
-
         Modelica.Blocks.Sources.Constant const(k=Modelica.Constants.pi/2) annotation(Placement(visible = true, transformation(origin={-30,-70},   extent={{-10,10},{10,-10}},      rotation=180)));
         Modelica.Blocks.Math.Add add1 annotation(Placement(visible = true, transformation(origin={-70,50},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
         Modelica.Blocks.Math.Add add2 annotation(Placement(visible = true, transformation(origin={-70,10},     extent = {{-10, -10}, {10, 10}}, rotation = -90)));
         Modelica.Blocks.Math.Add add3 annotation(Placement(visible = true, transformation(origin={-70,-30},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-        PV.SimpleModuleSymmetric module1(
+        SimpleModuleSymmetric module1(
           final useConstantIrradiance=false,
           final moduleData=moduleData,
           final useHeatPort=useHeatPort) annotation (Placement(visible=true, transformation(
               origin={0,80},
               extent={{10,-10},{-10,10}},
               rotation=90)));
-        PV.SimpleModuleSymmetric module2(
+        SimpleModuleSymmetric module2(
           final useConstantIrradiance=false,
           final moduleData=moduleData,
           final useHeatPort=useHeatPort) annotation (Placement(visible=true, transformation(
               origin={0,40},
               extent={{10,-10},{-10,10}},
               rotation=90)));
-        PV.SimpleModuleSymmetric module3(
+        SimpleModuleSymmetric module3(
           final useConstantIrradiance=false,
           final moduleData=moduleData,
           final useHeatPort=useHeatPort) annotation (Placement(visible=true, transformation(
               origin={0,0},
               extent={{10,-10},{-10,10}},
               rotation=90)));
-        PV.SimpleModuleSymmetric module4(
+        SimpleModuleSymmetric module4(
           final useConstantIrradiance=false,
           final moduleData=moduleData,
           final useHeatPort=useHeatPort) annotation (Placement(visible=true, transformation(
@@ -1887,10 +1886,9 @@ The angle of inclination of each panel, <code>gamma</code>, is an input to this 
 The second input is the azimuth of one of the fore panels. The remaining three panels are 
 displaced by 90 degrees, each.
 </html>"));
-
       end SolarPyramidDCConverter;
       annotation (Icon(graphics={          Polygon(points = {{-80, 60}, {-60, 80}, {60, 80}, {80, 60}, {80, -60}, {60, -80}, {-60, -80}, {-80, -60}, {-80, 60}}, pattern = LinePattern.None, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid), Line(points = {{-40, 80}, {-40, -80}}, color = {255, 255, 255}), Line(points = {{40, 80}, {40, -80}}, color = {255, 255, 255})}));
-    end PV;
+    end PhotoVoltaics;
 
 
 
@@ -1899,7 +1897,7 @@ displaced by 90 degrees, each.
       model DCConverter "DC controlled single phase DC/AC converter"
         extends Modelica.Electrical.PowerConverters.Interfaces.DCDC.DCtwoPin1;
         extends Modelica.Electrical.PowerConverters.Interfaces.DCDC.DCtwoPin2;
-        extends PhotoVoltaics.Icons.Converter;
+        extends .PhotoVoltaics.Icons.Converter;
 
         parameter Modelica.SIunits.Voltage VRef = 48 "Reference DC source voltage";
         parameter Modelica.SIunits.Time Ti = 1E-6 "Internal integration time constant";
@@ -1960,7 +1958,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
       model QuasiStaticSinglePhaseConverter "Ideal quasi static single phase DC/AC converter"
         extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
         extends .PhotoVoltaics.Interfaces.QuasiStatic.ACpins;
-        extends PhotoVoltaics.Icons.Converter;
+        extends .PhotoVoltaics.Icons.Converter;
         parameter Modelica.SIunits.Voltage VRef = 400 / sqrt(3) "Reference voltage";
         parameter Modelica.SIunits.Time Ti = 1E-6 "Internal integration time constant";
         Modelica.SIunits.Power powerDC = vDC * iDC "Power of DC side";
@@ -2055,7 +2053,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
       model QuasiStaticMultiPhaseConverter "Ideal quasi stastic multi phase DC/AC converter"
         extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
         extends .PhotoVoltaics.Interfaces.QuasiStatic.ACplug;
-        extends PhotoVoltaics.Icons.Converter;
+        extends .PhotoVoltaics.Icons.Converter;
         parameter Modelica.SIunits.Voltage VRef = 400 "Reference line to line voltage";
         parameter Modelica.SIunits.Time Ti = 1E-6 "Internal integration time constant";
         Modelica.SIunits.Power powerDC = vDC * iDC "Power of DC side";
@@ -2163,7 +2161,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
 
         import Modelica.Constants.pi;
         extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
-        extends PhotoVoltaics.Icons.Converter;
+        extends .PhotoVoltaics.Icons.Converter;
 
         Modelica.Electrical.MultiPhase.Interfaces.PositivePlug ac "AC output"
           annotation (Placement(transformation(extent={{90,-10},{110,10}})));
@@ -2402,6 +2400,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
                                                                          Diagram(coordinateSystem(preserveAspectRatio=false)));
         end DCConverter;
       end ConvertersWithSampleMPTracker;
+      annotation (Icon(graphics={Line(points={{-80,-80},{80,80}}, color={0,0,0}), Rectangle(extent={{-80,80},{80,-80}}, lineColor={0,0,0})}));
     end Converters;
 
     package Batteries "Batteries"
@@ -2446,6 +2445,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
         connect(capacitor.n, pin_n) annotation(Line(points = {{10, 0}, {56, 0}, {56, 4.44089e-16}, {100, 4.44089e-16}}, color = {0, 0, 255}, smooth = Smooth.None));
         annotation(defaultComponentName="battery",Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})),           Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Text(extent = {{-120, 50}, {-20, 0}}, lineColor = {0, 0, 255}, textString = "+"), Line(points = {{-90, 0}, {-10, 0}}, color = {0, 0, 255}), Line(points = {{-10, 60}, {-10, -60}}, color = {0, 0, 255}), Line(points = {{10, 30}, {10, -30}}, color = {0, 0, 255}), Line(points = {{10, 0}, {90, 0}}, color = {0, 0, 255}), Text(extent = {{20, 50}, {120, 0}}, lineColor = {0, 0, 255}, textString = "-"), Text(extent = {{-150, 140}, {150, 100}}, lineColor = {0, 0, 255}, textString = "%name")}));
       end IdealBattery;
+      annotation (Icon(graphics={Ellipse(extent={{-40,40},{40,-40}}, lineColor={0,0,0}), Line(points={{0,80},{0,-80}}, color={0,0,0})}));
     end Batteries;
 
     package Diodes "Diodes"
@@ -2513,6 +2513,10 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
 </html>"),Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Polygon(points = {{30, 0}, {-30, 40}, {-30, -40}, {30, 0}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-90, 0}, {40, 0}}, color = {0, 0, 255}), Line(points = {{40, 0}, {90, 0}}, color = {0, 0, 255}), Line(points = {{30, 40}, {30, -40}}, color = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}),
           Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));
       end Diode2exp;
+      annotation (Icon(graphics={
+            Line(points={{-30,-40},{-30,40},{30,0},{-30,-40}}, color={0,0,0}),
+            Line(points={{30,40},{30,-40}}, color={0,0,0}),
+            Line(points={{-80,0},{80,0}}, color={0,0,0})}));
     end Diodes;
 
     package Blocks "Blocks"
