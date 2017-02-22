@@ -1151,7 +1151,7 @@ on the horizontal axis</li>
               origin={-10,-40},
               extent={{-10,-10},{10,10}},
               rotation=0)));
-        Modelica.Electrical.Analog.Interfaces.PositivePin p1 "Positive pin of PV panel 1" annotation (Placement(transformation(extent={{90,90},{110,110}})));
+        Modelica.Electrical.Analog.Interfaces.PositivePin p1 "Positive pin of PV panel 1" annotation (Placement(transformation(extent={{90,90},{110,110}}), iconTransformation(extent={{90,90},{110,110}})));
         Modelica.Electrical.Analog.Interfaces.PositivePin p2 "Positive pin of PV panel 2" annotation (Placement(transformation(extent={{90,50},{110,70}})));
         Modelica.Electrical.Analog.Interfaces.PositivePin p3 "Positive pin of PV panel 3" annotation (Placement(transformation(extent={{90,10},{110,30}}), iconTransformation(extent={{90,10},{110,30}})));
         Modelica.Electrical.Analog.Interfaces.PositivePin p4 "Positive pin of PV panel 4" annotation (Placement(transformation(extent={{90,-30},{110,-10}}), iconTransformation(extent={{90,-30},{110,-10}})));
@@ -1226,7 +1226,7 @@ on the horizontal axis</li>
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Polygon(
-                points={{90,80},{10,0},{90,-80},{90,80}},
+                points={{88,80},{8,0},{88,-80},{88,80}},
                 lineColor={0,0,127},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
@@ -1236,7 +1236,7 @@ on the horizontal axis</li>
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Polygon(
-                points={{0,10},{-80,90},{80,90},{0,10}},
+                points={{0,8},{-80,88},{80,88},{0,8}},
                 lineColor={0,0,127},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
@@ -1286,92 +1286,92 @@ on the horizontal axis</li>
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{-10,44},{10,24}},
+                extent={{-10,42},{10,22}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{-30,64},{-10,44}},
+                extent={{-30,62},{-10,42}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{-10,64},{10,44}},
+                extent={{-10,62},{10,42}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{10,44},{30,64}},
+                extent={{10,42},{30,62}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{-50,84},{-30,64}},
+                extent={{-50,82},{-30,62}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{-30,84},{-10,64}},
+                extent={{-30,82},{-10,62}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{-10,64},{10,84}},
+                extent={{-10,62},{10,82}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{10,64},{30,84}},
+                extent={{10,62},{30,82}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{30,64},{50,84}},
+                extent={{30,62},{50,82}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{24,-10},{44,10}},
+                extent={{22,-10},{42,10}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{44,10},{64,30}},
+                extent={{42,10},{62,30}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{44,-10},{64,10}},
+                extent={{42,-10},{62,10}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{44,-30},{64,-10}},
+                extent={{42,-30},{62,-10}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{64,-50},{84,-30}},
+                extent={{62,-50},{82,-30}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{64,-30},{84,-10}},
+                extent={{62,-30},{82,-10}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{64,-10},{84,10}},
+                extent={{62,-10},{82,10}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{64,10},{84,30}},
+                extent={{62,10},{82,30}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{64,30},{84,50}},
+                extent={{62,30},{82,50}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
@@ -1421,7 +1421,7 @@ on the horizontal axis</li>
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Ellipse(
-                extent={{-8,10},{10,-8}},
+                extent={{-8,8},{8,-8}},
                 lineColor={255,255,255},
                 fillColor={0,0,0},
                 fillPattern=FillPattern.Solid)}),                      Diagram(coordinateSystem(preserveAspectRatio=false)),
@@ -1642,7 +1642,7 @@ displaced by 90 degrees, each.
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Polygon(
-                points={{90,80},{10,0},{90,-80},{90,80}},
+                points={{88,80},{8,0},{88,-80},{88,80}},
                 lineColor={0,0,127},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
@@ -1652,7 +1652,7 @@ displaced by 90 degrees, each.
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Polygon(
-                points={{0,10},{-80,90},{80,90},{0,10}},
+                points={{0,8},{-80,88},{80,88},{0,8}},
                 lineColor={0,0,127},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
@@ -1702,92 +1702,92 @@ displaced by 90 degrees, each.
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{-10,44},{10,24}},
+                extent={{-10,42},{10,22}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{-30,64},{-10,44}},
+                extent={{-30,62},{-10,42}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{-10,64},{10,44}},
+                extent={{-10,62},{10,42}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{10,44},{30,64}},
+                extent={{10,42},{30,62}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{-50,84},{-30,64}},
+                extent={{-50,82},{-30,62}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{-30,84},{-10,64}},
+                extent={{-30,82},{-10,62}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{-10,64},{10,84}},
+                extent={{-10,62},{10,82}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{10,64},{30,84}},
+                extent={{10,62},{30,82}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{30,64},{50,84}},
+                extent={{30,62},{50,82}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{24,-10},{44,10}},
+                extent={{22,-10},{42,10}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{44,10},{64,30}},
+                extent={{42,10},{62,30}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{44,-10},{64,10}},
+                extent={{42,-10},{62,10}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{44,-30},{64,-10}},
+                extent={{42,-30},{62,-10}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{64,-50},{84,-30}},
+                extent={{62,-50},{82,-30}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{64,-30},{84,-10}},
+                extent={{62,-30},{82,-10}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{64,-10},{84,10}},
+                extent={{62,-10},{82,10}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{64,10},{84,30}},
+                extent={{62,10},{82,30}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Rectangle(
-                extent={{64,30},{84,50}},
+                extent={{62,30},{82,50}},
                 lineColor={255,255,255},
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
@@ -1837,7 +1837,7 @@ displaced by 90 degrees, each.
                 fillColor={85,85,255},
                 fillPattern=FillPattern.Solid),
               Ellipse(
-                extent={{-8,10},{10,-8}},
+                extent={{-8,8},{8,-8}},
                 lineColor={255,255,255},
                 fillColor={0,0,0},
                 fillPattern=FillPattern.Solid)}),                      Diagram(coordinateSystem(preserveAspectRatio=false)),
@@ -1852,6 +1852,7 @@ displaced by 90 degrees, each.
 </html>"));
 
       end SolarPyramidDCConverter;
+      annotation (Icon(graphics={          Polygon(points = {{-80, 60}, {-60, 80}, {60, 80}, {80, 60}, {80, -60}, {60, -80}, {-60, -80}, {-80, -60}, {-80, 60}}, pattern = LinePattern.None, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid), Line(points = {{-40, 80}, {-40, -80}}, color = {255, 255, 255}), Line(points = {{40, 80}, {40, -80}}, color = {255, 255, 255})}));
     end PV;
 
 
