@@ -125,6 +125,12 @@ Ramazan Kavlak<br>
 <li>Restructured PV, Converters, Batteries within Components; this is a non-backwards compatible change</li>
 <li>Added some more irradiance models</li>
 <li>Added solar pyramid model</li>
+<li>Added icons package<li>
+<li>Changed interface names of DC converter (now compatible with 
+    <a hfre=\"modelica://Modelica.Electrical.PowerConverters\">PowerConverters</a></li> 
+<li>Added Conveters with integrated sampled power tracking</li>
+<li>Changed internal integration time constant of converters from <code>T</code> to <code>Ti</code> 
+    due to incompatibility with temperature</li>
 </ul>
 
 <h5>Version 0.3.2, 2017-01-29</h5>
@@ -649,24 +655,22 @@ on the horizontal axis</li>
     equation
       connect(groundDC.p, module.n) annotation (
         Line(points = {{-40, -20}, {-40, -10}}, color = {0, 0, 255}));
-      connect(groundDC.p, converter.dc_n) annotation (
-        Line(points = {{-40, -20}, {-40, -20}, {20, -20}, {20, -10}}, color = {0, 0, 255}));
       connect(mpTracker.vRef, converter.vDCRef) annotation (
         Line(points = {{21, -50}, {30, -50}, {30, -12}}, color = {0, 0, 127}));
       connect(module.p, powerSensor.pc) annotation (
         Line(points = {{-40, 10}, {-40, 10}, {-40, 20}, {-20, 20}}, color = {0, 0, 255}));
-      connect(powerSensor.nc, converter.dc_p) annotation (
-        Line(points = {{0, 20}, {0, 20}, {20, 20}, {20, 10}}, color = {0, 0, 255}));
       connect(mpTracker.power, powerSensor.power) annotation (
         Line(points = {{-2, -50}, {-2, -50}, {-18, -50}, {-18, 9}}, color = {0, 0, 127}));
       connect(powerSensor.pc, powerSensor.pv) annotation (
         Line(points = {{-20, 20}, {-20, 30}, {-10, 30}}, color = {0, 0, 255}));
       connect(powerSensor.nv, groundDC.p) annotation (
         Line(points = {{-10, 10}, {-10, 10}, {-10, -18}, {-10, -20}, {-40, -20}}, color = {0, 0, 255}));
-      connect(converter.dc_nsource, ground.p) annotation (Line(points={{40,-10},{40,-20},{80,-20}}, color={0,0,255}));
-      connect(converter.dc_psource, battery.pin_p) annotation (Line(points={{40,10},{40,20},{68,20},{80,20},{80,10}}, color={0,0,255}));
       connect(battery.pin_n, ground.p) annotation (Line(points={{80,-10},{80,-15},{80,-20}}, color={0,0,255}));
       connect(irradiance.irradiance, module.variableIrradiance) annotation (Line(points={{-69,0},{-52,0}}, color={0,0,127}));
+      connect(groundDC.p, converter.dc_n1) annotation (Line(points={{-40,-20},{-16,-20},{10,-20},{10,-6},{20,-6}}, color={0,0,255}));
+      connect(converter.dc_p1, powerSensor.nc) annotation (Line(points={{20,6},{10,6},{10,20},{0,20}}, color={0,0,255}));
+      connect(converter.dc_p2, battery.pin_p) annotation (Line(points={{40,6},{50,6},{50,20},{80,20},{80,10}}, color={0,0,255}));
+      connect(converter.dc_n2, ground.p) annotation (Line(points={{40,-6},{50,-6},{50,-20},{80,-20}}, color={0,0,255}));
       annotation (
         Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
         Diagram(coordinateSystem(initialScale = 0.1)),
@@ -867,43 +871,38 @@ on the horizontal axis</li>
                 -100},{100,100}})), experiment(Interval=0.0001));
     end SimpleModuleMultiPhase;
 
-    model SolarPyramidOpenCircuit
-      import Modelica.Constants.pi;
-      extends Modelica.Icons.Example;
-      Components.PV.SolarPyramid solarPyramid annotation (Placement(transformation(extent={{-60,-10},{-40,10}})));
-      Modelica.Blocks.Sources.Ramp gammaRamp(
-        duration=1,
-        offset=0,
-        startTime=0,
-        height=50*pi/180)
-                     annotation (Placement(transformation(extent={{-100,10},{-80,30}})));
-      Modelica.Blocks.Sources.Constant azimuthConst(k=10*pi/180)
-                                                         annotation (Placement(transformation(extent={{-100,-30},{-80,-10}})));
-      Modelica.Electrical.Analog.Basic.Ground ground annotation (Placement(transformation(extent={{-50,-40},{-30,-20}})));
-    equation
-      connect(gammaRamp.y, solarPyramid.gamma) annotation (Line(points={{-79,20},{-74,20},{-74,6},{-62,6}}, color={0,0,127}));
-      connect(azimuthConst.y, solarPyramid.azimuth) annotation (Line(points={{-79,-20},{-70,-20},{-70,-6},{-62,-6}}, color={0,0,127}));
-      connect(solarPyramid.n, ground.p) annotation (Line(points={{-40,-10},{-40,-15},{-40,-20}}, color={0,0,255}));
-    end SolarPyramidOpenCircuit;
-
     model SolarPyramidBatteryCharge "Solar pyramid charging a battery"
       import Modelica.Constants.pi;
       extends Modelica.Icons.Example;
-      Components.PV.SolarPyramid solarPyramid annotation (Placement(transformation(extent={{-60,-10},{-40,10}})));
+      Components.PV.SolarPyramidDCConverter solarPyramid(
+        moduleData=moduleData,
+        VRef=moduleData.VmpRef,
+        VmpRef=moduleData.VmpRef,
+        ImpRef=moduleData.ImpRef,
+        samplePeriod=0.5,
+        sunHeight=0.38397243543875) annotation (Placement(transformation(extent={{-40,-10},{-20,10}})));
       Modelica.Blocks.Sources.Ramp gammaRamp(
-        duration=1,
         offset=0,
         startTime=0,
-        height=50*pi/180)
-                     annotation (Placement(transformation(extent={{-100,10},{-80,30}})));
+        height=50*pi/180,
+        duration=500)
+                     annotation (Placement(transformation(extent={{-80,10},{-60,30}})));
       Modelica.Blocks.Sources.Constant azimuthConst(k=10*pi/180)
-                                                         annotation (Placement(transformation(extent={{-100,-30},{-80,-10}})));
-      Modelica.Electrical.Analog.Basic.Ground ground annotation (Placement(transformation(extent={{-50,-40},{-30,-20}})));
-      Components.Converters.DCConverter converter annotation (Placement(transformation(extent={{0,40},{20,60}})));
+                                                         annotation (Placement(transformation(extent={{-80,-30},{-60,-10}})));
+      Modelica.Electrical.Analog.Basic.Ground ground annotation (Placement(transformation(extent={{-40,-40},{-20,-20}})));
+      Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V=24) annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={20,-2})));
+      parameter Records.SHARP_NU_S5_E3E moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
     equation
-      connect(gammaRamp.y, solarPyramid.gamma) annotation (Line(points={{-79,20},{-74,20},{-74,6},{-62,6}}, color={0,0,127}));
-      connect(azimuthConst.y, solarPyramid.azimuth) annotation (Line(points={{-79,-20},{-70,-20},{-70,-6},{-62,-6}}, color={0,0,127}));
-      connect(solarPyramid.n, ground.p) annotation (Line(points={{-40,-10},{-40,-15},{-40,-20}}, color={0,0,255}));
+      connect(gammaRamp.y, solarPyramid.gamma) annotation (Line(points={{-59,20},{-54,20},{-54,6},{-42,6}}, color={0,0,127}));
+      connect(azimuthConst.y, solarPyramid.azimuth) annotation (Line(points={{-59,-20},{-50,-20},{-50,-6},{-42,-6}}, color={0,0,127}));
+      connect(ground.p, solarPyramid.nModule) annotation (Line(points={{-30,-20},{-30,-15},{-30,-10}}, color={0,0,255}));
+      connect(solarPyramid.dc_n, ground.p) annotation (Line(points={{-20,-6},{-12,-6},{-12,-20},{-30,-20}}, color={0,0,255}));
+      connect(solarPyramid.dc_p, constantVoltage.p) annotation (Line(points={{-20,6},{-16,6},{-12,6},{-12,20},{20,20},{20,8}}, color={0,0,255}));
+      connect(solarPyramid.dc_n, constantVoltage.n) annotation (Line(points={{-20,-6},{-12,-6},{-12,-20},{20,-20},{20,-12}}, color={0,0,255}));
+      annotation (experiment(StopTime=500, Interval=0.001));
     end SolarPyramidBatteryCharge;
     annotation (
       Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
@@ -1440,11 +1439,23 @@ displaced by 90 degrees, each.
       model SolarPyramidDCConverter "Solar pyramid with DC/DC converter"
         import Modelica.Constants.pi;
         extends Modelica.Thermal.HeatTransfer.Interfaces.PartialConditionalHeatPort(T = 298.15);
-        parameter Records.ModuleData moduleData "Module parameters" annotation (choicesAllMatching = true, Placement(transformation(extent={{-8,-88},{12,-68}})));
-        parameter Modelica.SIunits.Angle sunAzimuth = 0 "Azimuth of sun";
-        parameter Modelica.SIunits.Angle sunHeight = 1.0471975511965976 "Height of sun";
-        parameter Modelica.SIunits.Irradiance irradiance = 1000 "Irradiance";
-        Modelica.Blocks.Sources.Constant const(k=Modelica.Constants.pi/2) annotation(Placement(visible = true, transformation(origin={-40,-60},   extent={{-10,10},{10,-10}},      rotation=180)));
+        extends Modelica.Electrical.PowerConverters.Interfaces.ACDC.DCtwoPin;
+        parameter Records.ModuleData moduleData "Module parameters" annotation (choicesAllMatching = true, Placement(transformation(extent={{40,-88},{60,-68}})));
+        parameter Modelica.SIunits.Angle sunAzimuth = 0 "Azimuth of sun" annotation(Dialog(group="Irradiance"));
+        parameter Modelica.SIunits.Angle sunHeight = 1.0471975511965976 "Height of sun" annotation(Dialog(group="Irradiance"));
+        parameter Modelica.SIunits.Irradiance irradiance = 1000 "Irradiance" annotation(Dialog(group="Irradiance"));
+
+        parameter Modelica.SIunits.Voltage VRef = 48 "Reference DC source voltage" annotation(Dialog(group="Converter"));
+        parameter Modelica.SIunits.Time Ti = 1E-6 "Internal integration time constant" annotation(Dialog(group="Converter"));
+
+        parameter Modelica.SIunits.Time startTime = 0 "Start time" annotation(Dialog(group="MP tracker"));
+        parameter Modelica.SIunits.Time samplePeriod = 1 "Sample period" annotation(Dialog(group="MP tracker"));
+        parameter Modelica.SIunits.Voltage VmpRef "Reference maximum power power of plant" annotation(Dialog(group="MP tracker"));
+        parameter Modelica.SIunits.Current ImpRef "Reference maximum power current of plant" annotation(Dialog(group="MP tracker"));
+        parameter Integer n = 100 "Number of voltage and power discretizations" annotation(Dialog(group="MP tracker"));
+
+
+        Modelica.Blocks.Sources.Constant const(k=Modelica.Constants.pi/2) annotation(Placement(visible = true, transformation(origin={-30,-70},   extent={{-10,10},{10,-10}},      rotation=180)));
         Modelica.Blocks.Math.Add add1 annotation(Placement(visible = true, transformation(origin={-70,50},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
         Modelica.Blocks.Math.Add add2 annotation(Placement(visible = true, transformation(origin={-70,10},     extent = {{-10, -10}, {10, 10}}, rotation = -90)));
         Modelica.Blocks.Math.Add add3 annotation(Placement(visible = true, transformation(origin={-70,-30},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
@@ -1508,7 +1519,7 @@ displaced by 90 degrees, each.
               origin={-30,-40},
               extent={{-10,-10},{10,10}},
               rotation=0)));
-        Modelica.Electrical.Analog.Interfaces.NegativePin n "Common negative pin of all four PV panels" annotation (Placement(transformation(extent={{90,-110},{110,-90}})));
+        Modelica.Electrical.Analog.Interfaces.NegativePin nModule "Common negative pin of all four PV modules (needs ground)" annotation (Placement(transformation(extent={{-10,-110},{10,-90}})));
         Modelica.Blocks.Interfaces.RealInput azimuth "Azimuth of first solar panel" annotation (Placement(transformation(extent={{-140,-80},{-100,-40}})));
         Modelica.Blocks.Interfaces.RealInput gamma "Angle of inclination of each solar panel" annotation (Placement(transformation(extent={{-140,40},{-100,80}})));
         // Voltages
@@ -1530,18 +1541,57 @@ displaced by 90 degrees, each.
         Modelica.SIunits.Power power2 = module2.power "Power of module 2";
         Modelica.SIunits.Power power3 = module3.power "Power of module 3";
         Modelica.SIunits.Power power4 = module4.power "Power of module 4";
+        Modelica.SIunits.Power power = power1+power2+power3+power4 "Total power of all four modules";
+
         Modelica.SIunits.Power powerGenerating1 = module1.powerGenerating "Negative power consumption (generating) of module 1";
         Modelica.SIunits.Power powerGenerating2 = module2.powerGenerating "Negative power consumption (generating) of module 2";
         Modelica.SIunits.Power powerGenerating3 = module3.powerGenerating "Negative power consumption (generating) of module 3";
         Modelica.SIunits.Power powerGenerating4 = module4.powerGenerating "Negative power consumption (generating) of module 4";
+        Modelica.SIunits.Power powerGenerating = powerGenerating1+powerGenerating2+powerGenerating3+powerGenerating4 "Total negative power consumption (generating) of all four modules";
 
-        Modelica.Electrical.Analog.Sensors.PowerSensor powerSensor1 "Power sensor of module 1" annotation (Placement(transformation(extent={{30,80},{50,100}})));
-        Modelica.Electrical.Analog.Sensors.PowerSensor powerSensor2 "Power sensor of module 1" annotation (Placement(transformation(extent={{30,40},{50,60}})));
-        Blocks.MPTrackerSample mpTracker annotation (Placement(transformation(extent={{48,68},{60,80}})));
+        Converters.ConvertersWithSampleMPTracker.DCConverter dcConverter1(
+          final VRef=VRef,
+          final Ti=Ti,
+          final startTime=startTime,
+          final samplePeriod=samplePeriod,
+          final VmpRef=VmpRef,
+          final ImpRef=ImpRef,
+          final n=n)
+          annotation (Placement(transformation(extent={{40,70},{60,90}})));
+        Converters.ConvertersWithSampleMPTracker.DCConverter dcConverter2(
+          final VRef=VRef,
+          final Ti=Ti,
+          final startTime=startTime,
+          final samplePeriod=samplePeriod,
+          final VmpRef=VmpRef,
+          final ImpRef=ImpRef,
+          final n=n)
+          annotation (Placement(transformation(extent={{40,30},{60,50}})));
+        Converters.ConvertersWithSampleMPTracker.DCConverter dcConverter3(
+          final VRef=VRef,
+          final Ti=Ti,
+          final startTime=startTime,
+          final samplePeriod=samplePeriod,
+          final VmpRef=VmpRef,
+          final ImpRef=ImpRef,
+          final n=n)
+          annotation (Placement(transformation(extent={{40,-10},{60,10}})));
+        Converters.ConvertersWithSampleMPTracker.DCConverter dcConverter4(
+          final VRef=VRef,
+          final Ti=Ti,
+          final startTime=startTime,
+          final samplePeriod=samplePeriod,
+          final VmpRef=VmpRef,
+          final ImpRef=ImpRef,
+          final n=n)
+          annotation (Placement(transformation(extent={{40,-50},{60,-30}})));
       equation
-        connect(const.y,add1. u2) annotation(Line(points={{-51,-60},{-90,-60},{-90,70},{-76,70},{-76,62}}, color = {0, 0, 127}));
-        connect(const.y,add2. u2) annotation(Line(points={{-51,-60},{-90,-60},{-90,30},{-76,30},{-76,22}}, color = {0, 0, 127}));
-        connect(const.y,add3. u2) annotation(Line(points={{-51,-60},{-90,-60},{-90,-10},{-76,-10},{-76,-18}},  color = {0, 0, 127}));
+        connect(const.y,add1. u2) annotation(Line(points={{-41,-70},{-50,-70},{-50,-60},{-90,-60},{-90,70},{-76,70},{-76,62}},
+                                                                                                           color = {0, 0, 127}));
+        connect(const.y,add2. u2) annotation(Line(points={{-41,-70},{-50,-70},{-50,-60},{-90,-60},{-90,30},{-76,30},{-76,22}},
+                                                                                                           color = {0, 0, 127}));
+        connect(const.y,add3. u2) annotation(Line(points={{-41,-70},{-50,-70},{-50,-60},{-90,-60},{-90,-10},{-76,-10},{-76,-18}},
+                                                                                                               color = {0, 0, 127}));
         connect(irradianceParameter3.gamma,irradianceParameter4. gamma) annotation(Line(points={{-42,6},{-50,6},{-50,-34},{-46,-34},{-42,-34}},                    color = {0, 0, 127}));
         connect(irradianceParameter2.gamma,irradianceParameter3. gamma) annotation(Line(points={{-42,46},{-50,46},{-50,6},{-42,6}},                     color = {0, 0, 127}));
         connect(irradianceParameter1.gamma,irradianceParameter2. gamma) annotation(Line(points={{-42,86},{-50,86},{-50,46},{-42,46}},              color = {0, 0, 127}));
@@ -1556,27 +1606,35 @@ displaced by 90 degrees, each.
                                                                                                                                 color={0,0,127}));
         connect(add3.u1,add2. y) annotation(Line(points={{-64,-18},{-64,-6},{-70,-6},{-70,-1}},                                     color = {0, 0, 127}));
         connect(add2.u1,add1. y) annotation(Line(points={{-64,22},{-64,22},{-64,34},{-70,34},{-70,39}},                       color = {0, 0, 127}));
-        connect(module4.n, n) annotation (Line(points={{-4.44089e-16,-50},{0,-50},{0,-56},{100,-56},{100,-100},{100,-100}},
-                                                                                                         color={0,0,255}));
+        connect(module4.n, nModule) annotation (Line(points={{-4.44089e-16,-50},{0,-50},{0,-56},{16,-56},{16,-100},{8,-100},{8,-100},{0,-100}}, color={0,0,255}));
         connect(irradianceParameter1.azimuth, azimuth) annotation (Line(points={{-42,74},{-96,74},{-96,-60},{-120,-60}},          color={0,0,127}));
         connect(azimuth, add1.u1) annotation (Line(points={{-120,-60},{-96,-60},{-96,74},{-96,74},{-64,74},{-64,62}}, color={0,0,127}));
         connect(irradianceParameter1.gamma, gamma) annotation (Line(points={{-42,86},{-100,86},{-100,60},{-120,60}},
                                                                                                                   color={0,0,127}));
-        connect(module3.n, n) annotation (Line(points={{-6.66134e-16,-10},{0,-10},{0,-14},{16,-14},{16,-56},{100,-56},{100,-102},{100,-102},{100,-100},{100,-100}},
-                                                                                                                  color={0,0,255}));
-        connect(module2.n, n) annotation (Line(points={{0,30},{0,30},{0,24},{16,24},{16,-56},{100,-56},{100,-100}},
-                                                                                                              color={0,0,255}));
-        connect(module1.n, n) annotation (Line(points={{0,70},{0,70},{0,64},{16,64},{16,-56},{100,-56},{100,-100}},
-                                                                                                              color={0,0,255}));
+        connect(module3.n, nModule) annotation (Line(points={{-6.66134e-16,-10},{0,-10},{0,-16},{16,-16},{16,-56},{16,-100},{0,-100}}, color={0,0,255}));
+        connect(module2.n, nModule) annotation (Line(points={{0,30},{0,30},{0,24},{16,24},{16,-56},{16,-100},{0,-100}}, color={0,0,255}));
+        connect(module1.n, nModule) annotation (Line(points={{0,70},{0,70},{0,64},{16,64},{16,-56},{16,-100},{0,-100}}, color={0,0,255}));
         connect(internalHeatPort, internalHeatPort) annotation (Line(points={{-100,-80},{-100,-80}}, color={191,0,0}));
-        connect(internalHeatPort, module4.heatPort) annotation (Line(points={{-100,-80},{-100,-80},{-100,-100},{-100,-100},{24,-100},{24,-30},{10,-30}},                 color={191,0,0}));
         connect(module3.heatPort, module4.heatPort) annotation (Line(points={{10,10},{24,10},{24,-30},{10,-30}}, color={191,0,0}));
         connect(module2.heatPort, module4.heatPort) annotation (Line(points={{10,50},{24,50},{24,-30},{10,-30}}, color={191,0,0}));
         connect(module1.heatPort, module4.heatPort) annotation (Line(points={{10,90},{24,90},{24,-30},{10,-30}}, color={191,0,0}));
-        connect(module1.p, powerSensor1.pv) annotation (Line(points={{0,90},{0,100},{40,100}}, color={0,0,255}));
-        connect(powerSensor1.pc, powerSensor1.pv) annotation (Line(points={{30,90},{30,100},{40,100}}, color={0,0,255}));
-        connect(module2.p, powerSensor2.pv) annotation (Line(points={{0,50},{0,50},{0,60},{40,60}}, color={0,0,255}));
-        connect(powerSensor2.pc, powerSensor2.pv) annotation (Line(points={{30,50},{30,60},{40,60}}, color={0,0,255}));
+        connect(module1.n, dcConverter1.dc_n1) annotation (Line(points={{0,70},{0,64},{30,64},{30,74},{40,74}}, color={0,0,255}));
+        connect(module1.p, dcConverter1.dc_p1) annotation (Line(points={{0,90},{0,96},{30,96},{30,86},{40,86}}, color={0,0,255}));
+        connect(internalHeatPort, module4.heatPort) annotation (Line(points={{-100,-80},{-86,-80},{-86,-100},{-40,-100},{-40,-86},{24,-86},{24,-30},{10,-30}}, color={191,0,0}));
+        connect(module2.p, dcConverter2.dc_p1) annotation (Line(points={{0,50},{0,56},{30,56},{30,46},{40,46}}, color={0,0,255}));
+        connect(module2.n, dcConverter2.dc_n1) annotation (Line(points={{0,30},{0,30},{0,24},{0,24},{30,24},{30,34},{40,34}}, color={0,0,255}));
+        connect(module3.p, dcConverter3.dc_p1) annotation (Line(points={{0,10},{0,16},{30,16},{30,6},{40,6}}, color={0,0,255}));
+        connect(module3.n, dcConverter3.dc_n1) annotation (Line(points={{0,-10},{0,-10},{0,-16},{0,-16},{30,-16},{30,-6},{40,-6}}, color={0,0,255}));
+        connect(module4.p, dcConverter4.dc_p1) annotation (Line(points={{0,-30},{0,-24},{30,-24},{30,-34},{40,-34}}, color={0,0,255}));
+        connect(module4.n, dcConverter4.dc_n1) annotation (Line(points={{0,-50},{0,-50},{0,-56},{30,-56},{30,-46},{40,-46}}, color={0,0,255}));
+        connect(dcConverter1.dc_p2, dc_p) annotation (Line(points={{60,86},{70,86},{80,86},{80,60},{100,60}}, color={0,0,255}));
+        connect(dcConverter1.dc_n2, dc_n) annotation (Line(points={{60,74},{70,74},{70,-60},{100,-60}}, color={0,0,255}));
+        connect(dcConverter2.dc_p2, dc_p) annotation (Line(points={{60,46},{80,46},{80,60},{100,60}}, color={0,0,255}));
+        connect(dcConverter3.dc_p2, dc_p) annotation (Line(points={{60,6},{80,6},{80,60},{100,60}}, color={0,0,255}));
+        connect(dcConverter4.dc_p2, dc_p) annotation (Line(points={{60,-34},{80,-34},{80,60},{100,60}}, color={0,0,255}));
+        connect(dcConverter2.dc_n2, dc_n) annotation (Line(points={{60,34},{70,34},{70,-60},{100,-60}}, color={0,0,255}));
+        connect(dcConverter3.dc_n2, dc_n) annotation (Line(points={{60,-6},{70,-6},{70,-60},{100,-60}}, color={0,0,255}));
+        connect(dcConverter4.dc_n2, dc_n) annotation (Line(points={{60,-46},{70,-46},{70,-60},{100,-60}}, color={0,0,255}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
               Polygon(
                 points={{-88,80},{-8,0},{-88,-80},{-88,80}},
@@ -1801,14 +1859,12 @@ displaced by 90 degrees, each.
     package Converters "Converters"
       extends Modelica.Icons.Package;
       model DCConverter "DC controlled single phase DC/AC converter"
-        extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
-        //extends Modelica.Electrical.PowerConverters.Interfaces.DCDC.DCtwoPin1;
-        //extends Modelica.Electrical.PowerConverters.Interfaces.DCDC.DCtwoPin2;
+        extends Modelica.Electrical.PowerConverters.Interfaces.DCDC.DCtwoPin1;
+        extends Modelica.Electrical.PowerConverters.Interfaces.DCDC.DCtwoPin2;
+        extends PhotoVoltaics.Icons.Converter;
 
         parameter Modelica.SIunits.Voltage VRef = 48 "Reference DC source voltage";
-        parameter Modelica.SIunits.Time T = 1E-6 "Internal integration time constant";
-        Modelica.SIunits.Power powerDC = vDC * iDC "Power of photovoltaics DC side";
-        Modelica.SIunits.Power powerDCsource = (dc_psource.v-dc_nsource.v)*dc_psource.i "Power of source DC side";
+        parameter Modelica.SIunits.Time Ti = 1E-6 "Internal integration time constant";
         Modelica.Blocks.Interfaces.RealInput vDCRef(final unit = "V") "DC voltage" annotation (
           Placement(transformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin = {0, -120}), iconTransformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin = {0, -120})));
         Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage annotation (
@@ -1820,44 +1876,35 @@ displaced by 90 degrees, each.
         Modelica.Blocks.Math.Feedback feedback annotation (
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 270, origin = {-30, 0})));
         Modelica.Electrical.Analog.Sources.SignalCurrent            variableCurrentSource annotation (
-          Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin={90,-50})));
+          Placement(transformation(extent={{-10,-10},{10,10}},      rotation = 90, origin={80,-40})));
         Modelica.Electrical.Analog.Sensors.PowerSensor                      powerSensor annotation (
-          Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin={90,70})));
-        Modelica.Blocks.Continuous.Integrator integrator(k = 1 / VRef / T) annotation (
-          Placement(transformation(extent = {{-30, -60}, {-10, -40}})));
+          Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin={80,-10})));
+        Modelica.Blocks.Continuous.Integrator integrator(k=1/VRef/Ti)      annotation (
+          Placement(transformation(extent={{-8,-50},{12,-30}})));
         Modelica.Blocks.Math.Gain gain(final k = -1) annotation (
-          Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {-10, 50})));
-        Modelica.Electrical.Analog.Interfaces.PositivePin dc_psource "Positive DC source" annotation (Placement(transformation(extent={{90,110},{110,90}})));
-        Modelica.Electrical.Analog.Interfaces.NegativePin dc_nsource "Negative DC source" annotation (Placement(transformation(extent={{90,-110},{110,-90}})));
+          Placement(transformation(extent={{-10,-10},{10,10}},      rotation=180,   origin={0,0})));
+
       equation
-        connect(signalVoltage.n, dc_n) annotation (
-          Line(points = {{-90, -10}, {-90, -70}, {-90, -100}, {-100, -100}}, color = {0, 0, 255}));
-        connect(currentSensor.n, signalVoltage.p) annotation (
-          Line(points={{-90,26},{-90,26},{-90,10}},        color = {0, 0, 255}));
-        connect(signalVoltage.v, vDCRef) annotation (
-          Line(points = {{-83, 0}, {-70, 0}, {-70, -80}, {0, -80}, {0, -120}}, color = {0, 0, 127}));
-        connect(currentSensor.i, product.u1) annotation (
-          Line(points={{-80,36},{-80,36},{-70,36},{-62,36}},                     color = {0, 0, 127}));
-        connect(vDCRef, product.u2) annotation (
-          Line(points = {{0, -120}, {0, -120}, {0, -94}, {0, -94}, {0, -80}, {-70, -80}, {-70, 24}, {-62, 24}}, color = {0, 0, 127}));
-        connect(product.y, feedback.u1) annotation (
-          Line(points = {{-39, 30}, {-30, 30}, {-30, 8}}, color = {0, 0, 127}));
-        connect(feedback.y, integrator.u) annotation (
-          Line(points = {{-30, -9}, {-30, -9}, {-30, -20}, {-50, -20}, {-50, -50}, {-32, -50}}, color = {0, 0, 127}));
-        connect(gain.y, feedback.u2) annotation (
-          Line(points = {{-10, 39}, {-10, 39}, {-10, 2}, {-10, 0}, {-22, 0}}, color = {0, 0, 127}));
-        connect(gain.u, powerSensor.power) annotation (Line(points={{-10,62},{-10,78},{79,78}}, color={0,0,127}));
-        connect(powerSensor.pc, dc_psource) annotation (Line(points={{90,80},{90,80},{90,100},{100,100}}, color={0,0,255}));
-        connect(powerSensor.nc, variableCurrentSource.n) annotation (Line(points={{90,60},{90,-40}}, color={0,0,255}));
-        connect(variableCurrentSource.p, dc_nsource) annotation (Line(points={{90,-60},{90,-60},{90,-100},{100,-100}}, color={0,0,255}));
-        connect(integrator.y, variableCurrentSource.i) annotation (Line(points={{-9,-50},{83,-50},{83,-50}}, color={0,0,127}));
-        connect(powerSensor.pv, powerSensor.pc) annotation (Line(points={{100,70},{100,70},{100,80},{90,80}}, color={0,0,255}));
-        connect(powerSensor.nv, dc_nsource) annotation (Line(points={{80,70},{70,70},{60,70},{60,-100},{100,-100}}, color={0,0,255}));
-        connect(currentSensor.p, dc_p) annotation (Line(points={{-90,46},{-90,46},{-90,96},{-90,100},{-100,100}}, color={0,0,255}));
+        connect(currentSensor.n, signalVoltage.p) annotation (Line(points={{-90,26},{-90,26},{-90,10}},        color = {0, 0, 255}));
+        connect(signalVoltage.v, vDCRef) annotation (Line(points = {{-83, 0}, {-70, 0}, {-70, -80}, {0, -80}, {0, -120}}, color = {0, 0, 127}));
+        connect(currentSensor.i, product.u1) annotation (Line(points={{-80,36},{-80,36},{-70,36},{-62,36}},                     color = {0, 0, 127}));
+        connect(vDCRef, product.u2) annotation (Line(points = {{0, -120}, {0, -120}, {0, -94}, {0, -94}, {0, -80}, {-70, -80}, {-70, 24}, {-62, 24}}, color = {0, 0, 127}));
+        connect(product.y, feedback.u1) annotation (Line(points = {{-39, 30}, {-30, 30}, {-30, 8}}, color = {0, 0, 127}));
+        connect(feedback.y, integrator.u) annotation (Line(points={{-30,-9},{-30,-9},{-30,-20},{-30,-40},{-10,-40}},           color = {0, 0, 127}));
+        connect(gain.y, feedback.u2) annotation (Line(points={{-11,1.33227e-15},{-21,1.33227e-15},{-21,0},{-10,0},{-22,0}}, color = {0, 0, 127}));
+        connect(gain.u, powerSensor.power) annotation (Line(points={{12,-1.33227e-15},{12,0},{40,0},{60,0},{60,-2},{69,-2}}, color={0,0,127}));
+        connect(powerSensor.nc, variableCurrentSource.n) annotation (Line(points={{80,-20},{80,-30}},color={0,0,255}));
+        connect(integrator.y, variableCurrentSource.i) annotation (Line(points={{13,-40},{42,-40},{73,-40}}, color={0,0,127}));
+        connect(powerSensor.pv, powerSensor.pc) annotation (Line(points={{90,-10},{90,-10},{90,0},{80,0}},    color={0,0,255}));
+        connect(currentSensor.p, dc_p1) annotation (Line(points={{-90,46},{-90,46},{-90,60},{-100,60}}, color={0,0,255}));
+        connect(signalVoltage.n, dc_n1) annotation (Line(points={{-90,-10},{-90,-10},{-90,-60},{-100,-60}}, color={0,0,255}));
+        connect(powerSensor.pc, dc_p2) annotation (Line(points={{80,0},{80,60},{100,60}}, color={0,0,255}));
+        connect(variableCurrentSource.p, dc_n2) annotation (Line(points={{80,-50},{80,-50},{80,-58},{80,-58},{80,-60},{100,-60}}, color={0,0,255}));
+        connect(dc_n2, powerSensor.nv) annotation (Line(points={{100,-60},{90,-60},{60,-60},{60,-26},{60,-10},{70,-10}}, color={0,0,255}));
         annotation (
           defaultComponentName = "converter",
-          Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Rectangle(extent = {{-100, 100}, {100, -100}}, lineColor = {0, 0, 127}), Line(points = {{-100, -100}, {100, 100}}, color = {0, 0, 127}, smooth = Smooth.None), Text(extent={{-100,40},{-40,-40}},      lineColor = {0, 0, 255}, textString = "="),                                                                                   Text(extent = {{-150, 150}, {150, 110}}, lineColor = {0, 0, 255}, textString = "%name"), Text(extent = {{20, -100}, {80, -140}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "vDCRef"), Text(extent = {{-80, 80}, {20, 40}}, lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=FillPattern.Solid,
-                textString="PV"),                                                                                                                                                                                                        Text(extent = {{-40, -40}, {60, -80}}, lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=
+          Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={                                                                                                                                                                 Text(extent={{-100,40},{-40,-40}},      lineColor = {0, 0, 255}, textString = "="),                                                                                   Text(extent = {{-150, 150}, {150, 110}}, lineColor = {0, 0, 255}, textString = "%name"), Text(extent = {{20, -100}, {80, -140}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "vDCRef"), Text(extent={{-80,90},{20,50}},      lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=FillPattern.Solid,
+                textString="PV"),                                                                                                                                                                                                        Text(extent={{-40,-50},{60,-90}},      lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=
                     FillPattern.Solid,
                 textString="bat"),                                                                                                                                                                                                        Text(extent={{40,40},{100,-40}},        lineColor = {0, 0, 255}, textString = "=")}),
           Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})),
@@ -1875,8 +1922,9 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
       model QuasiStaticSinglePhaseConverter "Ideal quasi static single phase DC/AC converter"
         extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
         extends .PhotoVoltaics.Interfaces.QuasiStatic.ACpins;
+        extends PhotoVoltaics.Icons.Converter;
         parameter Modelica.SIunits.Voltage VRef = 400 / sqrt(3) "Reference voltage";
-        parameter Modelica.SIunits.Time T = 1E-6 "Internal integration time constant";
+        parameter Modelica.SIunits.Time Ti = 1E-6 "Internal integration time constant";
         Modelica.SIunits.Power powerDC = vDC * iDC "Power of DC side";
         Modelica.SIunits.Power powerAC = Modelica.ComplexMath.real(vAC * Modelica.ComplexMath.conj(iAC)) "Complex apparent power of AC side";
         Modelica.Blocks.Interfaces.RealInput vDCRef(final unit = "V") "DC voltage" annotation (
@@ -1897,7 +1945,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
           Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {60, 10})));
         Modelica.ComplexBlocks.ComplexMath.ComplexToReal complexToReal annotation (
           Placement(transformation(extent = {{40, 60}, {20, 80}})));
-        Modelica.Blocks.Continuous.Integrator integrator(k = 1 / VRef / T) annotation (
+        Modelica.Blocks.Continuous.Integrator integrator(k=1/VRef/Ti)      annotation (
           Placement(transformation(extent = {{-30, -60}, {-10, -40}})));
         Modelica.ComplexBlocks.ComplexMath.ComplexToPolar complexToPolar annotation (
           Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {40, -20})));
@@ -1952,8 +2000,8 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
           Line(points = {{90, 20}, {90, -100}, {100, -100}}, color = {85, 170, 255}));
         annotation (
           defaultComponentName = "converter",
-          Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Rectangle(extent = {{-100, 100}, {100, -100}}, lineColor = {0, 0, 127}), Line(points = {{-100, -100}, {100, 100}}, color = {0, 0, 127}, smooth = Smooth.None), Text(extent = {{-100, 40}, {-40, -40}}, lineColor = {0, 0, 255}, textString = "="), Text(extent = {{40, 40}, {100, -40}}, lineColor = {0, 0, 255}, textString = "~"), Text(extent = {{-150, 150}, {150, 110}}, lineColor = {0, 0, 255}, textString = "%name"), Text(extent = {{20, -100}, {80, -140}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "vDCRef"), Text(extent = {{-80, 80}, {20, 40}}, lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=FillPattern.Solid,
-                textString="PV"),                                                                                                                                                                                                        Text(extent = {{-40, -40}, {60, -80}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "src")}),
+          Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={                                                                                                                                                                 Text(extent = {{-100, 40}, {-40, -40}}, lineColor = {0, 0, 255}, textString = "="), Text(extent = {{40, 40}, {100, -40}}, lineColor = {0, 0, 255}, textString = "~"), Text(extent = {{-150, 150}, {150, 110}}, lineColor = {0, 0, 255}, textString = "%name"), Text(extent = {{20, -100}, {80, -140}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "vDCRef"), Text(extent={{-80,90},{20,50}},      lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=FillPattern.Solid,
+                textString="PV"),                                                                                                                                                                                                        Text(extent={{-40,-50},{60,-90}},      lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "src")}),
           Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})),
           Documentation(info = "<html>
 <p>This is an ideal DC/DC converter.<p>
@@ -1969,8 +2017,9 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
       model QuasiStaticMultiPhaseConverter "Ideal quasi stastic multi phase DC/AC converter"
         extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
         extends .PhotoVoltaics.Interfaces.QuasiStatic.ACplug;
+        extends PhotoVoltaics.Icons.Converter;
         parameter Modelica.SIunits.Voltage VRef = 400 "Reference line to line voltage";
-        parameter Modelica.SIunits.Time T = 1E-6 "Internal integration time constant";
+        parameter Modelica.SIunits.Time Ti = 1E-6 "Internal integration time constant";
         Modelica.SIunits.Power powerDC = vDC * iDC "Power of DC side";
         Modelica.SIunits.Power powerAC = Modelica.ComplexMath.real(vAC * Modelica.ComplexMath.conj(iAC)) "Complex apparent power of AC side";
         Modelica.Blocks.Interfaces.RealInput vDCRef(final unit = "V") "DC voltage" annotation (
@@ -2003,7 +2052,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
           Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 180, origin = {30, -50})));
         Modelica.Electrical.QuasiStationary.SinglePhase.Basic.Ground ground annotation (
           Placement(transformation(extent = {{40, -40}, {60, -20}})));
-        Modelica.Blocks.Continuous.Integrator integrator(k = sqrt(3) / VRef / T) annotation (
+        Modelica.Blocks.Continuous.Integrator integrator(k=sqrt(3)/VRef/Ti)      annotation (
           Placement(transformation(extent = {{-30, -60}, {-10, -40}})));
         Modelica.Blocks.Math.Gain gain(final k = -1) annotation (
           Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {-10, 40})));
@@ -2058,8 +2107,8 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
           Line(points = {{-10, 29}, {-10, 0}, {-22, 0}}, color = {0, 0, 127}));
         annotation (
           defaultComponentName = "converter",
-          Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={  Rectangle(extent = {{-100, 100}, {100, -100}}, lineColor = {0, 0, 127}), Line(points = {{-100, -100}, {100, 100}}, color = {0, 0, 127}, smooth = Smooth.None), Text(extent = {{-100, 40}, {-40, -40}}, lineColor = {0, 0, 255}, textString = "="), Text(extent = {{40, 40}, {100, -40}}, lineColor = {0, 0, 255}, textString = "~"), Text(extent = {{-150, 150}, {150, 110}}, lineColor = {0, 0, 255}, textString = "%name"), Text(extent = {{20, -100}, {80, -140}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "vDCRef"), Text(extent = {{-80, 80}, {20, 40}}, lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=FillPattern.Solid,
-                textString="PV"),                                                                                                                                                                                                        Text(extent = {{-40, -40}, {60, -80}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "src")}),
+          Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={                                                                                                                                                                 Text(extent = {{-100, 40}, {-40, -40}}, lineColor = {0, 0, 255}, textString = "="), Text(extent = {{40, 40}, {100, -40}}, lineColor = {0, 0, 255}, textString = "~"), Text(extent = {{-150, 150}, {150, 110}}, lineColor = {0, 0, 255}, textString = "%name"), Text(extent = {{20, -100}, {80, -140}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "vDCRef"), Text(extent={{-80,90},{20,50}},      lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=FillPattern.Solid,
+                textString="PV"),                                                                                                                                                                                                        Text(extent={{-40,-50},{60,-90}},      lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "src")}),
           Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})),
           Documentation(info = "<html>
 <p>This is an ideal DC/DC converter.<p>
@@ -2076,6 +2125,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
 
         import Modelica.Constants.pi;
         extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
+        extends PhotoVoltaics.Icons.Converter;
 
         Modelica.Electrical.MultiPhase.Interfaces.PositivePlug ac "AC output"
           annotation (Placement(transformation(extent={{90,-10},{110,10}})));
@@ -2086,7 +2136,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
         parameter Modelica.SIunits.Frequency f = 50 "Frequency";
         parameter Modelica.SIunits.Voltage VRef = 400
           "Reference line to line voltage";
-        parameter Modelica.SIunits.Time T = 1E-6
+        parameter Modelica.SIunits.Time Ti = 1E-6
           "Internal integration time constant";
         Modelica.SIunits.Power powerDC = vDC * iDC "Power of DC side";
 
@@ -2100,7 +2150,7 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 270, origin={-40,60})));
         Modelica.Electrical.Machines.SpacePhasors.Blocks.FromPolar fromPolar annotation (
           Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation=0,    origin={-40,-4})));
-        Modelica.Blocks.Continuous.Integrator integrator(k = sqrt(3) / VRef / T) annotation (
+        Modelica.Blocks.Continuous.Integrator integrator(k=sqrt(3)/VRef/Ti)      annotation (
           Placement(transformation(extent={{-10,-10},{10,10}},
               rotation=270,
               origin={-60,28})));
@@ -2164,7 +2214,8 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
           Placement(transformation(extent={{-6,-6},{6,6}},
               rotation=0,
               origin={-10,-40})));
-        Modelica.Blocks.Continuous.FirstOrder firstOrder[3](k=ones(3), T=fill(T, 3)) annotation (Placement(transformation(extent={{30,28},{50,48}})));
+        Modelica.Blocks.Continuous.FirstOrder firstOrder[3](k=ones(3), T=fill(Ti, 3))
+                                                                                     annotation (Placement(transformation(extent={{30,28},{50,48}})));
         Modelica.Electrical.Machines.SpacePhasors.Blocks.Rotator rotatorOut annotation (Placement(transformation(extent={{-20,-14},{0,6}})));
         Modelica.Blocks.Math.Gain neg(final k=-1) annotation (Placement(transformation(
               extent={{-6,6},{6,-6}},
@@ -2199,14 +2250,14 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
         connect(ground.p, star.pin_n)
           annotation (Line(points={{60,-14},{60,-12},{60,-10}},
                                                              color={0,0,255}));
-        connect(potentialSensor.plug_p, ac) annotation (Line(points={{80,-4},{80,
-                -4},{80,0},{100,0}}, color={0,0,255}));
+        connect(potentialSensor.plug_p, ac) annotation (Line(points={{80,-4},{80,-4},{80,0},{100,0}},
+                                     color={0,0,255}));
         connect(fromSpacePhasor.zero, const.y)
           annotation (Line(points={{28,2},{28,2},{28,-19.2}},
                                                       color={0,0,127}));
         connect(integrator.y, fromPolar.u[1]) annotation (Line(points={{-60,17},{-60,-4},{-52,-4}},
                                            color={0,0,127}));
-        connect(currentSensorAC.plug_n, ac) annotation (Line(points={{100,90},{100,90},{100,0}}, color={0,0,255}));
+        connect(currentSensorAC.plug_n, ac) annotation (Line(points={{100,90},{100,0}},          color={0,0,255}));
         connect(voltageSensorAC.plug_n, star.plug_p) annotation (Line(points={{90,50},{90,10},{60,10}}, color={0,0,255}));
         connect(voltageSensorAC.plug_p, ac) annotation (Line(points={{90,70},{100,70},{100,0}}, color={0,0,255}));
         connect(currentSensorAC.plug_p, signalCurrent.plug_n) annotation (Line(points={{80,90},{70,90},{70,40}}, color={0,0,255}));
@@ -2244,20 +2295,17 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
           Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},
                   {100,100}})),
           Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}}),
-               graphics={                                                                                      Rectangle(extent={{
-                    -100,100},{100,-100}},                                                                                                    lineColor = {0, 0, 127}), Line(points={{
-                    -100,-100},{100,100}},                                                                                                    color = {0, 0, 127}, smooth = Smooth.None), Text(extent={{
+               graphics={                                                                                                                                                                 Text(extent={{
                     -100,40},{-40,-40}},                                                                                                    lineColor = {0, 0, 255}, textString = "="), Text(extent={{
                     40,40},{100,-40}},                                                                                                    lineColor = {0, 0, 255}, textString = "~"), Text(extent={{
                     -150,150},{150,110}},                                                                                                    lineColor = {0, 0, 255}, textString = "%name"),
-                                                                                                      Text(extent={{
-                    -80,80},{20,40}},                                                                                                    lineColor=
+                                                                                                      Text(extent={{-80,90},{20,50}},    lineColor=
                     {0,0,255},                                                                                                    pattern=
                     LinePattern.Dash,                                                                                                    fillColor=
                     {0,0,255},
                   fillPattern=FillPattern.Solid,
-                textString="DC"),                                                                                                    Text(extent={{
-                    -22,-40},{78,-80}},                                                                                                    lineColor=
+                textString="DC"),                                                                                                    Text(extent={{-20,-50},{80,-90}},
+                                                                                                                                           lineColor=
                     {0,0,255},                                                                                                    pattern=
                     LinePattern.Dash,                                                                                                    fillColor=
                     {0,0,255},
@@ -2275,6 +2323,46 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
 
       package ConvertersWithSampleMPTracker "Converter models with integrated sampling MP tracker"
         extends Modelica.Icons.Package;
+        model DCConverter "DC converter with sampled maximum power tracking"
+          import PhotoVoltaics;
+          extends Modelica.Electrical.PowerConverters.Interfaces.DCDC.DCtwoPin1;
+          extends Modelica.Electrical.PowerConverters.Interfaces.DCDC.DCtwoPin2;
+          extends PhotoVoltaics.Icons.Converter;
+          extends PhotoVoltaics.Icons.MPTrackerSmall;
+
+          parameter Modelica.SIunits.Voltage VRef = 48 "Reference DC source voltage" annotation(Dialog(group="Converter"));
+          parameter Modelica.SIunits.Time Ti = 1E-6 "Internal integration time constant" annotation(Dialog(group="Converter"));
+
+          parameter Modelica.SIunits.Time startTime = 0 "Start time" annotation(Dialog(group="MP tracker"));
+          parameter Modelica.SIunits.Time samplePeriod = 1 "Sample period" annotation(Dialog(group="MP tracker"));
+          parameter Modelica.SIunits.Voltage VmpRef "Reference maximum power power of plant" annotation(Dialog(group="MP tracker"));
+          parameter Modelica.SIunits.Current ImpRef "Reference maximum power current of plant" annotation(Dialog(group="MP tracker"));
+          parameter Integer n = 100 "Number of voltage and power discretizations" annotation(Dialog(group="MP tracker"));
+
+          PhotoVoltaics.Components.Converters.DCConverter converter(final Ti=Ti, final VRef=VRef) annotation (Placement(transformation(extent={{40,-10},{60,10}})));
+          Modelica.Electrical.Analog.Sensors.PowerSensor powerSensor annotation (Placement(transformation(extent={{-40,50},{-20,70}})));
+          PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(
+            final startTime=startTime,
+            final samplePeriod=samplePeriod,
+            final VmpRef=VmpRef,
+            final ImpRef=ImpRef,
+            final n=n) annotation (Placement(transformation(extent={{-10,-90},{10,-70}})));
+        equation
+          connect(dc_p1, powerSensor.pc) annotation (Line(points={{-100,60},{-70,60},{-40,60}}, color={0,0,255}));
+          connect(powerSensor.nc, converter.dc_p1) annotation (Line(points={{-20,60},{20,60},{20,6},{40,6}}, color={0,0,255}));
+          connect(converter.dc_p2, dc_p2) annotation (Line(points={{60,6},{80,6},{80,60},{100,60}}, color={0,0,255}));
+          connect(dc_n1, converter.dc_n1) annotation (Line(points={{-100,-60},{-40,-60},{20,-60},{20,-6},{40,-6}}, color={0,0,255}));
+          connect(converter.dc_n2, dc_n2) annotation (Line(points={{60,-6},{80,-6},{80,-60},{100,-60}}, color={0,0,255}));
+          connect(powerSensor.pc, powerSensor.pv) annotation (Line(points={{-40,60},{-40,70},{-30,70}}, color={0,0,255}));
+          connect(powerSensor.nv, dc_n1) annotation (Line(points={{-30,50},{-30,50},{-30,-44},{-30,-60},{-100,-60}}, color={0,0,255}));
+          connect(mpTracker.vRef, converter.vDCRef) annotation (Line(points={{11,-80},{24,-80},{50,-80},{50,-12}}, color={0,0,127}));
+          connect(mpTracker.power, powerSensor.power) annotation (Line(points={{-12,-80},{-24,-80},{-38,-80},{-38,49}}, color={0,0,127}));
+          annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={                                                                                                                                                                       Text(extent={{-100,40},{-40,-40}},      lineColor = {0, 0, 255}, textString = "="),                                                                                                                                                                                                        Text(extent={{-80,90},{20,50}},      lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=FillPattern.Solid,
+                  textString="PV"),                                                                                                                                                                                                        Text(extent={{-40,-50},{60,-90}},      lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=
+                      FillPattern.Solid,
+                  textString="bat"),                                                                                                                                                                                                        Text(extent={{40,40},{100,-40}},        lineColor = {0, 0, 255}, textString = "=")}),
+                                                                         Diagram(coordinateSystem(preserveAspectRatio=false)));
+        end DCConverter;
       end ConvertersWithSampleMPTracker;
     end Converters;
 
@@ -2663,9 +2751,9 @@ represents thus the inverse of
 
       model IrradianceVariableLocation "Simple solar irradiance without considering weather conditions"
         import Modelica.Constants.pi;
-        import PhotoVoltaicsDropbox.Functions.rad;
-        import PhotoVoltaicsDropbox.Functions.degree;
-        import PhotoVoltaicsDropbox.Functions.dayOfTheYear;
+        import PhotoVoltaics.Functions.rad;
+        import PhotoVoltaics.Functions.degree;
+        import PhotoVoltaics.Functions.dayOfTheYear;
         parameter Integer startDay(final min = 1, final max = 31) = 10 "Day";
         parameter Integer startMonth(final min = 1, final max = 12) = 9 "Month";
         parameter Integer startYear = 2016 "Year";
@@ -2673,8 +2761,6 @@ represents thus the inverse of
         parameter Modelica.SIunits.Angle longitude = 16.428 * pi / 180 "Longitude";
         parameter Modelica.SIunits.Angle latitude = 48.280 * pi / 180 "Latitude";
         parameter Modelica.SIunits.Irradiance irradianceRef = 1000 "Reference solar irradiance";
-        //parameter Modelica.SIunits.Angle gamma = 10 * pi / 180 "Angle of PV module with w.r.t. horizontal plane";
-        //parameter Modelica.SIunits.Angle azimuth = 0 "Azimuth of the PV module orientation";
         Integer startDayOfYear(start = dayOfTheYear(startDay, startMonth, startYear)) "Start day of year in simulation";
         Integer dayOfYear(final start = dayOfTheYear(startDay, startMonth, startYear)) "Actual day of year";
         Integer daysOfYear(final start = dayOfTheYear(31, 12, startYear)) "Total number of days of year";
@@ -2696,8 +2782,8 @@ represents thus the inverse of
         Modelica.SIunits.Angle angleOfIncidence "Angle of incidence between a vector in sun direction and a normal vector";
         Modelica.SIunits.Irradiance directIrradianceHorizontal "Direct irradiance on the horizontal in W/m^2";
         Modelica.SIunits.Irradiance directIrradianceInclined "Direct irradiance on the inclined plane in w/m^2";
-        Modelica.Blocks.Interfaces.RealOutput irradiance annotation(Placement(transformation(extent = {{100, -10}, {120, 10}})));
-        Modelica.Blocks.Interfaces.RealInput gamma annotation (Placement(
+        Modelica.Blocks.Interfaces.RealOutput irradiance "Irradiance of inclined area" annotation(Placement(transformation(extent = {{100, -10}, {120, 10}})));
+        Modelica.Blocks.Interfaces.RealInput gamma "Inclination angle of area" annotation (Placement(
             visible=true,
             transformation(
               origin={-120,60},
@@ -2707,7 +2793,7 @@ represents thus the inverse of
               origin={-120,60},
               extent={{-20,-20},{20,20}},
               rotation=0)));
-        Modelica.Blocks.Interfaces.RealInput azimuth annotation (Placement(
+        Modelica.Blocks.Interfaces.RealInput azimuth "Azimuth of area" annotation (Placement(
             visible=true,
             transformation(
               origin={-120,-60},
@@ -3779,6 +3865,26 @@ The original data of this module are taken from
 </html>"));
     end KPV_240_PE;
   end Records;
+
+  package Icons "Icons"
+    extends Modelica.Icons.Package;
+    partial model Converter "Converter"
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={                                                                                                        Line(points = {{-100, -100}, {100, 100}}, color = {0, 0, 127}, smooth = Smooth.None),
+                                                                                                             Rectangle(extent = {{-100, 100}, {100, -100}}, lineColor = {0, 0, 127})}), Diagram(coordinateSystem(preserveAspectRatio=false)));
+    end Converter;
+
+    partial model MPTrackerSmall "MP tracker small"
+
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+            Rectangle(
+              extent={{-40,40},{40,-40}},
+              lineColor={0,0,0},
+              fillColor={255,255,255},
+              fillPattern=FillPattern.Solid),
+                         Line(points={{-34,-34},{-10,4},{14,30},{32,30},{36,-32}},                                                     color = {0, 0, 0}, smooth = Smooth.Bezier), Ellipse(extent={{14,36},{26,24}},      fillColor = {255, 0, 0}, fillPattern = FillPattern.Solid, pattern = LinePattern.None)}),
+                                                                     Diagram(coordinateSystem(preserveAspectRatio=false)));
+    end MPTrackerSmall;
+  end Icons;
   annotation (
     version = "0.X.X",
     versionBuild = 1,
