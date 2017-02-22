@@ -13,7 +13,7 @@ package PhotoVoltaics_TGM
       Placement(visible = true, transformation(extent = {{-60, 40}, {-40, 60}}, rotation = 0)));
     Modelica.Blocks.Math.Add G "Total irradiation on tilted surface" annotation (
       Placement(visible = true, transformation(extent = {{-20, 50}, {0, 70}}, rotation = 0)));
-    PhotoVoltaics.Components.SimplePlantSymmetric plant(useConstantIrradiance = false, moduleData = moduleData, npModule = npModule, nsModule = nsModule,
+    PhotoVoltaics.Components.PV.SimplePlantSymmetric plant(useConstantIrradiance = false, moduleData = moduleData, npModule = npModule, nsModule = nsModule,
       shadow=0.1)                                                                                                                                         annotation (
       Placement(visible = true, transformation(origin = {-50, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
     Modelica.Electrical.Analog.Basic.Ground ground annotation (
@@ -22,7 +22,7 @@ package PhotoVoltaics_TGM
       Placement(transformation(extent = {{60, 60}, {80, 80}})));
     Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(computeWetBulbTemperature = false, filNam = fileName) annotation (
       Placement(transformation(extent = {{-100, 70}, {-80, 90}})));
-    PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
+    PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter converter annotation (
       Placement(transformation(extent = {{10, -20}, {30, 0}})));
     PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 60) annotation (
       Placement(transformation(extent = {{-10, -70}, {10, -50}})));
@@ -94,13 +94,13 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter Integer nsModule = 6 "Number of series connected modules";
     parameter Integer npModule = 1 "Number of parallel connected modules";
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Analytical_20160629_power.csv");
-    PhotoVoltaics.Components.SimplePlantSymmetric plant(useConstantIrradiance = false, moduleData = moduleData, npModule = npModule, nsModule = nsModule) annotation (
+    PhotoVoltaics.Components.PV.SimplePlantSymmetric plant(useConstantIrradiance = false, moduleData = moduleData, npModule = npModule, nsModule = nsModule) annotation (
       Placement(visible = true, transformation(origin = {-50, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
     Modelica.Electrical.Analog.Basic.Ground ground annotation (
       Placement(visible = true, transformation(origin = {-50, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     parameter PhotoVoltaics.Records.TSM_200_DC01A moduleData annotation (
       Placement(transformation(extent = {{60, 60}, {80, 80}})));
-    PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
+    PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter converter annotation (
       Placement(transformation(extent = {{10, -20}, {30, 0}})));
     PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 10) annotation (
       Placement(transformation(extent = {{-10, -70}, {10, -50}})));
@@ -165,13 +165,13 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter Integer nsModule = 6 "Number of series connected modules";
     parameter Integer npModule = 1 "Number of parallel connected modules";
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Analytical_20160704_power.csv");
-    PhotoVoltaics.Components.SimplePlantSymmetric plant(useConstantIrradiance = false, moduleData = moduleData, npModule = npModule, nsModule = nsModule) annotation (
+    PhotoVoltaics.Components.PV.SimplePlantSymmetric plant(useConstantIrradiance = false, moduleData = moduleData, npModule = npModule, nsModule = nsModule) annotation (
       Placement(visible = true, transformation(origin = {-50, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
     Modelica.Electrical.Analog.Basic.Ground ground annotation (
       Placement(visible = true, transformation(origin = {-50, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     parameter PhotoVoltaics.Records.TSM_200_DC01A moduleData annotation (
       Placement(transformation(extent = {{60, 60}, {80, 80}})));
-    PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
+    PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter converter annotation (
       Placement(transformation(extent = {{10, -20}, {30, 0}})));
     PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 10) annotation (
       Placement(transformation(extent = {{-10, -70}, {10, -50}})));
@@ -236,13 +236,13 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter Integer nsModule = 6 "Number of series connected modules";
     parameter Integer npModule = 1 "Number of parallel connected modules";
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Analytical_20160808_power.csv");
-    PhotoVoltaics.Components.SimplePlantSymmetric plant(useConstantIrradiance = false, moduleData = moduleData, npModule = npModule, nsModule = nsModule) annotation (
+    PhotoVoltaics.Components.PV.SimplePlantSymmetric plant(useConstantIrradiance = false, moduleData = moduleData, npModule = npModule, nsModule = nsModule) annotation (
       Placement(visible = true, transformation(origin = {-50, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
     Modelica.Electrical.Analog.Basic.Ground ground annotation (
       Placement(visible = true, transformation(origin = {-50, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     parameter PhotoVoltaics.Records.TSM_200_DC01A moduleData annotation (
       Placement(transformation(extent = {{60, 60}, {80, 80}})));
-    PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
+    PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter converter annotation (
       Placement(transformation(extent = {{10, -20}, {30, 0}})));
     PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 10) annotation (
       Placement(transformation(extent = {{-10, -70}, {10, -50}})));
@@ -307,13 +307,13 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter Integer nsModule = 6 "Number of series connected modules";
     parameter Integer npModule = 1 "Number of parallel connected modules";
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Analytical_2016_energy.csv");
-    PhotoVoltaics.Components.SimplePlantSymmetric plant(useConstantIrradiance = false, moduleData = moduleData, npModule = npModule, nsModule = nsModule) annotation (
+    PhotoVoltaics.Components.PV.SimplePlantSymmetric plant(useConstantIrradiance = false, moduleData = moduleData, npModule = npModule, nsModule = nsModule) annotation (
       Placement(visible = true, transformation(origin = {-50, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
     Modelica.Electrical.Analog.Basic.Ground ground annotation (
       Placement(visible = true, transformation(origin = {-50, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     parameter PhotoVoltaics.Records.TSM_200_DC01A moduleData annotation (
       Placement(transformation(extent = {{60, 60}, {80, 80}})));
-    PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
+    PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter converter annotation (
       Placement(transformation(extent = {{10, -20}, {30, 0}})));
     PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 10) annotation (
       Placement(transformation(extent = {{-10, -70}, {10, -50}})));
@@ -384,14 +384,14 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Measurement_20160629_power.csv");
     Modelica.SIunits.Irradiance irradiance = irradianceTable.y[1] "Measured irradiance";
     Modelica.SIunits.Power powerAC = powerTable.y[1] "Measured AC power";
-    PhotoVoltaics.Components.SimplePlantSymmetric plant(useConstantIrradiance = false, moduleData = moduleData, npModule = npModule, nsModule = nsModule,
+    PhotoVoltaics.Components.PV.SimplePlantSymmetric plant(useConstantIrradiance = false, moduleData = moduleData, npModule = npModule, nsModule = nsModule,
       shadow=0.1)                                                                                                                                         annotation (
       Placement(visible = true, transformation(origin = {-50, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
     Modelica.Electrical.Analog.Basic.Ground ground annotation (
       Placement(visible = true, transformation(origin = {-50, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     parameter PhotoVoltaics.Records.TSM_200_DC01A moduleData annotation (
       Placement(transformation(extent = {{60, 60}, {80, 80}})));
-    PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
+    PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter converter annotation (
       Placement(transformation(extent = {{10, -20}, {30, 0}})));
     PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 10) annotation (
       Placement(transformation(extent = {{-10, -70}, {10, -50}})));
@@ -462,14 +462,14 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Measurement_20160704_power.csv");
     Modelica.SIunits.Irradiance irradiance = irradianceTable.y[1] "Measured irradiance";
     Modelica.SIunits.Power powerAC = powerTable.y[1] "Measured AC power";
-    PhotoVoltaics.Components.SimplePlantSymmetric plant(useConstantIrradiance = false, moduleData = moduleData, npModule = npModule, nsModule = nsModule,
+    PhotoVoltaics.Components.PV.SimplePlantSymmetric plant(useConstantIrradiance = false, moduleData = moduleData, npModule = npModule, nsModule = nsModule,
       shadow=0.1)                                                                                                                                         annotation (
       Placement(visible = true, transformation(origin = {-50, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
     Modelica.Electrical.Analog.Basic.Ground ground annotation (
       Placement(visible = true, transformation(origin = {-50, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     parameter PhotoVoltaics.Records.TSM_200_DC01A moduleData annotation (
       Placement(transformation(extent = {{60, 60}, {80, 80}})));
-    PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
+    PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter converter annotation (
       Placement(transformation(extent = {{10, -20}, {30, 0}})));
     PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 10) annotation (
       Placement(transformation(extent = {{-10, -70}, {10, -50}})));
@@ -540,14 +540,14 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Measurement_20160808_power.csv");
     Modelica.SIunits.Irradiance irradiance = irradianceTable.y[1] "Measured irradiance";
     Modelica.SIunits.Power powerAC = powerTable.y[1] "Measured AC power";
-    PhotoVoltaics.Components.SimplePlantSymmetric plant(useConstantIrradiance = false, moduleData = moduleData, npModule = npModule, nsModule = nsModule,
+    PhotoVoltaics.Components.PV.SimplePlantSymmetric plant(useConstantIrradiance = false, moduleData = moduleData, npModule = npModule, nsModule = nsModule,
       shadow=0.1)                                                                                                                                         annotation (
       Placement(visible = true, transformation(origin = {-50, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
     Modelica.Electrical.Analog.Basic.Ground ground annotation (
       Placement(visible = true, transformation(origin = {-50, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     parameter PhotoVoltaics.Records.TSM_200_DC01A moduleData annotation (
       Placement(transformation(extent = {{60, 60}, {80, 80}})));
-    PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
+    PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter converter annotation (
       Placement(transformation(extent = {{10, -20}, {30, 0}})));
     PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 10) annotation (
       Placement(transformation(extent = {{-10, -70}, {10, -50}})));
@@ -618,14 +618,14 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Measurement_20160626_to_20161004_power.csv");
     Modelica.SIunits.Irradiance irradiance = irradianceTable.y[1] "Measured irradiance";
     Modelica.SIunits.Power powerAC = powerTable.y[1] "Measured AC power";
-    PhotoVoltaics.Components.SimplePlantSymmetric plant(useConstantIrradiance = false, moduleData = moduleData, npModule = npModule, nsModule = nsModule,
+    PhotoVoltaics.Components.PV.SimplePlantSymmetric plant(useConstantIrradiance = false, moduleData = moduleData, npModule = npModule, nsModule = nsModule,
       shadow=0.1)                                                                                                                                         annotation (
       Placement(visible = true, transformation(origin = {-50, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
     Modelica.Electrical.Analog.Basic.Ground ground annotation (
       Placement(visible = true, transformation(origin = {-50, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     parameter PhotoVoltaics.Records.TSM_200_DC01A moduleData annotation (
       Placement(transformation(extent = {{60, 60}, {80, 80}})));
-    PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
+    PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter converter annotation (
       Placement(transformation(extent = {{10, -20}, {30, 0}})));
     PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 10) annotation (
       Placement(transformation(extent = {{-10, -70}, {10, -50}})));
@@ -699,14 +699,14 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
       Placement(visible = true, transformation(extent = {{-60, 40}, {-40, 60}}, rotation = 0)));
     Modelica.Blocks.Math.Add G "Total irradiation on tilted surface" annotation (
       Placement(visible = true, transformation(extent = {{-20, 50}, {0, 70}}, rotation = 0)));
-    PhotoVoltaics.Components.SimplePlantSymmetric plant(moduleData = moduleData, npModule = npModule, nsModule = nsModule, useConstantIrradiance = false,
+    PhotoVoltaics.Components.PV.SimplePlantSymmetric plant(moduleData = moduleData, npModule = npModule, nsModule = nsModule, useConstantIrradiance = false,
       shadow=0.1)                                                                                                                                         annotation (
       Placement(visible = true, transformation(origin = {-50, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
     Modelica.Electrical.Analog.Basic.Ground ground annotation (
       Placement(visible = true, transformation(origin = {-50, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(computeWetBulbTemperature = false, filNam = fileName) annotation (
       Placement(transformation(extent = {{-100, 70}, {-80, 90}})));
-    PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
+    PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter converter annotation (
       Placement(transformation(extent = {{10, -20}, {30, 0}})));
     PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 60) annotation (
       Placement(transformation(extent = {{-10, -70}, {10, -50}})));
@@ -779,11 +779,11 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter Integer nsModule = 8 "Number of series connected modules";
     parameter Integer npModule = 1 "Number of parallel connected modules";
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Trina_Analytical_20160629_power.csv");
-    PhotoVoltaics.Components.SimplePlantSymmetric plant(moduleData = moduleData, npModule = npModule, nsModule = nsModule, useConstantIrradiance = false) annotation (
+    PhotoVoltaics.Components.PV.SimplePlantSymmetric plant(moduleData = moduleData, npModule = npModule, nsModule = nsModule, useConstantIrradiance = false) annotation (
       Placement(visible = true, transformation(origin = {-50, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
     Modelica.Electrical.Analog.Basic.Ground ground annotation (
       Placement(visible = true, transformation(origin = {-50, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
+    PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter converter annotation (
       Placement(transformation(extent = {{10, -20}, {30, 0}})));
     PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 10) annotation (
       Placement(transformation(extent = {{-10, -70}, {10, -50}})));
@@ -850,11 +850,11 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter Integer nsModule = 8 "Number of series connected modules";
     parameter Integer npModule = 1 "Number of parallel connected modules";
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Trina_Analytical_20160704_power.csv");
-    PhotoVoltaics.Components.SimplePlantSymmetric plant(moduleData = moduleData, npModule = npModule, nsModule = nsModule, useConstantIrradiance = false) annotation (
+    PhotoVoltaics.Components.PV.SimplePlantSymmetric plant(moduleData = moduleData, npModule = npModule, nsModule = nsModule, useConstantIrradiance = false) annotation (
       Placement(visible = true, transformation(origin = {-50, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
     Modelica.Electrical.Analog.Basic.Ground ground annotation (
       Placement(visible = true, transformation(origin = {-50, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
+    PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter converter annotation (
       Placement(transformation(extent = {{10, -20}, {30, 0}})));
     PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 10) annotation (
       Placement(transformation(extent = {{-10, -70}, {10, -50}})));
@@ -921,11 +921,11 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter Integer nsModule = 8 "Number of series connected modules";
     parameter Integer npModule = 1 "Number of parallel connected modules";
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Trina_Analytical_20160808_power.csv");
-    PhotoVoltaics.Components.SimplePlantSymmetric plant(moduleData = moduleData, npModule = npModule, nsModule = nsModule, useConstantIrradiance = false) annotation (
+    PhotoVoltaics.Components.PV.SimplePlantSymmetric plant(moduleData = moduleData, npModule = npModule, nsModule = nsModule, useConstantIrradiance = false) annotation (
       Placement(visible = true, transformation(origin = {-50, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
     Modelica.Electrical.Analog.Basic.Ground ground annotation (
       Placement(visible = true, transformation(origin = {-50, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
+    PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter converter annotation (
       Placement(transformation(extent = {{10, -20}, {30, 0}})));
     PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 10) annotation (
       Placement(transformation(extent = {{-10, -70}, {10, -50}})));
@@ -992,11 +992,11 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter Integer nsModule = 8 "Number of series connected modules";
     parameter Integer npModule = 1 "Number of parallel connected modules";
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Trina_Analytical_2016_energy.csv");
-    PhotoVoltaics.Components.SimplePlantSymmetric plant(moduleData = moduleData, npModule = npModule, nsModule = nsModule, useConstantIrradiance = false) annotation (
+    PhotoVoltaics.Components.PV.SimplePlantSymmetric plant(moduleData = moduleData, npModule = npModule, nsModule = nsModule, useConstantIrradiance = false) annotation (
       Placement(visible = true, transformation(origin = {-50, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
     Modelica.Electrical.Analog.Basic.Ground ground annotation (
       Placement(visible = true, transformation(origin = {-50, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
+    PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter converter annotation (
       Placement(transformation(extent = {{10, -20}, {30, 0}})));
     PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 10) annotation (
       Placement(transformation(extent = {{-10, -70}, {10, -50}})));
@@ -1075,11 +1075,11 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     Modelica.SIunits.Current IDC = combiTimeTable.y[7] "Measured DC current";
     Modelica.SIunits.Temperature T1 = combiTimeTable.y[8] "Temperature of ambient";
     Modelica.SIunits.Temperature T2 = combiTimeTable.y[9] "Temperature of PV modules";
-    PhotoVoltaics.Components.SimplePlantSymmetric plant(moduleData = moduleData, npModule = npModule, nsModule = nsModule, shadow = 0.1, useConstantIrradiance = false, useHeatPort = false) annotation (
+    PhotoVoltaics.Components.PV.SimplePlantSymmetric plant(moduleData = moduleData, npModule = npModule, nsModule = nsModule, shadow = 0.1, useConstantIrradiance = false, useHeatPort = false) annotation (
       Placement(visible = true, transformation(origin = {-50, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
     Modelica.Electrical.Analog.Basic.Ground ground annotation (
       Placement(visible = true, transformation(origin = {-50, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
+    PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter converter annotation (
       Placement(transformation(extent = {{10, -20}, {30, 0}})));
     PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 10) annotation (
       Placement(transformation(extent = {{-10, -70}, {10, -50}})));
@@ -1156,12 +1156,12 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     Modelica.SIunits.Current IDC = combiTimeTable.y[7] "Measured DC current";
     Modelica.SIunits.Temperature T1 = combiTimeTable.y[8] "Temperature of ambient";
     Modelica.SIunits.Temperature T2 = combiTimeTable.y[9] "Temperature of PV modules";
-    PhotoVoltaics.Components.SimplePlantSymmetric plant(moduleData = moduleData, npModule = npModule, nsModule = nsModule, useConstantIrradiance = false, useHeatPort = false,
+    PhotoVoltaics.Components.PV.SimplePlantSymmetric plant(moduleData = moduleData, npModule = npModule, nsModule = nsModule, useConstantIrradiance = false, useHeatPort = false,
       shadow=0.1)                                                                                                                                                              annotation (
       Placement(visible = true, transformation(origin = {-50, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
     Modelica.Electrical.Analog.Basic.Ground ground annotation (
       Placement(visible = true, transformation(origin = {-50, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
+    PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter converter annotation (
       Placement(transformation(extent = {{10, -20}, {30, 0}})));
     PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 10) annotation (
       Placement(transformation(extent = {{-10, -70}, {10, -50}})));
@@ -1238,12 +1238,12 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     Modelica.SIunits.Current IDC = combiTimeTable.y[7] "Measured DC current";
     Modelica.SIunits.Temperature T1 = combiTimeTable.y[8] "Temperature of ambient";
     Modelica.SIunits.Temperature T2 = combiTimeTable.y[9] "Temperature of PV modules";
-    PhotoVoltaics.Components.SimplePlantSymmetric plant(moduleData = moduleData, npModule = npModule, nsModule = nsModule, useConstantIrradiance = false, useHeatPort = false,
+    PhotoVoltaics.Components.PV.SimplePlantSymmetric plant(moduleData = moduleData, npModule = npModule, nsModule = nsModule, useConstantIrradiance = false, useHeatPort = false,
       shadow=0.1)                                                                                                                                                              annotation (
       Placement(visible = true, transformation(origin = {-50, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
     Modelica.Electrical.Analog.Basic.Ground ground annotation (
       Placement(visible = true, transformation(origin = {-50, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
+    PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter converter annotation (
       Placement(transformation(extent = {{10, -20}, {30, 0}})));
     PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 10) annotation (
       Placement(transformation(extent = {{-10, -70}, {10, -50}})));
@@ -1320,12 +1320,12 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     Modelica.SIunits.Current IDC = combiTimeTable.y[7] "Measured DC current";
     Modelica.SIunits.Temperature T1 = combiTimeTable.y[8] "Temperature of ambient";
     Modelica.SIunits.Temperature T2 = combiTimeTable.y[9] "Temperature of PV modules";
-    PhotoVoltaics.Components.SimplePlantSymmetric plant(moduleData = moduleData, npModule = npModule, nsModule = nsModule, useConstantIrradiance = false, useHeatPort = false,
+    PhotoVoltaics.Components.PV.SimplePlantSymmetric plant(moduleData = moduleData, npModule = npModule, nsModule = nsModule, useConstantIrradiance = false, useHeatPort = false,
       shadow=0.1)                                                                                                                                                              annotation (
       Placement(visible = true, transformation(origin = {-50, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
     Modelica.Electrical.Analog.Basic.Ground ground annotation (
       Placement(visible = true, transformation(origin = {-50, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    PhotoVoltaics.Components.SinglePhaseVoltageControlledConverter converter annotation (
+    PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter converter annotation (
       Placement(transformation(extent = {{10, -20}, {30, 0}})));
     PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 10) annotation (
       Placement(transformation(extent = {{-10, -70}, {10, -50}})));
