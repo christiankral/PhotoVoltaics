@@ -118,6 +118,12 @@ Ramazan Kavlak<br>
 <h5>Note</h5>
 <p>Non backwards compatible changes will occur before releasing version 1.0.0</p>
 
+<h5>Version 0.5.0, 2017-XX-XX</h5>
+<ul>
+<li>Replaced power factor input of multi phase converter by phase angle phi input, see #12</li>
+<li>Improved and fixed documentation of converters</li>
+</ul>
+
 <h5>Version 0.4.0, 2017-02-24</h5>
 <ul>
 <li>Added transient converter, see #8</li>
@@ -824,8 +830,8 @@ on the horizontal axis</li>
         offset=1000,
         startTime=1)                                                                                 annotation (
         Placement(transformation(extent={{-100,20},{-80,40}})));
-      Modelica.Blocks.Sources.Constant powerfactor(k=0.9)
-        annotation (Placement(transformation(extent={{-30,-50},{-10,-30}})));
+      Modelica.Blocks.Sources.Constant powerfactor(k=-acos(0.9))
+        annotation (Placement(transformation(extent={{-30,-52},{-10,-32}})));
       PhotoVoltaics.Components.SimplePhotoVoltaics.SimpleModuleSymmetric module(
         moduleData=moduleData,
         useConstantIrradiance=false,
@@ -883,8 +889,7 @@ on the horizontal axis</li>
       connect(mpTracker.vRef, converter.vDCRef)
         annotation (Line(points={{-9,-10},{-6,-10},{-6,18}},
                                                            color={0,0,127}));
-      connect(powerfactor.y, converter.powerfactor) annotation (Line(points={{-9,-40},{6,-40},{6,18}},
-                                          color={0,0,127}));
+      connect(powerfactor.y, converter.phi) annotation (Line(points={{-9,-42},{5.8,-42},{5.8,18}}, color={0,0,127}));
       connect(converter.ac, powerSensorGrid.pc) annotation (Line(points={{10,30},{16,30},{20,30}},
                                                                                                 color={0,0,255}));
       connect(powerSensorGrid.pv, powerSensorGrid.pc) annotation (Line(points={{30,40},{20,40},{20,30}},color={0,0,255}));
@@ -1944,14 +1949,19 @@ displaced by 90 degrees, each.
                     FillPattern.Solid,
                 textString="bat"),                                                                                                                                                                                                        Text(extent={{40,40},{100,-40}},        lineColor = {0, 0, 255}, textString = "=")}),
           Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})),
-          Documentation(info = "<html>
-<p>This is an ideal DC/DC converter.<p>
+          Documentation(info="<html>
+<p>This is an ideal DC/DC converter.</p>
+<p>
+The DC/DC converter is characterized by:
+</p> 
 <ul>
-<li><b>side 1</b> must be connected with voltage source</li>
-<li><b>side 2</b> must be connected with load</li>
+<li>Losses are not considered</li> 
+<li>The AC output current is determined based on power balance, calculating with instantaneous values: 
+    <code>vDC1*iDC1 + vDC2*iDC2 = 0<code></li>
+<li>The DC input voltage <code>vDCRef</code> is applied to the DC side 1 without limitations</li>
+<li>The phase angle input <code>phi</code> influences the AC reactive power based on the following figure,
+    where underlined voltages and currents represent complex phasors</li>
 </ul>
-<p>Signal input <code>i2</code> is the current flowing into the positive pin of side 2. 
-In order to operate side 2 as a load the signal input current <code>i2</code> must be <b>negative</b>.</p>
 </html>"));
       end DCConverter;
 
@@ -2039,14 +2049,19 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
           Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={                                                                                                                                                                 Text(extent = {{-100, 40}, {-40, -40}}, lineColor = {0, 0, 255}, textString = "="), Text(extent = {{40, 40}, {100, -40}}, lineColor = {0, 0, 255}, textString = "~"), Text(extent = {{-150, 150}, {150, 110}}, lineColor = {0, 0, 255}, textString = "%name"), Text(extent = {{20, -100}, {80, -140}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "vDCRef"), Text(extent={{-80,90},{20,50}},      lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=FillPattern.Solid,
                 textString="PV"),                                                                                                                                                                                                        Text(extent={{-40,-50},{60,-90}},      lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "src")}),
           Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})),
-          Documentation(info = "<html>
-<p>This is an ideal DC/DC converter.<p>
+          Documentation(info="<html>
+<p>This is an ideal DC/AC converter.</p>
+<p>
+The DC/AC converter is characterized by:
+</p> 
 <ul>
-<li><b>side 1</b> must be connected with voltage source</li>
-<li><b>side 2</b> must be connected with load</li>
+<li>Losses are not considered</li> 
+<li>The AC output current is determined based on power balance, calculating with instantanteous DC and complex AC phasor values: 
+    <code>vDC*iDC + real(
+    </code><u><code>v</code></u><code>AC*</code><u><code>i</code></u><code>AC</code><sup><code>*</code></sup> 
+    <code>)= 0</code></li>
+<<li>The DC input voltage <code>vDCRef</code> is applied to the DC side without limitations</li>
 </ul>
-<p>Signal input <code>i2</code> is the current flowing into the positive pin of side 2. 
-In order to operate side 2 as a load the signal input current <code>i2</code> must be <b>negative</b>.</p>
 </html>"));
       end QuasiStaticSinglePhaseConverter;
 
@@ -2146,14 +2161,21 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
           Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={                                                                                                                                                                 Text(extent = {{-100, 40}, {-40, -40}}, lineColor = {0, 0, 255}, textString = "="), Text(extent = {{40, 40}, {100, -40}}, lineColor = {0, 0, 255}, textString = "~"), Text(extent = {{-150, 150}, {150, 110}}, lineColor = {0, 0, 255}, textString = "%name"), Text(extent = {{20, -100}, {80, -140}}, lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "vDCRef"), Text(extent={{-80,90},{20,50}},      lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=FillPattern.Solid,
                 textString="PV"),                                                                                                                                                                                                        Text(extent={{-40,-50},{60,-90}},      lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "src")}),
           Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})),
-          Documentation(info = "<html>
-<p>This is an ideal DC/DC converter.<p>
+          Documentation(info="<html>
+<p>This is an ideal DC/AC converter.</p>
+<p>
+The DC/AC converter is characterized by:
+</p> 
 <ul>
-<li><b>side 1</b> must be connected with voltage source</li>
-<li><b>side 2</b> must be connected with load</li>
+<li>Losses are not considered</li> 
+<li>The AC output current is determined based on power balance, calculating with instantanteous DC and complex AC phasor values: 
+    <code>vDC*iDC + real(
+    </code><u><code>v</code></u><code>1*</code><u><code>i</code></u><code>1</code><sup><code>*</code></sup> 
+  + </code><u><code>v</code></u><code>2*</code><u><code>i</code></u><code>2</code><sup><code>*</code></sup> 
+  + </code><u><code>v</code></u><code>3*</code><u><code>i</code></u><code>3</code><sup><code>*</code></sup> 
+    <code>)= 0</code></li>
+<li>The DC input voltage <code>vDCRef</code> is applied to the DC side without limitations</li>
 </ul>
-<p>Signal input <code>i2</code> is the current flowing into the positive pin of side 2. 
-In order to operate side 2 as a load the signal input current <code>i2</code> must be <b>negative</b>.</p>
 </html>"));
       end QuasiStaticMultiPhaseConverter;
 
@@ -2183,30 +2205,29 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
         Modelica.Blocks.Math.Product product annotation (
           Placement(transformation(extent={{-80,70},{-60,90}})));
         Modelica.Blocks.Math.Feedback feedback annotation (
-          Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 270, origin={-40,60})));
+          Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 270, origin={-70,50})));
         Modelica.Electrical.Machines.SpacePhasors.Blocks.FromPolar fromPolar annotation (
-          Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation=0,    origin={-40,-4})));
+          Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation=0,    origin={-50,0})));
         Modelica.Blocks.Continuous.Integrator integrator(k=sqrt(3)/VRef/Ti)      annotation (
           Placement(transformation(extent={{-10,-10},{10,10}},
               rotation=270,
-              origin={-60,28})));
+              origin={-70,20})));
         Modelica.Blocks.Math.Gain gain(final k=1)    annotation (
-          Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation=180,   origin={-10,60})));
+          Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation=180,   origin={-40,50})));
         Modelica.Electrical.Machines.SpacePhasors.Blocks.FromSpacePhasor fromSpacePhasor(m=3)
           annotation (Placement(transformation(
               extent={{-10,-10},{10,10}},
               rotation=90,
-              origin={20,14})));
-        Modelica.Blocks.Sources.Constant const(k=0) annotation (Placement(
-              transformation(
-              extent={{8,-8},{-8,8}},
-              rotation=270,
-              origin={28,-28})));
+              origin={0,30})));
+        Modelica.Blocks.Sources.Constant zeroConst(final k=0) annotation (Placement(transformation(
+              extent={{10,-10},{-10,10}},
+              rotation=0,
+              origin={30,0})));
         Modelica.Electrical.MultiPhase.Sources.SignalCurrent signalCurrent
           annotation (Placement(transformation(
               extent={{-10,-10},{10,10}},
               rotation=90,
-              origin={70,30})));
+              origin={60,50})));
         Modelica.Electrical.MultiPhase.Basic.Star star annotation (Placement(
               transformation(
               extent={{-10,-10},{10,10}},
@@ -2214,52 +2235,39 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
               origin={60,0})));
         Modelica.Electrical.Analog.Basic.Ground ground
           annotation (Placement(transformation(extent={{50,-34},{70,-14}})));
-        Modelica.Electrical.MultiPhase.Sensors.PotentialSensor potentialSensor
-          annotation (Placement(transformation(extent={{-10,-10},{10,10}},
-              rotation=270,
-              origin={80,-14})));
-        Modelica.Blocks.Sources.Constant const2(final k=2*pi*f)
-          annotation (Placement(transformation(extent={{-44,-50},{-24,-30}})));
+        Modelica.Blocks.Sources.Constant constOmega(final k=2*pi*f) annotation (Placement(transformation(extent={{-60,-50},{-40,-30}})));
         Modelica.Blocks.Math.RectangularToPolar rectangularToPolar
-          annotation (Placement(transformation(extent={{20,-80},{0,-60}})));
+          annotation (Placement(transformation(extent={{20,-70},{0,-50}})));
 
-        Modelica.Electrical.MultiPhase.Sensors.CurrentSensor currentSensorAC(final m=3) annotation (Placement(transformation(extent={{80,80},{100,100}})));
         Modelica.Electrical.MultiPhase.Sensors.VoltageSensor voltageSensorAC(final m=3) annotation (Placement(transformation(
               extent={{-10,-10},{10,10}},
               rotation=270,
-              origin={90,60})));
-        Modelica.Blocks.Math.Product productPower[3] annotation (Placement(transformation(extent={{60,60},{40,80}})));
+              origin={90,50})));
+        Modelica.Blocks.Math.Product productPower[3] annotation (Placement(transformation(extent={{40,70},{20,90}})));
         Modelica.Blocks.Math.Add add
           annotation (Placement(transformation(extent={{-22,-80},{-42,-60}})));
-        Modelica.Blocks.Interfaces.RealInput powerfactor "cos phi" annotation (
-            Placement(transformation(
+        Modelica.Blocks.Interfaces.RealInput phi "Phase angle of current with respect to voltage" annotation (Placement(transformation(
               extent={{-20,-20},{20,20}},
               rotation=90,
               origin={60,-120}), iconTransformation(
               extent={{-20,-20},{20,20}},
               rotation=90,
               origin={60,-120})));
-        Modelica.Blocks.Math.Acos acos
-          annotation (Placement(transformation(extent={{48,-96},{36,-84}})));
-        Modelica.Blocks.Math.Gain gain1(final k=-1)  annotation (
-          Placement(transformation(extent={{-6,-6},{6,6}},          rotation=180,   origin={20,-90})));
 
-        Modelica.Blocks.Math.UnitConversions.To_deg to_deg
-          annotation (Placement(transformation(extent={{-64,-76},{-76,-64}})));
-        Modelica.Blocks.Continuous.Integrator integrator2(k=1)                   annotation (
-          Placement(transformation(extent={{-6,-6},{6,6}},
+        Modelica.Blocks.Continuous.Integrator integratorOmega(final k=1) annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
               rotation=0,
-              origin={-10,-40})));
+              origin={-20,-40})));
         Modelica.Blocks.Continuous.FirstOrder firstOrder[3](k=ones(3), T=fill(Ti, 3))
-                                                                                     annotation (Placement(transformation(extent={{30,28},{50,48}})));
-        Modelica.Electrical.Machines.SpacePhasors.Blocks.Rotator rotatorOut annotation (Placement(transformation(extent={{-20,-14},{0,6}})));
+                                                                                     annotation (Placement(transformation(extent={{20,40},{40,60}})));
+        Modelica.Electrical.Machines.SpacePhasors.Blocks.Rotator rotatorOut annotation (Placement(transformation(extent={{-30,-10},{-10,10}})));
         Modelica.Blocks.Math.Gain neg(final k=-1) annotation (Placement(transformation(
-              extent={{-6,6},{6,-6}},
-              rotation=90,
-              origin={6,-28})));
-        Modelica.Electrical.Machines.SpacePhasors.Blocks.ToSpacePhasor toSpacePhasor annotation (Placement(transformation(extent={{90,-80},{70,-60}})));
-        Modelica.Electrical.Machines.SpacePhasors.Blocks.Rotator rotatorIn annotation (Placement(transformation(extent={{60,-60},{40,-80}})));
-        Modelica.Blocks.Math.Sum sum3(nin=3) annotation (Placement(transformation(extent={{32,60},{12,80}})));
+              extent={{-10,10},{10,-10}},
+              rotation=180,
+              origin={0,-20})));
+        Modelica.Electrical.Machines.SpacePhasors.Blocks.ToSpacePhasor toSpacePhasor annotation (Placement(transformation(extent={{90,-70},{70,-50}})));
+        Modelica.Electrical.Machines.SpacePhasors.Blocks.Rotator rotatorIn annotation (Placement(transformation(extent={{60,-50},{40,-70}})));
+        Modelica.Blocks.Math.Sum sum3(nin=3) annotation (Placement(transformation(extent={{10,70},{-10,90}})));
       equation
         connect(currentSensor.n,signalVoltage. p) annotation (
           Line(points={{-100,50},{-100,50},{-100,10}},     color = {0, 0, 255}));
@@ -2271,61 +2279,53 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
         connect(dc_n, signalVoltage.n) annotation (Line(points={{-100,-100},{-100,
                 -10}},       color={0,0,255}));
         connect(product.y,feedback. u1) annotation (
-          Line(points={{-59,80},{-40,80},{-40,68}},       color = {0, 0, 127}));
+          Line(points={{-59,80},{-50,80},{-50,64},{-50,64},{-50,64},{-70,64},{-70,58}},
+                                                          color = {0, 0, 127}));
         connect(feedback.y,integrator. u) annotation (
-          Line(points={{-40,51},{-40,46},{-60,46},{-60,40}},                                    color = {0, 0, 127}));
+          Line(points={{-70,41},{-70,38},{-70,32}},                                             color = {0, 0, 127}));
         connect(gain.y,feedback. u2) annotation (
-          Line(points={{-21,60},{-21,60},{-32,60}},      color = {0, 0, 127}));
+          Line(points={{-51,50},{-51,50},{-62,50}},      color = {0, 0, 127}));
         connect(product.u1, currentSensor.i) annotation (Line(points={{-82,86},{
                 -90,86},{-90,60}},          color={0,0,127}));
         connect(product.u2, vDCRef) annotation (Line(points={{-82,74},{-86,74},{-86,-10},
                 {-86,-90},{-60,-90},{-60,-120}},      color={0,0,127}));
         connect(star.plug_p, signalCurrent.plug_p)
-          annotation (Line(points={{60,10},{60,16},{70,16},{70,20}},
+          annotation (Line(points={{60,10},{60,16},{60,40}},
                                                      color={0,0,255}));
         connect(ground.p, star.pin_n)
           annotation (Line(points={{60,-14},{60,-12},{60,-10}},
                                                              color={0,0,255}));
-        connect(potentialSensor.plug_p, ac) annotation (Line(points={{80,-4},{80,-4},{80,0},{100,0}},
-                                     color={0,0,255}));
-        connect(fromSpacePhasor.zero, const.y)
-          annotation (Line(points={{28,2},{28,2},{28,-19.2}},
-                                                      color={0,0,127}));
-        connect(integrator.y, fromPolar.u[1]) annotation (Line(points={{-60,17},{-60,-4},{-52,-4}},
+        connect(fromSpacePhasor.zero, zeroConst.y) annotation (Line(points={{8,18},{8,0},{19,0}}, color={0,0,127}));
+        connect(integrator.y, fromPolar.u[1]) annotation (Line(points={{-70,9},{-70,0},{-62,0}},
                                            color={0,0,127}));
-        connect(currentSensorAC.plug_n, ac) annotation (Line(points={{100,90},{100,0}},          color={0,0,255}));
-        connect(voltageSensorAC.plug_n, star.plug_p) annotation (Line(points={{90,50},{90,10},{60,10}}, color={0,0,255}));
-        connect(voltageSensorAC.plug_p, ac) annotation (Line(points={{90,70},{100,70},{100,0}}, color={0,0,255}));
-        connect(currentSensorAC.plug_p, signalCurrent.plug_n) annotation (Line(points={{80,90},{70,90},{70,40}}, color={0,0,255}));
-        connect(rectangularToPolar.y_arg, add.u1) annotation (Line(points={{-1,-76},{-6,-76},{-6,-64},{-20,-64}},
+        connect(voltageSensorAC.plug_n, star.plug_p) annotation (Line(points={{90,40},{90,10},{60,10}}, color={0,0,255}));
+        connect(voltageSensorAC.plug_p, ac) annotation (Line(points={{90,60},{100,60},{100,0}}, color={0,0,255}));
+        connect(rectangularToPolar.y_arg, add.u1) annotation (Line(points={{-1,-66},{-10,-66},{-10,-64},{-20,-64}},
                                           color={0,0,127}));
-        connect(add.y, fromPolar.u[2]) annotation (Line(points={{-43,-70},{-43,-70},{-60,-70},{-60,-4},{-52,-4}},
+        connect(add.y, fromPolar.u[2]) annotation (Line(points={{-43,-70},{-43,-70},{-70,-70},{-70,0},{-62,0}},
                                          color={0,0,127}));
-        connect(powerfactor, acos.u) annotation (Line(points={{60,-120},{60,-90},
-                {49.2,-90}}, color={0,0,127}));
-        connect(acos.y, gain1.u)
-          annotation (Line(points={{35.4,-90},{27.2,-90}}, color={0,0,127}));
-        connect(gain1.y, add.u2) annotation (Line(points={{13.4,-90},{-10,-90},{-10,-76},{-20,-76}},
-                           color={0,0,127}));
-        connect(add.y, to_deg.u)
-          annotation (Line(points={{-43,-70},{-62.8,-70}}, color={0,0,127}));
-        connect(const2.y, integrator2.u)
-          annotation (Line(points={{-23,-40},{-17.2,-40}}, color={0,0,127}));
-        connect(fromSpacePhasor.y, firstOrder.u) annotation (Line(points={{20,25},{20,38},{28,38}}, color={0,0,127}));
-        connect(firstOrder.y, signalCurrent.i) annotation (Line(points={{51,38},{56,38},{56,30},{63,30}}, color={0,0,127}));
-        connect(fromPolar.y, rotatorOut.u) annotation (Line(points={{-29,-4},{-22,-4}}, color={0,0,127}));
-        connect(neg.y, rotatorOut.angle) annotation (Line(points={{6,-21.4},{6,-20},{4,-20},{4,-20},{-10,-20},{-10,-16}}, color={0,0,127}));
-        connect(rotatorIn.u, toSpacePhasor.y) annotation (Line(points={{62,-70},{62,-70},{69,-70}}, color={0,0,127}));
-        connect(rotatorIn.angle, integrator2.y) annotation (Line(points={{50,-58},{50,-54},{68,-54},{68,-40},{-3.4,-40}}, color={0,0,127}));
-        connect(potentialSensor.phi, toSpacePhasor.u) annotation (Line(points={{80,-25},{80,-28},{130,-28},{130,-70},{92,-70}}, color={0,0,127}));
-        connect(neg.u, integrator2.y) annotation (Line(points={{6,-35.2},{6,-35.2},{6,-40},{-3.4,-40}}, color={0,0,127}));
-        connect(rotatorOut.y, fromSpacePhasor.u) annotation (Line(points={{1,-4},{8,-4},{20,-4},{20,2}}, color={0,0,127}));
-        connect(rectangularToPolar.u_re, rotatorIn.y[1]) annotation (Line(points={{22,-64},{22,-64},{34,-64},{34,-70},{39,-70}}, color={0,0,127}));
-        connect(rectangularToPolar.u_im, rotatorIn.y[2]) annotation (Line(points={{22,-76},{34,-76},{34,-70},{39,-70}}, color={0,0,127}));
-        connect(sum3.y, gain.u) annotation (Line(points={{11,70},{8,70},{8,60},{2,60}}, color={0,0,127}));
-        connect(productPower.u1, currentSensorAC.i) annotation (Line(points={{62,76},{74,76},{90,76},{90,79}}, color={0,0,127}));
-        connect(productPower.u2, voltageSensorAC.v) annotation (Line(points={{62,64},{68,64},{74,64},{74,60},{79,60}}, color={0,0,127}));
-        connect(sum3.u, productPower.y) annotation (Line(points={{34,70},{39,70},{39,70}}, color={0,0,127}));
+        connect(constOmega.y, integratorOmega.u) annotation (Line(points={{-39,-40},{-34,-40},{-32,-40}}, color={0,0,127}));
+        connect(fromSpacePhasor.y, firstOrder.u) annotation (Line(points={{6.66134e-16,41},{6.66134e-16,50},{18,50}},
+                                                                                                    color={0,0,127}));
+        connect(firstOrder.y, signalCurrent.i) annotation (Line(points={{41,50},{53,50}},                 color={0,0,127}));
+        connect(fromPolar.y, rotatorOut.u) annotation (Line(points={{-39,0},{-32,0}},   color={0,0,127}));
+        connect(neg.y, rotatorOut.angle) annotation (Line(points={{-11,-20},{-11,-20},{-14,-20},{-20,-20},{-20,-12}},     color={0,0,127}));
+        connect(rotatorIn.u, toSpacePhasor.y) annotation (Line(points={{62,-60},{62,-60},{69,-60}}, color={0,0,127}));
+        connect(rotatorIn.angle, integratorOmega.y) annotation (Line(points={{50,-48},{50,-44},{50,-40},{-9,-40}}, color={0,0,127}));
+        connect(neg.u, integratorOmega.y) annotation (Line(points={{12,-20},{20,-20},{20,-40},{-9,-40}}, color={0,0,127}));
+        connect(rotatorOut.y, fromSpacePhasor.u) annotation (Line(points={{-9,0},{-9,0},{-8.88178e-16,0},{-8.88178e-16,18}},
+                                                                                                         color={0,0,127}));
+        connect(rectangularToPolar.u_re, rotatorIn.y[1]) annotation (Line(points={{22,-54},{22,-54},{32,-54},{32,-60},{39,-60}}, color={0,0,127}));
+        connect(rectangularToPolar.u_im, rotatorIn.y[2]) annotation (Line(points={{22,-66},{32,-66},{32,-60},{39,-60}}, color={0,0,127}));
+        connect(sum3.y, gain.u) annotation (Line(points={{-11,80},{-12,80},{-20,80},{-20,50},{-28,50}},
+                                                                                        color={0,0,127}));
+        connect(productPower.u2, voltageSensorAC.v) annotation (Line(points={{42,74},{42,74},{76,74},{76,72},{76,50},{79,50}},
+                                                                                                                       color={0,0,127}));
+        connect(sum3.u, productPower.y) annotation (Line(points={{12,80},{19,80}},         color={0,0,127}));
+        connect(firstOrder.y, productPower.u1) annotation (Line(points={{41,50},{48,50},{48,86},{42,86}}, color={0,0,127}));
+        connect(signalCurrent.plug_n, voltageSensorAC.plug_p) annotation (Line(points={{60,60},{60,60},{60,70},{90,70},{90,60}}, color={0,0,255}));
+        connect(voltageSensorAC.v, toSpacePhasor.u) annotation (Line(points={{79,50},{76,50},{76,-38},{76,-40},{100,-40},{100,-60},{92,-60}}, color={0,0,127}));
+        connect(add.u2, phi) annotation (Line(points={{-20,-76},{-16,-76},{-10,-76},{-10,-90},{60,-90},{60,-120}}, color={0,0,127}));
         annotation (
       defaultComponentName = "converter",
           Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},
@@ -2346,15 +2346,25 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
                     LinePattern.Dash,                                                                                                    fillColor=
                     {0,0,255},
                   fillPattern=FillPattern.Solid,
-                textString="3ph AC")}),                                                                                                    Documentation(info = "<html>
-<p>This is an ideal DC/DC converter.<p>
+                textString="3ph AC")}),                                                                                                    Documentation(info="<html>
+<p>This is an ideal DC/AC converter.<p>
+
+<p>
+The multi phase converter is characterized by:
+</p> 
 <ul>
-<li><b>side 1</b> must be connected with voltage source</li>
-<li><b>side 2</b> must be connected with load</li>
+<li>Losses are not considered</li> 
+<li>The AC output current is determined based on power balance, calculating with instantaneous values: 
+    <code>vDC*iDC + v1*i1 + v2*i2 + v3*i3 = 0<code></li>
+<li>The DC input voltage <code>vDCRef</code> is applied to the DC side without limitations</li>
+<li>The phase angle input <code>phi</code> influences the AC reactive power as shown in the figure below,
+    where underlined voltages and currents represent complex voltage and current phasors</li>
+<li>A negative angle <code>phi</code> may supply a capacitive load (see figure below)</li>
+<li>A positive angle <code>phi</code> may supply an inductive load</li>
 </ul>
-<p>Signal input <code>i2</code> is the current flowing into the positive pin of side 2. 
-In order to operate side 2 as a load the signal input current <code>i2</code> must be <b>negative</b>.</p>
-</html>"));
+<p>
+<img src=\"modelica://PhotoVoltaics/Resources/Images/MultiPhaseConverter.png\">
+</p></html>"));
       end MultiPhaseConverter;
 
       package ConvertersWithSampleMPTracker "Converter models with integrated sampling MP tracker"
@@ -2397,7 +2407,12 @@ In order to operate side 2 as a load the signal input current <code>i2</code> mu
                   textString="PV"),                                                                                                                                                                                                        Text(extent={{-40,-50},{60,-90}},      lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=
                       FillPattern.Solid,
                   textString="bat"),                                                                                                                                                                                                        Text(extent={{40,40},{100,-40}},        lineColor = {0, 0, 255}, textString = "=")}),
-                                                                         Diagram(coordinateSystem(preserveAspectRatio=false)));
+                                                                         Diagram(coordinateSystem(preserveAspectRatio=false)),
+            Documentation(info="<html>
+<p>This is DC/DC <a href=\"modelica://PhotoVoltaics.Components.Converters.DCConverter\">converter</a>
+   with integrated power measurement and sampled 
+   <a href=\"modelica://PhotoVoltaics.Components.Blocks.MPTrackerSample\">maxmimum power tracking</a>.
+</p></html>"));
         end DCConverter;
       end ConvertersWithSampleMPTracker;
       annotation (Icon(graphics={Line(points={{-80,-80},{80,80}}, color={0,0,0}), Rectangle(extent={{-80,80},{80,-80}}, lineColor={0,0,0})}));
