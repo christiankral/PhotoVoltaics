@@ -13,7 +13,7 @@ package PhotoVoltaics_TGM
       Placement(visible = true, transformation(extent = {{-60, 40}, {-40, 60}}, rotation = 0)));
     Modelica.Blocks.Math.Add G "Total irradiation on tilted surface" annotation (
       Placement(visible = true, transformation(extent = {{-20, 50}, {0, 70}}, rotation = 0)));
-    PhotoVoltaics.Components.PhotoVoltaics.SimplePlantSymmetric plant(
+    PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
       useConstantIrradiance=false,
       moduleData=moduleData,
       npModule=npModule,
@@ -100,7 +100,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter Integer nsModule = 6 "Number of series connected modules";
     parameter Integer npModule = 1 "Number of parallel connected modules";
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Analytical_20160629_power.csv");
-    PhotoVoltaics.Components.PhotoVoltaics.SimplePlantSymmetric plant(
+    PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
       useConstantIrradiance=false,
       moduleData=moduleData,
       npModule=npModule,
@@ -177,7 +177,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter Integer nsModule = 6 "Number of series connected modules";
     parameter Integer npModule = 1 "Number of parallel connected modules";
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Analytical_20160704_power.csv");
-    PhotoVoltaics.Components.PhotoVoltaics.SimplePlantSymmetric plant(
+    PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
       useConstantIrradiance=false,
       moduleData=moduleData,
       npModule=npModule,
@@ -254,7 +254,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter Integer nsModule = 6 "Number of series connected modules";
     parameter Integer npModule = 1 "Number of parallel connected modules";
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Analytical_20160808_power.csv");
-    PhotoVoltaics.Components.PhotoVoltaics.SimplePlantSymmetric plant(
+    PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
       useConstantIrradiance=false,
       moduleData=moduleData,
       npModule=npModule,
@@ -331,7 +331,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter Integer nsModule = 6 "Number of series connected modules";
     parameter Integer npModule = 1 "Number of parallel connected modules";
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Analytical_2016_energy.csv");
-    PhotoVoltaics.Components.PhotoVoltaics.SimplePlantSymmetric plant(
+    PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
       useConstantIrradiance=false,
       moduleData=moduleData,
       npModule=npModule,
@@ -414,7 +414,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Measurement_20160629_power.csv");
     Modelica.SIunits.Irradiance irradiance = irradianceTable.y[1] "Measured irradiance";
     Modelica.SIunits.Power powerAC = powerTable.y[1] "Measured AC power";
-    PhotoVoltaics.Components.PhotoVoltaics.SimplePlantSymmetric plant(
+    PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
       useConstantIrradiance=false,
       moduleData=moduleData,
       npModule=npModule,
@@ -498,7 +498,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Measurement_20160704_power.csv");
     Modelica.SIunits.Irradiance irradiance = irradianceTable.y[1] "Measured irradiance";
     Modelica.SIunits.Power powerAC = powerTable.y[1] "Measured AC power";
-    PhotoVoltaics.Components.PhotoVoltaics.SimplePlantSymmetric plant(
+    PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
       useConstantIrradiance=false,
       moduleData=moduleData,
       npModule=npModule,
@@ -582,7 +582,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Measurement_20160808_power.csv");
     Modelica.SIunits.Irradiance irradiance = irradianceTable.y[1] "Measured irradiance";
     Modelica.SIunits.Power powerAC = powerTable.y[1] "Measured AC power";
-    PhotoVoltaics.Components.PhotoVoltaics.SimplePlantSymmetric plant(
+    PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
       useConstantIrradiance=false,
       moduleData=moduleData,
       npModule=npModule,
@@ -666,7 +666,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Measurement_20160626_to_20161004_power.csv");
     Modelica.SIunits.Irradiance irradiance = irradianceTable.y[1] "Measured irradiance";
     Modelica.SIunits.Power powerAC = powerTable.y[1] "Measured AC power";
-    PhotoVoltaics.Components.PhotoVoltaics.SimplePlantSymmetric plant(
+    PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
       useConstantIrradiance=false,
       moduleData=moduleData,
       npModule=npModule,
@@ -753,7 +753,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
       Placement(visible = true, transformation(extent = {{-60, 40}, {-40, 60}}, rotation = 0)));
     Modelica.Blocks.Math.Add G "Total irradiation on tilted surface" annotation (
       Placement(visible = true, transformation(extent = {{-20, 50}, {0, 70}}, rotation = 0)));
-    PhotoVoltaics.Components.PhotoVoltaics.SimplePlantSymmetric plant(
+    PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
       moduleData=moduleData,
       npModule=npModule,
       nsModule=nsModule,
@@ -839,7 +839,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter Integer nsModule = 8 "Number of series connected modules";
     parameter Integer npModule = 1 "Number of parallel connected modules";
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Trina_Analytical_20160629_power.csv");
-    PhotoVoltaics.Components.PhotoVoltaics.SimplePlantSymmetric plant(
+    PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
       moduleData=moduleData,
       npModule=npModule,
       nsModule=nsModule,
@@ -916,7 +916,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter Integer nsModule = 8 "Number of series connected modules";
     parameter Integer npModule = 1 "Number of parallel connected modules";
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Trina_Analytical_20160704_power.csv");
-    PhotoVoltaics.Components.PhotoVoltaics.SimplePlantSymmetric plant(
+    PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
       moduleData=moduleData,
       npModule=npModule,
       nsModule=nsModule,
@@ -993,7 +993,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter Integer nsModule = 8 "Number of series connected modules";
     parameter Integer npModule = 1 "Number of parallel connected modules";
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Trina_Analytical_20160808_power.csv");
-    PhotoVoltaics.Components.PhotoVoltaics.SimplePlantSymmetric plant(
+    PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
       moduleData=moduleData,
       npModule=npModule,
       nsModule=nsModule,
@@ -1070,7 +1070,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     parameter Integer nsModule = 8 "Number of series connected modules";
     parameter Integer npModule = 1 "Number of parallel connected modules";
     parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Trina_Analytical_2016_energy.csv");
-    PhotoVoltaics.Components.PhotoVoltaics.SimplePlantSymmetric plant(
+    PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
       moduleData=moduleData,
       npModule=npModule,
       nsModule=nsModule,
@@ -1159,7 +1159,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     Modelica.SIunits.Current IDC = combiTimeTable.y[7] "Measured DC current";
     Modelica.SIunits.Temperature T1 = combiTimeTable.y[8] "Temperature of ambient";
     Modelica.SIunits.Temperature T2 = combiTimeTable.y[9] "Temperature of PV modules";
-    PhotoVoltaics.Components.PhotoVoltaics.SimplePlantSymmetric plant(
+    PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
       moduleData=moduleData,
       npModule=npModule,
       nsModule=nsModule,
@@ -1248,7 +1248,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     Modelica.SIunits.Current IDC = combiTimeTable.y[7] "Measured DC current";
     Modelica.SIunits.Temperature T1 = combiTimeTable.y[8] "Temperature of ambient";
     Modelica.SIunits.Temperature T2 = combiTimeTable.y[9] "Temperature of PV modules";
-    PhotoVoltaics.Components.PhotoVoltaics.SimplePlantSymmetric plant(
+    PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
       moduleData=moduleData,
       npModule=npModule,
       nsModule=nsModule,
@@ -1337,7 +1337,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     Modelica.SIunits.Current IDC = combiTimeTable.y[7] "Measured DC current";
     Modelica.SIunits.Temperature T1 = combiTimeTable.y[8] "Temperature of ambient";
     Modelica.SIunits.Temperature T2 = combiTimeTable.y[9] "Temperature of PV modules";
-    PhotoVoltaics.Components.PhotoVoltaics.SimplePlantSymmetric plant(
+    PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
       moduleData=moduleData,
       npModule=npModule,
       nsModule=nsModule,
@@ -1426,7 +1426,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
     Modelica.SIunits.Current IDC = combiTimeTable.y[7] "Measured DC current";
     Modelica.SIunits.Temperature T1 = combiTimeTable.y[8] "Temperature of ambient";
     Modelica.SIunits.Temperature T2 = combiTimeTable.y[9] "Temperature of PV modules";
-    PhotoVoltaics.Components.PhotoVoltaics.SimplePlantSymmetric plant(
+    PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
       moduleData=moduleData,
       npModule=npModule,
       nsModule=nsModule,
