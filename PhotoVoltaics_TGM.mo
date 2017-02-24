@@ -1529,10 +1529,10 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
       Diagram(coordinateSystem(preserveAspectRatio = false)));
   end WriteCSV;
   annotation (
-    version = "0.X.x",
+    version = "0.4.0",
     versionBuild = 1,
-    versionDate = "2017-XX-XX",
-    uses(Modelica(version = "3.2.2"), Buildings(version = "4.0.0"), PhotoVoltaics(version = "0.X.X")),
+    versionDate = "2017-02-24",
+    uses(Modelica(version = "3.2.2"), Buildings(version = "4.0.0"), PhotoVoltaics(version = "0.4.0")),
     Documentation(info = "<html>
 <p>This library is based on the 
 <a href=\"https://github.com/christiankral/PhotoVoltaics\">PhotoVoltaics</a> and the 
