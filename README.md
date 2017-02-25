@@ -13,6 +13,19 @@ Modelica library for the simulation of photo voltaic cells, modules and plants. 
  - Maximum power tracker based on continuous voltage regulation
  - Linear, symmetric and chargable battery model, parameterized by cut off voltage, charge voltage, energy
 
+# Application Examples
+
+## Phileas Rover
+
+The maximum power harvest of a solar pyramid, which may be applicable to the [Phileas Rover](http://oewf.org/en/polares-science/phileas-rover/) of the [Austrian Space Forum, OEWF](http://oewf.org/en/), can be investigated by the PhotoVoltaics libraray. 
+
+![Phileas Rover](http://oewf.org/wp-content/uploads/2014/08/aouda-phileas-santek_medium-225x300.jpg "Phileas Rover")
+Image source: [OEWF](http://oewf.org/wp-content/uploads/2014/08/aouda-phileas-santek_medium-225x300.jpg)
+
+## TGM Photovoltaic Power Plant
+
+Actual irradiance and electric power measurement data of the TGM power plant in [Vienna](http://www.openstreetmap.org/way/233509248) are provided in the PhotoVoltaics_TGM library. Measurements and simulation results can be compared by the provided example models. The PhotoVoltaics_TGM library relies on the [Buildings library](https://github.com/lbl-srg/modelica-buildings). 
+
 # License
 
 This Modelica library is free software and the use is completely at your own
