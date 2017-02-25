@@ -1528,7 +1528,7 @@ java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/R
       Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Text(extent = {{-60, -60}, {60, 60}}, lineColor = {0, 0, 0}, textString = "CSV"), Text(extent = {{-150, -150}, {150, -110}}, lineColor = {0, 0, 255}, textString = "%inputQuantity")}),
       Diagram(coordinateSystem(preserveAspectRatio = false)));
   end WriteCSV;
-  annotation (
+  annotation (preferredView="info",
     version = "0.X.X",
     versionBuild = 1,
     versionDate = "2017-XX-XX",
