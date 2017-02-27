@@ -23,11 +23,31 @@ equation
    elseif v / ns / nsModule > VNegLin then (-Ibv * exp(-(v / ns / nsModule + Bv) / (Nbv * m * Vt))) + Ids * VBv / m / VtRef + v / ns / nsModule / R else Ids * v / ns / nsModule / m / Vt - Ibv * exp(VRef / m / VtRef) * (1 - (v / ns / nsModule + Bv) / (Nbv * m * Vt) - VRef / m / VtRef) + v / ns / nsModule / R);
   annotation (
     defaultComponentName = "diode",
-    Documentation(info = "<html>
-           <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
-<pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
-  i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
-</html>"),
+    Documentation(info="<html>
+<p>This model consists of four different regions:<p>
+<ul>
+<li>Forward direction: exponential function</li>
+<li>Backwards direction: linear, before reaching backwards breakthrough region<li>
+<li>Breaktrough: exponential function</li>
+<li>Beyond breakthrough: linear region in order to limit magnitude of exponential breakthrough</li>
+</ul>
+
+<p>One particular feature of this scalable model is that this diode can be used to model cells, symmetric modules and symmetric plants, 
+as </p>
+<ul>
+<li>the number of series connections of a module,</li>
+<li>the number of series connections of a plant,</li>
+<li>the number of parallel connections of a plant</li>
+</ul>
+<p>can be considered.</p>
+
+<p>The breakthrough parameters are basically taken from 
+<a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>.
+</p>
+
+<p>The temperature dependence of the temperature voltage <code>Vt</code> and saturation current of the diode are 
+considered consistently in the <a href=\"modelica://PhotoVoltaics.Interfaces.PartialDiode\">partial diodel</a> model.
+</p></html>"),
     Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot), Polygon(points = {{-8, 46}, {-68, 86}, {-68, 6}, {-8, 46}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-8, 86}, {-8, 6}}, color = {0, 0, 255}), Polygon(points = {{72, 46}, {12, 86}, {12, 6}, {72, 46}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{72, 86}, {72, 6}}, color = {0, 0, 255}), Polygon(points = {{-8, -46}, {-68, -6}, {-68, -86}, {-8, -46}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{-8, -6}, {-8, -86}}, color = {0, 0, 255}), Polygon(points = {{72, -46}, {12, -6}, {12, -86}, {72, -46}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170}, fillPattern = FillPattern.Solid), Line(points = {{72, -6}, {72, -86}}, color = {0, 0, 255}), Line(points = {{100, 46}, {100, -46}}, color = {28, 108, 200}), Line(points = {{-100, 46}, {-100, -46}}, color = {28, 108, 200}), Line(points = {{-100, 46}, {100, 46}}, color = {0, 0, 255}), Line(points = {{-100, -46}, {100, -46}}, color = {0, 0, 255})}),
     Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));
 end Diode2Module;
