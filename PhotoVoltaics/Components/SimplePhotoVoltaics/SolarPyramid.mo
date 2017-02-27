@@ -6,6 +6,12 @@ model SolarPyramid "Solar pyramid "
   parameter Modelica.SIunits.Angle sunAzimuth = 0 "Azimuth of sun";
   parameter Modelica.SIunits.Angle sunHeight = 1.0471975511965976 "Height of sun";
   parameter Modelica.SIunits.Irradiance irradiance = 1000 "Irradiance";
+
+  parameter Real shadow1(final min=0, final max=1)=0 "Shadow of module 1";
+  parameter Real shadow2(final min=0, final max=1)=0 "Shadow of module 2";
+  parameter Real shadow3(final min=0, final max=1)=0 "Shadow of module 3";
+  parameter Real shadow4(final min=0, final max=1)=0 "Shadow of module 4";
+
   Modelica.Blocks.Sources.Constant const(k=Modelica.Constants.pi/2) annotation(Placement(visible = true, transformation(origin={-40,-60},   extent={{-10,10},{10,-10}},      rotation=180)));
   Modelica.Blocks.Math.Add add1 annotation(Placement(visible = true, transformation(origin={-50,50},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Blocks.Math.Add add2 annotation(Placement(visible = true, transformation(origin={-50,10},     extent = {{-10, -10}, {10, 10}}, rotation = -90)));
@@ -13,28 +19,35 @@ model SolarPyramid "Solar pyramid "
   SimpleModuleSymmetric module1(
     final useConstantIrradiance=false,
     final moduleData=moduleData,
-    final useHeatPort=useHeatPort) annotation (Placement(visible=true, transformation(
+    final useHeatPort=useHeatPort,
+    final shadow=shadow1,
+    final T=T)                     annotation (Placement(visible=true, transformation(
         origin={20,80},
         extent={{10,-10},{-10,10}},
         rotation=90)));
   SimpleModuleSymmetric module2(
     final useConstantIrradiance=false,
     final moduleData=moduleData,
-    final useHeatPort=useHeatPort) annotation (Placement(visible=true, transformation(
+    final useHeatPort=useHeatPort,
+    final T=T,
+    final shadow=shadow2)          annotation (Placement(visible=true, transformation(
         origin={20,40},
         extent={{10,-10},{-10,10}},
         rotation=90)));
   SimpleModuleSymmetric module3(
     final useConstantIrradiance=false,
     final moduleData=moduleData,
-    final useHeatPort=useHeatPort) annotation (Placement(visible=true, transformation(
+    final useHeatPort=useHeatPort,
+    final T=T,
+    final shadow=shadow3)          annotation (Placement(visible=true, transformation(
         origin={20,0},
         extent={{10,-10},{-10,10}},
         rotation=90)));
   SimpleModuleSymmetric module4(
     final useConstantIrradiance=false,
     final moduleData=moduleData,
-    final useHeatPort=useHeatPort) annotation (Placement(visible=true, transformation(
+    final useHeatPort=useHeatPort,
+    final shadow=shadow4)          annotation (Placement(visible=true, transformation(
         origin={20,-40},
         extent={{10,-10},{-10,10}},
         rotation=90)));
@@ -122,12 +135,12 @@ equation
                                                                                      color={0,0,255}));
   connect(module3.p, p3) annotation (Line(points={{20,10},{20,20},{100,20}}, color={0,0,255}));
   connect(module4.p, p4) annotation (Line(points={{20,-30},{20,-30},{20,-22},{20,-20},{100,-20}},  color={0,0,255}));
-  connect(module4.n, n) annotation (Line(points={{20,-50},{20,-50},{20,-56},{100,-56},{100,-86},{100,-86},{100,-100},{100,-100}},
+  connect(module4.n, n) annotation (Line(points={{20,-50},{20,-50},{20,-56},{100,-56},{100,-86},{100,-100}},
                                                                                                    color={0,0,255}));
   connect(irradianceParameter1.azimuth, azimuth) annotation (Line(points={{-22,74},{-80,74},{-80,-60},{-120,-60}},          color={0,0,127}));
   connect(azimuth, add1.u1) annotation (Line(points={{-120,-60},{-80,-60},{-80,74},{-50,74},{-44,74},{-44,62}}, color={0,0,127}));
   connect(irradianceParameter1.gamma, gamma) annotation (Line(points={{-22,86},{-92,86},{-92,60},{-120,60}},color={0,0,127}));
-  connect(module3.n, n) annotation (Line(points={{20,-10},{20,-10},{20,-16},{40,-16},{40,-56},{100,-56},{100,-100},{100,-100}},
+  connect(module3.n, n) annotation (Line(points={{20,-10},{20,-10},{20,-16},{40,-16},{40,-56},{100,-56},{100,-100}},
                                                                                                             color={0,0,255}));
   connect(module2.n, n) annotation (Line(points={{20,30},{20,30},{20,24},{40,24},{40,-56},{100,-56},{100,-100}},
                                                                                                         color={0,0,255}));

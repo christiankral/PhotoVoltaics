@@ -17,6 +17,11 @@ model SolarPyramidDCConverter "Solar pyramid with DC/DC converters"
   parameter Modelica.SIunits.Current ImpRef "Reference maximum power current of plant" annotation(Dialog(group="MP tracker"));
   parameter Integer n = 100 "Number of voltage and power discretizations" annotation(Dialog(group="MP tracker"));
 
+  parameter Real shadow1(final min=0, final max=1)=0 "Shadow of module 1";
+  parameter Real shadow2(final min=0, final max=1)=0 "Shadow of module 2";
+  parameter Real shadow3(final min=0, final max=1)=0 "Shadow of module 3";
+  parameter Real shadow4(final min=0, final max=1)=0 "Shadow of module 4";
+
   Modelica.Blocks.Sources.Constant const(k=Modelica.Constants.pi/2) annotation(Placement(visible = true, transformation(origin={-30,-70},   extent={{-10,10},{10,-10}},      rotation=180)));
   Modelica.Blocks.Math.Add add1 annotation(Placement(visible = true, transformation(origin={-70,50},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Blocks.Math.Add add2 annotation(Placement(visible = true, transformation(origin={-70,10},     extent = {{-10, -10}, {10, 10}}, rotation = -90)));
@@ -24,28 +29,36 @@ model SolarPyramidDCConverter "Solar pyramid with DC/DC converters"
   SimpleModuleSymmetric module1(
     final useConstantIrradiance=false,
     final moduleData=moduleData,
-    final useHeatPort=useHeatPort) annotation (Placement(visible=true, transformation(
+    final useHeatPort=useHeatPort,
+    final T=T,
+    final shadow=shadow1)          annotation (Placement(visible=true, transformation(
         origin={0,80},
         extent={{10,-10},{-10,10}},
         rotation=90)));
   SimpleModuleSymmetric module2(
     final useConstantIrradiance=false,
     final moduleData=moduleData,
-    final useHeatPort=useHeatPort) annotation (Placement(visible=true, transformation(
+    final useHeatPort=useHeatPort,
+    final T=T,
+    final shadow=shadow2)          annotation (Placement(visible=true, transformation(
         origin={0,40},
         extent={{10,-10},{-10,10}},
         rotation=90)));
   SimpleModuleSymmetric module3(
     final useConstantIrradiance=false,
     final moduleData=moduleData,
-    final useHeatPort=useHeatPort) annotation (Placement(visible=true, transformation(
+    final useHeatPort=useHeatPort,
+    final T=T,
+    final shadow=shadow3)          annotation (Placement(visible=true, transformation(
         origin={0,0},
         extent={{10,-10},{-10,10}},
         rotation=90)));
   SimpleModuleSymmetric module4(
     final useConstantIrradiance=false,
     final moduleData=moduleData,
-    final useHeatPort=useHeatPort) annotation (Placement(visible=true, transformation(
+    final useHeatPort=useHeatPort,
+    final T=T,
+    final shadow=shadow4)          annotation (Placement(visible=true, transformation(
         origin={0,-40},
         extent={{10,-10},{-10,10}},
         rotation=90)));
@@ -168,7 +181,7 @@ equation
                                                                                                                           color={0,0,127}));
   connect(add3.u1,add2. y) annotation(Line(points={{-64,-18},{-64,-6},{-70,-6},{-70,-1}},                                     color = {0, 0, 127}));
   connect(add2.u1,add1. y) annotation(Line(points={{-64,22},{-64,22},{-64,34},{-70,34},{-70,39}},                       color = {0, 0, 127}));
-  connect(module4.n, nModule) annotation (Line(points={{-4.44089e-16,-50},{0,-50},{0,-56},{16,-56},{16,-100},{8,-100},{8,-100},{0,-100}}, color={0,0,255}));
+  connect(module4.n, nModule) annotation (Line(points={{-4.44089e-16,-50},{0,-50},{0,-56},{16,-56},{16,-100},{8,-100},{0,-100}},          color={0,0,255}));
   connect(irradianceParameter1.azimuth, azimuth) annotation (Line(points={{-42,74},{-96,74},{-96,-60},{-120,-60}},          color={0,0,127}));
   connect(azimuth, add1.u1) annotation (Line(points={{-120,-60},{-96,-60},{-96,74},{-96,74},{-64,74},{-64,62}}, color={0,0,127}));
   connect(irradianceParameter1.gamma, gamma) annotation (Line(points={{-42,86},{-100,86},{-100,60},{-120,60}},
@@ -184,9 +197,9 @@ equation
   connect(module1.p, dcConverter1.dc_p1) annotation (Line(points={{0,90},{0,96},{30,96},{30,86},{40,86}}, color={0,0,255}));
   connect(internalHeatPort, module4.heatPort) annotation (Line(points={{-100,-80},{-86,-80},{-86,-100},{-40,-100},{-40,-86},{24,-86},{24,-30},{10,-30}}, color={191,0,0}));
   connect(module2.p, dcConverter2.dc_p1) annotation (Line(points={{0,50},{0,56},{30,56},{30,46},{40,46}}, color={0,0,255}));
-  connect(module2.n, dcConverter2.dc_n1) annotation (Line(points={{0,30},{0,30},{0,24},{0,24},{30,24},{30,34},{40,34}}, color={0,0,255}));
+  connect(module2.n, dcConverter2.dc_n1) annotation (Line(points={{0,30},{0,30},{0,24},{30,24},{30,34},{40,34}},        color={0,0,255}));
   connect(module3.p, dcConverter3.dc_p1) annotation (Line(points={{0,10},{0,16},{30,16},{30,6},{40,6}}, color={0,0,255}));
-  connect(module3.n, dcConverter3.dc_n1) annotation (Line(points={{0,-10},{0,-10},{0,-16},{0,-16},{30,-16},{30,-6},{40,-6}}, color={0,0,255}));
+  connect(module3.n, dcConverter3.dc_n1) annotation (Line(points={{0,-10},{0,-10},{0,-16},{30,-16},{30,-6},{40,-6}},         color={0,0,255}));
   connect(module4.p, dcConverter4.dc_p1) annotation (Line(points={{0,-30},{0,-24},{30,-24},{30,-34},{40,-34}}, color={0,0,255}));
   connect(module4.n, dcConverter4.dc_n1) annotation (Line(points={{0,-50},{0,-50},{0,-56},{30,-56},{30,-46},{40,-46}}, color={0,0,255}));
   connect(dcConverter1.dc_p2, dc_p) annotation (Line(points={{60,86},{70,86},{80,86},{80,60},{100,60}}, color={0,0,255}));
