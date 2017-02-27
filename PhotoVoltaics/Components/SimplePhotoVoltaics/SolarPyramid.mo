@@ -345,6 +345,7 @@ equation
           fillColor={0,0,0},
           fillPattern=FillPattern.Solid)}),                      Diagram(coordinateSystem(preserveAspectRatio=false)),
     Documentation(info="<html>
+<p>
 Model of a symmetric solar pyramid as used for a 
 <a href=\"https://images.sciencedaily.com/2011/04/110425081301-medium.jpg\">Mars rover</a>
 prototype. This model consists of four symmetrical photovoltaic panels. 
@@ -352,5 +353,5 @@ The center position of can be moved vertically, such that the four panels are mo
 The angle of inclination of each panel, <code>gamma</code>, is an input to this model.
 The second input is the azimuth of one of the fore panels. The remaining three panels are 
 displaced by 90 degrees, each.
-</html>"));
+</p></html>"));
 end SolarPyramid;
