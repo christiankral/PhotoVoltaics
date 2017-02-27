@@ -1,5 +1,5 @@
 within PhotoVoltaics.Components.SimplePhotoVoltaics;
-model SimpleCell
+model SimpleCell "Simple cell model"
   extends .PhotoVoltaics.Interfaces.PartialCell(signalCurrent(
       final irradianceRef=moduleData.irradianceRef,
       final alphaRef=moduleData.alphaIsc,

@@ -1,5 +1,5 @@
 within PhotoVoltaics.Components.SimplePhotoVoltaics;
-model SolarPyramidDCConverter "Solar pyramid with DC/DC converter"
+model SolarPyramidDCConverter "Solar pyramid with DC/DC converters"
   import Modelica.Constants.pi;
   extends Modelica.Thermal.HeatTransfer.Interfaces.PartialConditionalHeatPort(T = 298.15);
   extends Modelica.Electrical.PowerConverters.Interfaces.ACDC.DCtwoPin;
