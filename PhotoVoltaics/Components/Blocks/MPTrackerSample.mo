@@ -34,7 +34,12 @@ algorithm
   // Do not allow negative voltages
   annotation (
     defaultComponentName = "mpTracker",
-    Documentation(info = "<html>
+    Documentation(info="<html>
+<p>This is a simple model of sampling maximum power tracker. The initial output of this tracker is maximum power voltage
+<code>VmpRef</code>. After that, the sensed input power in sampled by a fixed sampling period. The output voltage is decreased by 
+a voltage step of <code>VmpRef/n</code>. If then then actual power is greater than the previous power, the sign of of voltage change 
+does not change. If the actual power is less than the previous power, the direction of the voltage change is swiched. This way
+the sampling maximum power tracker is permanently searching for a local maximum.</p>
 </html>"),
     Icon(graphics={  Line(points = {{-80, -78}, {-12, 20}, {12, 50}, {30, 64}, {44, 70}, {52, 68}, {60, 56}, {68, 22}, {80, -78}}, color = {0, 0, 0}, smooth = Smooth.Bezier), Ellipse(extent = {{34, 78}, {54, 58}}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Polygon(origin = {0, -10}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}), Line(origin = {0, 2}, points = {{-80, -80}, {-80, 68}}, color = {192, 192, 192}), Line(origin = {10, -78}, points = {{-90, 0}, {68, 0}}, color = {192, 192, 192}), Polygon(origin = {-10, -78}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, points = {{90, 0}, {68, 8}, {68, -8}, {90, 0}})}));
 end MPTrackerSample;
