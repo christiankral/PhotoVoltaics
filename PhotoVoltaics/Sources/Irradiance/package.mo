@@ -54,5 +54,7 @@ package Irradiance "Irradiance"
           points={{46,20},{92,24},{50,6},{46,20}},
           lineColor={255,170,85},
           fillColor={255,255,0},
-          fillPattern=FillPattern.Solid)}));
+          fillPattern=FillPattern.Solid)}), Documentation(info="<html>
+<p>This package contains solar irradiance sources.</p>
+</html>"));
 end Irradiance;
