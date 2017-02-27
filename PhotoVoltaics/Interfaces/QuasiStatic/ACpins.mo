@@ -6,4 +6,7 @@ partial model ACpins "Single phase AC pins"
     Placement(transformation(extent = {{90, -110}, {110, -90}})));
   Modelica.SIunits.ComplexVoltage vAC = ac_p.v - ac_n.v "AC potential";
   Modelica.SIunits.ComplexCurrent iAC = ac_p.i "AC current";
+  annotation (Documentation(info="<html>
+<p>This model provides single phase AC quasi static pins.</p>
+</html>"));
 end ACpins;

@@ -5,4 +5,7 @@ partial model ACplug "AC multi phase plug"
     Placement(transformation(extent = {{90, -10}, {110, 10}})));
   Modelica.SIunits.ComplexVoltage vAC[m] = ac.pin[:].v "AC potential";
   Modelica.SIunits.ComplexCurrent iAC[m] = ac.pin[:].i "AC current";
+  annotation (Documentation(info="<html>
+<p>This model provides a multi phase AC quasi static plug.</p>
+</html>"));
 end ACplug;

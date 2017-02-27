@@ -30,10 +30,9 @@ equation
   LossPower = v * i;
   annotation (
     defaultComponentName = "diode",
-    Documentation(info = "<html>
-           <p>The simple model of a Zener diode is derived from <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>. It consists of the diode including parallel ohmic resistance <i>R</i>. The diode formula is:
-<pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
-  i  =  Ids ( e      - 1) - Ibv ( e                  ).</pre>
+    Documentation(info="<html>
+<p>This partial model of the diode does not yet contain any current versus voltage characteristic. In this model the 
+temperature dependencies of the temperature voltage, the saturation current, etc. are defined.</p>
 </html>"),
     Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Text(extent = {{-150, 150}, {150, 110}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}),
     Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));

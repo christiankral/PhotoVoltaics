@@ -19,7 +19,7 @@ model SimpleModuleMPDC
     Placement(transformation(extent = {{-20, 10}, {0, 30}})));
   parameter Records.SHARP_NU_S5_E3E moduleData annotation (
     Placement(transformation(extent = {{60, 60}, {80, 80}})));
-  Components.Batteries.IdealBattery battery(
+  Sources.Electrical.IdealBattery battery(
     ns=4,
     np=1,
     V1Cell=14,

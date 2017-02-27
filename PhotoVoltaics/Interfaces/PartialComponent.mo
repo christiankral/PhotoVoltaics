@@ -29,5 +29,9 @@ equation
     Line(points = {{-19, 80}, {-20, 80}, {-20, 80}, {0, 80}, {0, 80}, {0, 70}, {0, 70}}, color = {0, 0, 127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})),
-    Icon(coordinateSystem(preserveAspectRatio = false)));
+    Icon(coordinateSystem(preserveAspectRatio = false)),
+    Documentation(info="<html>
+<p>This partial model contains the connectors and some parameters of photovoltaic components. Interfaces voltages,
+currents and power terms are defined.</p>
+</html>"));
 end PartialComponent;

@@ -38,5 +38,8 @@ record ModuleData "Data of PV module"
     defaultComponentName = "moduleData",
     defaultComponentPrefixes = "parameter",
     Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Text(lineColor = {0, 0, 255}, extent = {{-200, -150}, {200, -110}}, textString = "%moduleName")}),
-    Diagram(coordinateSystem(preserveAspectRatio = false)));
+    Diagram(coordinateSystem(preserveAspectRatio = false)),
+    Documentation(info="<html>
+<p>This record defines parameters provided by photovoltaic module manufacturers.</p>
+</html>"));
 end ModuleData;

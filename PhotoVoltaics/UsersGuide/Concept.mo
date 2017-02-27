@@ -53,6 +53,7 @@ is provied. In the actual version only a sampling tracker is available.</p>
 <li>Irradiance Model without time dependency and terrestric data; sun location is
     <a href=\"modelica://PhotoVoltaics.Sources.Irradiance.IrradianceFixedSun\">fixed</a> such that extraterrestrial solar radiation
     can be investsigated</li>
+<li>Measurement data read from file such as implemented in <a href=\"modelica://PhotoVoltaics_TGM\">PhotoVoltaics_TGM</a></li>
 </ul>
 
 <p>
