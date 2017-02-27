@@ -4,8 +4,12 @@ class ReleaseNotes "Release Notes"
   annotation (
     preferredView = "info",
     Documentation(info="<html>
-<h5>Note</h5>
-<p>Non backwards compatible changes will occur before releasing version 1.0.0</p>
+<h5>Version 1.0.0, 2017-XX-XX</h5>
+<ul>
+<li>Added shadow to solar pyramid model, see #18</li>
+<li>Added component names to icon layer, see #19</li>
+<li>Improved documentation</li>
+</ul>
 
 <h5>Version 0.5.0, 2017-02-25</h5>
 <ul>
