@@ -26,7 +26,7 @@ equation
   connect(groundAC.pin, voltageSource.pin_n) annotation (
     Line(points = {{40, -18}, {40, -14}, {40, -10}}, color = {85, 170, 255}));
   connect(ramp.y, converter.vDCRef) annotation (
-    Line(points = {{-39, -70}, {-39, -70}, {0, -70}, {0, -12}}, color = {0, 0, 127}));
+    Line(points={{-39,-70},{-39,-70},{-6,-70},{-6,-12}},        color = {0, 0, 127}));
   annotation (
     experiment(StopTime = 180));
 end SinglePhaseVoltageControlledConverter;

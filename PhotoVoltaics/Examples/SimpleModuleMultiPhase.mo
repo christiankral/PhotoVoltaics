@@ -89,7 +89,7 @@ equation
   connect(mpTracker.vRef, converter.vDCRef)
     annotation (Line(points={{-9,-10},{-6,-10},{-6,18}},
                                                        color={0,0,127}));
-  connect(powerfactor.y, converter.phi) annotation (Line(points={{-9,-42},{5.8,-42},{5.8,18}}, color={0,0,127}));
+  connect(powerfactor.y, converter.phi) annotation (Line(points={{-9,-42},{6,-42},{6,18}},     color={0,0,127}));
   connect(converter.ac, powerSensorGrid.pc) annotation (Line(points={{10,30},{16,30},{20,30}},
                                                                                             color={0,0,255}));
   connect(powerSensorGrid.pv, powerSensorGrid.pc) annotation (Line(points={{30,40},{20,40},{20,30}},color={0,0,255}));

@@ -343,7 +343,8 @@ equation
           extent={{-8,8},{8,-8}},
           lineColor={255,255,255},
           fillColor={0,0,0},
-          fillPattern=FillPattern.Solid)}),                      Diagram(coordinateSystem(preserveAspectRatio=false)),
+          fillPattern=FillPattern.Solid),                                             Text(extent = {{-150, -150}, {150, -110}}, textString = "%name", lineColor = {0, 0, 255})}),
+                                                                 Diagram(coordinateSystem(preserveAspectRatio=false)),
     Documentation(info="<html>
 <p>
 Model of a symmetric solar pyramid as used for a 

@@ -8,7 +8,7 @@ model QuasiStaticSinglePhaseConverter "Ideal quasi static single phase DC/AC con
   Modelica.SIunits.Power powerDC = vDC * iDC "Power of DC side";
   Modelica.SIunits.Power powerAC = Modelica.ComplexMath.real(vAC * Modelica.ComplexMath.conj(iAC)) "Complex apparent power of AC side";
   Modelica.Blocks.Interfaces.RealInput vDCRef(final unit = "V") "DC voltage" annotation (
-    Placement(transformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin = {0, -120}), iconTransformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin = {0, -120})));
+    Placement(transformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin={-60,-120}),  iconTransformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin={-60,-120})));
   Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {-90, 0})));
   Modelica.Electrical.Analog.Sensors.CurrentSensor currentSensor annotation (
@@ -41,11 +41,12 @@ equation
   connect(currentSensor.n, signalVoltage.p) annotation (
     Line(points = {{-90, 50}, {-90, 50}, {-90, 10}}, color = {0, 0, 255}));
   connect(signalVoltage.v, vDCRef) annotation (
-    Line(points = {{-83, 0}, {-70, 0}, {-70, -80}, {0, -80}, {0, -120}}, color = {0, 0, 127}));
+    Line(points={{-83,0},{-70,0},{-70,-80},{-60,-80},{-60,-120}},        color = {0, 0, 127}));
   connect(currentSensor.i, product.u1) annotation (
     Line(points = {{-80, 60}, {-76, 60}, {-70, 60}, {-70, 36}, {-62, 36}}, color = {0, 0, 127}));
   connect(vDCRef, product.u2) annotation (
-    Line(points = {{0, -120}, {0, -120}, {0, -94}, {0, -94}, {0, -80}, {-70, -80}, {-70, 24}, {-62, 24}}, color = {0, 0, 127}));
+    Line(points={{-60,-120},{-60,-120},{-60,-86},{-60,-86},{-60,-80},{-66,-80},{-70,-80},{-70,24},{-62,24}},
+                                                                                                          color = {0, 0, 127}));
   connect(product.y, feedback.u1) annotation (
     Line(points = {{-39, 30}, {-30, 30}, {-30, 8}}, color = {0, 0, 127}));
   connect(powerSensor.currentP, powerSensor.voltageP) annotation (

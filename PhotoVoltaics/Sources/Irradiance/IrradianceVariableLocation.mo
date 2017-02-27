@@ -142,5 +142,6 @@ equation
           points={{46,20},{92,24},{50,6},{46,20}},
           lineColor={255,170,85},
           fillColor={255,255,0},
-          fillPattern=FillPattern.Solid)}),                                                                                                                                                                                                        Diagram(coordinateSystem(preserveAspectRatio = false)));
+          fillPattern=FillPattern.Solid),                                                                                                                                                                                                        Text(extent={{-150,150},{150,110}},      lineColor = {0, 0, 255}, textString = "%name")}),
+                                                                                                                                                                                                        Diagram(coordinateSystem(preserveAspectRatio = false)));
 end IrradianceVariableLocation;

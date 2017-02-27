@@ -22,7 +22,7 @@ equation
   connect(groundDC.p, constantCurrent.p) annotation (
     Line(points = {{-40, 0}, {-40, 10}}, color = {0, 0, 255}));
   connect(ramp.y, converter.vDCRef) annotation (
-    Line(points = {{-39, -50}, {-20, -50}, {0, -50}, {0, 8}}, color = {0, 0, 127}));
+    Line(points={{-39,-50},{-20,-50},{-6,-50},{-6,8}},        color = {0, 0, 127}));
   connect(star.pin_n, groundAC.pin) annotation (
     Line(points = {{40, -40}, {40, -50}, {40, -50}}, color = {85, 170, 255}));
   connect(star.plug_p, voltageSource.plug_n) annotation (

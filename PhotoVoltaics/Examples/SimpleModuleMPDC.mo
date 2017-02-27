@@ -36,7 +36,7 @@ equation
   connect(groundDC.p, module.n) annotation (
     Line(points = {{-40, -20}, {-40, -10}}, color = {0, 0, 255}));
   connect(mpTracker.vRef, converter.vDCRef) annotation (
-    Line(points = {{21, -50}, {30, -50}, {30, -12}}, color = {0, 0, 127}));
+    Line(points={{21,-50},{24,-50},{24,-12}},        color = {0, 0, 127}));
   connect(module.p, powerSensor.pc) annotation (
     Line(points = {{-40, 10}, {-40, 10}, {-40, 20}, {-20, 20}}, color = {0, 0, 255}));
   connect(mpTracker.power, powerSensor.power) annotation (

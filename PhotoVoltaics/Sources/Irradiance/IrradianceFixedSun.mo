@@ -89,5 +89,6 @@ equation
         Line(
           points={{-100,-60},{100,-60}},
           color={0,0,0},
-          pattern=LinePattern.Dash)}),                                                                                                                                                                                                        Diagram(coordinateSystem(preserveAspectRatio = false)));
+          pattern=LinePattern.Dash),                                                                                                                                                                                                        Text(extent={{-150,150},{150,110}},      lineColor = {0, 0, 255}, textString = "%name")}),
+                                                                                                                                                                                                        Diagram(coordinateSystem(preserveAspectRatio = false)));
 end IrradianceFixedSun;

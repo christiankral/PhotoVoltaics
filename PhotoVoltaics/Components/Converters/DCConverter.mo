@@ -7,7 +7,7 @@ model DCConverter "DC controlled single phase DC/AC converter"
   parameter Modelica.SIunits.Voltage VRef = 48 "Reference DC source voltage";
   parameter Modelica.SIunits.Time Ti = 1E-6 "Internal integration time constant";
   Modelica.Blocks.Interfaces.RealInput vDCRef(final unit = "V") "DC voltage" annotation (
-    Placement(transformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin = {0, -120}), iconTransformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin = {0, -120})));
+    Placement(transformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin={-60,-120}),  iconTransformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin={-60,-120})));
   Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {-90, 0})));
   Modelica.Electrical.Analog.Sensors.CurrentSensor currentSensor annotation (
@@ -27,9 +27,9 @@ model DCConverter "DC controlled single phase DC/AC converter"
 
 equation
   connect(currentSensor.n, signalVoltage.p) annotation (Line(points={{-90,26},{-90,26},{-90,10}},        color = {0, 0, 255}));
-  connect(signalVoltage.v, vDCRef) annotation (Line(points = {{-83, 0}, {-70, 0}, {-70, -80}, {0, -80}, {0, -120}}, color = {0, 0, 127}));
+  connect(signalVoltage.v, vDCRef) annotation (Line(points={{-83,0},{-70,0},{-70,-80},{-60,-80},{-60,-120}},        color = {0, 0, 127}));
   connect(currentSensor.i, product.u1) annotation (Line(points={{-80,36},{-80,36},{-70,36},{-62,36}},                     color = {0, 0, 127}));
-  connect(vDCRef, product.u2) annotation (Line(points = {{0, -120}, {0, -120}, {0, -94}, {0, -94}, {0, -80}, {-70, -80}, {-70, 24}, {-62, 24}}, color = {0, 0, 127}));
+  connect(vDCRef, product.u2) annotation (Line(points={{-60,-120},{-60,-120},{-60,-88},{-60,-94},{-60,-80},{-70,-80},{-70,24},{-62,24}},        color = {0, 0, 127}));
   connect(product.y, feedback.u1) annotation (Line(points = {{-39, 30}, {-30, 30}, {-30, 8}}, color = {0, 0, 127}));
   connect(feedback.y, integrator.u) annotation (Line(points={{-30,-9},{-30,-9},{-30,-20},{-30,-40},{-10,-40}},           color = {0, 0, 127}));
   connect(gain.y, feedback.u2) annotation (Line(points={{-11,1.33227e-15},{-21,1.33227e-15},{-21,0},{-10,0},{-22,0}}, color = {0, 0, 127}));
