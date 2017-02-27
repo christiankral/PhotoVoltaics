@@ -29,7 +29,11 @@ equation
        </li>
 </ul>
 </html>",
-    info = "<html>
-<p>The signal current source is a parameterless converter of real valued signals into a the source current. No further effects are modeled. The real valued signal has to be provided by components of the blocks library. It can be regarded as the &quot;Opposite&quot; of a current sensor.</p>
+    info="<html>
+<p>The signal current source is a converter of real valued irradiance signal into a source current. 
+Depending on the actual temperature the current is adjusted through a linear temperature coeffficient.</p>
+<pre>
+i = IRef * (irradiance / irradianceRef + alphaRef * (T_heatPort - TRef))
+</pre>
 </html>"));
 end SignalCurrent;
