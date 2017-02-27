@@ -20,4 +20,7 @@ algorithm
   dayOfYear := dayOfYear + (if month > 9 then 30 else 0);
   dayOfYear := dayOfYear + (if month > 10 then 31 else 0);
   dayOfYear := dayOfYear + (if month > 11 then 30 else 0);
+  annotation (Documentation(info="<html>
+<p>Calculate the day of the year (between 1 and 365 or 366).</p>
+</html>"));
 end dayOfTheYear;
