@@ -20,5 +20,7 @@ partial package Records "Package containing records"
         Line(
           origin={0,-40},
           points={{-80,0},{80,0}},
-          color={64,64,64})}));
+          color={64,64,64})}), Documentation(info="<html>
+<p>This partial package provides a records symbol within a regular package icon.</p>
+</html>"));
 end Records;
