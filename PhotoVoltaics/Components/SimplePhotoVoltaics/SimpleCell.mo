@@ -24,5 +24,32 @@ initial equation
   IphRef = IsdRef * (exp(moduleData.VmpCellRef / m / moduleData.VtCellRef) - 1) + moduleData.ImpRef;
   annotation (
     defaultComponentName = "cell",
-    Icon(coordinateSystem, graphics={  Polygon(points = {{-80, 60}, {-60, 80}, {60, 80}, {80, 60}, {80, -60}, {60, -80}, {-60, -80}, {-80, -60}, {-80, 60}}, pattern = LinePattern.None, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid), Line(points = {{-40, 80}, {-40, -80}}, color = {255, 255, 255}), Line(points = {{40, 80}, {40, -80}}, color = {255, 255, 255}), Text(extent = {{-150, -150}, {150, -110}}, textString = "%name", lineColor = {0, 0, 255})}));
+    Icon(coordinateSystem, graphics={  Polygon(points = {{-80, 60}, {-60, 80}, {60, 80}, {80, 60}, {80, -60}, {60, -80}, {-60, -80}, {-80, -60}, {-80, 60}}, pattern = LinePattern.None, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid), Line(points = {{-40, 80}, {-40, -80}}, color = {255, 255, 255}), Line(points = {{40, 80}, {40, -80}}, color = {255, 255, 255}), Text(extent = {{-150, -150}, {150, -110}}, textString = "%name", lineColor = {0, 0, 255})}),
+    Documentation(info="<html>
+<p>The basic simple cell model consists of a scalable
+<a href=\"modelica://PhotoVoltaics.Components.Diodes.Diode2Module\">diode</a> model and a 
+<a href=\"modelica://PhotoVoltaics.Sources.Electrical.SignalCurrent\">signal current source</a> with temperature 
+dependency in order to consider the temperature coefficient of the short circuit of PV cell.</p>
+
+</p>
+The diode model used an exponential curve when forward conducting. This exponential curve is parameterized by</p>
+<ul>
+<li>the ideality factor of the diode, <code>m</code>,</li>
+<li>the photo current <code>IphRef</code> at reference conditions (reference temperature and irradiance)</li>
+</ul>
+
+<p>
+These parameters are determined from the characteristic of the cell, determined by the maximum power voltage and current. 
+</p>
+
+<pre>
+  IphRef = IsdRef * (exp(moduleData.VocCellRef / m / moduleData.VtCellRef) - 1);
+  IphRef = IsdRef * (exp(moduleData.VmpCellRef / m / moduleData.VtCellRef) - 1) + moduleData.ImpRef;
+</pre>
+
+<p>
+The solar irradiance of the model can eithe be constant or provided by signal input. The current of current source
+is determined linearely dependent of irradiance.</p>
+
+</html>"));
 end SimpleCell;
