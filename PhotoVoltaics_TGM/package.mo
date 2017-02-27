@@ -27,16 +27,38 @@ package PhotoVoltaics_TGM
     versionBuild = 1,
     versionDate = "2017-XX-XX",
     uses(Modelica(version = "3.2.2"), Buildings(version = "4.0.0"), PhotoVoltaics(version = "0.X.X")),
-    Documentation(info = "<html>
-<p>This library is based on the 
-<a href=\"https://github.com/christiankral/PhotoVoltaics\">PhotoVoltaics</a> and the 
-<a href=\"https://github.com/lbl-srg/modelica-buildings\">Buildings</a> 
-library. More information can be found at the 
-<a href=\"modelica://PhotoVoltaics.UsersGuide\">User's Guide</a> of the
-<a href=\"modelica://PhotoVoltaics\">PhotoVoltaics</a> library.</p>
+    Documentation(info="<html>
+<p>This library is based on the <a href=\"https://github.com/christiankral/PhotoVoltaics\">PhotoVoltaics</a> and the <a href=\"https://github.com/lbl-srg/modelica-buildings\">Buildings</a> library. More information can be found at the <a href=\"modelica://PhotoVoltaics.UsersGuide\">User&apos;s Guide</a> of the <a href=\"modelica://PhotoVoltaics\">PhotoVoltaics</a> library. </p>
+<p>The data base of this library are two photo voltaic power plants at the <a href=\"https://www.tgm.ac.at\">TGM</a> in <a href=\"http://www.openstreetmap.org/way/233509248\">Vienna</a>, Austria</p>
+<p>Two photovoltaic plants are investigated:</p>
+<table cellspacing=\"0\" cellpadding=\"2\" border=\"1\" width=\"100%\"><tr>
+<td></td>
+<td><p>Comax</p></td>
+<td><p>Trina</p></td>
+</tr>
+<tr>
+<td><p>Modules</p></td>
+<td><p>TSM_200_DC01A</p></td>
+<td><p>TSM_230_PC05</p></td>
+</tr>
+<tr>
+<td><p>Series connected modules</p></td>
+<td><p>6</p></td>
+<td><p>8</p></td>
+</tr>
+<tr>
+<td><p>azimuth</p></td>
+<td><p>0&deg;</p></td>
+<td><p>0&deg;</p></td>
+</tr>
+<tr>
+<td><p>gamma (inclination of PV modules)</p></td>
+<td><p>10&deg;</p></td>
+<td><p>10&deg;</p></td>
+</tr>
+</table>
 
-<p>The data base of this library are two photo voltaic power plants at the 
-<a href=\"https://www.tgm.ac.at\">TGM</a> in
-<a href=\"http://www.openstreetmap.org/way/233509248\">Vienna</a>, Austria</p>
-<p></html>"));
+<p>For these two plants different irradiance sources are investigated.</p>
+
+<p>Measured data are also provided and may be compared with simulation data.</p></html>"));
 end PhotoVoltaics_TGM;

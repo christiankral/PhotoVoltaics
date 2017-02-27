@@ -65,15 +65,9 @@ equation
     experiment(StopTime = 3.1536e+07, Interval = 900, Tolerance = 1e-06, StartTime = 0),
     Documentation(revisions = "<html>
 </html>",
-        info = "<html>
-<p>This example is based on weather data taken from 
-<a href=\"https://energyplus.net/weather-location/europe_wmo_region_6/AUT//AUT_Vienna.Schwechat.110360_IWEC\">https://energyplus.net</a>. 
-The EPW file was converted using a java script provided by the 
-<a href=\"https://github.com/lbl-srg/modelica-buildings\">Buildings</a> library.</p>
-<p><code>
-java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/Resources/WeatherData/AUT_Vienna.Schwechat.110360_IWEC.epw
-</code></p>
-
+        info="<html>
+<p>This example is based on analytical solar data for one year. This simulation investigates the theoretical 
+harvest of electric energy if there were absolutely no clouds and other disturbing weather conditions.</p>
 </html>"),
 __OpenModelica_simulationFlags(cpu = "()", jacobian = "coloredNumerical", s = "dassl", lv = "LOG_STATS"));
 end TGM_Comax_Analytical_2016;

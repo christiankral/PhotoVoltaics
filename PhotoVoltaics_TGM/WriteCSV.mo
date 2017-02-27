@@ -1,5 +1,5 @@
 within PhotoVoltaics_TGM;
-model WriteCSV "Simple block to write CSV files with one time and data column"
+block WriteCSV "Simple block to write CSV files with one time and data column"
   extends Modelica.Blocks.Interfaces.BlockIcon;
   parameter String fileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/time_energy.csv");
   parameter String inputQuantity = "energy(Ws)" "Header to be written to CSV file";
@@ -24,5 +24,8 @@ algorithm
   end when;
   annotation (
     Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Text(extent = {{-60, -60}, {60, 60}}, lineColor = {0, 0, 0}, textString = "CSV"), Text(extent = {{-150, -150}, {150, -110}}, lineColor = {0, 0, 255}, textString = "%inputQuantity")}),
-    Diagram(coordinateSystem(preserveAspectRatio = false)));
+    Diagram(coordinateSystem(preserveAspectRatio = false)),
+    Documentation(info="<html>
+<p>The sampled input data of this blocks are written to a CSV file.</p>
+</html>"));
 end WriteCSV;
