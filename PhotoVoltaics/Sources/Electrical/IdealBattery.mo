@@ -1,4 +1,4 @@
-within PhotoVoltaics.Components.Batteries;
+within PhotoVoltaics.Sources.Electrical;
 model IdealBattery "Re-chargeable ideal battery without loss"
   parameter Integer ns(min = 1) = 1 "Number of series cells";
   parameter Integer np(min = 1) = 1 "Number of parallel cells";
