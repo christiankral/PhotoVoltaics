@@ -13,6 +13,8 @@ Modelica library for the simulation of photo voltaic cells, modules and plants. 
  - Maximum power tracker based on continuous voltage regulation
  - Linear, symmetric and chargable battery model, parameterized by cut off voltage, charge voltage, energy
 
+![PhotoVoltaics library](https://github.com/christiankral/PhotoVoltaics/blob/master/PhotoVoltaics/Resources/Images/SimpleModuleMPDC.png?raw=true)
+
 # Application Examples
 
 ## Phileas Rover
