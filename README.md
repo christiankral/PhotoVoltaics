@@ -28,6 +28,8 @@ Image source: [OEWF](http://oewf.org/wp-content/uploads/2014/08/aouda-phileas-sa
 
 Actual irradiance and electric power measurement data of the TGM power plants in [Vienna](http://www.openstreetmap.org/way/233509248) are provided in the PhotoVoltaics_TGM library. Measurements and simulation results can be compared by the provided example models. The PhotoVoltaics_TGM library relies on the [Buildings library](https://github.com/lbl-srg/modelica-buildings). 
 
+![TGM](https://github.com/christiankral/PhotoVoltaics/blob/master/PhotoVoltaics/Resources/Images/TGM_Comax_Trina.jpg?raw=true)
+
 # License
 
 This Modelica library is free software and the use is completely at your own
