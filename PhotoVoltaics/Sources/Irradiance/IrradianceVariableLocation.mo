@@ -8,8 +8,8 @@ model IrradianceVariableLocation "Simple solar irradiance without considering we
   parameter Integer startMonth(final min = 1, final max = 12) = 9 "Month";
   parameter Integer startYear = 2016 "Year";
   parameter Integer TimeZone = 1 "Time zone";
-  parameter Modelica.SIunits.Angle longitude = 16.428 * pi / 180 "Longitude";
-  parameter Modelica.SIunits.Angle latitude = 48.280 * pi / 180 "Latitude";
+  parameter Modelica.SIunits.Angle longitude = 0.2856929452589518 "Longitude";
+  parameter Modelica.SIunits.Angle latitude = 0.8418964085999744 "Latitude";
   parameter Modelica.SIunits.Irradiance irradianceRef = 1000 "Reference solar irradiance";
   Integer startDayOfYear(start = dayOfTheYear(startDay, startMonth, startYear)) "Start day of year in simulation";
   Integer dayOfYear(final start = dayOfTheYear(startDay, startMonth, startYear)) "Actual day of year";
@@ -143,5 +143,5 @@ equation
           lineColor={255,170,85},
           fillColor={255,255,0},
           fillPattern=FillPattern.Solid),                                                                                                                                                                                                        Text(extent={{-150,150},{150,110}},      lineColor = {0, 0, 255}, textString = "%name")}),
-                                                                                                                                                                                                        Diagram(coordinateSystem(preserveAspectRatio = false)));
+                                                                                                                                                                                                  Diagram(coordinateSystem(preserveAspectRatio = false)));
 end IrradianceVariableLocation;

@@ -1,4 +1,4 @@
-package PhotoVoltaics_TGM
+﻿package PhotoVoltaics_TGM
   extends Modelica.Icons.Package;
 
 
@@ -47,7 +47,8 @@ package PhotoVoltaics_TGM
     uses(Modelica(version = "3.2.2"), Buildings(version = "3.0.0"), PhotoVoltaics(version = "1.0.0")),
     Documentation(info="<html>
 <p>This library is based on the <a href=\"https://github.com/christiankral/PhotoVoltaics\">PhotoVoltaics</a> and the <a href=\"https://github.com/lbl-srg/modelica-buildings\">Buildings</a> library. More information can be found at the <a href=\"modelica://PhotoVoltaics.UsersGuide\">User&apos;s Guide</a> of the <a href=\"modelica://PhotoVoltaics\">PhotoVoltaics</a> library. </p>
-<p>The data base of this library are two photo voltaic power plants at the <a href=\"https://www.tgm.ac.at\">TGM</a> in <a href=\"http://www.openstreetmap.org/way/233509248\">Vienna</a>, Austria</p>
+<p>The data base of this library are two photo voltaic power plants at the <a href=\"https://www.tgm.ac.at\">TGM</a> in <a href=\"http://www.openstreetmap.org/way/233509248\">Vienna</a>, Austria. The
+GPS coordinates are 48.237111°N, 16.369000°E.</p>
 <p>Two photovoltaic plants are investigated:</p>
 <table cellspacing=\"0\" cellpadding=\"2\" border=\"1\" width=\"100%\"><tr>
 <td></td>
@@ -75,6 +76,11 @@ package PhotoVoltaics_TGM
 <td><p>10&deg;</p></td>
 </tr>
 </table>
+
+<p>
+<img src=\"modelica://PhotoVoltaics/Resources/Images/TGM_Comax_Trina.jpg\">
+</p>
+
 
 <p>For these two plants different irradiance sources are investigated.</p>
 

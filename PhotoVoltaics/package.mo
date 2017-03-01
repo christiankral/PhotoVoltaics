@@ -19,6 +19,14 @@
 
 
 
+
+
+
+
+
+
+
+
   annotation (preferredView="info",
     version = "1.0.0",
     versionBuild = 1,
@@ -59,6 +67,10 @@ of the <a href=\"http://oewf.org/en/\">Austrian Space Forum, OEWF</a>, can be in
 Measurements and simulation results can be compared by the provided example models. 
 The PhotoVoltaics_TGM library relies on the <a href=\"https://github.com/lbl-srg/modelica-buildings\">Buildings library</a>.
 </p> 
+
+<p>
+<img src=\"modelica://PhotoVoltaics/Resources/Images/TGM_Comax_Trina.jpg\">
+</p>
 
 <h5>Contributions</h5>
 <p>

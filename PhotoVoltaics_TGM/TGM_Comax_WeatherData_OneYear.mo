@@ -5,9 +5,13 @@ model TGM_Comax_WeatherData_OneYear "One year based on real weather data; Comax 
   parameter Integer npModule = 1 "Number of parallel connected modules";
   parameter String fileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/Resources/WeatherData/AUT_Vienna.Schwechat.110360_IWEC.mos") "File name";
   parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_WeatherData_2016_energy.csv");
-  Buildings.BoundaryConditions.SolarIrradiation.DiffusePerez HDifTil(til = 0.17453292519943, lat = 0.84264496286286, azi = 0) "Diffuse irradiation on tilted surface" annotation (
+  Buildings.BoundaryConditions.SolarIrradiation.DiffusePerez HDifTil(                                                azi = 0,
+    til(displayUnit="deg") = 0.17453292519943,
+    lat(displayUnit="deg") = 0.8418964085999744)                                                                                "Diffuse irradiation on tilted surface" annotation (
     Placement(visible = true, transformation(extent = {{-60, 70}, {-40, 90}}, rotation = 0)));
-  Buildings.BoundaryConditions.SolarIrradiation.DirectTiltedSurface HDirTil(til = 0.17453292519943, lat = 0.84264496286286, azi = 0) "Direct irradiation on tilted surface" annotation (
+  Buildings.BoundaryConditions.SolarIrradiation.DirectTiltedSurface HDirTil(                                                azi = 0,
+    til(displayUnit="deg") = 0.17453292519943,
+    lat(displayUnit="deg") = 0.8418964085999744)                                                                                                           "Direct irradiation on tilted surface" annotation (
     Placement(visible = true, transformation(extent = {{-60, 40}, {-40, 60}}, rotation = 0)));
   Modelica.Blocks.Math.Add G "Total irradiation on tilted surface" annotation (
     Placement(visible = true, transformation(extent = {{-20, 50}, {0, 70}}, rotation = 0)));
@@ -54,7 +58,7 @@ equation
   connect(weaDat.weaBus, HDirTil.weaBus) annotation (
     Line(points = {{-80, 80}, {-70, 80}, {-70, 50}, {-60, 50}}, color = {255, 204, 51}, thickness = 0.5));
   connect(mpTracker.vRef, converter.vDCRef) annotation (
-    Line(points = {{11, -60}, {20, -60}, {20, -22}}, color = {0, 0, 127}));
+    Line(points={{11,-60},{14,-60},{14,-22}},        color = {0, 0, 127}));
   connect(converter.ac_n, groundAC.pin) annotation (
     Line(points = {{30, -20}, {30, -30}, {70, -30}}, color = {85, 170, 255}));
   connect(groundAC.pin, voltageSource.pin_n) annotation (
