@@ -3,7 +3,8 @@ model TGM_Trina_WeatherData_OneYear "One year based on real weather data; Trina 
   extends Modelica.Icons.Example;
   parameter Integer nsModule = 8 "Number of series connected modules";
   parameter Integer npModule = 1 "Number of parallel connected modules";
-  parameter String fileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/Resources/WeatherData/AUT_Vienna.Schwechat.110360_IWEC.mos") "File name";
+  // Weather data file name has to be passed without loadResource to ReaderTMY3 class of Buildings library
+  parameter String fileName = "modelica://PhotoVoltaics/Resources/WeatherData/AUT_Vienna.Schwechat.110360_IWEC.mos" "File name";
   parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Trina_WeatherData_2016_energy.csv");
   Buildings.BoundaryConditions.SolarIrradiation.DiffusePerez HDifTil(til = 0.17453292519943, lat = 0.8418964085999744, azi = 0) "Diffuse irradiation on tilted surface" annotation (
     Placement(visible = true, transformation(extent = {{-60, 70}, {-40, 90}}, rotation = 0)));
