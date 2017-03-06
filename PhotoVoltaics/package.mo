@@ -62,7 +62,7 @@ of the <a href=\"http://oewf.org/en/\">Austrian Space Forum, OEWF</a>, can be in
 
 <p><b>TGM Photovoltaic Power Plants</b></p>
 
-<p>Actual irradiance and electric power measurement data of the TGM power plants in 
+<p>Actual irradiance and electric power measurement data of the TGM power plants Trina and Comax in 
 <a href=\"http://www.openstreetmap.org/way/233509248>\"Vienna</a> are provided in the PhotoVoltaics_TGM library. 
 Measurements and simulation results can be compared by the provided example models. 
 The PhotoVoltaics_TGM library relies on the <a href=\"https://github.com/lbl-srg/modelica-buildings\">Buildings library</a>.
