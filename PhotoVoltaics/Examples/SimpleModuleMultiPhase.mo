@@ -41,7 +41,8 @@ model SimpleModuleMultiPhase
         rotation=-90)));
   PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef=moduleData.VmpRef, ImpRef=moduleData.ImpRef,
     samplePeriod=0.1)                                                                                           annotation (Placement(transformation(extent={{-30,-20},{-10,0}})));
-  PhotoVoltaics.Components.Converters.MultiPhaseConverter converter annotation (Placement(transformation(extent={{-10,20},{10,40}})));
+  PhotoVoltaics.Components.Converters.MultiPhaseConverter converter(VmpRef=
+        moduleData.VmpRef, ImpRef=moduleData.ImpRef)                annotation (Placement(transformation(extent={{-10,20},{10,40}})));
   parameter PhotoVoltaics.Records.SHARP_NU_S5_E3E moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
   Modelica.Electrical.MultiPhase.Sensors.PowerSensor powerSensorGrid annotation (Placement(transformation(extent={{20,20},{40,40}})));
   Modelica.Electrical.MultiPhase.Sensors.VoltageQuasiRMSSensor voltageQuasiRMSSensor(m=3) annotation (Placement(transformation(
@@ -59,7 +60,8 @@ model SimpleModuleMultiPhase
 
   Modelica.SIunits.Power powerDC = powerSensor.power "DC power";
   Modelica.SIunits.Power powerAC = powerSensorGrid.power "AC real power";
-  Modelica.SIunits.ApparentPower aparrentPowerAC = powerFactorActual.u2 "AC apparent power";
+  Modelica.SIunits.ApparentPower aparrentPowerAC = powerFactorActual.u2
+    "AC apparent power";
   Real powerFactorAC = powerFactorActual.y "Actual power factor";
 
   Modelica.Blocks.Nonlinear.Limiter limiter(uMax=Modelica.Constants.inf, uMin=Modelica.Constants.small) annotation (Placement(transformation(extent={{-28,-90},{-48,-70}})));
@@ -96,7 +98,7 @@ equation
   connect(powerSensorGrid.nv, star.plug_p) annotation (Line(points={{30,20},{30,20},{30,-2},{30,-50},{80,-50}}, color={0,0,255}));
   connect(powerSensorGrid.nc, currentQuasiRMSSensor.plug_p) annotation (Line(points={{40,30},{54,30},{80,30},{80,20}}, color={0,0,255}));
   connect(currentQuasiRMSSensor.plug_n, cosineVoltage.plug_p) annotation (Line(points={{80,0},{80,-6},{80,-20}},
-                                                                                                         color={0,0,255}));
+                                                                                                    color={0,0,255}));
   connect(voltageQuasiRMSSensor.plug_n, star.plug_p) annotation (Line(points={{50,-40},{50,-50},{80,-50}}, color={0,0,255}));
   connect(voltageQuasiRMSSensor.plug_p, currentQuasiRMSSensor.plug_n) annotation (Line(points={{50,-20},{50,-10},{80,-10},{80,0}}, color={0,0,255}));
   connect(powerFactorActual.u1, powerSensorGrid.power) annotation (Line(points={{-68,-74},{-60,-74},{-60,-60},{22,-60},{22,19}}, color={0,0,127}));
