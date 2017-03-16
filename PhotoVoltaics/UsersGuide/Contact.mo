@@ -3,7 +3,7 @@ class Contact "Contact"
   extends Modelica.Icons.Contact;
   annotation (
     preferredView = "info",
-    Documentation(info="<html>
+    Documentation(info="c<html>
 <p>
 This library was developed during a diploma thesis at the
 <a href=\"http://www.tgm.ac.at\">TGM</a>
@@ -34,7 +34,7 @@ email: <a HREF=\"mailto:dr.christian.kral@gmail.com\">dr.christian.kral@gmail.co
 
 <h4>Additional contributions</h4>
 <ul>
-<li>The three phase transient multi phase converter was contributed by Luiz Bueno, RWTH Aachen, German.</li>
+<li>The three phase transient multi phase converter was contributed by Luiz Bueno, RWTH Aachen, Germany.</li>
 <ul>
 
 </html>"));

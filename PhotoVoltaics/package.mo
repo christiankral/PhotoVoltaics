@@ -85,6 +85,6 @@ Library authors are</p>
 <li><a href=\"http://christiankral.net\">Christian Kral</a></li>
 </ul>
 
-<p>The three phase transient multi phase converter was contributed by Luiz Bueno, RWTH Aachen, German.</p>
+<p>The three phase transient multi phase converter was contributed by Luiz Bueno, RWTH Aachen, Germany.</p>
 </html>"));
 end PhotoVoltaics;

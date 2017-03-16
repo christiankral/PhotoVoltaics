@@ -166,8 +166,9 @@ defaultComponentName = "converter",
               LinePattern.Dash,                                                                                                    fillColor=
               {0,0,255},
             fillPattern=FillPattern.Solid,
-          textString="3ph AC"),                                                                                                                                                                                                        Text(extent={{-150,-110},{-90,-150}},   lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "vDCRef")}),
-                                                                                                                                     Documentation(info="<html>
+          textString="3ph AC"),                                                                                                                                                                                                        Text(extent={{-150,-110},{-90,-150}},   lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "vDCRef"),
+                                                                                                                                                                                                        Text(extent={{90,-110},{150,-150}},     lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=FillPattern.Solid,
+          textString="phi")}),                                                                                                       Documentation(info="<html>
 <p>This is an ideal DC/AC converter.<p>
 
 <p>
