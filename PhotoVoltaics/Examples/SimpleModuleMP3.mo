@@ -1,5 +1,5 @@
 within PhotoVoltaics.Examples;
-model SimpleModuleMP3
+model SimpleModuleMP3 "Simple module supplies quasi static three phase AC grid with maximum power tracker"
   extends Modelica.Icons.Example;
   Modelica.Electrical.Analog.Basic.Ground groundDC annotation (
     Placement(visible = true, transformation(origin = {-40, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

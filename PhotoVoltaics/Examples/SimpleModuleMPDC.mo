@@ -1,5 +1,5 @@
 within PhotoVoltaics.Examples;
-model SimpleModuleMPDC
+model SimpleModuleMPDC "Simple module supplies DC grid with maximum power tracker"
   extends Modelica.Icons.Example;
   Modelica.Electrical.Analog.Basic.Ground groundDC annotation (
     Placement(visible = true, transformation(origin = {-40, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

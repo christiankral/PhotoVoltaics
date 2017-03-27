@@ -1,5 +1,5 @@
 within PhotoVoltaics.Functions;
-function degree
+function degree "Convert radians into degrees"
   input Real rad "Angle in rad";
   output Real degree "Angle in degree";
 algorithm

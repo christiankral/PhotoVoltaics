@@ -1,5 +1,5 @@
 within PhotoVoltaics.Examples;
-model SimpleModule
+model SimpleModule "Simple module with load resistor"
   extends Modelica.Icons.Example;
   Modelica.Electrical.Analog.Basic.Ground ground annotation (
     Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

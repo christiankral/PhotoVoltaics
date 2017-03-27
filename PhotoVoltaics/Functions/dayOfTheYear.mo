@@ -1,5 +1,5 @@
 within PhotoVoltaics.Functions;
-function dayOfTheYear
+function dayOfTheYear "Determined day of the year based on date"
   input Integer day "Day";
   input Integer month "Month";
   input Integer year "Year";

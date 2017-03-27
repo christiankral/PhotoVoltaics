@@ -1,5 +1,5 @@
 within PhotoVoltaics.Components.Blocks;
-model Power10
+model Power10 "Calculates to the power of 10"
   extends Modelica.Blocks.Interfaces.SISO;
   parameter Real k "Gain";
 equation

@@ -34,8 +34,9 @@ model Irradiance "Simple solar irradiance without considering weather conditions
   Modelica.SIunits.Angle angleOfIncidence "Angle of incidence between a vector in sun direction and a normal vector";
   Modelica.SIunits.Irradiance directIrradianceHorizontal "Direct irradiance on the horizontal in W/m^2";
   Modelica.SIunits.Irradiance directIrradianceInclined "Direct irradiance on the inclined plane in w/m^2";
-  Modelica.Blocks.Interfaces.RealOutput irradiance annotation (
-    Placement(transformation(extent = {{100, -10}, {120, 10}})));
+  Modelica.Blocks.Interfaces.RealOutput irradiance "Irradiance of inclined area"
+                                                   annotation (
+    Placement(transformation(extent={{102,-10},{122,10}})));
 algorithm
   // Calculate ratio of day w.r.t. total number of days of a year as equivalent angle
   when sample(24 * 3600, 24 * 3600) then

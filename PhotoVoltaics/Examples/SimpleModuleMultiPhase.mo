@@ -1,5 +1,5 @@
 within PhotoVoltaics.Examples;
-model SimpleModuleMultiPhase
+model SimpleModuleMultiPhase "Simple module supplies transient three phase AC grid with maximum power tracker"
 
   import Modelica.Constants.pi;
   extends Modelica.Icons.Example;

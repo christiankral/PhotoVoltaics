@@ -1,5 +1,5 @@
 within PhotoVoltaics.Examples;
-model SimpleCellVoltageSource
+model SimpleCellVoltageSource "Simple cell with DC voltage"
   extends Modelica.Icons.Example;
   Modelica.Electrical.Analog.Basic.Ground ground annotation (
     Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
