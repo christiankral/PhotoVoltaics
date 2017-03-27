@@ -4,6 +4,11 @@ class ReleaseNotes "Release Notes"
   annotation (
     preferredView = "info",
     Documentation(info="<html>
+<h5>Version 0.6.1, 2017-03-27</h5>
+<ul>
+<li>Removed obsolete solar pyramid without converter</li>
+</ul>
+
 <h5>Version 0.6.0, 2017-03-16</h5>
 <ul>
 <li>Added shadow to solar pyramid model, see #18</li>
