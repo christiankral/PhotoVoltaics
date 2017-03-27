@@ -46,7 +46,8 @@ equation
   connect(powerSensor.nv, groundDC.p) annotation (
     Line(points = {{-10, 10}, {-10, 10}, {-10, -18}, {-10, -20}, {-40, -20}}, color = {0, 0, 255}));
   connect(battery.pin_n, ground.p) annotation (Line(points={{80,-10},{80,-15},{80,-20}}, color={0,0,255}));
-  connect(irradiance.irradiance, module.variableIrradiance) annotation (Line(points={{-69,0},{-52,0}}, color={0,0,127}));
+  connect(irradiance.irradiance, module.variableIrradiance) annotation (Line(points={{-68.8,0},{-52,0}},
+                                                                                                       color={0,0,127}));
   connect(groundDC.p, converter.dc_n1) annotation (Line(points={{-40,-20},{-16,-20},{10,-20},{10,-6},{20,-6}}, color={0,0,255}));
   connect(converter.dc_p1, powerSensor.nc) annotation (Line(points={{20,6},{10,6},{10,20},{0,20}}, color={0,0,255}));
   connect(converter.dc_p2, battery.pin_p) annotation (Line(points={{40,6},{50,6},{50,20},{80,20},{80,10}}, color={0,0,255}));

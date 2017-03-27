@@ -66,7 +66,7 @@
     uses(Modelica(version = "3.2.2")),
     Icon(coordinateSystem, graphics={  Ellipse(origin = {36, 75}, fillColor = {255, 255, 127}, fillPattern = FillPattern.Solid, extent = {{0, 1}, {40, -39}}, endAngle = 360), Rectangle(origin = {-60, -9}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -7}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {-60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -61}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {60, -5}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
             fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Line(origin = {18, 34}, points = {{4, 10}, {-84, -16}}), Line(origin = {-12, 70}, points = {{34, -6}, {-34, 6}}), Line(points = {{36, 30}, {28, 16}}, color = {28, 108, 200})}),
-    Documentation(info="<html>
+    Documentation(info="	<html>
 <p>
 Modelica library for the simulation of photo voltaic cells, modules and plants. The library provides:
 </p>
@@ -85,6 +85,11 @@ Modelica library for the simulation of photo voltaic cells, modules and plants. 
 <li>Maximum power tracker based on continuous voltage regulation</li>
 <li>Linear, symmetric and chargable battery model, parameterized by cut off voltage, charge voltage, energy</li>
 </ul>
+
+<p>
+<img src=\"modelica://PhotoVoltaics/Resources/Images/SimpleModuleMPDC.png\">
+</p>
+
 <h5>Application examples</h5>
 
 <p><b>Phileas Rover</b></p>
