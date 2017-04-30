@@ -2,6 +2,7 @@ within PhotoVoltaics.UsersGuide;
 class License "Modelica License 1.1"
   extends Modelica.Icons.Information;
   annotation (
+    preferredView = "info",
     Documentation(info="<html>
 <h4>PhotoVoltaics Modelica Library</h4>
 

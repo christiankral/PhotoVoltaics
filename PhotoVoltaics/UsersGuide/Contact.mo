@@ -3,7 +3,7 @@ class Contact "Contact"
   extends Modelica.Icons.Contact;
   annotation (
     preferredView = "info",
-    Documentation(info="c<html>
+    Documentation(info="<html>
 <p>
 This library was developed during a diploma thesis at the
 <a href=\"http://www.tgm.ac.at\">TGM</a>
