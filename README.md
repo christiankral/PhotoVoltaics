@@ -19,7 +19,7 @@ Modelica library for the simulation of photo voltaic cells, modules and plants. 
 
 ## Phileas Rover
 
-The maximum power harvest of a solar pyramid, which may be applicable to the [Phileas Rover](http://oewf.org/en/polares-science/phileas-rover/) of the [Austrian Space Forum, OEWF](http://oewf.org/en/), can be investigated by the PhotoVoltaics libraray. 
+The maximum power harvest of a solar pyramid, which may be applicable to the [Phileas Rover](http://oewf.org/en/polares-science/phileas-rover/) of the [Austrian Space Forum, OEWF](http://oewf.org/en/), can be investigated by the PhotoVoltaics library. 
 
 ![Phileas Rover](http://oewf.org/wp-content/uploads/2014/08/aouda-phileas-santek_medium-225x300.jpg "Phileas Rover")
 Image source: [OEWF](http://oewf.org/wp-content/uploads/2014/08/aouda-phileas-santek_medium-225x300.jpg)
