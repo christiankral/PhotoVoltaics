@@ -4,6 +4,13 @@ class ReleaseNotes "Release Notes"
   annotation (
     preferredView = "info",
     Documentation(info="<html>
+<h5>Version 1.0.1, 2017-06-19</h5>
+<ul>
+<li>Added missing ground in 
+    <a href=\"modelica://PhotoVoltaics.ComponentTesting.DiodeCompare\">DiodeCompare</a>, see
+    <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/23\">#23</a></li>
+</ul>
+
 <h5>Version 1.0.0, 2017-04-30</h5>
 <ul>
 <li>Updated documentation</li>

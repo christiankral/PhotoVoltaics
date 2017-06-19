@@ -22,6 +22,7 @@ model DiodeCompare "Compare different diode models"
     Placement(transformation(extent = {{80, -90}, {100, -70}})));
   PhotoVoltaics.Components.Diodes.Diode2Module diodexm(m = 40 / 25.69, useHeatPort = true, nsModule = nsModule, npModule = npModule, ns = ns) annotation (
     Placement(transformation(extent = {{60, 20}, {80, 40}})));
+  Modelica.Electrical.Analog.Basic.Ground ground annotation (Placement(transformation(extent={{-20,-92},{0,-72}})));
 equation
   connect(rampVoltage.p, zDiode.p) annotation (
     Line(points = {{-40, -60}, {-50, -60}, {-50, -30}, {-40, -30}}, color = {0, 0, 255}));
@@ -43,6 +44,7 @@ equation
     Line(points = {{70, 20}, {70, 20}, {-48, 20}, {-60, 20}, {-60, -10}, {-70, -10}}, color = {191, 0, 0}));
   connect(diodexm.n, groundm.p) annotation (
     Line(points = {{80, 30}, {90, 30}, {90, -70}}, color = {0, 0, 255}));
+  connect(ground.p, rampVoltage.n) annotation (Line(points={{-10,-72},{-10,-60},{-20,-60}}, color={0,0,255}));
   annotation (
     Icon(coordinateSystem(preserveAspectRatio = false)),
     Diagram(coordinateSystem(preserveAspectRatio = false)));
