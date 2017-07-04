@@ -32,8 +32,9 @@ Actual irradiance and electric power measurement data of the TGM power plants in
 
 # License
 
-This Modelica library is free software and the use is completely at your own
-risk. The library is released under [Modelica License 1.1](https://www.modelica.org/licenses/ModelicaLicense1.1)
+The Modelica code of the PhotoVoltaics library, the images and the measurement data of the TGM are released under the [Modelica License 1.1](https://www.modelica.org/licenses/ModelicaLicense1.1). This Modelica library is free software and the use is completely at your own risk. 
+
+The package also contains weather data of Vienna retrieved from [EnergyPlus](https://energyplus.net/weather-location/europe_wmo_region_6/AUT//AUT_Vienna.Schwechat.110360_IWEC). The data of EnergyPlus are distributed under the [EnergyPlus Licensing](https://energyplus.net/licensing) conditions. 
 
 # Development and contribution
 
