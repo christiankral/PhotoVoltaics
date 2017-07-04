@@ -55,6 +55,6 @@ equation
   annotation (
     Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
     Diagram(coordinateSystem(initialScale = 0.1)),
-    experiment(StopTime = 300, Interval = 0.1, Tolerance = 1e-06, StartTime = 0),
+    experiment(StopTime = 86400, Interval = 1, Tolerance = 1e-06, StartTime = 0),
     __OpenModelica_simulationFlags(jacobian = "coloredNumerical", nls = "newton", s = "dassl", lv = "LOG_STATS"));
 end SimpleModuleMPDC;
