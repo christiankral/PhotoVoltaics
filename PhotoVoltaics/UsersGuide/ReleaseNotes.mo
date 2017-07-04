@@ -4,6 +4,13 @@ class ReleaseNotes "Release Notes"
   annotation (
     preferredView = "info",
     Documentation(info="<html>
+
+<h5>Version 1.1.0, 2017-07-04</h5>
+<ul>
+<li>Added links to tickets on GitHub, see
+    <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/24\">#24</a></li>
+</ul>
+
 <h5>Version 1.0.1, 2017-06-19</h5>
 <ul>
 <li>Added missing ground in 
@@ -23,21 +30,26 @@ class ReleaseNotes "Release Notes"
 
 <h5>Version 0.6.0, 2017-03-16</h5>
 <ul>
-<li>Added shadow to solar pyramid model, see #18</li>
-<li>Added component names to icon layer, see #19</li>
+<li>Added shadow to solar pyramid model, see 
+    <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/18\">#18</a></li>
+<li>Added component names to icon layer, see 
+    <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/19\">#19</a></li>
 <li>Removed solar pyramid model without converters</li>
 <li>Improved documentation</li>
 </ul>
 
 <h5>Version 0.5.0, 2017-02-25</h5>
 <ul>
-<li>Replaced power factor input of multi phase converter by phase angle phi input, see #12</li>
+<li>Replaced power factor input of multi phase converter by phase angle phi input, see
+    <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/12\">#12</a></li>
+
 <li>Improved and fixed documentation of converters</li>
 </ul>
 
 <h5>Version 0.4.0, 2017-02-24</h5>
 <ul>
-<li>Added transient converter, see #8</li>
+<li>Added transient converter, see 
+    <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/8\">#8</a></li>
 <li>Added DC converter</li>
 <li>Restructured PV, Converters, Batteries within Components; this is a non-backwards compatible change</li>
 <li>Added some more irradiance models</li>
@@ -61,12 +73,16 @@ class ReleaseNotes "Release Notes"
 
 <h5>Version 0.3.1, 2017-01-29</h5>
 <ul>
-<li>Updated initial conditions of diode model to improve converegence of simulations, see #3</li>
+<li>Updated initial conditions of diode model to improve converegence of simulations, see 
+    <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/3\">#3</a></li>
+
 </ul>
 
 <h5>Version 0.3.0, 2017-01-29</h5>
 <ul>
-<li>Prevented MP tracker from controlling negative voltages according to #5</li>
+<li>Prevented MP tracker from controlling negative voltages according to 
+    <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/5\">#5</a></li>
+
 <li>Tuned simulation settings to have most simulations run in OpenModelica</li>
 <li>Added simulation models including measurement data to 
     <a href=\"modelica://PhotoVoltaics_TGM\">PhotoVoltaics_TGM</a></li> 
