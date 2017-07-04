@@ -9,6 +9,9 @@ class ReleaseNotes "Release Notes"
 <ul>
 <li>Added links to tickets on GitHub, see
     <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/24\">#24</a></li>
+<li>Changed simulation time to 86400 seconds in 
+    <a href=\"modelica://PhotoVoltaics.Examples.SimpleModuleMPDC\">SimpleModuleMPDC</a>, see
+    <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/25\">#25</a></li>
 </ul>
 
 <h5>Version 1.0.1, 2017-06-19</h5>
