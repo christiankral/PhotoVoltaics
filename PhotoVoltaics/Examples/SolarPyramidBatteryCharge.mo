@@ -16,8 +16,7 @@ model SolarPyramidBatteryCharge "Solar pyramid charging a battery"
     startTime=10,
     duration=480)
                  annotation (Placement(transformation(extent={{-80,10},{-60,30}})));
-  Modelica.Blocks.Sources.Constant azimuthConst(k=10*pi/180)
-                                                     annotation (Placement(transformation(extent={{-80,-30},{-60,-10}})));
+  Modelica.Blocks.Sources.Constant azimuthConst(k=260*pi/180) annotation (Placement(transformation(extent={{-80,-30},{-60,-10}})));
   Modelica.Electrical.Analog.Basic.Ground ground annotation (Placement(transformation(extent={{-40,-40},{-20,-20}})));
   Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V=24) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},

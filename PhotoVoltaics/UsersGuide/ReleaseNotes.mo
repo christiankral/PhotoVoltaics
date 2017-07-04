@@ -12,6 +12,10 @@ class ReleaseNotes "Release Notes"
 <li>Changed simulation time to 86400 seconds in 
     <a href=\"modelica://PhotoVoltaics.Examples.SimpleModuleMPDC\">SimpleModuleMPDC</a>, see
     <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/25\">#25</a></li>
+<li>Changed sun azimuth in 
+    <a href=\"modelica://PhotoVoltaics.Examples.SolarPyramidBatteryCharge\">SolarPyramidBatteryCharge</a> 
+    from 10 to 260 degrees, see
+    <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/28\">#28</a></li>
 </ul>
 
 <h5>Version 1.0.1, 2017-06-19</h5>
