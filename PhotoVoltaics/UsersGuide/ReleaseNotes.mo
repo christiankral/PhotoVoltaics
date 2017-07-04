@@ -22,6 +22,10 @@ class ReleaseNotes "Release Notes"
     <a href=\"modelica://PhotoVoltaics.Examples.SolarPyramidBatteryCharge\">SolarPyramidBatteryCharge</a> 
     from 10 to 260 degrees, see
     <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/28\">#28</a></li>
+<li>Added 
+    <a href=\"modelica://PhotoVoltaics.UsersGuide.License\">license</a> 
+    information of EnergyPlus, see
+    <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/29\">#29</a></li>
 </ul>
 
 <h5>Version 1.0.1, 2017-06-19</h5>

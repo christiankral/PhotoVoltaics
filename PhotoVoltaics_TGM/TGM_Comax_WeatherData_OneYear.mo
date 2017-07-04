@@ -86,7 +86,7 @@ equation
     experiment(StopTime = 3.1536e+07, Interval = 900, Tolerance = 1e-08, __Dymola_Algorithm = "Rkfix4"),
     Documentation(revisions = "<html>
 </html>",
-        info = "<html>
+        info="<html>
 <p>This example is based on weather data taken from 
 <a href=\"https://energyplus.net/weather-location/europe_wmo_region_6/AUT//AUT_Vienna.Schwechat.110360_IWEC\">https://energyplus.net</a>. 
 The EPW file was converted using a Java script provided by the 
@@ -94,6 +94,9 @@ The EPW file was converted using a Java script provided by the
 <p><code>
 java -jar .../Buildings/Resources/bin/ConvertWeatherData.jar .../PhotoVoltaics/Resources/WeatherData/AUT_Vienna.Schwechat.110360_IWEC.epw
 </code></p>
-
+<p>The weather data are distributed under the 
+<a href=\"https://energyplus.net/licensing\">EnergyPlus Licensing</a> conditions, see 
+<a href=\"PhotoVoltaics.UsersGuide.License\">License</a>.
+</p>
 </html>"));
 end TGM_Comax_WeatherData_OneYear;
