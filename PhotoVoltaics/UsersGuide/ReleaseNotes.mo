@@ -12,6 +12,9 @@ class ReleaseNotes "Release Notes"
 <li>Changed simulation time to 86400 seconds in 
     <a href=\"modelica://PhotoVoltaics.Examples.SimpleModuleMPDC\">SimpleModuleMPDC</a>, see
     <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/25\">#25</a></li>
+<li>Removed obsolete self connection in 
+    <a href=\"modelica://PhotoVoltaics.Components.SimplePhotoVoltaics.SolarPyramidDCConverter\">SolarPyramidDCConverter</a>, see
+    <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/27\">#27</a></li>
 <li>Changed sun azimuth in 
     <a href=\"modelica://PhotoVoltaics.Examples.SolarPyramidBatteryCharge\">SolarPyramidBatteryCharge</a> 
     from 10 to 260 degrees, see

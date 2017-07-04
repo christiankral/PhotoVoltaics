@@ -161,35 +161,28 @@ model SolarPyramidDCConverter "Solar pyramid with DC/DC converters"
     final n=n)
     annotation (Placement(transformation(extent={{40,-50},{60,-30}})));
 equation
-  connect(const.y,add1. u2) annotation(Line(points={{-41,-70},{-50,-70},{-50,-60},{-90,-60},{-90,70},{-76,70},{-76,62}},
-                                                                                                     color = {0, 0, 127}));
-  connect(const.y,add2. u2) annotation(Line(points={{-41,-70},{-50,-70},{-50,-60},{-90,-60},{-90,30},{-76,30},{-76,22}},
-                                                                                                     color = {0, 0, 127}));
-  connect(const.y,add3. u2) annotation(Line(points={{-41,-70},{-50,-70},{-50,-60},{-90,-60},{-90,-10},{-76,-10},{-76,-18}},
-                                                                                                         color = {0, 0, 127}));
+  connect(const.y,add1. u2) annotation(Line(points={{-41,-70},{-50,-70},{-50,-60},{-90,-60},{-90,70},{-76,70},{-76,62}}, color = {0, 0, 127}));
+  connect(const.y,add2. u2) annotation(Line(points={{-41,-70},{-50,-70},{-50,-60},{-90,-60},{-90,30},{-76,30},{-76,22}}, color = {0, 0, 127}));
+  connect(const.y,add3. u2) annotation(Line(points={{-41,-70},{-50,-70},{-50,-60},{-90,-60},{-90,-10},{-76,-10},{-76,-18}}, color = {0, 0, 127}));
   connect(irradianceParameter3.gamma,irradianceParameter4. gamma) annotation(Line(points={{-42,6},{-50,6},{-50,-34},{-46,-34},{-42,-34}},                    color = {0, 0, 127}));
   connect(irradianceParameter2.gamma,irradianceParameter3. gamma) annotation(Line(points={{-42,46},{-50,46},{-50,6},{-42,6}},                     color = {0, 0, 127}));
   connect(irradianceParameter1.gamma,irradianceParameter2. gamma) annotation(Line(points={{-42,86},{-50,86},{-50,46},{-42,46}},              color = {0, 0, 127}));
-  connect(add3.y,irradianceParameter4. azimuth) annotation(Line(points={{-70,-41},{-70,-42},{-70,-46},{-42,-46}},                                          color = {0, 0, 127}));
-  connect(add2.y,irradianceParameter3. azimuth) annotation(Line(points={{-70,-1},{-70,-2},{-70,-6},{-42,-6}},                                            color = {0, 0, 127}));
-  connect(add1.y,irradianceParameter2. azimuth) annotation(Line(points={{-70,39},{-70,39},{-70,34},{-42,34}},                                     color = {0, 0, 127}));
+  connect(add3.y,irradianceParameter4. azimuth) annotation(Line(points={{-70,-41},{-70,-42},{-70,-46},{-42,-46}}, color = {0, 0, 127}));
+  connect(add2.y,irradianceParameter3. azimuth) annotation(Line(points={{-70,-1},{-70,-2},{-70,-6},{-42,-6}}, color = {0, 0, 127}));
+  connect(add1.y,irradianceParameter2. azimuth) annotation(Line(points={{-70,39},{-70,39},{-70,34},{-42,34}}, color = {0, 0, 127}));
   connect(irradianceParameter4.irradiance,module4. variableIrradiance) annotation(Line(points={{-19,-40},{-19,-40},{-12,-40}},                color = {0, 0, 127}));
-  connect(irradianceParameter3.irradiance,module3. variableIrradiance) annotation(Line(points={{-19,0},{-14,0},{-14,6.66134e-16},{-12,6.66134e-16}},
-                                                                                                                                              color = {0, 0, 127}));
-  connect(irradianceParameter2.irradiance,module2. variableIrradiance) annotation(Line(points={{-19,40},{-12,40}},                                  color = {0, 0, 127}));
-  connect(irradianceParameter1.irradiance, module1.variableIrradiance) annotation (Line(points={{-19,80},{-19,80},{-12,80}},
-                                                                                                                          color={0,0,127}));
-  connect(add3.u1,add2. y) annotation(Line(points={{-64,-18},{-64,-6},{-70,-6},{-70,-1}},                                     color = {0, 0, 127}));
-  connect(add2.u1,add1. y) annotation(Line(points={{-64,22},{-64,22},{-64,34},{-70,34},{-70,39}},                       color = {0, 0, 127}));
+  connect(irradianceParameter3.irradiance,module3. variableIrradiance) annotation(Line(points={{-19,0},{-14,0},{-14,6.66134e-16},{-12,6.66134e-16}}, color = {0, 0, 127}));
+  connect(irradianceParameter2.irradiance,module2. variableIrradiance) annotation(Line(points={{-19,40},{-12,40}}, color = {0, 0, 127}));
+  connect(irradianceParameter1.irradiance, module1.variableIrradiance) annotation (Line(points={{-19,80},{-19,80},{-12,80}}, color={0,0,127}));
+  connect(add3.u1,add2. y) annotation(Line(points={{-64,-18},{-64,-6},{-70,-6},{-70,-1}}, color = {0, 0, 127}));
+  connect(add2.u1,add1. y) annotation(Line(points={{-64,22},{-64,22},{-64,34},{-70,34},{-70,39}}, color = {0, 0, 127}));
   connect(module4.n, nModule) annotation (Line(points={{-4.44089e-16,-50},{0,-50},{0,-56},{16,-56},{16,-100},{8,-100},{0,-100}},          color={0,0,255}));
   connect(irradianceParameter1.azimuth, azimuth) annotation (Line(points={{-42,74},{-96,74},{-96,-60},{-120,-60}},          color={0,0,127}));
   connect(azimuth, add1.u1) annotation (Line(points={{-120,-60},{-96,-60},{-96,74},{-96,74},{-64,74},{-64,62}}, color={0,0,127}));
-  connect(irradianceParameter1.gamma, gamma) annotation (Line(points={{-42,86},{-100,86},{-100,60},{-120,60}},
-                                                                                                            color={0,0,127}));
+  connect(irradianceParameter1.gamma, gamma) annotation (Line(points={{-42,86},{-100,86},{-100,60},{-120,60}}, color={0,0,127}));
   connect(module3.n, nModule) annotation (Line(points={{-6.66134e-16,-10},{0,-10},{0,-16},{16,-16},{16,-56},{16,-100},{0,-100}}, color={0,0,255}));
   connect(module2.n, nModule) annotation (Line(points={{0,30},{0,30},{0,24},{16,24},{16,-56},{16,-100},{0,-100}}, color={0,0,255}));
   connect(module1.n, nModule) annotation (Line(points={{0,70},{0,70},{0,64},{16,64},{16,-56},{16,-100},{0,-100}}, color={0,0,255}));
-  connect(internalHeatPort, internalHeatPort) annotation (Line(points={{-100,-80},{-100,-80}}, color={191,0,0}));
   connect(module3.heatPort, module4.heatPort) annotation (Line(points={{10,10},{24,10},{24,-30},{10,-30}}, color={191,0,0}));
   connect(module2.heatPort, module4.heatPort) annotation (Line(points={{10,50},{24,50},{24,-30},{10,-30}}, color={191,0,0}));
   connect(module1.heatPort, module4.heatPort) annotation (Line(points={{10,90},{24,90},{24,-30},{10,-30}}, color={191,0,0}));
