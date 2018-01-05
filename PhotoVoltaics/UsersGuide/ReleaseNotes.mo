@@ -5,6 +5,13 @@ class ReleaseNotes "Release Notes"
     preferredView = "info",
     Documentation(info="<html>
 
+<h5>Version 1.1.1, 2018-01-05</h5>
+<ul>Fixed 
+    <a href=\"modelica://PhotoVoltaics.Sources.Blocks.TriangleAndStep\">TriangleAndStep</a>, see 
+    <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/30\">#30</a></li>
+    </li>
+   </ul>
+    
 <h5>Version 1.1.0, 2017-07-04</h5>
 <ul>
 <li>Added links to tickets on GitHub, see
