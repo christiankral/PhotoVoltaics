@@ -8,7 +8,7 @@ block MPTrackerSample "Sampling maximum power tracker"
   parameter Integer n = 100 "Number of voltage and power discretizations";
   final parameter Modelica.SIunits.Voltage dv = VmpRef / n "Voltage change and maximum deviation";
   final parameter Modelica.SIunits.Power dpower = VmpRef * ImpRef / n "Power change and maximum deviation";
-  Boolean firstTrigger "First boolean sample trigger signal";
+  Boolean firstTrigger(start = false, fixed = true) "First boolean sample trigger signal";
   // Boolean secondTrigger "Second boolean sample trigger signal";
   Boolean sampleTrigger "Boolean sample trigger signal";
   discrete Integer counter(final start = 0, fixed = true) "Sample counter";

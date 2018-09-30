@@ -27,7 +27,8 @@ model TGM_Comax_Measurement_20160626_to_20161004 "Measured irradiance model from
     Placement(transformation(extent = {{-10, -70}, {10, -50}})));
   Modelica.Electrical.QuasiStationary.SinglePhase.Basic.Ground groundAC annotation (
     Placement(transformation(extent = {{60, -50}, {80, -30}})));
-  Modelica.Electrical.QuasiStationary.SinglePhase.Sources.VoltageSource voltageSource(f = 50, V = 230, phi = 0) annotation (
+  Modelica.Electrical.QuasiStationary.SinglePhase.Sources.VoltageSource voltageSource(f = 50, V = 230, phi = 0,
+    gamma(start=0, fixed=true))                                                                                 annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {70, -10})));
   Modelica.Electrical.Analog.Sensors.PowerSensor powerSensor annotation (
     Placement(transformation(extent = {{-30, 0}, {-10, 20}})));

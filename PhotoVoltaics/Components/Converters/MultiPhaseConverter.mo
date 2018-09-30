@@ -78,8 +78,9 @@ model MultiPhaseConverter "Ideal multi phase DC/AC converter"
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-20,-40})));
-  Modelica.Blocks.Continuous.FirstOrder firstOrder[3](k=ones(3), T=fill(Ti, 3))
-                                                                               annotation (Placement(transformation(extent={{20,40},{40,60}})));
+  Modelica.Blocks.Continuous.FirstOrder firstOrder[3](k=ones(3), T=fill(Ti, 3),
+    initType=fill(Modelica.Blocks.Types.Init.InitialState, 3),
+    y_start=fill(0, 3))                                                        annotation (Placement(transformation(extent={{20,40},{40,60}})));
   Modelica.Electrical.Machines.SpacePhasors.Blocks.Rotator rotatorOut annotation (Placement(transformation(extent={{-30,-10},{-10,10}})));
   Modelica.Blocks.Math.Gain neg(final k=-1) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},

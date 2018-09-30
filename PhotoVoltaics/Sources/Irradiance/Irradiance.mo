@@ -13,11 +13,11 @@ model Irradiance "Simple solar irradiance without considering weather conditions
   parameter Modelica.SIunits.Irradiance irradianceRef = 1000 "Reference solar irradiance";
   parameter Modelica.SIunits.Angle gamma = 10 * pi / 180 "Angle of PV module with w.r.t. horizontal plane";
   parameter Modelica.SIunits.Angle azimuth = 0 "Azimuth of the PV module orientation";
-  Integer startDayOfYear(start = dayOfTheYear(startDay, startMonth, startYear)) "Start day of year in simulation";
-  Integer dayOfYear(final start = dayOfTheYear(startDay, startMonth, startYear)) "Actual day of year";
-  Integer daysOfYear(final start = dayOfTheYear(31, 12, startYear)) "Total number of days of year";
-  Integer year(final start = startYear) "Actual year";
-  Modelica.SIunits.Angle Jprime(final start = dayOfTheYear(startDay, startMonth, startYear) / dayOfTheYear(31, 12, startYear) * 2 * pi) "Equivalent Angle of the day of the year w.r.t. total number of days";
+  Integer startDayOfYear(start = dayOfTheYear(startDay, startMonth, startYear), fixed = true) "Start day of year in simulation";
+  Integer dayOfYear(final start = dayOfTheYear(startDay, startMonth, startYear), fixed = true) "Actual day of year";
+  Integer daysOfYear(final start = dayOfTheYear(31, 12, startYear), fixed = true) "Total number of days of year";
+  Integer year(final start = startYear, fixed = true) "Actual year";
+  Modelica.SIunits.Angle Jprime(final start = dayOfTheYear(startDay, startMonth, startYear) / dayOfTheYear(31, 12, startYear) * 2 * pi, fixed = true) "Equivalent Angle of the day of the year w.r.t. total number of days";
   Real delta_J;
   Real timeequation_J;
   Modelica.SIunits.Conversions.NonSIunits.Time_day localTimeDays "Local time in days";

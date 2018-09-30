@@ -17,7 +17,8 @@ model SimpleModuleMP "Simple module supplies quasi static single phase AC grid w
     Placement(transformation(extent = {{0, -60}, {20, -40}})));
   Modelica.Electrical.QuasiStationary.SinglePhase.Basic.Ground groundAC annotation (
     Placement(transformation(extent = {{70, -40}, {90, -20}})));
-  Modelica.Electrical.QuasiStationary.SinglePhase.Sources.VoltageSource voltageSource(f = 50, V = 230, phi = 0) annotation (
+  Modelica.Electrical.QuasiStationary.SinglePhase.Sources.VoltageSource voltageSource(f = 50, V = 230, phi = 0,
+    gamma(fixed=true, start=0))                                                                                 annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {80, 0})));
   Modelica.Electrical.Analog.Sensors.PowerSensor powerSensor annotation (
     Placement(transformation(extent = {{-20, 10}, {0, 30}})));
