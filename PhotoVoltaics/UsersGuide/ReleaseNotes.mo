@@ -5,6 +5,14 @@ class ReleaseNotes "Release Notes"
     preferredView = "info",
     Documentation(info="<html>
 
+<h5>Version 1.2.0, 2018-09-30</h5>
+<ul>
+    <li>Converted 
+    <a href=\"modelica://PhotoVoltaics_TGM\">PhotoVoltaics_TGM</a> library to Buildings version 5.1.0, as the 
+    processing of parameter <code>filNam</code> of
+    <code>Buildings.BoundaryConditions.WeatherData.ReaderTMY3</code> changed</li>
+</ul>
+
 <h5>Version 1.1.1, 2018-01-05</h5>
 <ul>
     <li>Fixed 
