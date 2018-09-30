@@ -1,6 +1,6 @@
 within PhotoVoltaics.Interfaces;
 partial model PartialDiode "Diode with one exponential function"
-  extends Modelica.Electrical.Analog.Interfaces.OnePort;
+  extends Modelica.Electrical.Analog.Interfaces.OnePort(i(start = 0));
   extends Modelica.Electrical.Analog.Interfaces.ConditionalHeatPort(T = 298.15);
   constant Modelica.SIunits.Charge Q = 1.6021766208E-19 "Elementary charge of electron";
   parameter Real m = 1 "Ideality factor of diode";

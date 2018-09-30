@@ -11,7 +11,7 @@ partial model PartialComponent "Partial cell or module"
   parameter Records.ModuleData moduleData "Module parameters" annotation (
     choicesAllMatching = true,
     Placement(transformation(extent = {{60, 60}, {80, 80}})));
-  Modelica.SIunits.Current i = p.i "Current";
+  Modelica.SIunits.Current i(start = 0) = p.i "Current";
   Modelica.SIunits.Current iGenerating = -i "Negative current (generating)";
   Modelica.SIunits.Power power = v * i "Power";
   Modelica.SIunits.Power powerGenerating = v * iGenerating "Negative power consumption (generating)";

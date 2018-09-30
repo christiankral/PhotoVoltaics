@@ -103,10 +103,10 @@ model SolarPyramidDCConverter "Solar pyramid with DC/DC converters"
   Modelica.SIunits.Voltage v3 = module3.v "Voltage of module 3";
   Modelica.SIunits.Voltage v4 = module4.v "Voltage of module 4";
   // Currents
-  Modelica.SIunits.Current i1 = module1.i "Current of module 1";
-  Modelica.SIunits.Current i2 = module2.i "Current of module 2";
-  Modelica.SIunits.Current i3 = module3.i "Current of module 3";
-  Modelica.SIunits.Current i4 = module4.i "Current of module 4";
+  Modelica.SIunits.Current i1(start=0) = module1.i "Current of module 1";
+  Modelica.SIunits.Current i2(start=0) = module2.i "Current of module 2";
+  Modelica.SIunits.Current i3(start=0) = module3.i "Current of module 3";
+  Modelica.SIunits.Current i4(start=0) = module4.i "Current of module 4";
   Modelica.SIunits.Current iGenerating1 = module1.iGenerating "Negativ current of module 1 (generating)";
   Modelica.SIunits.Current iGenerating2 = module2.iGenerating "Negativ current of module 2 (generating)";
   Modelica.SIunits.Current iGenerating3 = module3.iGenerating "Negativ current of module 3 (generating)";

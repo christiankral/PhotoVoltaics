@@ -43,7 +43,7 @@ equation
   connect(ground.p, plant.n) annotation (
     Line(points = {{-50, -30}, {-50, -20}}, color = {0, 0, 255}));
   connect(mpTracker.vRef, converter.vDCRef) annotation (
-    Line(points = {{11, -60}, {20, -60}, {20, -22}}, color = {0, 0, 127}));
+    Line(points={{11,-60},{14,-60},{14,-22}},        color = {0, 0, 127}));
   connect(converter.ac_n, groundAC.pin) annotation (
     Line(points = {{30, -20}, {30, -30}, {70, -30}}, color = {85, 170, 255}));
   connect(groundAC.pin, voltageSource.pin_n) annotation (
