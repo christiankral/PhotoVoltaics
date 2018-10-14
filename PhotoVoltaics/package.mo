@@ -68,9 +68,9 @@
 
 
   annotation (preferredView="info",
-    version = "1.3.1",
+    version = "1.X.X",
     versionBuild = 1,
-    versionDate = "2018-10-14",
+    versionDate = "2018-XX-XX",
     uses(Modelica(version = "3.2.2")),
     Icon(coordinateSystem, graphics={  Ellipse(origin = {36, 75}, fillColor = {255, 255, 127},
             fillPattern = FillPattern.Solid, extent = {{0, 1}, {40, -39}}, endAngle = 360), Rectangle(origin = {-60, -9}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
@@ -86,10 +86,10 @@ Modelica library for the simulation of photo voltaic cells, modules and plants. 
 </p>
 <ul>
 <li>
-<li>Simple cell models based on one diode and a irradiance dependent current source 
+<li>Simple cell models based on one diode and a irradiance dependent current source
     including temperature dependence of the open circuit voltage and the short circuit current</li>
 <li>Simple symmetric modules and non-symmetric module including shading of cells</li>
-<li>Simple symmetric plant</li> 
+<li>Simple symmetric plant</li>
 <li>Solar pyramid model</li>
 <li>Cell, module and plant parameters can be taken directly from manufacturer data sheets</li>
 <li>Data of commercial modules stored in Modelica Records for convenient investigations</li>
@@ -107,17 +107,17 @@ Modelica library for the simulation of photo voltaic cells, modules and plants. 
 <h5>Application examples</h5>
 
 <p><b>Phileas Rover</b></p>
-<p>The maximum power harvest of a solar pyramid, which may be applicable to the 
+<p>The maximum power harvest of a solar pyramid, which may be applicable to the
 <a href=\"http://oewf.org/en/polares-science/phileas-rover/\">Phileas Rover</a>
 of the <a href=\"http://oewf.org/en/\">Austrian Space Forum, OEWF</a>, can be investigated by the PhotoVoltaics libraray.</p>
 
 <p><b>TGM Photovoltaic Power Plants</b></p>
 
-<p>Actual irradiance and electric power measurement data of the TGM power plants Trina and Comax in 
-<a href=\"http://www.openstreetmap.org/way/233509248>\"Vienna</a> are provided in the PhotoVoltaics_TGM library. 
-Measurements and simulation results can be compared by the provided example models. 
+<p>Actual irradiance and electric power measurement data of the TGM power plants Trina and Comax in
+<a href=\"http://www.openstreetmap.org/way/233509248>\"Vienna</a> are provided in the PhotoVoltaics_TGM library.
+Measurements and simulation results can be compared by the provided example models.
 The PhotoVoltaics_TGM library relies on the <a href=\"https://github.com/lbl-srg/modelica-buildings\">Buildings library</a>.
-</p> 
+</p>
 
 <p>
 <img src=\"modelica://PhotoVoltaics/Resources/Images/TGM_Comax_Trina.jpg\">
@@ -125,8 +125,8 @@ The PhotoVoltaics_TGM library relies on the <a href=\"https://github.com/lbl-srg
 
 <h5>Contributions</h5>
 <p>
-The library was developed during a Diploma project at the Technical Engineering College, 
-<a href=\"http://www.tgm.ac.at\">TGM</a>, Wexstraße 19-23, 1200 Vienna, Austria. 
+The library was developed during a Diploma project at the Technical Engineering College,
+<a href=\"http://www.tgm.ac.at\">TGM</a>, Wexstraße 19-23, 1200 Vienna, Austria.
 Library authors are</p>
 <ul>
 <li>Jovan Brkic</li>
