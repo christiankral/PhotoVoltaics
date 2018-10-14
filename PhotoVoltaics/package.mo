@@ -68,7 +68,7 @@
 
 
   annotation (preferredView="info",
-    version = "1.3.0",
+    version = "1.3.1",
     versionBuild = 1,
     versionDate = "2018-10-14",
     uses(Modelica(version = "3.2.2")),

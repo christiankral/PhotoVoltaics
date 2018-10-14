@@ -5,6 +5,17 @@ class ReleaseNotes "Release Notes"
     preferredView = "info",
     Documentation(info="<html>
 
+<h5>Version 1.3.1, 2018-10-14</h5>
+<ul>
+<li>Fix license information in 
+    <a href=\"https://github.com/christiankral/PhotoVoltaics/blob/master/README.md\">README.md</a></li>
+</ul>
+
+<h5>Version 1.3.0, 2018-10-14</h5>
+<ul>
+<li>Change Modelica 1.1 to BSD 3-clause license</li>
+</ul>
+
 <h5>Version 1.2.0, 2018-09-30</h5>
 <ul>
     <li>Converted 
