@@ -4,6 +4,13 @@ class ReleaseNotes "Release Notes"
   annotation (
     preferredView = "info",
     Documentation(info="<html>
+ 
+<h5>Version 1.3.2, 2019-02-26</h5>
+<ul>
+<li>Remove library path from CSV file so that write protected libraries installations can still write data, 
+    <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/34\">#34</a></li>
+<li>Update license year from 2018 to 2019</li>
+</ul>
 
 <h5>Version 1.3.1, 2018-10-14</h5>
 <ul>

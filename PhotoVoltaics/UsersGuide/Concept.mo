@@ -5,6 +5,9 @@ class Concept "Concept"
     preferredView = "info",
     Documentation(info="<html>
 
+<p>The fundamentals of this library are presented in 
+<a href=\"modelica://PhotoVoltaics.UsersGuide.References\">[Brkic2019]</a>.</p>
+
 <p>The PhotoVoltaics library relies on simple electric equivalent circuit models of 
 <a href=\"modelica://PhotoVoltaics.Components.SimplePhotoVoltaics.SimpleCell\">photovoltaic cells</a>.
 Simple 
