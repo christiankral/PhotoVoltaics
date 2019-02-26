@@ -4,7 +4,7 @@ model TGM_Trina_Measurement_20160704 "Measured irradiance model on 2016-07-04; T
   parameter Integer nsModule = 8 "Number of series connected modules";
   parameter Integer npModule = 1 "Number of parallel connected modules";
   parameter String fileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/Resources/WeatherData/TGM_Trina_20160704.txt") "File name";
-  parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Trina_Measurement_20160704_power.csv");
+  parameter String csvFileName = Modelica.Utilities.Files.loadResource("TGM_Trina_Measurement_20160704_power.csv");
   Modelica.SIunits.Irradiance irradiance = combiTimeTable.y[1] "Measured irradiance";
   Modelica.SIunits.Power powerAC = combiTimeTable.y[2] "Measured AC power";
   Modelica.SIunits.Voltage VAC = combiTimeTable.y[3] "Measured AC voltage";

@@ -3,7 +3,7 @@ model TGM_Comax_Analytical_20160808 "Analytical sun model on 2016-08-08; Comax m
   extends Modelica.Icons.Example;
   parameter Integer nsModule = 6 "Number of series connected modules";
   parameter Integer npModule = 1 "Number of parallel connected modules";
-  parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Analytical_20160808_power.csv");
+  parameter String csvFileName = Modelica.Utilities.Files.loadResource("TGM_Comax_Analytical_20160808_power.csv");
   PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
     useConstantIrradiance=false,
     moduleData=moduleData,

@@ -5,7 +5,7 @@ model TGM_Comax_WeatherData_OneYear "One year based on real weather data; Comax 
   parameter Integer npModule = 1 "Number of parallel connected modules";
   // Weather data file name has to be passed without loadResource to ReaderTMY3 class of Buildings library
   parameter String fileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/Resources/WeatherData/AUT_Vienna.Schwechat.110360_IWEC.mos") "File name";
-  parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_WeatherData_2016_energy.csv");
+  parameter String csvFileName = Modelica.Utilities.Files.loadResource("TGM_Comax_WeatherData_2016_energy.csv");
   Buildings.BoundaryConditions.SolarIrradiation.DiffusePerez HDifTil(                                                azi = 0,
     til(displayUnit="deg") = 0.17453292519943,
     lat(displayUnit="deg") = 0.8418964085999744)                                                                                "Diffuse irradiation on tilted surface" annotation (

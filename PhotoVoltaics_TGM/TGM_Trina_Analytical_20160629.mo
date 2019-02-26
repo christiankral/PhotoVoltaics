@@ -3,7 +3,7 @@ model TGM_Trina_Analytical_20160629 "Analytical sun model on 2016-06-29; Trina m
   extends Modelica.Icons.Example;
   parameter Integer nsModule = 8 "Number of series connected modules";
   parameter Integer npModule = 1 "Number of parallel connected modules";
-  parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Trina_Analytical_20160629_power.csv");
+  parameter String csvFileName = Modelica.Utilities.Files.loadResource("TGM_Trina_Analytical_20160629_power.csv");
   PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
     moduleData=moduleData,
     npModule=npModule,

@@ -5,7 +5,7 @@ model TGM_Comax_Measurement_20160704 "Measured irradiance model on 2016-07-04; C
   parameter Integer npModule = 1 "Number of parallel connected modules";
   parameter String fileNameIrradiance = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/Resources/WeatherData/TGM_Trina_20160704.txt") "Irradiance data file name";
   parameter String fileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/Resources/WeatherData/TGM_Comax_20160704.txt") "Power data file name";
-  parameter String csvFileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/TGM_Comax_Measurement_20160704_power.csv");
+  parameter String csvFileName = Modelica.Utilities.Files.loadResource("TGM_Comax_Measurement_20160704_power.csv");
   Modelica.SIunits.Irradiance irradiance = irradianceTable.y[1] "Measured irradiance";
   Modelica.SIunits.Power powerAC = powerTable.y[1] "Measured AC power";
   PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(

@@ -1,6 +1,6 @@
 BSD 3-Clause License
 
-Copyright (c) 2016-2018, Christian Kral, Jovan Brkic, Muaz Ceran,
+Copyright (c) 2016-2019, Christian Kral, Jovan Brkic, Muaz Ceran,
 Mohamed Elmoghazy, Ramazan Kavlak.
 All rights reserved.
 
