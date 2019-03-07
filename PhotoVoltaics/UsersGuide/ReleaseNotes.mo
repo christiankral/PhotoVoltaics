@@ -8,7 +8,8 @@ class ReleaseNotes "Release Notes"
  
 <h5>Version 1.4.0, 2019-03-07</h5>
 <ul>
-<li>Switch from Modelica Standard Library 3.2.2 to 3.2.3</li>
+<li>Switch from Modelica Standard Library 3.2.2 to 3.2.3, see
+<a href=\"https://github.com/christiankral/PhotoVoltaics/issues/37\">#37</a></li>
 </ul>
 
 <h5>Version 1.3.2, 2019-02-26</h5>
