@@ -3,8 +3,14 @@ class ReleaseNotes "Release Notes"
   extends Modelica.Icons.ReleaseNotes;
   annotation (
     preferredView = "info",
-    Documentation(info="<html>
+    Documentation(info= "<html>
  
+ 
+<h5>Version 1.4.0, 2019-03-07</h5>
+<ul>
+<li>Switch from Modelica Standard Library 3.2.2 to 3.2.3</li>
+</ul>
+
 <h5>Version 1.3.2, 2019-02-26</h5>
 <ul>
 <li>Remove library path from CSV file so that write protected libraries installations can still write data, 
