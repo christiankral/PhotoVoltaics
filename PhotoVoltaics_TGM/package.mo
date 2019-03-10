@@ -103,11 +103,11 @@
 
 
   annotation (preferredView="info",
-    version = "1.4.1",
-    versionDate = "2019-03-10",
+    version = "1.X.X",
+    versionDate = "2019-XX-XX",
     uses(Modelica(version = "3.2.3"),
       Buildings(version = "5.1.0"),
-      PhotoVoltaics(version="1.4.1")),
+      PhotoVoltaics(version="1.X.X")),
     Documentation(info="<html>
 <p>This library is based on the <a href=\"https://github.com/christiankral/PhotoVoltaics\">PhotoVoltaics</a> and the <a href=\"https://github.com/lbl-srg/modelica-buildings\">Buildings</a> library. More information can be found at the <a href=\"modelica://PhotoVoltaics.UsersGuide\">User&apos;s Guide</a> of the <a href=\"modelica://PhotoVoltaics\">PhotoVoltaics</a> library. </p>
 <p>The data base of this library are two photo voltaic power plants at the <a href=\"https://www.tgm.ac.at\">TGM</a> in <a href=\"http://www.openstreetmap.org/way/233509248\">Vienna</a>, Austria. The
