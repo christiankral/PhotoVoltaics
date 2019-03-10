@@ -5,7 +5,7 @@ model TGM_Comax_Measurement_20160704 "Measured irradiance model on 2016-07-04; C
   parameter Integer npModule = 1 "Number of parallel connected modules";
   parameter String fileNameIrradiance = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/Resources/WeatherData/TGM_Trina_20160704.txt") "Irradiance data file name";
   parameter String fileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/Resources/WeatherData/TGM_Comax_20160704.txt") "Power data file name";
-  parameter String csvFileName = Modelica.Utilities.Files.loadResource("TGM_Comax_Measurement_20160704_power.csv");
+  parameter String csvFileName = "TGM_Comax_Measurement_20160704_power.csv";
   Modelica.SIunits.Irradiance irradiance = irradianceTable.y[1] "Measured irradiance";
   Modelica.SIunits.Power powerAC = powerTable.y[1] "Measured AC power";
   PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
@@ -50,9 +50,9 @@ equation
   connect(groundAC.pin, voltageSource.pin_n) annotation (
     Line(points = {{70, -30}, {70, -30}, {70, -20}}, color = {85, 170, 255}));
   connect(powerSensor.nc, converter.dc_p) annotation (
-    Line(points = {{-10, 10}, {-10, 10}, {10, 10}, {10, 0}}, color = {0, 0, 255}));
+    Line(points={{-10,10},{-10,10},{10,10},{10,-4}},         color = {0, 0, 255}));
   connect(mpTracker.power, powerSensor.power) annotation (
-    Line(points = {{-12, -60}, {-12, -60}, {-28, -60}, {-28, -1}}, color = {0, 0, 127}));
+    Line(points={{-12,-60},{-12,-60},{-30,-60},{-30,-1}},          color = {0, 0, 127}));
   connect(powerSensor.pc, powerSensor.pv) annotation (
     Line(points = {{-30, 10}, {-30, 20}, {-20, 20}}, color = {0, 0, 255}));
   connect(converter.ac_p, voltageSource.pin_p) annotation (
@@ -62,11 +62,11 @@ equation
   connect(powerSensor.nv, ground.p) annotation (
     Line(points = {{-20, 0}, {-20, 0}, {-20, -24}, {-20, -30}, {-50, -30}}, color = {0, 0, 255}));
   connect(ground.p, converter.dc_n) annotation (
-    Line(points = {{-50, -30}, {10, -30}, {10, -20}}, color = {0, 0, 255}));
+    Line(points={{-50,-30},{10,-30},{10,-16}},        color = {0, 0, 255}));
   connect(integrator.u, powerSensor.power) annotation (
-    Line(points = {{-48, -60}, {-48, -60}, {-28, -60}, {-28, -1}}, color = {0, 0, 127}));
+    Line(points={{-48,-60},{-48,-60},{-30,-60},{-30,-1}},          color = {0, 0, 127}));
   connect(writeCSV.u, powerSensor.power) annotation (
-    Line(points = {{-12, -90}, {-28, -90}, {-28, -1}}, color = {0, 0, 127}));
+    Line(points={{-12,-90},{-30,-90},{-30,-1}},        color = {0, 0, 127}));
   connect(irradianceTable.y[1], plant.variableIrradiance) annotation (
     Line(points = {{-79, -10}, {-70.5, -10}, {-62, -10}}, color = {0, 0, 127}));
   annotation (
