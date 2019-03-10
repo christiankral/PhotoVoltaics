@@ -1,6 +1,6 @@
 within PhotoVoltaics_TGM;
 block WriteCSV "Simple block to write CSV files with one time and data column"
-  extends Modelica.Blocks.Interfaces.BlockIcon;
+  extends Modelica.Blocks.Icons.Block;
   parameter String fileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/time_energy.csv");
   parameter String inputQuantity = "energy(Ws)" "Header to be written to CSV file";
   parameter String delimiter = "\t" "Delimiter";
