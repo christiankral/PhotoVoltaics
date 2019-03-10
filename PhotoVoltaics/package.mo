@@ -68,8 +68,8 @@
 
 
   annotation (preferredView="info",
-    version = "1.X.X",
-    versionDate = "2019-XX-XX",
+    version = "1.4.1",
+    versionDate = "2019-03-10",
     uses(Modelica(version = "3.2.3")),
     Icon(coordinateSystem, graphics={  Ellipse(origin = {36, 75}, fillColor = {255, 255, 127},
             fillPattern = FillPattern.Solid, extent = {{0, 1}, {40, -39}}, endAngle = 360), Rectangle(origin = {-60, -9}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
