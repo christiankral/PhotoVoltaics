@@ -1,5 +1,7 @@
 # PhotoVoltaics
 
+A paper about this library was published at the [Modelica Conference 2019](http://www.ep.liu.se/ecp/157/004/ecp19157004.pdf).
+
 Modelica library for the simulation of photo voltaic cells, modules and plants. The library provides:
  - Simple cell models based on one diode and a irradiance dependent current source including temperature dependence of the open circuit voltage and the short circuit current
  - Simple symmetric modules and non-symmetric module including shading of cells
