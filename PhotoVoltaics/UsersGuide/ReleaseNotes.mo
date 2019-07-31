@@ -9,6 +9,9 @@ class ReleaseNotes "Release Notes"
 <ul>
 <li>Improve documentation of initialization of cell model, see
 <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/39\">#39</a></li>
+<li>Improve docstring of 
+<a href=\"modelica://PhotoVoltaics.Interfaces.PartialDiode\">partial diode model</a>, see 
+<a href=\"https://github.com/christiankral/PhotoVoltaics/pull/40\">#40</a></li>
 </ul>
 
 <h5>Version 1.4.1, 2019-03-10</h5>

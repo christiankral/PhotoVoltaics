@@ -7,9 +7,9 @@ partial model PartialDiode "Diode with one exponential function"
   parameter Modelica.SIunits.Resistance R = 1E8 "Parallel ohmic resistance";
   parameter Modelica.SIunits.Temperature TRef = 298.15 "Reference temperature" annotation (
     Dialog(group = "Reference data"));
-  parameter Modelica.SIunits.Voltage VRef(min = Modelica.Constants.small) = 0.6292 "Reference voltage > 0 at TRef" annotation (
+  parameter Modelica.SIunits.Voltage VRef(min = Modelica.Constants.small) = 0.6292 "Reference voltage > 0, i.e. open circuit voltage, at TRef" annotation (
     Dialog(group = "Reference data"));
-  parameter Modelica.SIunits.Current IRef(min = Modelica.Constants.small) = 8.540 "Reference current > 0 at TRef" annotation (
+  parameter Modelica.SIunits.Current IRef(min = Modelica.Constants.small) = 8.540 "Reference current > 0, i.e. short circuit current, at TRef" annotation (
     Dialog(group = "Reference data"));
   parameter Modelica.SIunits.LinearTemperatureCoefficient alphaI = +0.00053 "Temperature coefficient of reference current at TRef" annotation (
     Dialog(group = "Reference data"));
