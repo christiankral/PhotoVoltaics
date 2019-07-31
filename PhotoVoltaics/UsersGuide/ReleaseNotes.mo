@@ -5,6 +5,12 @@ class ReleaseNotes "Release Notes"
     preferredView = "info",
     Documentation(info="<html>
  
+<h5>Version 1.X.X, 2019-07-31</h5>
+<ul>
+<li>Improve documentation of initialization of cell model, see
+<a href=\"https://github.com/christiankral/PhotoVoltaics/issues/39\">#39</a></li>
+</ul>
+
 <h5>Version 1.4.1, 2019-03-10</h5>
 <ul>
 <li>Replace obsolete block icon, see

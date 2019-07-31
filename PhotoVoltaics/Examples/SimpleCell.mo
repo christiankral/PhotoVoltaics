@@ -6,7 +6,7 @@ model SimpleCell "Simple cell with load resistor"
   Modelica.Electrical.Analog.Basic.VariableResistor variableResistor annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {40, 0})));
   PhotoVoltaics.Sources.Blocks.PowerRamp powerRamp(duration = 0.6, height = 8, offset = -4, ref = moduleData.VmpCellRef / moduleData.ImpRef, startTime = 0.2) annotation (
-    Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={70,0},    extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   PhotoVoltaics.Components.SimplePhotoVoltaics.SimpleCell cell(moduleData=moduleData) annotation (Placement(visible=true, transformation(
         origin={0,0},
         extent={{-10,10},{10,-10}},
@@ -21,7 +21,7 @@ equation
   connect(ground.p, variableResistor.n) annotation (
     Line(points = {{0, -20}, {14, -20}, {40, -20}, {40, -10}}, color = {0, 0, 255}));
   connect(variableResistor.R, powerRamp.y) annotation (
-    Line(points = {{51, -2.22045e-15}, {49.5, -2.22045e-15}, {49.5, 0}, {59, 0}}, color = {0, 0, 127}));
+    Line(points={{52,-2.22045e-15},{49.5,-2.22045e-15},{49.5,0},{59,0}},          color = {0, 0, 127}));
   annotation (
     defaultComponentName = "moduleData",
     defaultComponentPrefixes = "parameter",

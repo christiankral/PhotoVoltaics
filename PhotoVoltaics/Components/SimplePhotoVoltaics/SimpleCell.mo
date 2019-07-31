@@ -39,13 +39,19 @@ The diode model used an exponential curve when forward conducting. This exponent
 </ul>
 
 <p>
-These parameters are determined from the characteristic of the cell, determined by the maximum power voltage and current. 
+These parameters are determined from the characteristic of the cell, given by the
+<a href=\"modelica://PhotoVoltaics.Components.Diodes.Diode\">diode equation</a> and the node equation of the equivalent circuit of Fig. 3(a) of
+<a href=\"modelica://PhotoVoltaics.UsersGuide.References\">[Brkic2019]</a> for (1) the open circuit condition and (2) the maximum power point. 
 </p>
 
 <pre>
-  IphRef = IsdRef * (exp(moduleData.VocCellRef / m / moduleData.VtCellRef) - 1);
-  IphRef = IsdRef * (exp(moduleData.VmpCellRef / m / moduleData.VtCellRef) - 1) + moduleData.ImpRef;
+  (1)  IphRef = IsdRef * (exp(moduleData.VocCellRef / m / moduleData.VtCellRef) - 1);
+  (2)  IphRef = IsdRef * (exp(moduleData.VmpCellRef / m / moduleData.VtCellRef) - 1) + moduleData.ImpRef;
 </pre>
+
+<p> 
+These two equations are evaluated in the <code>initial equation</code> section of this model.
+</p> 
 
 <p>
 The solar irradiance of the model can eithe be constant or provided by signal input. The current of current source
