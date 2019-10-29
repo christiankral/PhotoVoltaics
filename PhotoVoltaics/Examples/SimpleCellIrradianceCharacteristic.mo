@@ -9,7 +9,7 @@ model SimpleCellIrradianceCharacteristic "Voltage current characteristic for dif
         origin={0,0},
         extent={{-10,10},{10,-10}},
         rotation=-90)));
-  Sources.Blocks.TriangleAndStep triangleAndStep(T = 1, stepHeight = 1000, triangleHeight = 8, triangleOffset = -4) annotation (
+  PhotoVoltaics.Sources.Blocks.TriangleAndStep triangleAndStep(T = 1, stepHeight = 1000, triangleHeight = 8, triangleOffset = -4) annotation (
     Placement(visible = true, transformation(origin = {-60, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   PhotoVoltaics.Components.Blocks.Power10 power10(k = moduleData.VocCellRef / moduleData.IscRef) annotation (
     Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
@@ -27,7 +27,7 @@ equation
   connect(triangleAndStep.triangle, power10.u) annotation (
     Line(points = {{-49, -6}, {-30, -6}, {-30, -60}, {92, -60}, {92, 0}, {82, 0}}, color = {0, 0, 127}));
   connect(variableResistor.R, power10.y) annotation (
-    Line(points = {{51, 0}, {59, 0}}, color = {0, 0, 127}));
+    Line(points={{52,0},{59,0}},      color = {0, 0, 127}));
   annotation (
     Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
     Diagram(coordinateSystem(initialScale = 0.1)),

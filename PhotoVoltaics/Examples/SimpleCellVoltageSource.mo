@@ -21,7 +21,7 @@ equation
   connect(ground.p, cell.n) annotation (
     Line(points = {{0, -20}, {0, -10}}, color = {0, 0, 255}));
   connect(signalVoltage.v, rampCurrent.y) annotation (
-    Line(points = {{47, 0}, {59, 0}, {59, 0}}, color = {0, 0, 127}));
+    Line(points={{52,0},{59,0},{59,0}},        color = {0, 0, 127}));
   annotation (
     Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
     Diagram(coordinateSystem(initialScale = 0.1)),

@@ -24,7 +24,7 @@ model SimpleModuleMP3 "Simple module supplies quasi static three phase AC grid w
     Placement(transformation(extent = {{-20, 10}, {0, 30}})));
   Modelica.Electrical.QuasiStationary.MultiPhase.Basic.Star star annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {80, -30})));
-  parameter Records.SHARP_NU_S5_E3E moduleData annotation (
+  parameter PhotoVoltaics.Records.SHARP_NU_S5_E3E moduleData annotation (
     Placement(transformation(extent = {{60, 60}, {80, 80}})));
 equation
   connect(groundDC.p, module.n) annotation (
@@ -32,15 +32,15 @@ equation
   connect(ramp.y, module.variableIrradiance) annotation (
     Line(points = {{-59, 0}, {-52, 0}}, color = {0, 0, 127}));
   connect(groundDC.p, converter.dc_n) annotation (
-    Line(points = {{-40, -20}, {-40, -20}, {20, -20}, {20, -10}}, color = {0, 0, 255}));
+    Line(points={{-40,-20},{-40,-20},{20,-20},{20,-6}},           color = {0, 0, 255}));
   connect(mpTracker.vRef, converter.vDCRef) annotation (
     Line(points={{21,-50},{24,-50},{24,-12}},        color = {0, 0, 127}));
   connect(module.p, powerSensor.pc) annotation (
     Line(points = {{-40, 10}, {-40, 10}, {-40, 20}, {-20, 20}}, color = {0, 0, 255}));
   connect(powerSensor.nc, converter.dc_p) annotation (
-    Line(points = {{0, 20}, {0, 20}, {20, 20}, {20, 10}}, color = {0, 0, 255}));
+    Line(points={{0,20},{0,20},{20,20},{20,6}},           color = {0, 0, 255}));
   connect(mpTracker.power, powerSensor.power) annotation (
-    Line(points = {{-2, -50}, {-2, -50}, {-18, -50}, {-18, 9}}, color = {0, 0, 127}));
+    Line(points={{-2,-50},{-2,-50},{-20,-50},{-20,9}},          color = {0, 0, 127}));
   connect(powerSensor.pc, powerSensor.pv) annotation (
     Line(points = {{-20, 20}, {-20, 30}, {-10, 30}}, color = {0, 0, 255}));
   connect(powerSensor.nv, groundDC.p) annotation (

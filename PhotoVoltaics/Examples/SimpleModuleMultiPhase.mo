@@ -80,11 +80,11 @@ equation
   connect(module.p, powerSensor.pc) annotation (Line(points={{-60,40},{-60,50},{-40,50}},
                          color={0,0,255}));
   connect(converter.dc_p, powerSensor.nc)
-    annotation (Line(points={{-10,40},{-10,50},{-20,50}},
+    annotation (Line(points={{-10,36},{-10,50},{-20,50}},
                                                       color={0,0,255}));
   connect(converter.dc_n, groundDC.p)
-    annotation (Line(points={{-10,20},{-10,10},{-60,10}},color={0,0,255}));
-  connect(mpTracker.power, powerSensor.power) annotation (Line(points={{-32,-10},{-38,-10},{-38,39}},
+    annotation (Line(points={{-10,24},{-10,10},{-60,10}},color={0,0,255}));
+  connect(mpTracker.power, powerSensor.power) annotation (Line(points={{-32,-10},{-40,-10},{-40,39}},
                                    color={0,0,127}));
   connect(mpTracker.vRef, converter.vDCRef)
     annotation (Line(points={{-9,-10},{-6,-10},{-6,18}},
@@ -99,10 +99,10 @@ equation
                                                                                                          color={0,0,255}));
   connect(voltageQuasiRMSSensor.plug_n, star.plug_p) annotation (Line(points={{50,-40},{50,-50},{80,-50}}, color={0,0,255}));
   connect(voltageQuasiRMSSensor.plug_p, currentQuasiRMSSensor.plug_n) annotation (Line(points={{50,-20},{50,-10},{80,-10},{80,0}}, color={0,0,255}));
-  connect(powerFactorActual.u1, powerSensorGrid.power) annotation (Line(points={{-68,-74},{-60,-74},{-60,-60},{22,-60},{22,19}}, color={0,0,127}));
+  connect(powerFactorActual.u1, powerSensorGrid.power) annotation (Line(points={{-68,-74},{-60,-74},{-60,-60},{20,-60},{20,19}}, color={0,0,127}));
   connect(gain.u, product.y) annotation (Line(points={{2,-80},{9,-80}},         color={0,0,127}));
-  connect(product.u1, currentQuasiRMSSensor.I) annotation (Line(points={{32,-74},{32,-74},{34,-74},{34,-32},{34,10},{70,10}}, color={0,0,127}));
-  connect(product.u2, voltageQuasiRMSSensor.V) annotation (Line(points={{32,-86},{38,-86},{38,-30},{40,-30}}, color={0,0,127}));
+  connect(product.u1, currentQuasiRMSSensor.I) annotation (Line(points={{32,-74},{32,-74},{34,-74},{34,-32},{34,10},{69,10}}, color={0,0,127}));
+  connect(product.u2, voltageQuasiRMSSensor.V) annotation (Line(points={{32,-86},{38,-86},{38,-30},{39,-30}}, color={0,0,127}));
   connect(limiter.y, powerFactorActual.u2) annotation (Line(points={{-49,-80},{-60,-80},{-60,-84},{-60,-86},{-68,-86}}, color={0,0,127}));
   connect(limiter.u, gain.y) annotation (Line(points={{-26,-80},{-21,-80}}, color={0,0,127}));
   annotation (

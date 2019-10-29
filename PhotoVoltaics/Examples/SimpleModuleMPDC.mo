@@ -10,16 +10,16 @@ model SimpleModuleMPDC "Simple module supplies DC grid with maximum power tracke
         origin={-40,0},
         extent={{-10,10},{10,-10}},
         rotation=-90)));
-  Components.Converters.DCConverter converter annotation (Placement(transformation(extent={{20,-10},{40,10}})));
+  PhotoVoltaics.Components.Converters.DCConverter converter annotation (Placement(transformation(extent={{20,-10},{40,10}})));
   PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = moduleData.VmpRef, ImpRef = moduleData.ImpRef,
     samplePeriod=10)                                                                                                annotation (
     Placement(transformation(extent = {{0, -60}, {20, -40}})));
   Modelica.Electrical.Analog.Basic.Ground ground annotation (Placement(transformation(extent={{70,-40},{90,-20}})));
   Modelica.Electrical.Analog.Sensors.PowerSensor powerSensor annotation (
     Placement(transformation(extent = {{-20, 10}, {0, 30}})));
-  parameter Records.SHARP_NU_S5_E3E moduleData annotation (
+  parameter PhotoVoltaics.Records.SHARP_NU_S5_E3E moduleData annotation (
     Placement(transformation(extent = {{60, 60}, {80, 80}})));
-  Sources.Electrical.IdealBattery battery(
+  PhotoVoltaics.Sources.Electrical.IdealBattery battery(
     ns=4,
     np=1,
     V1Cell=14,
@@ -31,7 +31,7 @@ model SimpleModuleMPDC "Simple module supplies DC grid with maximum power tracke
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={80,0})));
-  Sources.Irradiance.Irradiance irradiance annotation (Placement(transformation(extent={{-90,-10},{-70,10}})));
+  PhotoVoltaics.Sources.Irradiance.Irradiance irradiance annotation (Placement(transformation(extent={{-90,-10},{-70,10}})));
 equation
   connect(groundDC.p, module.n) annotation (
     Line(points = {{-40, -20}, {-40, -10}}, color = {0, 0, 255}));
@@ -40,7 +40,7 @@ equation
   connect(module.p, powerSensor.pc) annotation (
     Line(points = {{-40, 10}, {-40, 10}, {-40, 20}, {-20, 20}}, color = {0, 0, 255}));
   connect(mpTracker.power, powerSensor.power) annotation (
-    Line(points = {{-2, -50}, {-2, -50}, {-18, -50}, {-18, 9}}, color = {0, 0, 127}));
+    Line(points={{-2,-50},{-2,-50},{-20,-50},{-20,9}},          color = {0, 0, 127}));
   connect(powerSensor.pc, powerSensor.pv) annotation (
     Line(points = {{-20, 20}, {-20, 30}, {-10, 30}}, color = {0, 0, 255}));
   connect(powerSensor.nv, groundDC.p) annotation (

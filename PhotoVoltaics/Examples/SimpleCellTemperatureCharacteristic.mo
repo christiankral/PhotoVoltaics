@@ -12,7 +12,7 @@ model SimpleCellTemperatureCharacteristic "Voltage current characteristic for di
         origin={0,0},
         extent={{-10,-10},{10,10}},
         rotation=-90)));
-  Sources.Blocks.TriangleAndStep triangleAndStep(T = 1, triangleHeight = 8, triangleOffset = -4, stepNumber = 5, stepOffset = 293.15 - 40, stepHeight = 60) annotation (
+  PhotoVoltaics.Sources.Blocks.TriangleAndStep triangleAndStep(T = 1, triangleHeight = 8, triangleOffset = -4, stepNumber = 5, stepOffset = 293.15 - 40, stepHeight = 60) annotation (
     Placement(visible = true, transformation(origin = {-70, -2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   PhotoVoltaics.Components.Blocks.Power10 power10(k = moduleData.VocCellRef / moduleData.IscRef) annotation (
     Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
@@ -30,7 +30,7 @@ equation
   connect(triangleAndStep.triangle, power10.u) annotation (
     Line(points = {{-59, -8}, {-50, -8}, {-50, -60}, {92, -60}, {92, 0}, {82, 0}}, color = {0, 0, 127}));
   connect(variableResistor.R, power10.y) annotation (
-    Line(points = {{51, 0}, {59, 0}}, color = {0, 0, 127}));
+    Line(points={{52,0},{59,0}},      color = {0, 0, 127}));
   connect(prescribedTemperature.port, cell.heatPort) annotation (
     Line(points = {{-20, 10}, {-16, 10}, {-10, 10}}, color = {191, 0, 0}));
   connect(triangleAndStep.step, prescribedTemperature.T) annotation (

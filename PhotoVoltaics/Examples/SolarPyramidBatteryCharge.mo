@@ -3,7 +3,7 @@ model SolarPyramidBatteryCharge "Solar pyramid charging a battery"
   import Modelica.Constants.pi;
   extends Modelica.Icons.Example;
 
-  Components.SimplePhotoVoltaics.SolarPyramidDCConverter solarPyramid(
+  PhotoVoltaics.Components.SimplePhotoVoltaics.SolarPyramidDCConverter solarPyramid(
     moduleData=moduleData,
     VRef=moduleData.VmpRef,
     VmpRef=moduleData.VmpRef,
@@ -22,7 +22,7 @@ model SolarPyramidBatteryCharge "Solar pyramid charging a battery"
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={20,-2})));
-  parameter Records.SHARP_NU_S5_E3E moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
+  parameter PhotoVoltaics.Records.SHARP_NU_S5_E3E moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
 
   Modelica.SIunits.Conversions.NonSIunits.Angle_deg gamma_deg = Modelica.SIunits.Conversions.to_deg(solarPyramid.gamma);
 equation

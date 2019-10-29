@@ -12,7 +12,7 @@ model DiodeCompare "Compare different diode models"
     Placement(transformation(extent = {{-40, -70}, {-20, -50}})));
   PhotoVoltaics.Components.Diodes.Diode2exp diode(m = 40 / 25.69, useHeatPort = true) annotation (
     Placement(transformation(extent = {{-40, -10}, {-20, 10}})));
-  parameter Records.ModuleData moduleData annotation (
+  parameter PhotoVoltaics.Records.ModuleData moduleData annotation (
     Placement(transformation(extent = {{-10, 80}, {10, 100}})));
   Modelica.Thermal.HeatTransfer.Sources.FixedTemperature fixedTemperature(T = 318.15) annotation (
     Placement(transformation(extent = {{-90, -20}, {-70, 0}})));
