@@ -5,8 +5,10 @@ class ReleaseNotes "Release Notes"
     preferredView = "info",
     Documentation(info="<html>
  
-<h5>Version 1.X.X, 2019-07-31</h5>
+<h5>Version 1.5.0, 2019-10-29</h5>
 <ul>
+<li>Use fully qualified class names in examples, see
+<a href=\"https://github.com/christiankral/PhotoVoltaics/issues/41\">#41</a></li>
 <li>Improve documentation of initialization of cell model, see
 <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/39\">#39</a></li>
 <li>Improve docstring of 
