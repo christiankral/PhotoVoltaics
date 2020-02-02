@@ -41,13 +41,13 @@ Modelica library for the simulation of photo voltaic cells, modules and plants. 
 
 <p><b>Phileas Rover</b></p>
 <p>The maximum power harvest of a solar pyramid, which may be applicable to the
-<a href=\"https://oewf.org/en/polares-science/phileas-rover/\">Phileas Rover</a>
-of the <a href=\"https://oewf.org/en/\">Austrian Space Forum, OEWF</a>, can be investigated by the PhotoVoltaics libraray.</p>
+<a href=\"http://oewf.org/en/polares-science/phileas-rover/\">Phileas Rover</a>
+of the <a href=\"http://oewf.org/en/\">Austrian Space Forum, OEWF</a>, can be investigated by the PhotoVoltaics libraray.</p>
 
 <p><b>TGM Photovoltaic Power Plants</b></p>
 
 <p>Actual irradiance and electric power measurement data of the TGM power plants Trina and Comax in
-<a href=\"https://www.openstreetmap.org/way/233509248>\"Vienna</a> are provided in the PhotoVoltaics_TGM library.
+<a href=\"http://www.openstreetmap.org/way/233509248>\"Vienna</a> are provided in the PhotoVoltaics_TGM library.
 Measurements and simulation results can be compared by the provided example models.
 The PhotoVoltaics_TGM library relies on the <a href=\"https://github.com/lbl-srg/modelica-buildings\">Buildings library</a>.
 </p>
@@ -59,16 +59,22 @@ The PhotoVoltaics_TGM library relies on the <a href=\"https://github.com/lbl-srg
 <h5>Contributions</h5>
 <p>
 The library was developed during a Diploma project at the Technical Engineering College,
-<a href=\"https://www.tgm.ac.at\">TGM</a>, Wexstraße 19-23, 1200 Vienna, Austria.
+<a href=\"http://www.tgm.ac.at\">TGM</a>, Wexstraße 19-23, 1200 Vienna, Austria.
 Library authors are</p>
 <ul>
 <li>Jovan Brkic</li>
 <li>Muaz Ceran</li>
 <li>Mohamed Elmoghazy</li>
 <li>Ramazan Kavlak
-<li><a href=\"https://christiankral.net\">Christian Kral</a></li>
+<li><a href=\"http://christiankral.net\">Christian Kral</a></li>
 </ul>
 
 <p>The three phase transient multi phase converter was contributed by Luiz Bueno, RWTH Aachen, Germany.</p>
+
+<h4>Award</h4>
+
+<p>This libray was awarded with the 
+<a href=\"https://modelica.org/events/modelica2019/subpages/library-award\">second price</a> 
+at library award of the 13th Modelica Confernce, Regensburg 2019.</p>
 </html>"));
 end PhotoVoltaics;

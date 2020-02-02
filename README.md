@@ -32,9 +32,13 @@ Actual irradiance and electric power measurement data of the TGM power plants in
 
 ![TGM](https://github.com/christiankral/PhotoVoltaics/blob/master/PhotoVoltaics/Resources/Images/TGM_Comax_Trina.jpg?raw=true)
 
+# Award
+
+This libray was awarded with the [second price](https://modelica.org/events/modelica2019/subpages/library-award) at library award of the 13th Modelica Confernce, Regensburg 2019.
+
 # License
 
-The Modelica code of the PhotoVoltaics library, the images and the measurement data of the TGM are released under the [BSD 3-clause license](LICENSE.md). 
+The Modelica code of the PhotoVoltaics library, the images and the measurement data of the TGM are released under the [BSD 3-clause license](LICENSE.md).
 
 The package also contains weather data of Vienna retrieved from [EnergyPlus](https://energyplus.net/weather-location/europe_wmo_region_6/AUT//AUT_Vienna.Schwechat.110360_IWEC). The data of EnergyPlus are distributed under the [EnergyPlus Licensing](https://energyplus.net/licensing) conditions.
 
