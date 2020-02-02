@@ -12,7 +12,7 @@ model QuasiStaticMultiPhaseConverter "Ideal quasi stastic multi phase DC/AC conv
   Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {-90, 0})));
   Modelica.Electrical.Analog.Sensors.CurrentSensor currentSensor annotation (
-    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 270, origin = {-90, 60})));
+    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 270, origin={-90,40})));
   Modelica.Blocks.Math.Product product annotation (
     Placement(transformation(extent = {{-60, 20}, {-40, 40}})));
   Modelica.Blocks.Math.Feedback feedback annotation (
@@ -43,16 +43,16 @@ model QuasiStaticMultiPhaseConverter "Ideal quasi stastic multi phase DC/AC conv
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {-10, 40})));
 equation
   connect(signalVoltage.n, dc_n) annotation (
-    Line(points = {{-90, -10}, {-90, -80}, {-90, -100}, {-100, -100}}, color = {0, 0, 255}));
+    Line(points={{-90,-10},{-90,-60},{-100,-60}},                      color = {0, 0, 255}));
   connect(currentSensor.p, dc_p) annotation (
-    Line(points = {{-90, 70}, {-90, 70}, {-90, 76}, {-90, 100}, {-100, 100}}, color = {0, 0, 255}));
+    Line(points={{-90,50},{-90,60},{-100,60}},                                color = {0, 0, 255}));
   connect(currentSensor.n, signalVoltage.p) annotation (
-    Line(points = {{-90, 50}, {-90, 50}, {-90, 10}}, color = {0, 0, 255}));
+    Line(points={{-90,30},{-90,10}},                 color = {0, 0, 255}));
   connect(signalVoltage.v, vDCRef) annotation (
-    Line(points={{-83,-1.33227e-15},{-70,-1.33227e-15},{-70,-80},{-60,-80},{-60,-120}},
+    Line(points={{-78,-1.33227e-15},{-70,-1.33227e-15},{-70,-80},{-60,-80},{-60,-120}},
                                                                          color = {0, 0, 127}));
   connect(currentSensor.i, product.u1) annotation (
-    Line(points = {{-80, 60}, {-76, 60}, {-70, 60}, {-70, 36}, {-62, 36}}, color = {0, 0, 127}));
+    Line(points={{-79,40},{-70,40},{-70,36},{-62,36}},                     color = {0, 0, 127}));
   connect(vDCRef, product.u2) annotation (
     Line(points={{-60,-120},{-60,-120},{-60,-86},{-60,-86},{-60,-80},{-66,-80},{-70,-80},{-70,24},{-62,24}},color = {0, 0, 127}));
   connect(product.y, feedback.u1) annotation (
@@ -64,7 +64,7 @@ equation
   connect(potentialSensor.y, toSpacePhasor.u) annotation (
     Line(points = {{80, -21}, {80, -50}, {72, -50}}, color = {85, 170, 255}));
   connect(complexToReal.u, powerSensor.y) annotation (
-    Line(points = {{22, 70}, {30, 70}, {30, 68}, {39, 68}}, color = {85, 170, 255}));
+    Line(points={{22,70},{30,70},{30,70},{39,70}},          color = {85, 170, 255}));
   connect(fromSpacePhasor.y, variableCurrentSource.I) annotation (
     Line(points = {{10, 21}, {10, 30}, {40, 30}}, color = {85, 170, 255}));
   connect(fromSpacePhasor.u, fromPolar.y) annotation (

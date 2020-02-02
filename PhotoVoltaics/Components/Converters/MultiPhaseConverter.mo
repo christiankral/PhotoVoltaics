@@ -21,7 +21,7 @@ model MultiPhaseConverter "Ideal multi phase DC/AC converter"
   Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin={-100,0})));
   Modelica.Electrical.Analog.Sensors.CurrentSensor currentSensor annotation (
-    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 270, origin={-100,60})));
+    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 270, origin={-100,40})));
   Modelica.Blocks.Math.Product product annotation (
     Placement(transformation(extent={{-80,70},{-60,90}})));
   Modelica.Blocks.Math.Feedback feedback annotation (
@@ -91,14 +91,14 @@ model MultiPhaseConverter "Ideal multi phase DC/AC converter"
   Modelica.Blocks.Math.Sum sum3(nin=3) annotation (Placement(transformation(extent={{10,70},{-10,90}})));
 equation
   connect(currentSensor.n,signalVoltage. p) annotation (
-    Line(points={{-100,50},{-100,50},{-100,10}},     color = {0, 0, 255}));
+    Line(points={{-100,30},{-100,10}},               color = {0, 0, 255}));
   connect(signalVoltage.v,vDCRef)  annotation (
-    Line(points={{-93,-1.33227e-015},{-86,-1.33227e-015},{-86,-90},{-60,-90},{-60,
-          -120}},                                                        color = {0, 0, 127}));
-  connect(dc_p, currentSensor.p) annotation (Line(points={{-100,100},{-100,70}},
+    Line(points={{-88,-1.33227e-15},{-86,-1.33227e-15},{-86,-90},{-60,-90},{-60,-120}},
+                                                                         color = {0, 0, 127}));
+  connect(dc_p, currentSensor.p) annotation (Line(points={{-100,60},{-100,50}},
                      color={0,0,255}));
-  connect(dc_n, signalVoltage.n) annotation (Line(points={{-100,-100},{-100,
-          -10}},       color={0,0,255}));
+  connect(dc_n, signalVoltage.n) annotation (Line(points={{-100,-60},{-100,-10}},
+                       color={0,0,255}));
   connect(product.y,feedback. u1) annotation (
     Line(points={{-59,80},{-50,80},{-50,64},{-50,64},{-50,64},{-70,64},{-70,58}},
                                                     color = {0, 0, 127}));
@@ -106,8 +106,8 @@ equation
     Line(points={{-70,41},{-70,38},{-70,32}},                                             color = {0, 0, 127}));
   connect(gain.y,feedback. u2) annotation (
     Line(points={{-51,50},{-51,50},{-62,50}},      color = {0, 0, 127}));
-  connect(product.u1, currentSensor.i) annotation (Line(points={{-82,86},{
-          -90,86},{-90,60}},          color={0,0,127}));
+  connect(product.u1, currentSensor.i) annotation (Line(points={{-82,86},{-89,86},{-89,40}},
+                                      color={0,0,127}));
   connect(product.u2, vDCRef) annotation (Line(points={{-82,74},{-86,74},{-86,-10},
           {-86,-90},{-60,-90},{-60,-120}},      color={0,0,127}));
   connect(star.plug_p, signalCurrent.plug_p)
@@ -128,7 +128,7 @@ equation
   connect(constOmega.y, integratorOmega.u) annotation (Line(points={{-39,-40},{-34,-40},{-32,-40}}, color={0,0,127}));
   connect(fromSpacePhasor.y, firstOrder.u) annotation (Line(points={{6.66134e-16,41},{6.66134e-16,50},{18,50}},
                                                                                               color={0,0,127}));
-  connect(firstOrder.y, signalCurrent.i) annotation (Line(points={{41,50},{53,50}},                 color={0,0,127}));
+  connect(firstOrder.y, signalCurrent.i) annotation (Line(points={{41,50},{48,50}},                 color={0,0,127}));
   connect(fromPolar.y, rotatorOut.u) annotation (Line(points={{-39,0},{-32,0}},   color={0,0,127}));
   connect(neg.y, rotatorOut.angle) annotation (Line(points={{-11,-20},{-11,-20},{-14,-20},{-20,-20},{-20,-12}},     color={0,0,127}));
   connect(rotatorIn.u, toSpacePhasor.y) annotation (Line(points={{62,-60},{62,-60},{69,-60}}, color={0,0,127}));

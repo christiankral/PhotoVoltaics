@@ -27,15 +27,16 @@ model DCConverter "DC controlled single phase DC/AC converter"
 
 equation
   connect(currentSensor.n, signalVoltage.p) annotation (Line(points={{-90,26},{-90,26},{-90,10}},        color = {0, 0, 255}));
-  connect(signalVoltage.v, vDCRef) annotation (Line(points={{-83,0},{-70,0},{-70,-80},{-60,-80},{-60,-120}},        color = {0, 0, 127}));
-  connect(currentSensor.i, product.u1) annotation (Line(points={{-80,36},{-80,36},{-70,36},{-62,36}},                     color = {0, 0, 127}));
+  connect(signalVoltage.v, vDCRef) annotation (Line(points={{-78,0},{-70,0},{-70,-80},{-60,-80},{-60,-120}},        color = {0, 0, 127}));
+  connect(currentSensor.i, product.u1) annotation (Line(points={{-79,36},{-79,36},{-70,36},{-62,36}},                     color = {0, 0, 127}));
   connect(vDCRef, product.u2) annotation (Line(points={{-60,-120},{-60,-120},{-60,-88},{-60,-94},{-60,-80},{-70,-80},{-70,24},{-62,24}},        color = {0, 0, 127}));
   connect(product.y, feedback.u1) annotation (Line(points = {{-39, 30}, {-30, 30}, {-30, 8}}, color = {0, 0, 127}));
   connect(feedback.y, integrator.u) annotation (Line(points={{-30,-9},{-30,-9},{-30,-20},{-30,-40},{-10,-40}},           color = {0, 0, 127}));
   connect(gain.y, feedback.u2) annotation (Line(points={{-11,1.33227e-15},{-21,1.33227e-15},{-21,0},{-10,0},{-22,0}}, color = {0, 0, 127}));
-  connect(gain.u, powerSensor.power) annotation (Line(points={{12,-1.33227e-15},{12,0},{40,0},{60,0},{60,-2},{69,-2}}, color={0,0,127}));
+  connect(gain.u, powerSensor.power) annotation (Line(points={{12,-1.33227e-15},{12,0},{40,0},{60,0},{60,1.77636e-15},{69,1.77636e-15}},
+                                                                                                                       color={0,0,127}));
   connect(powerSensor.nc, variableCurrentSource.n) annotation (Line(points={{80,-20},{80,-30}},color={0,0,255}));
-  connect(integrator.y, variableCurrentSource.i) annotation (Line(points={{13,-40},{42,-40},{73,-40}}, color={0,0,127}));
+  connect(integrator.y, variableCurrentSource.i) annotation (Line(points={{13,-40},{68,-40},{68,-40}}, color={0,0,127}));
   connect(powerSensor.pv, powerSensor.pc) annotation (Line(points={{90,-10},{90,-10},{90,0},{80,0}},    color={0,0,255}));
   connect(currentSensor.p, dc_p1) annotation (Line(points={{-90,46},{-90,46},{-90,60},{-100,60}}, color={0,0,255}));
   connect(signalVoltage.n, dc_n1) annotation (Line(points={{-90,-10},{-90,-10},{-90,-60},{-100,-60}}, color={0,0,255}));

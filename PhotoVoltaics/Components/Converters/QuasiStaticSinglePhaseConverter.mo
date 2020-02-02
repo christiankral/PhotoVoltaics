@@ -12,7 +12,7 @@ model QuasiStaticSinglePhaseConverter "Ideal quasi static single phase DC/AC con
   Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {-90, 0})));
   Modelica.Electrical.Analog.Sensors.CurrentSensor currentSensor annotation (
-    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 270, origin = {-90, 60})));
+    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 270, origin={-90,40})));
   Modelica.Blocks.Math.Product product annotation (
     Placement(transformation(extent = {{-60, 20}, {-40, 40}})));
   Modelica.Blocks.Math.Feedback feedback annotation (
@@ -35,15 +35,15 @@ model QuasiStaticSinglePhaseConverter "Ideal quasi static single phase DC/AC con
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {-10, 50})));
 equation
   connect(signalVoltage.n, dc_n) annotation (
-    Line(points = {{-90, -10}, {-90, -70}, {-90, -100}, {-100, -100}}, color = {0, 0, 255}));
+    Line(points={{-90,-10},{-90,-60},{-100,-60}},                      color = {0, 0, 255}));
   connect(currentSensor.p, dc_p) annotation (
-    Line(points = {{-90, 70}, {-90, 70}, {-90, 76}, {-90, 100}, {-100, 100}}, color = {0, 0, 255}));
+    Line(points={{-90,50},{-90,60},{-100,60}},                                color = {0, 0, 255}));
   connect(currentSensor.n, signalVoltage.p) annotation (
-    Line(points = {{-90, 50}, {-90, 50}, {-90, 10}}, color = {0, 0, 255}));
+    Line(points={{-90,30},{-90,10}},                 color = {0, 0, 255}));
   connect(signalVoltage.v, vDCRef) annotation (
-    Line(points={{-83,0},{-70,0},{-70,-80},{-60,-80},{-60,-120}},        color = {0, 0, 127}));
+    Line(points={{-78,0},{-70,0},{-70,-80},{-60,-80},{-60,-120}},        color = {0, 0, 127}));
   connect(currentSensor.i, product.u1) annotation (
-    Line(points = {{-80, 60}, {-76, 60}, {-70, 60}, {-70, 36}, {-62, 36}}, color = {0, 0, 127}));
+    Line(points={{-79,40},{-70,40},{-70,36},{-62,36}},                     color = {0, 0, 127}));
   connect(vDCRef, product.u2) annotation (
     Line(points={{-60,-120},{-60,-120},{-60,-86},{-60,-86},{-60,-80},{-66,-80},{-70,-80},{-70,24},{-62,24}},
                                                                                                           color = {0, 0, 127}));
@@ -52,17 +52,17 @@ equation
   connect(powerSensor.currentP, powerSensor.voltageP) annotation (
     Line(points = {{90, 70}, {100, 70}, {100, 60}}, color = {85, 170, 255}));
   connect(complexToReal.u, powerSensor.y) annotation (
-    Line(points = {{42, 70}, {42, 70}, {74, 70}, {74, 68}, {79, 68}}, color = {85, 170, 255}));
+    Line(points={{42,70},{42,70},{74,70},{74,70},{79,70}},            color = {85, 170, 255}));
   connect(feedback.y, integrator.u) annotation (
     Line(points = {{-30, -9}, {-30, -9}, {-30, -20}, {-50, -20}, {-50, -50}, {-32, -50}}, color = {0, 0, 127}));
   connect(powerSensor.currentP, ac_p) annotation (
-    Line(points = {{90, 70}, {90, 70}, {90, 88}, {90, 100}, {100, 100}}, color = {85, 170, 255}));
+    Line(points={{90,70},{90,70},{90,88},{90,60},{100,60}},              color = {85, 170, 255}));
   connect(potentialSensor.pin_p, ac_p) annotation (
-    Line(points = {{60, 20}, {60, 100}, {100, 100}}, color = {85, 170, 255}));
+    Line(points={{60,20},{60,60},{100,60}},          color = {85, 170, 255}));
   connect(potentialSensor.pin_n, ac_n) annotation (
-    Line(points = {{60, 0}, {60, -100}, {100, -100}}, color = {85, 170, 255}));
+    Line(points={{60,0},{60,-60},{100,-60}},          color = {85, 170, 255}));
   connect(powerSensor.voltageN, ac_n) annotation (
-    Line(points = {{80, 60}, {80, 60}, {74, 60}, {74, -100}, {100, -100}}, color = {85, 170, 255}));
+    Line(points={{80,60},{80,60},{74,60},{74,-60},{100,-60}},              color = {85, 170, 255}));
   connect(complexToPolar.u, potentialSensor.y) annotation (
     Line(points = {{40, -8}, {40, 10}, {49, 10}}, color = {85, 170, 255}));
   connect(polarToComplex.y, variableCurrentSource.I) annotation (
@@ -78,7 +78,7 @@ equation
   connect(powerSensor.currentN, variableCurrentSource.pin_n) annotation (
     Line(points = {{90, 50}, {90, 40}, {90, 40}}, color = {85, 170, 255}));
   connect(variableCurrentSource.pin_p, ac_n) annotation (
-    Line(points = {{90, 20}, {90, -100}, {100, -100}}, color = {85, 170, 255}));
+    Line(points={{90,20},{90,-60},{100,-60}},          color = {85, 170, 255}));
   annotation (
     defaultComponentName = "converter",
     Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={                                                                                                                                                                 Text(extent = {{-100, 40}, {-40, -40}}, lineColor = {0, 0, 255}, textString = "="), Text(extent = {{40, 40}, {100, -40}}, lineColor = {0, 0, 255}, textString = "~"), Text(extent = {{-150, 150}, {150, 110}}, lineColor = {0, 0, 255}, textString = "%name"), Text(extent={{-152,-112},{-92,-152}},   lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "vDCRef"), Text(extent={{-80,90},{20,50}},      lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=FillPattern.Solid,
