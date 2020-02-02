@@ -9,6 +9,9 @@ class ReleaseNotes "Release Notes"
 <ul>
 <li>Change location of converter pins</a>, see
 <a href=\"https://github.com/christiankral/PhotoVoltaics/pull/42\">#42</a></li>
+<li>Converted
+    <a href=\"modelica://PhotoVoltaics_TGM\">PhotoVoltaics_TGM</a>
+    library to Buildings version 6.0.0</li>
 </ul>
 
 <h5>Version 1.5.0, 2019-10-29</h5>

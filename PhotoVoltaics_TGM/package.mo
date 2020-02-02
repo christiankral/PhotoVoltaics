@@ -2,14 +2,14 @@
   extends Modelica.Icons.Package;
 
   annotation (preferredView="info",
-    version = "1.X.X",
-    versionDate = "2019-XX-XX",
+    version = "1.6.0",
+    versionDate = "2020-02-02",
     uses(Modelica(version = "3.2.3"),
-      Buildings(version = "5.1.0"),
-      PhotoVoltaics(version="1.X.X")),
+      Buildings(version = "6.0.0"),
+      PhotoVoltaics(version="1.6.0")),
     Documentation(info="<html>
 <p>This library is based on the <a href=\"https://github.com/christiankral/PhotoVoltaics\">PhotoVoltaics</a> and the <a href=\"https://github.com/lbl-srg/modelica-buildings\">Buildings</a> library. More information can be found at the <a href=\"modelica://PhotoVoltaics.UsersGuide\">User&apos;s Guide</a> of the <a href=\"modelica://PhotoVoltaics\">PhotoVoltaics</a> library. </p>
-<p>The data base of this library are two photo voltaic power plants at the <a href=\"https://www.tgm.ac.at\">TGM</a> in <a href=\"http://www.openstreetmap.org/way/233509248\">Vienna</a>, Austria. The
+<p>The data base of this library are two photo voltaic power plants at the <a href=\"https://www.tgm.ac.at\">TGM</a> in <a href=\"https://www.openstreetmap.org/way/233509248\">Vienna</a>, Austria. The
 GPS coordinates are 48.237111°N, 16.369000°E.</p>
 <p>Two photovoltaic plants are investigated:</p>
 <table cellspacing=\"0\" cellpadding=\"2\" border=\"1\" width=\"100%\"><tr>
