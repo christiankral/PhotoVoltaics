@@ -6,7 +6,7 @@ class Contact "Contact"
     Documentation(info="<html>
 <p>
 This library was developed during a diploma thesis at the
-<a href=\"http://www.tgm.ac.at\">TGM</a>
+<a href=\"https://www.tgm.ac.at\">TGM</a>
 by Jovan Brkic, Muaz Ceran, Mohamed Elmoghazy and Ramazan Kavlak under the supervision of Christian Kral.
 The library is hosted at <a href=\"https://github.com/christiankral/PhotoVoltaics\">GitHub</a>.
 </p>
@@ -19,7 +19,7 @@ The library is hosted at <a href=\"https://github.com/christiankral/PhotoVoltaic
 
 <p>
 Christian Kral<br>
-<a href=\"http://christiankral.net\">Electric machines and drives</a><br>
+<a href=\"https://christiankral.net\">Electric machines and drives</a><br>
 1060 Vienna, Austria<br>
 email: <a HREF=\"mailto:dr.christian.kral@gmail.com\">dr.christian.kral@gmail.com</a><br>
 </p>

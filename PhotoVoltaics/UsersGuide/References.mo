@@ -10,7 +10,7 @@ class References "References"
     <tr>
       <td valign=\"top\">[Brkic2019]</td>
       <td valign=\"top\">Jovan Brkic, Muaz Ceran, Mohamed Elmoghazy, Ramazan Kavlak, Anton Haumer, Christian Kral,
-      \"<a href=\"http://www.ep.liu.se/ecp/157/004/ecp19157004.pdf\">Open Source PhotoVoltaics Library for Systemic Investigations</a>\",
+      \"<a href=\"https://www.ep.liu.se/ecp/157/004/ecp19157004.pdf\">Open Source PhotoVoltaics Library for Systemic Investigations</a>\",
         <i>13th Modelica Conference 2019</i>, Regensburg, Germany.</td>
     </tr>
 </table>
