@@ -6,7 +6,7 @@ record TSM_200_DC01A "Comax monocrystalline SI cell 200W"
     defaultComponentPrefixes = "parameter",
     Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"http://www.elektra.si/uploads/datoteke/trina_tsm-195-200-205-210dc80.08_mono.pdf\">Comax</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"http://www.elektra.si/uploads/datoteke/trina_tsm-195-200-205-210dc80.08_mono.pdf\">Comax</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/TSM_200_DC01A.pdf\">available</a>.
 </html>"));
 end TSM_200_DC01A;

@@ -100,14 +100,14 @@ equation
 <p>This is an ideal DC/AC converter.</p>
 <p>
 The DC/AC converter is characterized by:
-</p> 
+</p>
 <ul>
-<li>Losses are not considered</li> 
-<li>The AC output current is determined based on power balance, calculating with instantanteous DC and complex AC phasor values: 
+<li>Losses are not considered</li>
+<li>The AC output current is determined based on power balance, calculating with instantanteous DC and complex AC phasor values:
     <code>vDC*iDC + real(
-    </code><u><code>v</code></u><code>1*</code><u><code>i</code></u><code>1</code><sup><code>*</code></sup> 
-  + </code><u><code>v</code></u><code>2*</code><u><code>i</code></u><code>2</code><sup><code>*</code></sup> 
-  + </code><u><code>v</code></u><code>3*</code><u><code>i</code></u><code>3</code><sup><code>*</code></sup> 
+    </code><u><code>v</code></u><code>1*</code><u><code>i</code></u><code>1</code><sup><code>*</code></sup>
+  + </code><u><code>v</code></u><code>2*</code><u><code>i</code></u><code>2</code><sup><code>*</code></sup>
+  + </code><u><code>v</code></u><code>3*</code><u><code>i</code></u><code>3</code><sup><code>*</code></sup>
     <code>)= 0</code></li>
 <li>The DC input voltage <code>vDCRef</code> is applied to the DC side without limitations</li>
 </ul>

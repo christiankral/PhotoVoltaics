@@ -2,8 +2,6 @@ within PhotoVoltaics.Sources;
 package Irradiance "Irradiance"
   extends Modelica.Icons.Package;
 
-
-
   annotation (Icon(graphics={
         Ellipse(
           extent={{-40,40},{40,-40}},

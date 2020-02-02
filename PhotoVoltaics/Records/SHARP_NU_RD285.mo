@@ -6,7 +6,7 @@ record SHARP_NU_RD285 "SHARP monocrystalline SI cell 285W"
     defaultComponentPrefixes = "parameter",
     Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"https://www.eng.sfe-solar.com/wp-content/uploads/2016/03/Datasheet_NURD260-285W_black_151027.pdf\">SHARP</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"https://www.eng.sfe-solar.com/wp-content/uploads/2016/03/Datasheet_NURD260-285W_black_151027.pdf\">SHARP</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SHARP_NU_RD285.pdf\">available</a>.
 </html>"));
 end SHARP_NU_RD285;

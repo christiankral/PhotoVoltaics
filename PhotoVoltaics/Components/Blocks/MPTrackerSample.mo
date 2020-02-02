@@ -36,8 +36,8 @@ algorithm
     defaultComponentName = "mpTracker",
     Documentation(info="<html>
 <p>This is a simple model of sampling maximum power tracker. The initial output of this tracker is maximum power voltage
-<code>VmpRef</code>. After that, the sensed input power in sampled by a fixed sampling period. The output voltage is decreased by 
-a voltage step of <code>VmpRef/n</code>. If then then actual power is greater than the previous power, the sign of of voltage change 
+<code>VmpRef</code>. After that, the sensed input power in sampled by a fixed sampling period. The output voltage is decreased by
+a voltage step of <code>VmpRef/n</code>. If then then actual power is greater than the previous power, the sign of of voltage change
 does not change. If the actual power is less than the previous power, the direction of the voltage change is swiched. This way
 the sampling maximum power tracker is permanently searching for a local maximum.</p>
 </html>"),

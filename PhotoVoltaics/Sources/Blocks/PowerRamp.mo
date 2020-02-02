@@ -17,8 +17,8 @@ equation
             fillPattern =                                                                                                                                                                                                        FillPattern.Solid), Text(extent = {{53, 23}, {82, 10}}, lineColor = {0, 0, 0}, textString = "height"), Text(extent = {{-2, -21}, {37, -33}}, lineColor = {0, 0, 0}, textString = "duration")}),
     Documentation(info="<html>
 <p>
-The Real output y of this block is determined by a 
-<a href=\"modelica://Modelica.Blocks.Sources.Ramp\">ramp</a> output 
+The Real output y of this block is determined by a
+<a href=\"modelica://Modelica.Blocks.Sources.Ramp\">ramp</a> output
  from which</p>
 
 <pre>

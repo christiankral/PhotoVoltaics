@@ -6,7 +6,7 @@ record LG305N1C_B3 "LG monocrystalline SI cell 305W"
     defaultComponentPrefixes = "parameter",
     Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"http://www.lg.com/us/commercial/documents/lg-solar-spec-LG305N1C-B3-032315.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"http://www.lg.com/us/commercial/documents/lg-solar-spec-LG305N1C-B3-032315.pdf\">LG</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/LG305N1C_B3.pdf\">available</a>.
 </html>"));
 end LG305N1C_B3;

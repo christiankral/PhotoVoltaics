@@ -39,12 +39,12 @@ equation
     Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
     Diagram(coordinateSystem(initialScale = 0.1)),
     Documentation(info = "<html>
-<p>This example demonstrates the dependency of the voltage current characteristic of photo voltaic cell 
+<p>This example demonstrates the dependency of the voltage current characteristic of photo voltaic cell
 as a function of irradiance. Investigate the following plots:</p>
 <ul>
-<li><code>cell.iGenerating</code> on the vertical axis and <code>cell.v</code> 
+<li><code>cell.iGenerating</code> on the vertical axis and <code>cell.v</code>
 on the horizontal axis</li>
-<li><code>cell.power</code> on the vertical axis and <code>cell.v</code> 
+<li><code>cell.power</code> on the vertical axis and <code>cell.v</code>
 on the horizontal axis</li>
 </ul>
 </html>"),

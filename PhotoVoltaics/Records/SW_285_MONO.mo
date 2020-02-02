@@ -6,7 +6,7 @@ record SW_285_MONO "Solarworld monocrystalline SI cell 285W"
     defaultComponentPrefixes = "parameter",
     Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"https://www.solarworld-usa.com/~/media/www/files/datasheets/sunmodule-plus/sunmodule-solar-panel-285-mono-ds.pdf\">Solarworld</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"https://www.solarworld-usa.com/~/media/www/files/datasheets/sunmodule-plus/sunmodule-solar-panel-285-mono-ds.pdf\">Solarworld</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SW_285_MONO.pdf\">available</a>.
 </html>"));
 end SW_285_MONO;

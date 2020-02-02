@@ -21,4 +21,3 @@ xlabel('$v$\,(V)')
 ylabel('$i$\,(A)')
 subplots_adjust(left=0.2, right=0.95, top=0.95, bottom=0.15)
 grid(True)
-

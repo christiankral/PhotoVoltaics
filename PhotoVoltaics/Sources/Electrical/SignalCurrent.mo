@@ -30,7 +30,7 @@ equation
 </ul>
 </html>",
     info="<html>
-<p>The signal current source is a converter of real valued irradiance signal into a source current. 
+<p>The signal current source is a converter of real valued irradiance signal into a source current.
 Depending on the actual temperature the current is adjusted through a linear temperature coeffficient.</p>
 <pre>
 i = IRef * (irradiance / irradianceRef + alphaRef * (T_heatPort - TRef))

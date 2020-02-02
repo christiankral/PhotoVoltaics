@@ -54,10 +54,10 @@ equation
 <p>This is an ideal DC/DC converter.</p>
 <p>
 The DC/DC converter is characterized by:
-</p> 
+</p>
 <ul>
-<li>Losses are not considered</li> 
-<li>The AC output current is determined based on power balance, calculating with instantaneous values: 
+<li>Losses are not considered</li>
+<li>The AC output current is determined based on power balance, calculating with instantaneous values:
     <code>vDC1*iDC1 + vDC2*iDC2 = 0<code></li>
 <li>The DC input voltage <code>vDCRef</code> is applied to the DC side 1 without limitations</li>
 <li>The phase angle input <code>phi</code> influences the AC reactive power based on the following figure,

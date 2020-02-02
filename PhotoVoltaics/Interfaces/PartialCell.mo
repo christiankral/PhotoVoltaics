@@ -29,11 +29,11 @@ equation
     Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})),
     Icon(coordinateSystem(preserveAspectRatio = false)),
     Documentation(info="<html>
-<p>The partial cell model considers the basic components of a simple 
-<a href=\"modelica://PhotoVoltaics.Components.SimplePhotoVoltaics.SimpleCell\">cell</a>, 
+<p>The partial cell model considers the basic components of a simple
+<a href=\"modelica://PhotoVoltaics.Components.SimplePhotoVoltaics.SimpleCell\">cell</a>,
 simple symmetric
 <a href=\"modelica://PhotoVoltaics.Components.SimplePhotoVoltaics.SimpleModuleSymmetric\">module</a>
-and simple symmetric 
+and simple symmetric
 <a href=\"modelica://PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric\">plant</a>
 model.</p>
 </html>"));

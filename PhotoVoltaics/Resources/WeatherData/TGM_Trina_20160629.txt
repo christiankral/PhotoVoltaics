@@ -1,7 +1,7 @@
-#1									
-double	trina(68,10)								
+#1
+double	trina(68,10)
 #time(s)	irradiance(W/m2)	powerAC(W)	UAC(V)	IAC(A)	powerDC(W)	VDC(V)	IDC(A)	T1(degC)	T2(degC)
-#Start	date	2016-06-29							
+#Start	date	2016-06-29
 0	0.0	0	138	0	0	82	0.07	287.7	285.4
 17077	0.0	0	138	0	0	82	0.07	287.7	285.4
 18877	0.0	0	138	0	0	82	70	287.2	284.9

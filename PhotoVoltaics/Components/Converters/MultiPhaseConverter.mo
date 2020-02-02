@@ -174,10 +174,10 @@ defaultComponentName = "converter",
 
 <p>
 The multi phase converter is characterized by:
-</p> 
+</p>
 <ul>
-<li>Losses are not considered</li> 
-<li>The AC output current is determined based on power balance, calculating with instantaneous values: 
+<li>Losses are not considered</li>
+<li>The AC output current is determined based on power balance, calculating with instantaneous values:
     <code>vDC*iDC + v1*i1 + v2*i2 + v3*i3 = 0<code></li>
 <li>The DC input voltage <code>vDCRef</code> is applied to the DC side without limitations</li>
 <li>The phase angle input <code>phi</code> influences the AC reactive power as shown in the figure below,

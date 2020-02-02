@@ -6,7 +6,7 @@ record SPR_E20_327 "Sunpower monocrystalline SI cell 327W"
     defaultComponentPrefixes = "parameter",
     Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"https://us.sunpower.com/sites/sunpower/files/media-library/data-sheets/e-series-home-solar-panels-comparison.pdf\">Sunpower</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"https://us.sunpower.com/sites/sunpower/files/media-library/data-sheets/e-series-home-solar-panels-comparison.pdf\">Sunpower</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SPR_E20_327.pdf\">available</a>.
 </html>"));
 end SPR_E20_327;

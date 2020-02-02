@@ -41,7 +41,7 @@ equation
                                                                  Diagram(coordinateSystem(preserveAspectRatio=false)),
     Documentation(info="<html>
 <p>This is DC/DC <a href=\"modelica://PhotoVoltaics.Components.Converters.DCConverter\">converter</a>
-   with integrated power measurement and sampled 
+   with integrated power measurement and sampled
    <a href=\"modelica://PhotoVoltaics.Components.Blocks.MPTrackerSample\">maxmimum power tracking</a>.
 </p></html>"));
 end DCConverter;

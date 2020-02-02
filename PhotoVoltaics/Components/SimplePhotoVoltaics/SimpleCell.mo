@@ -27,8 +27,8 @@ initial equation
     Icon(coordinateSystem, graphics={  Polygon(points = {{-80, 60}, {-60, 80}, {60, 80}, {80, 60}, {80, -60}, {60, -80}, {-60, -80}, {-80, -60}, {-80, 60}}, pattern = LinePattern.None, fillColor = {85, 85, 255}, fillPattern = FillPattern.Solid), Line(points = {{-40, 80}, {-40, -80}}, color = {255, 255, 255}), Line(points = {{40, 80}, {40, -80}}, color = {255, 255, 255}), Text(extent = {{-150, -150}, {150, -110}}, textString = "%name", lineColor = {0, 0, 255})}),
     Documentation(info="<html>
 <p>The basic simple cell model consists of a scalable
-<a href=\"modelica://PhotoVoltaics.Components.Diodes.Diode2Module\">diode</a> model and a 
-<a href=\"modelica://PhotoVoltaics.Sources.Electrical.SignalCurrent\">signal current source</a> with temperature 
+<a href=\"modelica://PhotoVoltaics.Components.Diodes.Diode2Module\">diode</a> model and a
+<a href=\"modelica://PhotoVoltaics.Sources.Electrical.SignalCurrent\">signal current source</a> with temperature
 dependency in order to consider the temperature coefficient of the short circuit of PV cell.</p>
 
 </p>
@@ -41,7 +41,7 @@ The diode model used an exponential curve when forward conducting. This exponent
 <p>
 These parameters are determined from the characteristic of the cell, given by the
 <a href=\"modelica://PhotoVoltaics.Components.Diodes.Diode\">diode equation</a> and the node equation of the equivalent circuit of Fig. 3(a) of
-<a href=\"modelica://PhotoVoltaics.UsersGuide.References\">[Brkic2019]</a> for (1) the open circuit condition and (2) the maximum power point. 
+<a href=\"modelica://PhotoVoltaics.UsersGuide.References\">[Brkic2019]</a> for (1) the open circuit condition and (2) the maximum power point.
 </p>
 
 <pre>
@@ -49,9 +49,9 @@ These parameters are determined from the characteristic of the cell, given by th
   (2)  IphRef = IsdRef * (exp(moduleData.VmpCellRef / m / moduleData.VtCellRef) - 1) + moduleData.ImpRef;
 </pre>
 
-<p> 
+<p>
 These two equations are evaluated in the <code>initial equation</code> section of this model.
-</p> 
+</p>
 
 <p>
 The solar irradiance of the model can eithe be constant or provided by signal input. The current of current source

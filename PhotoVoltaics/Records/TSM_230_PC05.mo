@@ -6,7 +6,7 @@ record TSM_230_PC05 "Trina polycrystalline SI cell 230W"
     defaultComponentPrefixes = "parameter",
     Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"https://http://www.franklin-electric.com.au/media/52578/Trina%20TSM190-200DC01A_WW.pdf\">Trina</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"https://http://www.franklin-electric.com.au/media/52578/Trina%20TSM190-200DC01A_WW.pdf\">Trina</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/TSM_230_PC05.pdf\">available</a>.
 </html>"));
 end TSM_230_PC05;

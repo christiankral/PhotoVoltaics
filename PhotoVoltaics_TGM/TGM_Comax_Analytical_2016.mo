@@ -67,7 +67,7 @@ equation
     Documentation(revisions = "<html>
 </html>",
         info="<html>
-<p>This example is based on analytical solar data for one year. This simulation investigates the theoretical 
+<p>This example is based on analytical solar data for one year. This simulation investigates the theoretical
 harvest of electric energy if there were absolutely no clouds and other disturbing weather conditions.</p>
 </html>"),
 __OpenModelica_simulationFlags(cpu = "()", jacobian = "coloredNumerical", s = "dassl", lv = "LOG_STATS"));

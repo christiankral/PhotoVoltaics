@@ -6,7 +6,7 @@ record SW_300_MONO "Solarworld monocrystalline SI cell 300W"
     defaultComponentPrefixes = "parameter",
     Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"https://www.eng.sfe-solar.com/wp-content/uploads/2016/11/SolarWorld-SW290-300-Mono_EN.pdf\">Solarworld</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"https://www.eng.sfe-solar.com/wp-content/uploads/2016/11/SolarWorld-SW290-300-Mono_EN.pdf\">Solarworld</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SW_300_MONO.pdf\">available</a>.
 </html>"));
 end SW_300_MONO;

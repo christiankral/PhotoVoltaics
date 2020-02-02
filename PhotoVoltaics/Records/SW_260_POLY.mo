@@ -6,7 +6,7 @@ record SW_260_POLY "Solarworld polycrystalline SI cell 260W"
     defaultComponentPrefixes = "parameter",
     Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"https://www.eng.sfe-solar.com/wp-content/uploads/2012/01/SolarWorld-SW260Poly-5bb_EN.pdf\">Solarworld</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"https://www.eng.sfe-solar.com/wp-content/uploads/2012/01/SolarWorld-SW260Poly-5bb_EN.pdf\">Solarworld</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SW_260_POLY.pdf\">available</a>.
 </html>"));
 end SW_260_POLY;

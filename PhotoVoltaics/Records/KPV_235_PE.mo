@@ -6,7 +6,7 @@ record KPV_235_PE "Kioto polycrystalline SI cell 235W"
     defaultComponentPrefixes = "parameter",
     Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"https://www.enfsolar.com/Product/pdf/Crystalline/559ce7298807b.pdf\">Kioto</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly 
+<a href=\"https://www.enfsolar.com/Product/pdf/Crystalline/559ce7298807b.pdf\">Kioto</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/KPV_235_PE.pdf\">available</a>.
 </html>"));
 end KPV_235_PE;
