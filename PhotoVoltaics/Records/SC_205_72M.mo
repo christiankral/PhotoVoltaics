@@ -6,7 +6,7 @@ record SC_205_72M "Sunclass monocrystalline SI cell 205W"
     defaultComponentPrefixes = "parameter",
     Documentation(info = "<html>
 The original data of this module are taken from
-<a href=\"http://www.sunclass-solar.com/fileadmin/Download-Center/Solarmodule/SunClass/en/SunClass_SC_Serie_195-205W_72M_1580x808x35_EN.pdf\">Sunclass</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly
+<a href=\"https://www.sunclass-solar.com/fileadmin/Download-Center/Solarmodule/SunClass/en/SunClass_SC_Serie_195-205W_72M_1580x808x35_EN.pdf\">Sunclass</a>. You may want to download this PDF file and store it in the directory Resources/DataSheets for convenience reasons. You may want to make these data directly
 <a href=\"modelica://PhotoVoltaics/Resources/DataSheets/SC_205_72M.pdf\">available</a>.
 </html>"));
 end SC_205_72M;
