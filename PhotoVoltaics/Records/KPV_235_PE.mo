@@ -1,6 +1,6 @@
 within PhotoVoltaics.Records;
 record KPV_235_PE "Kioto polycrystalline SI cell 235W"
-  extends ModuleData(final moduleName = "KPV_235_PE", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 37.24, final IscRef = 8.61, final VmpRef = 29.82, final ImpRef = 7.97, final alphaIsc = +0.0005, final alphaVoc = -0.0031, final ns = 60, final nb = 3);
+  extends PhotoVoltaics.Records.ModuleData(final moduleName = "KPV_235_PE", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 37.24, final IscRef = 8.61, final VmpRef = 29.82, final ImpRef = 7.97, final alphaIsc = +0.0005, final alphaVoc = -0.0031, final ns = 60, final nb = 3);
   annotation (
     defaultComponentName = "moduleData",
     defaultComponentPrefixes = "parameter",

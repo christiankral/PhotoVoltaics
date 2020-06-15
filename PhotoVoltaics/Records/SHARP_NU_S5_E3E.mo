@@ -1,6 +1,6 @@
 within PhotoVoltaics.Records;
 record SHARP_NU_S5_E3E "SHARP NU monocrystalline SI cell 185W"
-  extends ModuleData(final moduleName = "SHARP_NU_S5_E3E", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 30.2, final IscRef = 8.54, final VmpRef = 24.0, final ImpRef = 7.71, final alphaIsc = +0.00053, final alphaVoc = -0.00340, final ns = 48, final nb = 3);
+  extends PhotoVoltaics.Records.ModuleData(final moduleName = "SHARP_NU_S5_E3E", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 30.2, final IscRef = 8.54, final VmpRef = 24.0, final ImpRef = 7.71, final alphaIsc = +0.00053, final alphaVoc = -0.00340, final ns = 48, final nb = 3);
   annotation (
     defaultComponentName = "moduleData",
     defaultComponentPrefixes = "parameter",

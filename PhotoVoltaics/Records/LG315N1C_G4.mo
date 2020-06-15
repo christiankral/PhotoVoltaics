@@ -1,6 +1,6 @@
 within PhotoVoltaics.Records;
 record LG315N1C_G4 "LG monocrystalline SI cell 315W"
-  extends ModuleData(final moduleName = "LG315N1C_G4", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 40.6, final IscRef = 10.02, final VmpRef = 33.2, final ImpRef = 9.5, final alphaIsc = +0.0003, final alphaVoc = -0.0028, final ns = 72, final nb = 3);
+  extends PhotoVoltaics.Records.ModuleData(final moduleName = "LG315N1C_G4", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 40.6, final IscRef = 10.02, final VmpRef = 33.2, final ImpRef = 9.5, final alphaIsc = +0.0003, final alphaVoc = -0.0028, final ns = 72, final nb = 3);
   annotation (
     defaultComponentName = "moduleData",
     defaultComponentPrefixes = "parameter",

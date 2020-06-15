@@ -5,6 +5,12 @@ class ReleaseNotes "Release Notes"
     preferredView = "info",
     Documentation(info="<html>
 
+<h5>Version 1.6.X, 2020-06-15</h5>
+<ul>
+<li>Change extends of records to fully qualified name, see
+<a href=\"https://github.com/christiankral/PhotoVoltaics/issues/43\">#43</a></li>
+</ul>
+
 <h5>Version 1.6.0, 2020-02-02</h5>
 <ul>
 <li>Change location of converter pins</a>, see
