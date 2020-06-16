@@ -3,17 +3,15 @@ class ReleaseNotes "Release Notes"
   extends Modelica.Icons.ReleaseNotes;
   annotation (
     preferredView = "info",
-    Documentation(info="<html>
-
-<h5>Version 1.6.X, 2020-06-15</h5>
+    Documentation(info= "<html><head></head><body><h5>Version 1.6.X, 2020-06-15</h5>
 <ul>
 <li>Change extends of records to fully qualified name, see
-<a href=\"https://github.com/christiankral/PhotoVoltaics/issues/43\">#43</a></li>
+<a href=\"https://github.com/christiankral/PhotoVoltaics/issues/43\">#43</a></li><li>Add example of table supplied module, see <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/44\">#44</a></li>
 </ul>
 
 <h5>Version 1.6.0, 2020-02-02</h5>
 <ul>
-<li>Change location of converter pins</a>, see
+<li>Change location of converter pins, see
 <a href=\"https://github.com/christiankral/PhotoVoltaics/pull/42\">#42</a></li>
 <li>Converted
     <a href=\"modelica://PhotoVoltaics_TGM\">PhotoVoltaics_TGM</a>
@@ -145,8 +143,8 @@ class ReleaseNotes "Release Notes"
 <li>Restructured PV, Converters, Batteries within Components; this is a non-backwards compatible change</li>
 <li>Added some more irradiance models</li>
 <li>Added solar pyramid model</li>
-<li>Added icons package<li>
-<li>Changed interface names of DC converter (now compatible with
+<li>Added icons package</li><li>
+</li><li>Changed interface names of DC converter (now compatible with
     <a hfre=\"modelica://Modelica.Electrical.PowerConverters\">PowerConverters</a></li>
 <li>Added Conveters with integrated sampled power tracking</li>
 <li>Changed internal integration time constant of converters from <code>T</code> to <code>Ti</code>
@@ -206,5 +204,5 @@ class ReleaseNotes "Release Notes"
 <li>Component testing models</li>
 </ul>
 </ul>
-</html>"));
+</body></html>"));
 end ReleaseNotes;
