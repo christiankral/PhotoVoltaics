@@ -49,7 +49,6 @@ GPS coordinates are 48.237111°N, 16.369000°E.</p>
 
 <p>For these two plants different irradiance sources are investigated.</p>
 
-<p>Measured data are also provided and may be compared with simulation data.</p></html>"),
-    conversion(from(version="1.6.0", script="modelica://PhotoVoltaics_TGM/ConvertFromPhotoVoltaics_TGM_1.6.0.mos")));
+<p>Measured data are also provided and may be compared with simulation data.</p></html>"));
 
 end PhotoVoltaics_TGM;
