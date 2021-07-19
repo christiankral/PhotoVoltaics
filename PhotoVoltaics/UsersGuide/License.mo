@@ -13,7 +13,7 @@ This library is published under the
 <a href=\"https://opensource.org/licenses/BSD-3-Clause\">BSD-3-Clause</a>.
 </p>
 <p>
-Copyright 2016-2019 Christian Kral, Jovan Brkic, Muaz Ceran, Mohamed Elmoghazy, Ramazan Kavlak. All rights reserved.
+Copyright 2016-2021 Christian Kral, Jovan Brkic, Muaz Ceran, Mohamed Elmoghazy, Ramazan Kavlak. All rights reserved.
 </p>
 
 <p>
