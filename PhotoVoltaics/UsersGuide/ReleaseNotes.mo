@@ -10,6 +10,10 @@ class ReleaseNotes "Release Notes"
 <li>Switch to Modelica Standard Library (MSL) 4.0.0</li>
 <li>Remove examples relying on 
 <a href=\"https://github.com/lbl-srg/modelica-buildings/issues/2122\">Bulidings, as this library is not yet prepared for the MSL 4.0.0</a></li>
+<li>Add exmaple <a href=\"modelica://PhotoVoltaics.Examples.SimpleModuleMPTable\">SimpleModuleMPTable</a>, see
+    <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/44\">#44</a></li>
+<li>Use absolute instance names in all module <a href=\"modelica://PhotoVoltaics.Records\">Records</a>, see
+    <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/43\">#43</a></li>
 </ul>
 
 <h5>Version 1.6.0, 2020-02-02</h5>
