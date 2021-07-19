@@ -136,7 +136,7 @@ class ReleaseNotes "Release Notes"
 
 <h5>Version 0.5.0, 2017-02-25</h5>
 <ul>
-<li>Replaced power factor input of multi phase converter by phase angle phi input, see
+<li>Replaced power factor input of polyphase converter by phase angle phi input, see
     <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/12\">#12</a></li>
 
 <li>Improved and fixed documentation of converters</li>

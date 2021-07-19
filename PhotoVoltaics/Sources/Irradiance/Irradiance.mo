@@ -8,8 +8,10 @@ model Irradiance "Simple solar irradiance without considering weather conditions
   parameter Integer startMonth(final min = 1, final max = 12) = 9 "Month";
   parameter Integer startYear = 2016 "Year";
   parameter Integer TimeZone = 1 "Time zone";
-  parameter Modelica.Units.SI.Angle longitude=0.2856929452589518 "Longitude";
-  parameter Modelica.Units.SI.Angle latitude=0.8418964085999744 "Latitude";
+  parameter Modelica.Units.SI.Angle longitude=0.2856929452589518
+    "Longitude";
+  parameter Modelica.Units.SI.Angle latitude=0.8418964085999744
+    "Latitude";
   parameter Modelica.Units.SI.Irradiance irradianceRef=1000
     "Reference solar irradiance";
   parameter Modelica.Units.SI.Angle gamma=10*pi/180
@@ -21,19 +23,20 @@ model Irradiance "Simple solar irradiance without considering weather conditions
   Integer daysOfYear(final start = dayOfTheYear(31, 12, startYear), fixed = true) "Total number of days of year";
   Integer year(final start = startYear, fixed = true) "Actual year";
   Modelica.Units.SI.Angle Jprime(final start=dayOfTheYear(
-        startDay,
-        startMonth,
-        startYear)/dayOfTheYear(
-        31,
-        12,
-        startYear)*2*pi, fixed=true)
+              startDay,
+              startMonth,
+              startYear)/dayOfTheYear(
+              31,
+              12,
+              startYear)*2*pi, fixed=true)
     "Equivalent Angle of the day of the year w.r.t. total number of days";
   Real delta_J;
   Real timeequation_J;
   Modelica.Units.NonSI.Time_day localTimeDays "Local time in days";
   Integer localDays "Locale day";
   Modelica.Units.SI.Time localTime "Local time";
-  Modelica.Units.NonSI.Time_hour localTimeHours "Local time in unit hours";
+  Modelica.Units.NonSI.Time_hour localTimeHours
+    "Local time in unit hours";
   Modelica.Units.NonSI.Time_hour LocalMeanTimeHours
     "Local mean time in unit hours";
   Modelica.Units.NonSI.Time_hour trueMeanTimeHours

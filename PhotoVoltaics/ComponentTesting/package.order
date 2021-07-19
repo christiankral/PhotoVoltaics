@@ -1,4 +1,4 @@
 DiodeCompare
 SinglePhaseVoltageControlledConverter
-MultiPhaseVoltageControlledConverter
+PolyphaseVoltageControlledConverter
 TestIrradiance

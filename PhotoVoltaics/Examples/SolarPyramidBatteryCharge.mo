@@ -24,8 +24,8 @@ model SolarPyramidBatteryCharge "Solar pyramid charging a battery"
         origin={20,-2})));
   parameter PhotoVoltaics.Records.SHARP_NU_S5_E3E moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
 
-  Modelica.Units.NonSI.Angle_deg gamma_deg=Modelica.Units.Conversions.to_deg(
-      solarPyramid.gamma);
+  Modelica.Units.NonSI.Angle_deg gamma_deg=
+      Modelica.Units.Conversions.to_deg(solarPyramid.gamma);
 equation
   connect(gammaRamp.y, solarPyramid.gamma) annotation (Line(points={{-59,20},{-54,20},{-54,6},{-42,6}}, color={0,0,127}));
   connect(azimuthConst.y, solarPyramid.azimuth) annotation (Line(points={{-59,-20},{-50,-20},{-50,-6},{-42,-6}}, color={0,0,127}));

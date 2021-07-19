@@ -1,5 +1,6 @@
 within PhotoVoltaics.Sources.Electrical;
-model VariableUnrootedMultiPhaseCurrentSource "Unrooted variable multi phase AC current source"
+model VariableUnrootedPolyphaseCurrentSource
+  "Unrooted variable polyphase AC current source"
   extends Modelica.Electrical.QuasiStatic.Polyphase.Interfaces.OnePort;
   import Modelica.Constants.pi;
   Modelica.ComplexBlocks.Interfaces.ComplexInput I[m] annotation (
@@ -15,16 +16,16 @@ equation
 This model describes <i>m</i> variable current sources, with <i>m</i> complex signal inputs,
 specifying the complex current by the complex RMS voltage components.
 Additionally, the frequency of the current source is defined by a real signal input.
-<i>m</i> <a href=\"modelica://Modelica.Electrical.QuasiStationary.SinglePhase.Sources.VariableCurrentSource\">single phase VariableCurrentSources</a> are used.
+<i>m</i> <a href=\"modelica://Modelica.Electrical.QuasiStatic.SinglePhase.Sources.VariableCurrentSource\">single-phase VariableCurrentSources</a> are used.
 </p>
 
 <h4>See also</h4>
 
 <p>
-<a href=\"modelica://Modelica.Electrical.QuasiStationary.SinglePhase.Sources.VoltageSource\">SinglePhase.VoltageSource</a>,
-<a href=\"modelica://Modelica.Electrical.QuasiStationary.MultiPhase.Sources.VoltageSource\">VoltageSource</a>,
-<a href=\"modelica://Modelica.Electrical.QuasiStationary.MultiPhase.Sources.VariableVoltageSource\">VariableVoltageSource</a>,
-<a href=\"modelica://Modelica.Electrical.QuasiStationary.MultiPhase.Sources.CurrentSource\">CurrentSource</a>.
+<a href=\"modelica://Modelica.Electrical.QuasiStatic.SinglePhase.Sources.VoltageSource\">SinglePhase.VoltageSource</a>,
+<a href=\"modelica://Modelica.Electrical.QuasiStatic.Polyphase.Sources.VoltageSource\">VoltageSource</a>,
+<a href=\"modelica://Modelica.Electrical.QuasiStatic.Polyphase.Sources.VariableVoltageSource\">VariableVoltageSource</a>,
+<a href=\"modelica://Modelica.Electrical.QuasiStatic.Polyphase.Sources.CurrentSource\">CurrentSource</a>.
 </p>
 </html>"));
-end VariableUnrootedMultiPhaseCurrentSource;
+end VariableUnrootedPolyphaseCurrentSource;

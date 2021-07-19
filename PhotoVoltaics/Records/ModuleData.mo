@@ -6,21 +6,21 @@ record ModuleData "Data of PV module"
     annotation (Dialog(group="Reference data"));
   parameter Modelica.Units.SI.Irradiance irradianceRef=1000
     "Reference solar irradiance" annotation (Dialog(group="Reference data"));
-  parameter Modelica.Units.SI.Voltage VocRef(min=Modelica.Constants.small) =
-    30.2 "Reference open circuit module voltage > 0 at TRref"
+  parameter Modelica.Units.SI.Voltage VocRef(min=Modelica.Constants.small) = 30.2
+    "Reference open circuit module voltage > 0 at TRref"
     annotation (Dialog(group="Reference data"));
   final parameter Modelica.Units.SI.Voltage VocCellRef=VocRef/ns
     "Reference open circuit cell voltage > 0 at TRref";
-  parameter Modelica.Units.SI.Current IscRef(min=Modelica.Constants.small) =
-    8.54 "Reference short circuit current > 0 at TRref and irradianceRef"
+  parameter Modelica.Units.SI.Current IscRef(min=Modelica.Constants.small) = 8.54
+    "Reference short circuit current > 0 at TRref and irradianceRef"
     annotation (Dialog(group="Reference data"));
-  parameter Modelica.Units.SI.Voltage VmpRef(min=Modelica.Constants.small) =
-    24.0 "Reference maximum power module voltage > 0 at TRref"
+  parameter Modelica.Units.SI.Voltage VmpRef(min=Modelica.Constants.small) = 24.0
+    "Reference maximum power module voltage > 0 at TRref"
     annotation (Dialog(group="Reference data"));
   final parameter Modelica.Units.SI.Voltage VmpCellRef=VmpRef/ns
     "Reference maximum power cell voltage > 0 at TRref";
-  parameter Modelica.Units.SI.Current ImpRef(min=Modelica.Constants.small) =
-    7.71 "Reference maximum power current > 0 at TRref and irradianceRef"
+  parameter Modelica.Units.SI.Current ImpRef(min=Modelica.Constants.small) = 7.71
+    "Reference maximum power current > 0 at TRref and irradianceRef"
     annotation (Dialog(group="Reference data"));
   parameter Modelica.Units.SI.LinearTemperatureCoefficient alphaIsc=+0.00053
     "Temperature coefficient of reference short circuit current at TRref"
@@ -40,8 +40,8 @@ record ModuleData "Data of PV module"
                     parameter Modelica.SIunits.Resistance RsCell = 0 "Series resistance of cell" annotation(Dialog(group = "Non-ideal effects"));
                     parameter Modelica.SIunits.Resistance RshCell = 1E8 "Shunt resistance of cell" annotation(Dialog(group = "Non-ideal effects"));
                     */
-  final parameter Modelica.Units.SI.Voltage VtCellRef=Modelica.Constants.k*TRef
-      /Q "Reference temperature voltage of cell";
+  final parameter Modelica.Units.SI.Voltage VtCellRef=Modelica.Constants.k*
+      TRef/Q "Reference temperature voltage of cell";
   constant Modelica.Units.SI.Charge Q=1.6021766208E-19
     "Elementary charge of electron";
   annotation (

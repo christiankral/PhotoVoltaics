@@ -2,8 +2,10 @@ within PhotoVoltaics.Sources.Electrical;
 model IdealBattery "Re-chargeable ideal battery without loss"
   parameter Integer ns(min = 1) = 1 "Number of series cells";
   parameter Integer np(min = 1) = 1 "Number of parallel cells";
-  parameter Modelica.Units.SI.Voltage V1Cell "Maximum cell voltage > V0Cell";
-  parameter Modelica.Units.SI.Voltage V0Cell "Minimum cell voltage < V1Cell";
+  parameter Modelica.Units.SI.Voltage V1Cell
+    "Maximum cell voltage > V0Cell";
+  parameter Modelica.Units.SI.Voltage V0Cell
+    "Minimum cell voltage < V1Cell";
   final parameter Modelica.Units.SI.Voltage V1=V1Cell*ns
     "Maximum battery voltage > V0";
   final parameter Modelica.Units.SI.Voltage V0=V0Cell*ns
@@ -16,7 +18,8 @@ model IdealBattery "Re-chargeable ideal battery without loss"
     "Total cell energy between V0Cell and V1Cell";
   final parameter Modelica.Units.SI.Capacitance CCell=2*ECell/(V1Cell^2 -
       V0Cell^2) "Total charge of battery";
-  parameter Modelica.Units.SI.Voltage ViniCell=V1Cell "Initial cell voltage";
+  parameter Modelica.Units.SI.Voltage ViniCell=V1Cell
+    "Initial cell voltage";
   Modelica.Units.SI.Voltage v=pin_p.v - pin_n.v "Battery voltage";
   Modelica.Units.SI.Voltage vCell=v/ns "Cell voltage";
   Modelica.Units.SI.Current i=capacitor.i "Battery current";

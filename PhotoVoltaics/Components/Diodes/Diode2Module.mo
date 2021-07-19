@@ -7,14 +7,14 @@ model Diode2Module "Diode model with four different sections including breakthro
   parameter Integer ns = 1 "Number of series connected cells per module";
   parameter Integer nsModule(final min = 1) = 1 "Number of series connected modules";
   parameter Integer npModule(final min = 1) = 1 "Number of parallel connected modules";
-  final parameter Modelica.Units.SI.Voltage VtRef=Modelica.Constants.k*TRef/Q
-    "Reference voltage equivalent of temperature";
-  final parameter Modelica.Units.SI.Voltage VBv=(-m*Nbv*log(IdsRef*Nbv/Ibv)*
-      VtRef) - Bv "Voltage limit of approximation of breakthrough";
-  final parameter Modelica.Units.SI.Current IdsRef=IRef/(exp(VRef/m/VtRef) - 1)
-    "Reference saturation current";
-  final parameter Modelica.Units.SI.Voltage VNegLin=(-VRef/m/VtRef*(Nbv*m*VtRef))
-       - Bv "Limit of linear range left of breakthrough";
+  final parameter Modelica.Units.SI.Voltage VtRef=Modelica.Constants.k*
+      TRef/Q "Reference voltage equivalent of temperature";
+  final parameter Modelica.Units.SI.Voltage VBv=(-m*Nbv*log(IdsRef*Nbv/
+      Ibv)*VtRef) - Bv "Voltage limit of approximation of breakthrough";
+  final parameter Modelica.Units.SI.Current IdsRef=IRef/(exp(VRef/m/VtRef)
+       - 1) "Reference saturation current";
+  final parameter Modelica.Units.SI.Voltage VNegLin=(-VRef/m/VtRef*(Nbv*m*
+      VtRef)) - Bv "Limit of linear range left of breakthrough";
   Modelica.Units.SI.Voltage VNeg "Limit of linear negative voltage range";
   Modelica.Units.SI.Voltage vCell=v/ns/nsModule "Cell voltage";
   Modelica.Units.SI.Voltage vModule=v/nsModule "Module voltage";

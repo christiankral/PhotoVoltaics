@@ -1,5 +1,5 @@
 within PhotoVoltaics.Examples;
-model SimpleModuleMP3 "Simple module supplies quasi static three phase AC grid with maximum power tracker"
+model SimpleModuleMP3 "Simple module supplies quasi-static three-phase AC grid with maximum power tracker"
   extends Modelica.Icons.Example;
   Modelica.Electrical.Analog.Basic.Ground groundDC annotation (
     Placement(visible = true, transformation(origin = {-40, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -12,7 +12,9 @@ model SimpleModuleMP3 "Simple module supplies quasi static three phase AC grid w
         rotation=-90)));
   Modelica.Blocks.Sources.Ramp ramp(duration = 100, startTime = 100, height = 800, offset = 200) annotation (
     Placement(transformation(extent = {{-80, -10}, {-60, 10}})));
-  PhotoVoltaics.Components.Converters.QuasiStaticMultiPhaseConverter converter annotation (Placement(transformation(extent={{20,-10},{40,10}})));
+  PhotoVoltaics.Components.Converters.QuasiStaticPolyphaseConverter
+    converter
+    annotation (Placement(transformation(extent={{20,-10},{40,10}})));
   PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = moduleData.VmpRef, ImpRef = moduleData.ImpRef) annotation (
     Placement(transformation(extent = {{0, -60}, {20, -40}})));
   Modelica.Electrical.QuasiStatic.SinglePhase.Basic.Ground groundAC

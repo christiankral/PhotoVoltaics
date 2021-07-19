@@ -4,8 +4,10 @@ model DCConverter "DC controlled single phase DC/AC converter"
   extends Modelica.Electrical.PowerConverters.Interfaces.DCDC.DCtwoPin2;
   extends .PhotoVoltaics.Icons.Converter;
 
-  parameter Modelica.Units.SI.Voltage VRef=48 "Reference DC source voltage";
-  parameter Modelica.Units.SI.Time Ti=1E-6 "Internal integration time constant";
+  parameter Modelica.Units.SI.Voltage VRef=48
+    "Reference DC source voltage";
+  parameter Modelica.Units.SI.Time Ti=1E-6
+    "Internal integration time constant";
   Modelica.Blocks.Interfaces.RealInput vDCRef(final unit = "V") "DC voltage" annotation (
     Placement(transformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin={-60,-120}),  iconTransformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin={-60,-120})));
   Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage annotation (

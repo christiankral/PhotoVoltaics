@@ -1,7 +1,8 @@
 within PhotoVoltaics.Sources.Electrical;
 model SignalCurrent "Generic current source using the input signal as source current"
   extends Modelica.Electrical.Analog.Interfaces.ConditionalHeatPort(T = 298.15);
-  parameter Modelica.Units.SI.Temperature TRef=298.15 "Reference temperature";
+  parameter Modelica.Units.SI.Temperature TRef=298.15
+    "Reference temperature";
   parameter Modelica.Units.SI.Current IRef=1
     "Reference current at reference irradiance and reference temperature";
   parameter Modelica.Units.SI.Irradiance irradianceRef=1000
@@ -12,7 +13,8 @@ model SignalCurrent "Generic current source using the input signal as source cur
     Placement(transformation(extent = {{-110, -10}, {-90, 10}})));
   Modelica.Electrical.Analog.Interfaces.NegativePin n annotation (
     Placement(transformation(extent = {{110, -10}, {90, 10}})));
-  Modelica.Units.SI.Voltage v "Voltage drop between the two pins (= p.v - n.v)";
+  Modelica.Units.SI.Voltage v
+    "Voltage drop between the two pins (= p.v - n.v)";
   Modelica.Units.SI.Current i
     "Current flowing from pin p to pin n as input signal";
   Modelica.Blocks.Interfaces.RealInput irradiance(unit = "W/m2") "Irradiance" annotation (

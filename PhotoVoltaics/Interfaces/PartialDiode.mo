@@ -6,13 +6,13 @@ partial model PartialDiode "Diode with one exponential function"
     "Elementary charge of electron";
   parameter Real m = 1 "Ideality factor of diode";
   parameter Modelica.Units.SI.Resistance R=1E8 "Parallel ohmic resistance";
-  parameter Modelica.Units.SI.Temperature TRef=298.15 "Reference temperature"
+  parameter Modelica.Units.SI.Temperature TRef=298.15
+    "Reference temperature" annotation (Dialog(group="Reference data"));
+  parameter Modelica.Units.SI.Voltage VRef(min=Modelica.Constants.small) = 0.6292
+    "Reference voltage > 0, i.e. open circuit voltage, at TRef"
     annotation (Dialog(group="Reference data"));
-  parameter Modelica.Units.SI.Voltage VRef(min=Modelica.Constants.small) =
-    0.6292 "Reference voltage > 0, i.e. open circuit voltage, at TRef"
-    annotation (Dialog(group="Reference data"));
-  parameter Modelica.Units.SI.Current IRef(min=Modelica.Constants.small) =
-    8.540 "Reference current > 0, i.e. short circuit current, at TRef"
+  parameter Modelica.Units.SI.Current IRef(min=Modelica.Constants.small) = 8.540
+    "Reference current > 0, i.e. short circuit current, at TRef"
     annotation (Dialog(group="Reference data"));
   parameter Modelica.Units.SI.LinearTemperatureCoefficient alphaI=+0.00053
     "Temperature coefficient of reference current at TRef"

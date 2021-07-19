@@ -30,8 +30,8 @@ Modelica library for the simulation of photo voltaic cells, modules and plants. 
 <li>Cell, module and plant parameters can be taken directly from manufacturer data sheets</li>
 <li>Data of commercial modules stored in Modelica Records for convenient investigations</li>
 <li>Analytical irradiance model without weather conditions</li>
-<li>Single and three phase quasi static converters</li>
-<li>Three phase transient converter</li>
+<li>Single-phase and three-phase quasi static converters</li>
+<li>Three-phase transient converter</li>
 <li>Maximum power tracker based on continuous voltage regulation</li>
 <li>Linear, symmetric and chargable battery model, parameterized by cut off voltage, charge voltage, energy</li>
 </ul>
@@ -72,7 +72,7 @@ Library authors are</p>
 <li><a href=\"https://christiankral.net\">Christian Kral</a></li>
 </ul>
 
-<p>The three phase transient multi phase converter was contributed by Luiz Bueno, RWTH Aachen, Germany.</p>
+<p>The three-phase transient polyphase converter was contributed by Luiz Bueno, RWTH Aachen, Germany.</p>
 
 <h4>Award</h4>
 

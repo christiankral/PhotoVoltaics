@@ -1,5 +1,5 @@
 within PhotoVoltaics.Sources.Electrical;
-model VariableUnrootedSinglePhaseCurrentSource "Unrooted variable multi phase AC current source"
+model VariableUnrootedSinglePhaseCurrentSource "Unrooted variable polyphase AC current source"
   extends Modelica.Electrical.QuasiStatic.SinglePhase.Interfaces.OnePort;
   import Modelica.Constants.pi;
   Modelica.ComplexBlocks.Interfaces.ComplexInput I annotation (

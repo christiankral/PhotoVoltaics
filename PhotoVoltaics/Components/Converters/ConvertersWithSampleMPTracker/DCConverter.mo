@@ -6,9 +6,10 @@ model DCConverter "DC converter with sampled maximum power tracking"
   extends PhotoVoltaics.Icons.Converter;
   extends PhotoVoltaics.Icons.MPTrackerSmall;
 
-  parameter Modelica.Units.SI.Voltage VRef=48 "Reference DC source voltage"
-    annotation (Dialog(group="Converter"));
-  parameter Modelica.Units.SI.Time Ti=1E-6 "Internal integration time constant"
+  parameter Modelica.Units.SI.Voltage VRef=48
+    "Reference DC source voltage" annotation (Dialog(group="Converter"));
+  parameter Modelica.Units.SI.Time Ti=1E-6
+    "Internal integration time constant"
     annotation (Dialog(group="Converter"));
 
   parameter Modelica.Units.SI.Time startTime=0 "Start time"

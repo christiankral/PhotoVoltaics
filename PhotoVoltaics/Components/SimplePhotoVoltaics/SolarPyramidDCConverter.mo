@@ -1,7 +1,8 @@
 within PhotoVoltaics.Components.SimplePhotoVoltaics;
 model SolarPyramidDCConverter "Solar pyramid with DC/DC converters"
   import Modelica.Constants.pi;
-  extends Modelica.Thermal.HeatTransfer.Interfaces.PartialConditionalHeatPort(T = 298.15);
+  extends
+    Modelica.Thermal.HeatTransfer.Interfaces.PartialConditionalHeatPort(      T = 298.15);
   extends Modelica.Electrical.PowerConverters.Interfaces.ACDC.DCtwoPin;
   parameter Records.ModuleData moduleData "Module parameters" annotation (choicesAllMatching = true, Placement(transformation(extent={{40,-88},{60,-68}})));
   parameter Modelica.Units.SI.Angle sunAzimuth=0 "Azimuth of sun"
@@ -11,9 +12,10 @@ model SolarPyramidDCConverter "Solar pyramid with DC/DC converters"
   parameter Modelica.Units.SI.Irradiance irradiance=1000 "Irradiance"
     annotation (Dialog(group="Irradiance"));
 
-  parameter Modelica.Units.SI.Voltage VRef=48 "Reference DC source voltage"
-    annotation (Dialog(group="Converter"));
-  parameter Modelica.Units.SI.Time Ti=1E-6 "Internal integration time constant"
+  parameter Modelica.Units.SI.Voltage VRef=48
+    "Reference DC source voltage" annotation (Dialog(group="Converter"));
+  parameter Modelica.Units.SI.Time Ti=1E-6
+    "Internal integration time constant"
     annotation (Dialog(group="Converter"));
 
   parameter Modelica.Units.SI.Time startTime=0 "Start time"
@@ -142,8 +144,8 @@ model SolarPyramidDCConverter "Solar pyramid with DC/DC converters"
     "Negative power consumption (generating) of module 3";
   Modelica.Units.SI.Power powerGenerating4=module4.powerGenerating
     "Negative power consumption (generating) of module 4";
-  Modelica.Units.SI.Power powerGenerating=powerGenerating1 + powerGenerating2
-       + powerGenerating3 + powerGenerating4
+  Modelica.Units.SI.Power powerGenerating=powerGenerating1 +
+      powerGenerating2 + powerGenerating3 + powerGenerating4
     "Total negative power consumption (generating) of all four modules";
 
   Converters.ConvertersWithSampleMPTracker.DCConverter dcConverter1(

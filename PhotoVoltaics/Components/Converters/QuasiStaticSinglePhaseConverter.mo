@@ -3,8 +3,10 @@ model QuasiStaticSinglePhaseConverter "Ideal quasi static single phase DC/AC con
   extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
   extends .PhotoVoltaics.Interfaces.QuasiStatic.ACpins;
   extends .PhotoVoltaics.Icons.Converter;
-  parameter Modelica.Units.SI.Voltage VRef=400/sqrt(3) "Reference voltage";
-  parameter Modelica.Units.SI.Time Ti=1E-6 "Internal integration time constant";
+  parameter Modelica.Units.SI.Voltage VRef=400/sqrt(3)
+    "Reference voltage";
+  parameter Modelica.Units.SI.Time Ti=1E-6
+    "Internal integration time constant";
   Modelica.Units.SI.Power powerDC=vDC*iDC "Power of DC side";
   Modelica.Units.SI.Power powerAC=Modelica.ComplexMath.real(vAC*
       Modelica.ComplexMath.conj(iAC)) "Complex apparent power of AC side";
@@ -20,8 +22,8 @@ model QuasiStaticSinglePhaseConverter "Ideal quasi static single phase DC/AC con
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 270, origin = {-30, 0})));
   Sources.Electrical.VariableUnrootedSinglePhaseCurrentSource variableCurrentSource annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin = {90, 30})));
-  Modelica.Electrical.QuasiStatic.SinglePhase.Sensors.PowerSensor powerSensor
-    annotation (Placement(transformation(
+  Modelica.Electrical.QuasiStatic.SinglePhase.Sensors.PowerSensor
+    powerSensor annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={90,60})));
@@ -58,8 +60,8 @@ equation
     Line(points = {{-39, 30}, {-30, 30}, {-30, 8}}, color = {0, 0, 127}));
   connect(powerSensor.currentP, powerSensor.voltageP) annotation (
     Line(points = {{90, 70}, {100, 70}, {100, 60}}, color = {85, 170, 255}));
-  connect(complexToReal.u, powerSensor.apparentPower) annotation (Line(points={
-          {42,70},{42,70},{74,70},{74,70},{79,70}}, color={85,170,255}));
+  connect(complexToReal.u, powerSensor.apparentPower) annotation (Line(
+        points={{42,70},{42,70},{74,70},{74,70},{79,70}}, color={85,170,255}));
   connect(feedback.y, integrator.u) annotation (
     Line(points = {{-30, -9}, {-30, -9}, {-30, -20}, {-50, -20}, {-50, -50}, {-32, -50}}, color = {0, 0, 127}));
   connect(powerSensor.currentP, ac_p) annotation (

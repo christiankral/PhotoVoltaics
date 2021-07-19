@@ -1,5 +1,5 @@
 within PhotoVoltaics.Components.Converters;
-model MultiPhaseConverter "Ideal multi phase DC/AC converter"
+model PolyphaseConverter "Ideal polyphase DC/AC converter"
 
   import Modelica.Constants.pi;
   extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
@@ -12,8 +12,10 @@ model MultiPhaseConverter "Ideal multi phase DC/AC converter"
     Placement(transformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin={-60,-120}),  iconTransformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin={-60,-120})));
 
   parameter Modelica.Units.SI.Frequency f=50 "Frequency";
-  parameter Modelica.Units.SI.Voltage VRef=400 "Reference line to line voltage";
-  parameter Modelica.Units.SI.Time Ti=1E-6 "Internal integration time constant";
+  parameter Modelica.Units.SI.Voltage VRef=400
+    "Reference line to line voltage";
+  parameter Modelica.Units.SI.Time Ti=1E-6
+    "Internal integration time constant";
   Modelica.Units.SI.Power powerDC=vDC*iDC "Power of DC side";
 
   Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage annotation (
@@ -41,8 +43,8 @@ model MultiPhaseConverter "Ideal multi phase DC/AC converter"
         extent={{10,-10},{-10,10}},
         rotation=0,
         origin={30,0})));
-  Modelica.Electrical.Polyphase.Sources.SignalCurrent signalCurrent annotation
-    (Placement(transformation(
+  Modelica.Electrical.Polyphase.Sources.SignalCurrent signalCurrent
+    annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={60,50})));
@@ -57,8 +59,8 @@ model MultiPhaseConverter "Ideal multi phase DC/AC converter"
   Modelica.Blocks.Math.RectangularToPolar rectangularToPolar
     annotation (Placement(transformation(extent={{20,-70},{0,-50}})));
 
-  Modelica.Electrical.Polyphase.Sensors.VoltageSensor voltageSensorAC(final m=3)
-    annotation (Placement(transformation(
+  Modelica.Electrical.Polyphase.Sensors.VoltageSensor voltageSensorAC(
+      final m=3) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={90,50})));
@@ -168,13 +170,13 @@ defaultComponentName = "converter",
             fillPattern=FillPattern.Solid,
           textString="3ph AC"),                                                                                                                                                                                                        Text(extent={{-150,-110},{-90,-150}},   lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255},
             fillPattern =                                                                                                                                                                                                        FillPattern.Solid, textString = "vDCRef"),
-                                                                                                                                                                                                        Text(extent={{90,-110},{150,-150}},     lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},
+                                                                                                                                                                                                  Text(extent={{90,-110},{150,-150}},     lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},
             fillPattern =                                                                                                                                                                                                        FillPattern.Solid,
           textString="phi")}),                                                                                                       Documentation(info="<html>
 <p>This is an ideal DC/AC converter.<p>
 
 <p>
-The multi phase converter is characterized by:
+The polyphase converter is characterized by:
 </p>
 <ul>
 <li>Losses are not considered</li>
@@ -187,6 +189,6 @@ The multi phase converter is characterized by:
 <li>A positive angle <code>phi</code> may supply an inductive load</li>
 </ul>
 <p>
-<img src=\"modelica://PhotoVoltaics/Resources/Images/MultiPhaseConverter.png\">
+<img src=\"modelica://PhotoVoltaics/Resources/Images/PolyphaseConverter.png\">
 </p></html>"));
-end MultiPhaseConverter;
+end PolyphaseConverter;

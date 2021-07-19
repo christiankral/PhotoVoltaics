@@ -1,5 +1,6 @@
 within PhotoVoltaics.Examples;
-model SimpleModuleMultiPhase "Simple module supplies transient three phase AC grid with maximum power tracker"
+model SimpleModulePolyphase
+  "Simple module supplies transient three-phase AC grid with maximum power tracker"
 
   import Modelica.Constants.pi;
   extends Modelica.Icons.Example;
@@ -40,7 +41,8 @@ model SimpleModuleMultiPhase "Simple module supplies transient three phase AC gr
         rotation=-90)));
   PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef=moduleData.VmpRef, ImpRef=moduleData.ImpRef,
     samplePeriod=0.1)                                                                                           annotation (Placement(transformation(extent={{-30,-20},{-10,0}})));
-  PhotoVoltaics.Components.Converters.MultiPhaseConverter converter annotation (Placement(transformation(extent={{-10,20},{10,40}})));
+  PhotoVoltaics.Components.Converters.PolyphaseConverter converter
+    annotation (Placement(transformation(extent={{-10,20},{10,40}})));
   parameter PhotoVoltaics.Records.SHARP_NU_S5_E3E moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
   Modelica.Electrical.Polyphase.Sensors.PowerSensor powerSensorGrid
     annotation (Placement(transformation(extent={{20,20},{40,40}})));
@@ -111,4 +113,4 @@ equation
   annotation (
       Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
             -100},{100,100}})), experiment(StopTime=5, Interval=0.0001));
-end SimpleModuleMultiPhase;
+end SimpleModulePolyphase;

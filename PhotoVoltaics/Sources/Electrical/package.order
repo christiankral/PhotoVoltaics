@@ -1,4 +1,4 @@
 IdealBattery
 SignalCurrent
 VariableUnrootedSinglePhaseCurrentSource
-VariableUnrootedMultiPhaseCurrentSource
+VariableUnrootedPolyphaseCurrentSource

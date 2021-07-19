@@ -1,7 +1,8 @@
 within PhotoVoltaics.Interfaces;
 partial model PartialComponent "Partial cell or module"
   extends Modelica.Electrical.Analog.Interfaces.TwoPin(v(start = 0));
-  extends Modelica.Thermal.HeatTransfer.Interfaces.PartialConditionalHeatPort(T = 298.15);
+  extends
+    Modelica.Thermal.HeatTransfer.Interfaces.PartialConditionalHeatPort(      T = 298.15);
   parameter Boolean useConstantIrradiance = true "If false, signal input is used" annotation (
     Evaluate = true,
     HideResult = true,

@@ -1,10 +1,13 @@
 within PhotoVoltaics.Components.Converters;
-model QuasiStaticMultiPhaseConverter "Ideal quasi stastic multi phase DC/AC converter"
+model QuasiStaticPolyphaseConverter
+  "Ideal quasi stastic polyphase DC/AC converter"
   extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
   extends .PhotoVoltaics.Interfaces.QuasiStatic.ACplug;
   extends .PhotoVoltaics.Icons.Converter;
-  parameter Modelica.Units.SI.Voltage VRef=400 "Reference line to line voltage";
-  parameter Modelica.Units.SI.Time Ti=1E-6 "Internal integration time constant";
+  parameter Modelica.Units.SI.Voltage VRef=400
+    "Reference line to line voltage";
+  parameter Modelica.Units.SI.Time Ti=1E-6
+    "Internal integration time constant";
   Modelica.Units.SI.Power powerDC=vDC*iDC "Power of DC side";
   Modelica.Units.SI.Power powerAC=Modelica.ComplexMath.real(vAC*
       Modelica.ComplexMath.conj(iAC)) "Complex apparent power of AC side";
@@ -18,15 +21,18 @@ model QuasiStaticMultiPhaseConverter "Ideal quasi stastic multi phase DC/AC conv
     Placement(transformation(extent = {{-60, 20}, {-40, 40}})));
   Modelica.Blocks.Math.Feedback feedback annotation (
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 270, origin = {-30, 0})));
-  Sources.Electrical.VariableUnrootedMultiPhaseCurrentSource variableCurrentSource(final m = m) annotation (
-    Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin = {50, 30})));
+  Sources.Electrical.VariableUnrootedPolyphaseCurrentSource
+    variableCurrentSource(final m=m) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={50,30})));
   Modelica.Electrical.QuasiStatic.Polyphase.Basic.Star star(final m=m)
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={50,0})));
-  Modelica.Electrical.QuasiStatic.Polyphase.Sensors.PowerSensor powerSensor(
-      final m=m) annotation (Placement(transformation(
+  Modelica.Electrical.QuasiStatic.Polyphase.Sensors.PowerSensor
+    powerSensor(final m=m) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={50,60})));
@@ -35,8 +41,8 @@ model QuasiStaticMultiPhaseConverter "Ideal quasi stastic multi phase DC/AC conv
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={80,-10})));
-  Modelica.Electrical.QuasiStatic.Polyphase.Blocks.ToSpacePhasor toSpacePhasor(
-      final m=m) annotation (Placement(transformation(
+  Modelica.Electrical.QuasiStatic.Polyphase.Blocks.ToSpacePhasor
+    toSpacePhasor(final m=m) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={60,-50})));
@@ -79,8 +85,8 @@ equation
     Line(points = {{40, 60}, {30, 60}, {30, 10}, {50, 10}}, color = {85, 170, 255}));
   connect(potentialSensor.v, toSpacePhasor.u) annotation (
     Line(points = {{80, -21}, {80, -50}, {72, -50}}, color = {85, 170, 255}));
-  connect(complexToReal.u, powerSensor.apparentPower) annotation (Line(points={
-          {22,70},{30,70},{30,70},{39,70}}, color={85,170,255}));
+  connect(complexToReal.u, powerSensor.apparentPower) annotation (Line(
+        points={{22,70},{30,70},{30,70},{39,70}}, color={85,170,255}));
   connect(fromSpacePhasor.y, variableCurrentSource.I) annotation (
     Line(points = {{10, 21}, {10, 30}, {40, 30}}, color = {85, 170, 255}));
   connect(fromSpacePhasor.u, fromPolar.y) annotation (
@@ -131,4 +137,4 @@ The DC/AC converter is characterized by:
 <li>The DC input voltage <code>vDCRef</code> is applied to the DC side without limitations</li>
 </ul>
 </html>"));
-end QuasiStaticMultiPhaseConverter;
+end QuasiStaticPolyphaseConverter;

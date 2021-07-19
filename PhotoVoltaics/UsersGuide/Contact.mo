@@ -34,7 +34,7 @@ email: <a HREF=\"mailto:dr.christian.kral@gmail.com\">dr.christian.kral@gmail.co
 
 <h4>Additional contributions</h4>
 <ul>
-<li>The three phase transient multi phase converter was contributed by Luiz Bueno, RWTH Aachen, Germany.</li>
+<li>The three-phase transient polyphase converter were contributed by Luiz Bueno, RWTH Aachen, Germany.</li>
 <ul>
 
 </html>"));

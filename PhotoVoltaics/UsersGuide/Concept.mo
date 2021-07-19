@@ -27,11 +27,11 @@ parallel connectrions of a plant.</p>
 the electric grid. In the PhotoVoltaics libaray the
 <a href=\"modelica://PhotoVoltaics.Components.Converters.DCConverter\">DC/DC</a> and DC/AC converters are provided. In the quasi static
 domain a
-<a href=\"modelica://PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter\">single</a> and a
-<a href=\"modelica://PhotoVoltaics.Components.Converters.QuasiStaticMultiPhaseConverter\">three</a> phase converter are provided.
+<a href=\"modelica://PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter\">single-phase</a> and a
+<a href=\"modelica://PhotoVoltaics.Components.Converters.QuasiStaticPolyphaseConverter\">three-phase</a> converter are provided.
 For time transient models there is currently only a
-<a href=\"modelica://PhotoVoltaics.Components.Converters.MultiPhaseConverter\">three</a>
-phase converter provided.THE converter models consider
+<a href=\"modelica://PhotoVoltaics.Components.Converters.PolyphaseConverter\">three</a>
+phase converter provided. The converter models consider
 </p>
 <ul>
 <li>no loss of the semiconductors,</li>

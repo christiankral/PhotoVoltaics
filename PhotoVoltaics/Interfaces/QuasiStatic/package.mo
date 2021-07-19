@@ -1,5 +1,5 @@
 within PhotoVoltaics.Interfaces;
-package QuasiStatic "Quasi static interfaces"
+package QuasiStatic "Quasi-static interfaces"
   extends Modelica.Icons.Package;
 
 annotation (Documentation(info="<html>
