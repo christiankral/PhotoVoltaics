@@ -2,8 +2,8 @@
   extends Modelica.Icons.Package;
 
   annotation (preferredView="info",
-    version="2.0.0",
-    versionDate = "2021-07-19",
+    version="2.X.X",
+    versionDate = "2021-XX-XX",
     uses(
       Buildings(version = "X.X.X"),
       Modelica(version="4.0.0"),

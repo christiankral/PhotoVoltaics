@@ -2,8 +2,8 @@
   extends Modelica.Icons.Package;
 
   annotation (preferredView="info",
-    version="2.0.0",
-    versionDate = "2021-07-19",
+    version="2.X.X",
+    versionDate = "2021-XX-XX",
     uses(Modelica(version="4.0.0")),
     conversion(
       from(version={"1.6.0", "1.5.0", "1.4.1", "1.4.0", "1.3.2", "1.3.1", "1.3.0", "1.2.0", "1.1.0", "1.0.1", "1.0.0"},
