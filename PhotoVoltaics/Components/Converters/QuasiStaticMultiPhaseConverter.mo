@@ -3,10 +3,11 @@ model QuasiStaticMultiPhaseConverter "Ideal quasi stastic multi phase DC/AC conv
   extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
   extends .PhotoVoltaics.Interfaces.QuasiStatic.ACplug;
   extends .PhotoVoltaics.Icons.Converter;
-  parameter Modelica.SIunits.Voltage VRef = 400 "Reference line to line voltage";
-  parameter Modelica.SIunits.Time Ti = 1E-6 "Internal integration time constant";
-  Modelica.SIunits.Power powerDC = vDC * iDC "Power of DC side";
-  Modelica.SIunits.Power powerAC = Modelica.ComplexMath.real(vAC * Modelica.ComplexMath.conj(iAC)) "Complex apparent power of AC side";
+  parameter Modelica.Units.SI.Voltage VRef=400 "Reference line to line voltage";
+  parameter Modelica.Units.SI.Time Ti=1E-6 "Internal integration time constant";
+  Modelica.Units.SI.Power powerDC=vDC*iDC "Power of DC side";
+  Modelica.Units.SI.Power powerAC=Modelica.ComplexMath.real(vAC*
+      Modelica.ComplexMath.conj(iAC)) "Complex apparent power of AC side";
   Modelica.Blocks.Interfaces.RealInput vDCRef(final unit = "V") "DC voltage" annotation (
     Placement(transformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin={-60,-120}),  iconTransformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin={-60,-120})));
   Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage annotation (
@@ -19,24 +20,39 @@ model QuasiStaticMultiPhaseConverter "Ideal quasi stastic multi phase DC/AC conv
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 270, origin = {-30, 0})));
   Sources.Electrical.VariableUnrootedMultiPhaseCurrentSource variableCurrentSource(final m = m) annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin = {50, 30})));
-  Modelica.Electrical.QuasiStationary.MultiPhase.Basic.Star star(final m = m) annotation (
-    Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {50, 0})));
-  Modelica.Electrical.QuasiStationary.MultiPhase.Sensors.PowerSensor powerSensor(final m = m) annotation (
-    Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {50, 60})));
-  Modelica.Electrical.QuasiStationary.MultiPhase.Sensors.PotentialSensor potentialSensor(final m = m) annotation (
-    Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {80, -10})));
-  Modelica.Electrical.QuasiStationary.MultiPhase.Blocks.ToSpacePhasor toSpacePhasor(final m = m) annotation (
-    Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 180, origin = {60, -50})));
+  Modelica.Electrical.QuasiStatic.Polyphase.Basic.Star star(final m=m)
+    annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={50,0})));
+  Modelica.Electrical.QuasiStatic.Polyphase.Sensors.PowerSensor powerSensor(
+      final m=m) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={50,60})));
+  Modelica.Electrical.QuasiStatic.Polyphase.Sensors.PotentialSensor
+    potentialSensor(final m=m) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={80,-10})));
+  Modelica.Electrical.QuasiStatic.Polyphase.Blocks.ToSpacePhasor toSpacePhasor(
+      final m=m) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={60,-50})));
   Modelica.ComplexBlocks.ComplexMath.ComplexToReal complexToReal annotation (
     Placement(transformation(extent = {{20, 60}, {0, 80}})));
-  Modelica.Electrical.QuasiStationary.MultiPhase.Blocks.FromSpacePhasor fromSpacePhasor(final m = m) annotation (
-    Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin = {10, 10})));
+  Modelica.Electrical.QuasiStatic.Polyphase.Blocks.FromSpacePhasor
+    fromSpacePhasor(final m=m) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={10,10})));
   Modelica.Electrical.Machines.SpacePhasors.Blocks.FromPolar fromPolar annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin = {10, -20})));
   Modelica.Electrical.Machines.SpacePhasors.Blocks.ToPolar toPolar annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 180, origin = {30, -50})));
-  Modelica.Electrical.QuasiStationary.SinglePhase.Basic.Ground ground annotation (
-    Placement(transformation(extent = {{40, -40}, {60, -20}})));
+  Modelica.Electrical.QuasiStatic.SinglePhase.Basic.Ground ground
+    annotation (Placement(transformation(extent={{40,-40},{60,-20}})));
   Modelica.Blocks.Continuous.Integrator integrator(k=sqrt(3)/VRef/Ti)      annotation (
     Placement(transformation(extent = {{-30, -60}, {-10, -40}})));
   Modelica.Blocks.Math.Gain gain(final k = -1) annotation (
@@ -61,10 +77,10 @@ equation
     Line(points = {{50, 70}, {60, 70}, {60, 60}}, color = {85, 170, 255}));
   connect(powerSensor.voltageN, star.plug_p) annotation (
     Line(points = {{40, 60}, {30, 60}, {30, 10}, {50, 10}}, color = {85, 170, 255}));
-  connect(potentialSensor.y, toSpacePhasor.u) annotation (
+  connect(potentialSensor.v, toSpacePhasor.u) annotation (
     Line(points = {{80, -21}, {80, -50}, {72, -50}}, color = {85, 170, 255}));
-  connect(complexToReal.u, powerSensor.y) annotation (
-    Line(points={{22,70},{30,70},{30,70},{39,70}},          color = {85, 170, 255}));
+  connect(complexToReal.u, powerSensor.apparentPower) annotation (Line(points={
+          {22,70},{30,70},{30,70},{39,70}}, color={85,170,255}));
   connect(fromSpacePhasor.y, variableCurrentSource.I) annotation (
     Line(points = {{10, 21}, {10, 30}, {40, 30}}, color = {85, 170, 255}));
   connect(fromSpacePhasor.u, fromPolar.y) annotation (
@@ -93,8 +109,11 @@ equation
     Line(points = {{-10, 29}, {-10, 0}, {-22, 0}}, color = {0, 0, 127}));
   annotation (
     defaultComponentName = "converter",
-    Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={                                                                                                                                                                 Text(extent = {{-100, 40}, {-40, -40}}, lineColor = {0, 0, 255}, textString = "="), Text(extent = {{40, 40}, {100, -40}}, lineColor = {0, 0, 255}, textString = "~"), Text(extent = {{-150, 150}, {150, 110}}, lineColor = {0, 0, 255}, textString = "%name"), Text(extent={{-150,-112},{-90,-152}},   lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "vDCRef"), Text(extent={{-80,90},{20,50}},      lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=FillPattern.Solid,
-          textString="PV"),                                                                                                                                                                                                        Text(extent={{-40,-50},{60,-90}},      lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "src")}),
+    Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics={                                                                                                                                                                 Text(extent = {{-100, 40}, {-40, -40}}, lineColor = {0, 0, 255}, textString = "="), Text(extent = {{40, 40}, {100, -40}}, lineColor = {0, 0, 255}, textString = "~"), Text(extent = {{-150, 150}, {150, 110}}, lineColor = {0, 0, 255}, textString = "%name"), Text(extent={{-150,-112},{-90,-152}},   lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255},
+            fillPattern =                                                                                                                                                                                                        FillPattern.Solid, textString = "vDCRef"), Text(extent={{-80,90},{20,50}},      lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},
+            fillPattern =                                                                                                                                                                                                        FillPattern.Solid,
+          textString="PV"),                                                                                                                                                                                                        Text(extent={{-40,-50},{60,-90}},      lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255},
+            fillPattern =                                                                                                                                                                                                        FillPattern.Solid, textString = "src")}),
     Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})),
     Documentation(info="<html>
 <p>This is an ideal DC/AC converter.</p>

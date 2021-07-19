@@ -15,15 +15,22 @@ model SimpleModuleMP3 "Simple module supplies quasi static three phase AC grid w
   PhotoVoltaics.Components.Converters.QuasiStaticMultiPhaseConverter converter annotation (Placement(transformation(extent={{20,-10},{40,10}})));
   PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = moduleData.VmpRef, ImpRef = moduleData.ImpRef) annotation (
     Placement(transformation(extent = {{0, -60}, {20, -40}})));
-  Modelica.Electrical.QuasiStationary.SinglePhase.Basic.Ground groundAC annotation (
-    Placement(transformation(extent = {{70, -70}, {90, -50}})));
-  Modelica.Electrical.QuasiStationary.MultiPhase.Sources.VoltageSource voltageSource(f = 50, V = fill(400 / sqrt(3), 3),
-    gamma(fixed=true, start=0))                                                                                          annotation (
-    Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {80, 0})));
+  Modelica.Electrical.QuasiStatic.SinglePhase.Basic.Ground groundAC
+    annotation (Placement(transformation(extent={{70,-70},{90,-50}})));
+  Modelica.Electrical.QuasiStatic.Polyphase.Sources.VoltageSource voltageSource(
+    f=50,
+    V=fill(400/sqrt(3), 3),
+    gamma(fixed=true, start=0)) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={80,0})));
   Modelica.Electrical.Analog.Sensors.PowerSensor powerSensor annotation (
     Placement(transformation(extent = {{-20, 10}, {0, 30}})));
-  Modelica.Electrical.QuasiStationary.MultiPhase.Basic.Star star annotation (
-    Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {80, -30})));
+  Modelica.Electrical.QuasiStatic.Polyphase.Basic.Star star annotation (
+      Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={80,-30})));
   parameter PhotoVoltaics.Records.SHARP_NU_S5_E3E moduleData annotation (
     Placement(transformation(extent = {{60, 60}, {80, 80}})));
 equation

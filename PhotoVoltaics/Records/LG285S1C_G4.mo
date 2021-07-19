@@ -1,6 +1,6 @@
 within PhotoVoltaics.Records;
 record LG285S1C_G4 "LG monocrystalline SI cell 285W"
-  extends PhotoVoltaics.Records.ModuleData(final moduleName = "LG285S1C_G4", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 39, final IscRef = 9.43, final VmpRef = 32.3, final ImpRef = 8.88, final alphaIsc = +0.0003, final alphaVoc = -0.003, final ns = 72, final nb = 3);
+  extends ModuleData(final moduleName = "LG285S1C_G4", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 39, final IscRef = 9.43, final VmpRef = 32.3, final ImpRef = 8.88, final alphaIsc = +0.0003, final alphaVoc = -0.003, final ns = 72, final nb = 3);
   annotation (
     defaultComponentName = "moduleData",
     defaultComponentPrefixes = "parameter",

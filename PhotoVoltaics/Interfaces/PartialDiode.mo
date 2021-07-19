@@ -2,23 +2,30 @@ within PhotoVoltaics.Interfaces;
 partial model PartialDiode "Diode with one exponential function"
   extends Modelica.Electrical.Analog.Interfaces.OnePort(v(start = 0));
   extends Modelica.Electrical.Analog.Interfaces.ConditionalHeatPort(T = 298.15);
-  constant Modelica.SIunits.Charge Q = 1.6021766208E-19 "Elementary charge of electron";
+  constant Modelica.Units.SI.Charge Q=1.6021766208E-19
+    "Elementary charge of electron";
   parameter Real m = 1 "Ideality factor of diode";
-  parameter Modelica.SIunits.Resistance R = 1E8 "Parallel ohmic resistance";
-  parameter Modelica.SIunits.Temperature TRef = 298.15 "Reference temperature" annotation (
-    Dialog(group = "Reference data"));
-  parameter Modelica.SIunits.Voltage VRef(min = Modelica.Constants.small) = 0.6292 "Reference voltage > 0, i.e. open circuit voltage, at TRef" annotation (
-    Dialog(group = "Reference data"));
-  parameter Modelica.SIunits.Current IRef(min = Modelica.Constants.small) = 8.540 "Reference current > 0, i.e. short circuit current, at TRef" annotation (
-    Dialog(group = "Reference data"));
-  parameter Modelica.SIunits.LinearTemperatureCoefficient alphaI = +0.00053 "Temperature coefficient of reference current at TRef" annotation (
-    Dialog(group = "Reference data"));
-  parameter Modelica.SIunits.LinearTemperatureCoefficient alphaV = -0.00340 "Temperature coefficient of reference voltage at TRef*" annotation (
-    Dialog(group = "Reference data"));
-  Modelica.SIunits.Voltage Vt "Voltage equivalent of temperature (k*T/Q)";
-  Modelica.SIunits.Voltage VRefActual "Reference voltage w.r.t. actual temperature";
-  Modelica.SIunits.Current IRefActual "Reference current w.r.t. actual temperature";
-  Modelica.SIunits.Current Ids "Saturation current";
+  parameter Modelica.Units.SI.Resistance R=1E8 "Parallel ohmic resistance";
+  parameter Modelica.Units.SI.Temperature TRef=298.15 "Reference temperature"
+    annotation (Dialog(group="Reference data"));
+  parameter Modelica.Units.SI.Voltage VRef(min=Modelica.Constants.small) =
+    0.6292 "Reference voltage > 0, i.e. open circuit voltage, at TRef"
+    annotation (Dialog(group="Reference data"));
+  parameter Modelica.Units.SI.Current IRef(min=Modelica.Constants.small) =
+    8.540 "Reference current > 0, i.e. short circuit current, at TRef"
+    annotation (Dialog(group="Reference data"));
+  parameter Modelica.Units.SI.LinearTemperatureCoefficient alphaI=+0.00053
+    "Temperature coefficient of reference current at TRef"
+    annotation (Dialog(group="Reference data"));
+  parameter Modelica.Units.SI.LinearTemperatureCoefficient alphaV=-0.00340
+    "Temperature coefficient of reference voltage at TRef*"
+    annotation (Dialog(group="Reference data"));
+  Modelica.Units.SI.Voltage Vt "Voltage equivalent of temperature (k*T/Q)";
+  Modelica.Units.SI.Voltage VRefActual
+    "Reference voltage w.r.t. actual temperature";
+  Modelica.Units.SI.Current IRefActual
+    "Reference current w.r.t. actual temperature";
+  Modelica.Units.SI.Current Ids "Saturation current";
 equation
   // Temperature dependent voltage
   Vt = Modelica.Constants.k * T_heatPort / Q;

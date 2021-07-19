@@ -1,8 +1,8 @@
 within PhotoVoltaics.Components.Diodes;
 model Diode2exp "Diode with two superimposed exponential functions"
   extends .PhotoVoltaics.Interfaces.PartialDiode;
-  parameter Modelica.SIunits.Voltage Bv = 5.1 "Breakthrough voltage";
-  parameter Modelica.SIunits.Current Ibv = 0.7 "Breakthrough knee current";
+  parameter Modelica.Units.SI.Voltage Bv=5.1 "Breakthrough voltage";
+  parameter Modelica.Units.SI.Current Ibv=0.7 "Breakthrough knee current";
   parameter Real Nbv = 0.74 "Breakthrough emission coefficient";
 equation
   i = Ids * (exp(v / m / Vt) - 1) - Ibv * exp(-(v + Bv) / (Nbv * m * Vt)) + v / R;

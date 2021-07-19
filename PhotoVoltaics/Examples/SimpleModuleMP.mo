@@ -15,11 +15,17 @@ model SimpleModuleMP "Simple module supplies quasi static single phase AC grid w
   PhotoVoltaics.Components.Converters.QuasiStaticSinglePhaseConverter converter annotation (Placement(transformation(extent={{20,-10},{40,10}})));
   PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = moduleData.VmpRef, ImpRef = moduleData.ImpRef) annotation (
     Placement(transformation(extent = {{0, -60}, {20, -40}})));
-  Modelica.Electrical.QuasiStationary.SinglePhase.Basic.Ground groundAC annotation (
-    Placement(transformation(extent = {{70, -40}, {90, -20}})));
-  Modelica.Electrical.QuasiStationary.SinglePhase.Sources.VoltageSource voltageSource(f = 50, V = 230, phi = 0,
-    gamma(fixed=true, start=0))                                                                                 annotation (
-    Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {80, 0})));
+  Modelica.Electrical.QuasiStatic.SinglePhase.Basic.Ground groundAC
+    annotation (Placement(transformation(extent={{70,-40},{90,-20}})));
+  Modelica.Electrical.QuasiStatic.SinglePhase.Sources.VoltageSource
+    voltageSource(
+    f=50,
+    V=230,
+    phi=0,
+    gamma(fixed=true, start=0)) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={80,0})));
   Modelica.Electrical.Analog.Sensors.PowerSensor powerSensor annotation (
     Placement(transformation(extent = {{-20, 10}, {0, 30}})));
   parameter PhotoVoltaics.Records.SHARP_NU_S5_E3E moduleData annotation (
@@ -34,7 +40,7 @@ equation
   connect(mpTracker.vRef, converter.vDCRef) annotation (
     Line(points={{21,-50},{24,-50},{24,-12}},        color = {0, 0, 127}));
   connect(converter.ac_n, groundAC.pin) annotation (
-    Line(points = {{40, -10}, {40, -20}, {80, -20}}, color = {85, 170, 255}));
+    Line(points={{40,-6},{40,-20},{80,-20}},         color = {85, 170, 255}));
   connect(groundAC.pin, voltageSource.pin_n) annotation (
     Line(points = {{80, -20}, {80, -20}, {80, -10}}, color = {85, 170, 255}));
   connect(module.p, powerSensor.pc) annotation (
@@ -48,7 +54,7 @@ equation
   connect(powerSensor.nv, groundDC.p) annotation (
     Line(points = {{-10, 10}, {-10, 10}, {-10, -18}, {-10, -20}, {-40, -20}}, color = {0, 0, 255}));
   connect(converter.ac_p, voltageSource.pin_p) annotation (
-    Line(points = {{40, 10}, {40, 10}, {40, 20}, {80, 20}, {80, 10}}, color = {85, 170, 255}));
+    Line(points={{40,6},{40,6},{40,20},{80,20},{80,10}},              color = {85, 170, 255}));
   annotation (
     Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
     Diagram(coordinateSystem(initialScale = 0.1)),

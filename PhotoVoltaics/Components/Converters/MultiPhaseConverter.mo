@@ -5,18 +5,16 @@ model MultiPhaseConverter "Ideal multi phase DC/AC converter"
   extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
   extends .PhotoVoltaics.Icons.Converter;
 
-  Modelica.Electrical.MultiPhase.Interfaces.PositivePlug ac "AC output"
+  Modelica.Electrical.Polyphase.Interfaces.PositivePlug ac "AC output"
     annotation (Placement(transformation(extent={{90,-10},{110,10}})));
   Modelica.Blocks.Interfaces.RealInput vDCRef(final unit = "V")
     "DC voltage"                                                             annotation (
     Placement(transformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin={-60,-120}),  iconTransformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin={-60,-120})));
 
-  parameter Modelica.SIunits.Frequency f = 50 "Frequency";
-  parameter Modelica.SIunits.Voltage VRef = 400
-    "Reference line to line voltage";
-  parameter Modelica.SIunits.Time Ti = 1E-6
-    "Internal integration time constant";
-  Modelica.SIunits.Power powerDC = vDC * iDC "Power of DC side";
+  parameter Modelica.Units.SI.Frequency f=50 "Frequency";
+  parameter Modelica.Units.SI.Voltage VRef=400 "Reference line to line voltage";
+  parameter Modelica.Units.SI.Time Ti=1E-6 "Internal integration time constant";
+  Modelica.Units.SI.Power powerDC=vDC*iDC "Power of DC side";
 
   Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin={-100,0})));
@@ -43,12 +41,12 @@ model MultiPhaseConverter "Ideal multi phase DC/AC converter"
         extent={{10,-10},{-10,10}},
         rotation=0,
         origin={30,0})));
-  Modelica.Electrical.MultiPhase.Sources.SignalCurrent signalCurrent
-    annotation (Placement(transformation(
+  Modelica.Electrical.Polyphase.Sources.SignalCurrent signalCurrent annotation
+    (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={60,50})));
-  Modelica.Electrical.MultiPhase.Basic.Star star annotation (Placement(
+  Modelica.Electrical.Polyphase.Basic.Star star annotation (Placement(
         transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
@@ -59,7 +57,8 @@ model MultiPhaseConverter "Ideal multi phase DC/AC converter"
   Modelica.Blocks.Math.RectangularToPolar rectangularToPolar
     annotation (Placement(transformation(extent={{20,-70},{0,-50}})));
 
-  Modelica.Electrical.MultiPhase.Sensors.VoltageSensor voltageSensorAC(final m=3) annotation (Placement(transformation(
+  Modelica.Electrical.Polyphase.Sensors.VoltageSensor voltageSensorAC(final m=3)
+    annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={90,50})));
@@ -167,8 +166,10 @@ defaultComponentName = "converter",
               LinePattern.Dash,                                                                                                    fillColor=
               {0,0,255},
             fillPattern=FillPattern.Solid,
-          textString="3ph AC"),                                                                                                                                                                                                        Text(extent={{-150,-110},{-90,-150}},   lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, textString = "vDCRef"),
-                                                                                                                                                                                                        Text(extent={{90,-110},{150,-150}},     lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},     fillPattern=FillPattern.Solid,
+          textString="3ph AC"),                                                                                                                                                                                                        Text(extent={{-150,-110},{-90,-150}},   lineColor = {0, 0, 255}, pattern = LinePattern.Dash, fillColor = {0, 0, 255},
+            fillPattern =                                                                                                                                                                                                        FillPattern.Solid, textString = "vDCRef"),
+                                                                                                                                                                                                        Text(extent={{90,-110},{150,-150}},     lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},
+            fillPattern =                                                                                                                                                                                                        FillPattern.Solid,
           textString="phi")}),                                                                                                       Documentation(info="<html>
 <p>This is an ideal DC/AC converter.<p>
 

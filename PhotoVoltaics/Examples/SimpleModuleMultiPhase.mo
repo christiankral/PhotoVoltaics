@@ -8,19 +8,18 @@ model SimpleModuleMultiPhase "Simple module supplies transient three phase AC gr
     Placement(visible = true, transformation(origin={-60,0},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Electrical.Analog.Sensors.PowerSensor powerSensor annotation (
     Placement(transformation(extent={{-40,40},{-20,60}})));
-  Modelica.Electrical.MultiPhase.Basic.Star star annotation (Placement(
+  Modelica.Electrical.Polyphase.Basic.Star star annotation (Placement(
         transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={80,-60})));
   Modelica.Electrical.Analog.Basic.Ground ground
     annotation (Placement(transformation(extent={{70,-96},{90,-76}})));
-  Modelica.Electrical.MultiPhase.Sources.CosineVoltage cosineVoltage(
-    freqHz=fill(50, 3),
+  Modelica.Electrical.Polyphase.Sources.CosineVoltage cosineVoltage(
+    f=fill(50, 3),
     V=fill(400*sqrt(2/3), 3),
-    phase=-Modelica.Electrical.MultiPhase.Functions.symmetricOrientation(3))
-                                                   annotation (Placement(
-        transformation(
+    phase=-Modelica.Electrical.Polyphase.Functions.symmetricOrientation(3))
+    annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={80,-30})));
@@ -43,12 +42,15 @@ model SimpleModuleMultiPhase "Simple module supplies transient three phase AC gr
     samplePeriod=0.1)                                                                                           annotation (Placement(transformation(extent={{-30,-20},{-10,0}})));
   PhotoVoltaics.Components.Converters.MultiPhaseConverter converter annotation (Placement(transformation(extent={{-10,20},{10,40}})));
   parameter PhotoVoltaics.Records.SHARP_NU_S5_E3E moduleData annotation (Placement(transformation(extent={{60,60},{80,80}})));
-  Modelica.Electrical.MultiPhase.Sensors.PowerSensor powerSensorGrid annotation (Placement(transformation(extent={{20,20},{40,40}})));
-  Modelica.Electrical.MultiPhase.Sensors.VoltageQuasiRMSSensor voltageQuasiRMSSensor(m=3) annotation (Placement(transformation(
+  Modelica.Electrical.Polyphase.Sensors.PowerSensor powerSensorGrid
+    annotation (Placement(transformation(extent={{20,20},{40,40}})));
+  Modelica.Electrical.Polyphase.Sensors.VoltageQuasiRMSSensor
+    voltageQuasiRMSSensor(m=3) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={50,-30})));
-  Modelica.Electrical.MultiPhase.Sensors.CurrentQuasiRMSSensor currentQuasiRMSSensor(final m=3) annotation (Placement(transformation(
+  Modelica.Electrical.Polyphase.Sensors.CurrentQuasiRMSSensor
+    currentQuasiRMSSensor(final m=3) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={80,10})));
@@ -57,9 +59,10 @@ model SimpleModuleMultiPhase "Simple module supplies transient three phase AC gr
   Modelica.Blocks.Math.Gain gain(final k=3)
                                  annotation (Placement(transformation(extent={{0,-90},{-20,-70}})));
 
-  Modelica.SIunits.Power powerDC = powerSensor.power "DC power";
-  Modelica.SIunits.Power powerAC = powerSensorGrid.power "AC real power";
-  Modelica.SIunits.ApparentPower aparrentPowerAC = powerFactorActual.u2 "AC apparent power";
+  Modelica.Units.SI.Power powerDC=powerSensor.power "DC power";
+  Modelica.Units.SI.Power powerAC=powerSensorGrid.power "AC real power";
+  Modelica.Units.SI.ApparentPower aparrentPowerAC=powerFactorActual.u2
+    "AC apparent power";
   Real powerFactorAC = powerFactorActual.y "Actual power factor";
 
   Modelica.Blocks.Nonlinear.Limiter limiter(uMax=Modelica.Constants.inf, uMin=Modelica.Constants.small) annotation (Placement(transformation(extent={{-28,-90},{-48,-70}})));

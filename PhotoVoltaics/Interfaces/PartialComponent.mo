@@ -6,15 +6,17 @@ partial model PartialComponent "Partial cell or module"
     Evaluate = true,
     HideResult = true,
     choices(checkBox = true));
-  parameter Modelica.SIunits.Irradiance constantIrradiance = 1000 "Constant solar irradiance, if useConstantIrradiance = true" annotation (
-    Dialog(enable = useConstantIrradiance));
+  parameter Modelica.Units.SI.Irradiance constantIrradiance=1000
+    "Constant solar irradiance, if useConstantIrradiance = true"
+    annotation (Dialog(enable=useConstantIrradiance));
   parameter Records.ModuleData moduleData "Module parameters" annotation (
     choicesAllMatching = true,
     Placement(transformation(extent = {{60, 60}, {80, 80}})));
-  Modelica.SIunits.Current i = p.i "Current";
-  Modelica.SIunits.Current iGenerating = -i "Negative current (generating)";
-  Modelica.SIunits.Power power = v * i "Power";
-  Modelica.SIunits.Power powerGenerating = v * iGenerating "Negative power consumption (generating)";
+  Modelica.Units.SI.Current i=p.i "Current";
+  Modelica.Units.SI.Current iGenerating=-i "Negative current (generating)";
+  Modelica.Units.SI.Power power=v*i "Power";
+  Modelica.Units.SI.Power powerGenerating=v*iGenerating
+    "Negative power consumption (generating)";
   Modelica.Blocks.Interfaces.RealInput variableIrradiance(unit = "W/m2") if not useConstantIrradiance "Solar irradiance" annotation (
     Placement(transformation(extent = {{20, -20}, {-20, 20}}, rotation = 90, origin = {0, 120}), iconTransformation(extent = {{20, -20}, {-20, 20}}, rotation = 90, origin = {0, 120})));
   Modelica.Blocks.Sources.Constant const(final k = constantIrradiance) if useConstantIrradiance annotation (

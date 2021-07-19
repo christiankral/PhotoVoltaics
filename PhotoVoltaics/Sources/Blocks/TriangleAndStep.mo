@@ -1,10 +1,10 @@
 within PhotoVoltaics.Sources.Blocks;
 block TriangleAndStep "Multiple steps and triangles"
-  parameter Modelica.SIunits.Time T = 1 "Total time of varying outputs";
+  parameter Modelica.Units.SI.Time T=1 "Total time of varying outputs";
   parameter Integer stepNumber = 5 "Number of steps";
   parameter Real stepHeight = 1 "Total step height";
   parameter Real stepOffset = 0 "Offset";
-  parameter Modelica.SIunits.Time startTime = 0 "Start time";
+  parameter Modelica.Units.SI.Time startTime=0 "Start time";
   parameter Real triangleHeight = 1 "Height of triangle output";
   parameter Real triangleOffset = 0 "Offset of triangle output";
   Modelica.Blocks.Sources.Ramp ramp(

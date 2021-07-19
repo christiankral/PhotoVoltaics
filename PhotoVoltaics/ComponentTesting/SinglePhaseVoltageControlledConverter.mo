@@ -6,10 +6,16 @@ model SinglePhaseVoltageControlledConverter "Test of voltage current controlled 
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin = {-40, 0})));
   Modelica.Electrical.Analog.Basic.Ground groundDC annotation (
     Placement(transformation(extent = {{-50, -40}, {-30, -20}})));
-  Modelica.Electrical.QuasiStationary.SinglePhase.Sources.VoltageSource voltageSource(f = 50, V = 100, phi = 0) annotation (
-    Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {40, 0})));
-  Modelica.Electrical.QuasiStationary.SinglePhase.Basic.Ground groundAC annotation (
-    Placement(transformation(extent = {{30, -38}, {50, -18}})));
+  Modelica.Electrical.QuasiStatic.SinglePhase.Sources.VoltageSource
+    voltageSource(
+    f=50,
+    V=100,
+    phi=0) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={40,0})));
+  Modelica.Electrical.QuasiStatic.SinglePhase.Basic.Ground groundAC
+    annotation (Placement(transformation(extent={{30,-38},{50,-18}})));
   Modelica.Blocks.Sources.Ramp ramp(duration = 0.6, startTime = 0.2, height = 200, offset = -100) annotation (
     Placement(transformation(extent = {{-60, -80}, {-40, -60}})));
 equation

@@ -1,6 +1,6 @@
 within PhotoVoltaics.Records;
 record SHARP_NU_RD280 "SHARP monocrystalline SI cell 280W"
-  extends PhotoVoltaics.Records.ModuleData(final moduleName = "NU_RD280", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 39.2, final IscRef = 9.67, final VmpRef = 31.2, final ImpRef = 8.97, final alphaIsc = +0.0005, final alphaVoc = -0.0029, final ns = 60, final nb = 3);
+  extends ModuleData(final moduleName = "NU_RD280", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 39.2, final IscRef = 9.67, final VmpRef = 31.2, final ImpRef = 8.97, final alphaIsc = +0.0005, final alphaVoc = -0.0029, final ns = 60, final nb = 3);
   annotation (
     defaultComponentName = "moduleData",
     defaultComponentPrefixes = "parameter",

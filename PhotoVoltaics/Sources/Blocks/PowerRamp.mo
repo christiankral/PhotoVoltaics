@@ -1,9 +1,11 @@
 within PhotoVoltaics.Sources.Blocks;
 block PowerRamp "Generate ramp signal based logarithmic range"
   parameter Real height = 1 "Height of ramps";
-  parameter Modelica.SIunits.Time duration(min = 0.0, start = 2) "Duration of ramp (= 0.0 gives a Step)";
+  parameter Modelica.Units.SI.Time duration(min=0.0, start=2)
+    "Duration of ramp (= 0.0 gives a Step)";
   parameter Real offset = 0 "Offset of output signal";
-  parameter Modelica.SIunits.Time startTime = 0 "Output = offset for time < startTime";
+  parameter Modelica.Units.SI.Time startTime=0
+    "Output = offset for time < startTime";
   parameter Real ref = 1 "Reference value, determined by ref * 10 ^ (ramp function)";
   extends Modelica.Blocks.Interfaces.SO;
 equation

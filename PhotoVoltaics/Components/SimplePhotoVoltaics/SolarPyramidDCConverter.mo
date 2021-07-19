@@ -4,17 +4,28 @@ model SolarPyramidDCConverter "Solar pyramid with DC/DC converters"
   extends Modelica.Thermal.HeatTransfer.Interfaces.PartialConditionalHeatPort(T = 298.15);
   extends Modelica.Electrical.PowerConverters.Interfaces.ACDC.DCtwoPin;
   parameter Records.ModuleData moduleData "Module parameters" annotation (choicesAllMatching = true, Placement(transformation(extent={{40,-88},{60,-68}})));
-  parameter Modelica.SIunits.Angle sunAzimuth = 0 "Azimuth of sun" annotation(Dialog(group="Irradiance"));
-  parameter Modelica.SIunits.Angle sunHeight = 1.0471975511965976 "Height of sun" annotation(Dialog(group="Irradiance"));
-  parameter Modelica.SIunits.Irradiance irradiance = 1000 "Irradiance" annotation(Dialog(group="Irradiance"));
+  parameter Modelica.Units.SI.Angle sunAzimuth=0 "Azimuth of sun"
+    annotation (Dialog(group="Irradiance"));
+  parameter Modelica.Units.SI.Angle sunHeight=1.0471975511965976
+    "Height of sun" annotation (Dialog(group="Irradiance"));
+  parameter Modelica.Units.SI.Irradiance irradiance=1000 "Irradiance"
+    annotation (Dialog(group="Irradiance"));
 
-  parameter Modelica.SIunits.Voltage VRef = 48 "Reference DC source voltage" annotation(Dialog(group="Converter"));
-  parameter Modelica.SIunits.Time Ti = 1E-6 "Internal integration time constant" annotation(Dialog(group="Converter"));
+  parameter Modelica.Units.SI.Voltage VRef=48 "Reference DC source voltage"
+    annotation (Dialog(group="Converter"));
+  parameter Modelica.Units.SI.Time Ti=1E-6 "Internal integration time constant"
+    annotation (Dialog(group="Converter"));
 
-  parameter Modelica.SIunits.Time startTime = 0 "Start time" annotation(Dialog(group="MP tracker"));
-  parameter Modelica.SIunits.Time samplePeriod = 1 "Sample period" annotation(Dialog(group="MP tracker"));
-  parameter Modelica.SIunits.Voltage VmpRef "Reference maximum power power of plant" annotation(Dialog(group="MP tracker"));
-  parameter Modelica.SIunits.Current ImpRef "Reference maximum power current of plant" annotation(Dialog(group="MP tracker"));
+  parameter Modelica.Units.SI.Time startTime=0 "Start time"
+    annotation (Dialog(group="MP tracker"));
+  parameter Modelica.Units.SI.Time samplePeriod=1 "Sample period"
+    annotation (Dialog(group="MP tracker"));
+  parameter Modelica.Units.SI.Voltage VmpRef
+    "Reference maximum power power of plant"
+    annotation (Dialog(group="MP tracker"));
+  parameter Modelica.Units.SI.Current ImpRef
+    "Reference maximum power current of plant"
+    annotation (Dialog(group="MP tracker"));
   parameter Integer n = 100 "Number of voltage and power discretizations" annotation(Dialog(group="MP tracker"));
 
   parameter Real shadow1(final min=0, final max=1)=0 "Shadow of module 1";
@@ -98,31 +109,42 @@ model SolarPyramidDCConverter "Solar pyramid with DC/DC converters"
   Modelica.Blocks.Interfaces.RealInput azimuth "Azimuth of first solar panel" annotation (Placement(transformation(extent={{-140,-80},{-100,-40}})));
   Modelica.Blocks.Interfaces.RealInput gamma "Angle of inclination of each solar panel" annotation (Placement(transformation(extent={{-140,40},{-100,80}})));
   // Voltages
-  Modelica.SIunits.Voltage v1 = module1.v "Voltage of module 1";
-  Modelica.SIunits.Voltage v2 = module2.v "Voltage of module 2";
-  Modelica.SIunits.Voltage v3 = module3.v "Voltage of module 3";
-  Modelica.SIunits.Voltage v4 = module4.v "Voltage of module 4";
+  Modelica.Units.SI.Voltage v1=module1.v "Voltage of module 1";
+  Modelica.Units.SI.Voltage v2=module2.v "Voltage of module 2";
+  Modelica.Units.SI.Voltage v3=module3.v "Voltage of module 3";
+  Modelica.Units.SI.Voltage v4=module4.v "Voltage of module 4";
   // Currents
-  Modelica.SIunits.Current i1(start=0) = module1.i "Current of module 1";
-  Modelica.SIunits.Current i2(start=0) = module2.i "Current of module 2";
-  Modelica.SIunits.Current i3(start=0) = module3.i "Current of module 3";
-  Modelica.SIunits.Current i4(start=0) = module4.i "Current of module 4";
-  Modelica.SIunits.Current iGenerating1 = module1.iGenerating "Negativ current of module 1 (generating)";
-  Modelica.SIunits.Current iGenerating2 = module2.iGenerating "Negativ current of module 2 (generating)";
-  Modelica.SIunits.Current iGenerating3 = module3.iGenerating "Negativ current of module 3 (generating)";
-  Modelica.SIunits.Current iGenerating4 = module4.iGenerating "Negativ current of module 4 (generating)";
+  Modelica.Units.SI.Current i1(start=0) = module1.i "Current of module 1";
+  Modelica.Units.SI.Current i2(start=0) = module2.i "Current of module 2";
+  Modelica.Units.SI.Current i3(start=0) = module3.i "Current of module 3";
+  Modelica.Units.SI.Current i4(start=0) = module4.i "Current of module 4";
+  Modelica.Units.SI.Current iGenerating1=module1.iGenerating
+    "Negativ current of module 1 (generating)";
+  Modelica.Units.SI.Current iGenerating2=module2.iGenerating
+    "Negativ current of module 2 (generating)";
+  Modelica.Units.SI.Current iGenerating3=module3.iGenerating
+    "Negativ current of module 3 (generating)";
+  Modelica.Units.SI.Current iGenerating4=module4.iGenerating
+    "Negativ current of module 4 (generating)";
   // Power
-  Modelica.SIunits.Power power1 = module1.power "Power of module 1";
-  Modelica.SIunits.Power power2 = module2.power "Power of module 2";
-  Modelica.SIunits.Power power3 = module3.power "Power of module 3";
-  Modelica.SIunits.Power power4 = module4.power "Power of module 4";
-  Modelica.SIunits.Power power = power1+power2+power3+power4 "Total power of all four modules";
+  Modelica.Units.SI.Power power1=module1.power "Power of module 1";
+  Modelica.Units.SI.Power power2=module2.power "Power of module 2";
+  Modelica.Units.SI.Power power3=module3.power "Power of module 3";
+  Modelica.Units.SI.Power power4=module4.power "Power of module 4";
+  Modelica.Units.SI.Power power=power1 + power2 + power3 + power4
+    "Total power of all four modules";
 
-  Modelica.SIunits.Power powerGenerating1 = module1.powerGenerating "Negative power consumption (generating) of module 1";
-  Modelica.SIunits.Power powerGenerating2 = module2.powerGenerating "Negative power consumption (generating) of module 2";
-  Modelica.SIunits.Power powerGenerating3 = module3.powerGenerating "Negative power consumption (generating) of module 3";
-  Modelica.SIunits.Power powerGenerating4 = module4.powerGenerating "Negative power consumption (generating) of module 4";
-  Modelica.SIunits.Power powerGenerating = powerGenerating1+powerGenerating2+powerGenerating3+powerGenerating4 "Total negative power consumption (generating) of all four modules";
+  Modelica.Units.SI.Power powerGenerating1=module1.powerGenerating
+    "Negative power consumption (generating) of module 1";
+  Modelica.Units.SI.Power powerGenerating2=module2.powerGenerating
+    "Negative power consumption (generating) of module 2";
+  Modelica.Units.SI.Power powerGenerating3=module3.powerGenerating
+    "Negative power consumption (generating) of module 3";
+  Modelica.Units.SI.Power powerGenerating4=module4.powerGenerating
+    "Negative power consumption (generating) of module 4";
+  Modelica.Units.SI.Power powerGenerating=powerGenerating1 + powerGenerating2
+       + powerGenerating3 + powerGenerating4
+    "Total negative power consumption (generating) of all four modules";
 
   Converters.ConvertersWithSampleMPTracker.DCConverter dcConverter1(
     final VRef=VRef,

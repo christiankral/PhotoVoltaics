@@ -6,13 +6,21 @@ model DCConverter "DC converter with sampled maximum power tracking"
   extends PhotoVoltaics.Icons.Converter;
   extends PhotoVoltaics.Icons.MPTrackerSmall;
 
-  parameter Modelica.SIunits.Voltage VRef = 48 "Reference DC source voltage" annotation(Dialog(group="Converter"));
-  parameter Modelica.SIunits.Time Ti = 1E-6 "Internal integration time constant" annotation(Dialog(group="Converter"));
+  parameter Modelica.Units.SI.Voltage VRef=48 "Reference DC source voltage"
+    annotation (Dialog(group="Converter"));
+  parameter Modelica.Units.SI.Time Ti=1E-6 "Internal integration time constant"
+    annotation (Dialog(group="Converter"));
 
-  parameter Modelica.SIunits.Time startTime = 0 "Start time" annotation(Dialog(group="MP tracker"));
-  parameter Modelica.SIunits.Time samplePeriod = 1 "Sample period" annotation(Dialog(group="MP tracker"));
-  parameter Modelica.SIunits.Voltage VmpRef "Reference maximum power power of plant" annotation(Dialog(group="MP tracker"));
-  parameter Modelica.SIunits.Current ImpRef "Reference maximum power current of plant" annotation(Dialog(group="MP tracker"));
+  parameter Modelica.Units.SI.Time startTime=0 "Start time"
+    annotation (Dialog(group="MP tracker"));
+  parameter Modelica.Units.SI.Time samplePeriod=1 "Sample period"
+    annotation (Dialog(group="MP tracker"));
+  parameter Modelica.Units.SI.Voltage VmpRef
+    "Reference maximum power power of plant"
+    annotation (Dialog(group="MP tracker"));
+  parameter Modelica.Units.SI.Current ImpRef
+    "Reference maximum power current of plant"
+    annotation (Dialog(group="MP tracker"));
   parameter Integer n = 100 "Number of voltage and power discretizations" annotation(Dialog(group="MP tracker"));
 
   PhotoVoltaics.Components.Converters.DCConverter converter(final Ti=Ti, final VRef=VRef) annotation (Placement(transformation(extent={{40,-10},{60,10}})));

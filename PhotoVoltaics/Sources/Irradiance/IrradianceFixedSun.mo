@@ -1,12 +1,16 @@
 within PhotoVoltaics.Sources.Irradiance;
 model IrradianceFixedSun "Simple solar irradiance with fixed sun position"
   import Modelica.Constants.pi;
-  parameter Modelica.SIunits.Irradiance irradianceRef = 1000 "Reference solar irradiance";
-  parameter Modelica.SIunits.Angle sunHeight "Sun height";
-  parameter Modelica.SIunits.Angle sunAzimuth "Sun azimuth";
-  Modelica.SIunits.Angle angleOfIncidence "Angle of incidence between a vector in sun direction and a normal vector";
-  Modelica.SIunits.Irradiance directIrradianceHorizontal "Direct irradiance on the horizontal";
-  Modelica.SIunits.Irradiance directIrradianceInclined "Direct irradiance on the inclined plane";
+  parameter Modelica.Units.SI.Irradiance irradianceRef=1000
+    "Reference solar irradiance";
+  parameter Modelica.Units.SI.Angle sunHeight "Sun height";
+  parameter Modelica.Units.SI.Angle sunAzimuth "Sun azimuth";
+  Modelica.Units.SI.Angle angleOfIncidence
+    "Angle of incidence between a vector in sun direction and a normal vector";
+  Modelica.Units.SI.Irradiance directIrradianceHorizontal
+    "Direct irradiance on the horizontal";
+  Modelica.Units.SI.Irradiance directIrradianceInclined
+    "Direct irradiance on the inclined plane";
   Modelica.Blocks.Interfaces.RealOutput irradiance annotation(Placement(transformation(extent = {{100, -10}, {120, 10}})));
   Modelica.Blocks.Interfaces.RealInput gamma annotation(Placement(visible = true, transformation(origin={-120,60},    extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin={-120,60},    extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealInput azimuth annotation(Placement(visible = true, transformation(origin={-120,-60},    extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin={-120,-60},    extent = {{-20, -20}, {20, 20}}, rotation = 0)));

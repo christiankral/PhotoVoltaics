@@ -1,16 +1,20 @@
 within PhotoVoltaics.Sources.Electrical;
 model SignalCurrent "Generic current source using the input signal as source current"
   extends Modelica.Electrical.Analog.Interfaces.ConditionalHeatPort(T = 298.15);
-  parameter Modelica.SIunits.Temperature TRef = 298.15 "Reference temperature";
-  parameter Modelica.SIunits.Current IRef = 1 "Reference current at reference irradiance and reference temperature";
-  parameter Modelica.SIunits.Irradiance irradianceRef = 1000 "Reference solar irradiance";
-  parameter Modelica.SIunits.LinearTemperatureCoefficient alphaRef = 0 "Temperature coefficient of reference current at TRref";
+  parameter Modelica.Units.SI.Temperature TRef=298.15 "Reference temperature";
+  parameter Modelica.Units.SI.Current IRef=1
+    "Reference current at reference irradiance and reference temperature";
+  parameter Modelica.Units.SI.Irradiance irradianceRef=1000
+    "Reference solar irradiance";
+  parameter Modelica.Units.SI.LinearTemperatureCoefficient alphaRef=0
+    "Temperature coefficient of reference current at TRref";
   Modelica.Electrical.Analog.Interfaces.PositivePin p annotation (
     Placement(transformation(extent = {{-110, -10}, {-90, 10}})));
   Modelica.Electrical.Analog.Interfaces.NegativePin n annotation (
     Placement(transformation(extent = {{110, -10}, {90, 10}})));
-  Modelica.SIunits.Voltage v "Voltage drop between the two pins (= p.v - n.v)";
-  Modelica.SIunits.Current i "Current flowing from pin p to pin n as input signal";
+  Modelica.Units.SI.Voltage v "Voltage drop between the two pins (= p.v - n.v)";
+  Modelica.Units.SI.Current i
+    "Current flowing from pin p to pin n as input signal";
   Modelica.Blocks.Interfaces.RealInput irradiance(unit = "W/m2") "Irradiance" annotation (
     Placement(transformation(origin = {0, 70}, extent = {{-20, -20}, {20, 20}}, rotation = 270)));
 equation

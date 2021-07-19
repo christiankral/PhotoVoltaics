@@ -2,27 +2,29 @@ within PhotoVoltaics.Sources.Electrical;
 model IdealBattery "Re-chargeable ideal battery without loss"
   parameter Integer ns(min = 1) = 1 "Number of series cells";
   parameter Integer np(min = 1) = 1 "Number of parallel cells";
-  parameter Modelica.SIunits.Voltage V1Cell "Maximum cell voltage > V0Cell";
-  parameter Modelica.SIunits.Voltage V0Cell "Minimum cell voltage < V1Cell";
-  final parameter Modelica.SIunits.Voltage V1 = V1Cell*ns "Maximum battery voltage > V0";
-  final parameter Modelica.SIunits.Voltage V0 = V0Cell*ns "Maximum battery voltage < V1";
+  parameter Modelica.Units.SI.Voltage V1Cell "Maximum cell voltage > V0Cell";
+  parameter Modelica.Units.SI.Voltage V0Cell "Minimum cell voltage < V1Cell";
+  final parameter Modelica.Units.SI.Voltage V1=V1Cell*ns
+    "Maximum battery voltage > V0";
+  final parameter Modelica.Units.SI.Voltage V0=V0Cell*ns
+    "Maximum battery voltage < V1";
   parameter Boolean allowOvercharge = false
     "Allows overcharging without error";
   parameter Boolean allowUndercharge = false
     "Allows undercharging without error";
-  parameter Modelica.SIunits.Energy ECell
+  parameter Modelica.Units.SI.Energy ECell
     "Total cell energy between V0Cell and V1Cell";
-  final parameter Modelica.SIunits.Capacitance CCell = 2 * ECell / (V1Cell ^ 2 - V0Cell ^ 2)
-    "Total charge of battery";
-  parameter Modelica.SIunits.Voltage ViniCell = V1Cell "Initial cell voltage";
-  Modelica.SIunits.Voltage v = pin_p.v - pin_n.v "Battery voltage";
-  Modelica.SIunits.Voltage vCell = v / ns "Cell voltage";
-  Modelica.SIunits.Current i = capacitor.i "Battery current";
-  Modelica.SIunits.Current iCell = i / np "Cell current";
-  Modelica.SIunits.Power power = v * i "Battery power";
-  Modelica.SIunits.Power powerCell = power/ns/np "Cell power";
-  Modelica.SIunits.Energy energy "Energy";
-  Modelica.SIunits.Energy energyCell "Cell energy";
+  final parameter Modelica.Units.SI.Capacitance CCell=2*ECell/(V1Cell^2 -
+      V0Cell^2) "Total charge of battery";
+  parameter Modelica.Units.SI.Voltage ViniCell=V1Cell "Initial cell voltage";
+  Modelica.Units.SI.Voltage v=pin_p.v - pin_n.v "Battery voltage";
+  Modelica.Units.SI.Voltage vCell=v/ns "Cell voltage";
+  Modelica.Units.SI.Current i=capacitor.i "Battery current";
+  Modelica.Units.SI.Current iCell=i/np "Cell current";
+  Modelica.Units.SI.Power power=v*i "Battery power";
+  Modelica.Units.SI.Power powerCell=power/ns/np "Cell power";
+  Modelica.Units.SI.Energy energy "Energy";
+  Modelica.Units.SI.Energy energyCell "Cell energy";
   Modelica.Electrical.Analog.Basic.Capacitor capacitor(final C = CCell * np / ns, v(start = ns * ViniCell, fixed = true)) annotation(Placement(transformation(extent = {{-10, -10}, {10, 10}})));
   Modelica.Electrical.Analog.Interfaces.PositivePin pin_p "Positive pin"
                                                           annotation(Placement(transformation(extent = {{-110, -10}, {-90, 10}})));

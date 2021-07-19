@@ -1,6 +1,6 @@
 within PhotoVoltaics.Records;
 record TSM_200_DC01A "Comax monocrystalline SI cell 200W"
-  extends PhotoVoltaics.Records.ModuleData(final moduleName = "TSM 200 DC01A", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 46, final IscRef = 5.6, final VmpRef = 37.6, final ImpRef = 5.37, final alphaIsc = +0.0002, final alphaVoc = -0.003, final ns = 72, final nb = 3);
+  extends ModuleData(final moduleName = "TSM 200 DC01A", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 46, final IscRef = 5.6, final VmpRef = 37.6, final ImpRef = 5.37, final alphaIsc = +0.0002, final alphaVoc = -0.003, final ns = 72, final nb = 3);
   annotation (
     defaultComponentName = "moduleData",
     defaultComponentPrefixes = "parameter",

@@ -19,18 +19,24 @@ model SimplePlantSymmetric "Simple plant consisting of symmetric series and para
   parameter Integer nsModule(final min = 1) = 1 "Number of series connected modules";
   parameter Integer npModule(final min = 1) = 1 "Number of parallel connected modules";
   final parameter Real m(start = 2, fixed = false) "Ideality factor of diode";
-  final parameter Modelica.SIunits.Current IsdRef(start = 1E-4, fixed = false) "Reference saturation current of cell";
-  final parameter Modelica.SIunits.Current IphRef = moduleData.IscRef "Reference photo current of cell";
-  Modelica.SIunits.Voltage vCell = v / moduleData.ns / nsModule "Cell voltage";
-  Modelica.SIunits.Current iCell = i / npModule "Cell current";
-  Modelica.SIunits.Current iCellGenerating = -iCell "Negative cell current (generating)";
-  Modelica.SIunits.Power powerCell = vCell * iCell "Cell power";
-  Modelica.SIunits.Power powerCellGenerating = vCell * iCellGenerating "Negative power consumption (generating)";
-  Modelica.SIunits.Voltage vModule = v / nsModule "Module voltage";
-  Modelica.SIunits.Current iModule = i / npModule "Modile current";
-  Modelica.SIunits.Current iModuleGenerating = -iModule "Negative module current (generating)";
-  Modelica.SIunits.Power powerModule = vModule * iModule "Module power";
-  Modelica.SIunits.Power powerModuleGenerating = vModule * iModuleGenerating "Negative module power (generating)";
+  final parameter Modelica.Units.SI.Current IsdRef(start=1E-4, fixed=false)
+    "Reference saturation current of cell";
+  final parameter Modelica.Units.SI.Current IphRef=moduleData.IscRef
+    "Reference photo current of cell";
+  Modelica.Units.SI.Voltage vCell=v/moduleData.ns/nsModule "Cell voltage";
+  Modelica.Units.SI.Current iCell=i/npModule "Cell current";
+  Modelica.Units.SI.Current iCellGenerating=-iCell
+    "Negative cell current (generating)";
+  Modelica.Units.SI.Power powerCell=vCell*iCell "Cell power";
+  Modelica.Units.SI.Power powerCellGenerating=vCell*iCellGenerating
+    "Negative power consumption (generating)";
+  Modelica.Units.SI.Voltage vModule=v/nsModule "Module voltage";
+  Modelica.Units.SI.Current iModule=i/npModule "Modile current";
+  Modelica.Units.SI.Current iModuleGenerating=-iModule
+    "Negative module current (generating)";
+  Modelica.Units.SI.Power powerModule=vModule*iModule "Module power";
+  Modelica.Units.SI.Power powerModuleGenerating=vModule*iModuleGenerating
+    "Negative module power (generating)";
 initial equation
   IphRef = IsdRef * (exp(moduleData.VocCellRef / m / moduleData.VtCellRef) - 1);
   IphRef = IsdRef * (exp(moduleData.VmpCellRef / m / moduleData.VtCellRef) - 1) + moduleData.ImpRef;

@@ -1,20 +1,24 @@
 within PhotoVoltaics.Components.Diodes;
 model Diode2Module "Diode model with four different sections including breakthrough"
   extends .PhotoVoltaics.Interfaces.PartialDiode;
-  parameter Modelica.SIunits.Voltage Bv = 5.1 "Breakthrough voltage";
-  parameter Modelica.SIunits.Current Ibv = 0.7 "Breakthrough knee current";
+  parameter Modelica.Units.SI.Voltage Bv=5.1 "Breakthrough voltage";
+  parameter Modelica.Units.SI.Current Ibv=0.7 "Breakthrough knee current";
   parameter Real Nbv = 0.74 "Breakthrough emission coefficient";
   parameter Integer ns = 1 "Number of series connected cells per module";
   parameter Integer nsModule(final min = 1) = 1 "Number of series connected modules";
   parameter Integer npModule(final min = 1) = 1 "Number of parallel connected modules";
-  final parameter Modelica.SIunits.Voltage VtRef = Modelica.Constants.k * TRef / Q "Reference voltage equivalent of temperature";
-  final parameter Modelica.SIunits.Voltage VBv = (-m * Nbv * log(IdsRef * Nbv / Ibv) * VtRef) - Bv "Voltage limit of approximation of breakthrough";
-  final parameter Modelica.SIunits.Current IdsRef = IRef / (exp(VRef / m / VtRef) - 1) "Reference saturation current";
-  final parameter Modelica.SIunits.Voltage VNegLin = (-VRef / m / VtRef * (Nbv * m * VtRef)) - Bv "Limit of linear range left of breakthrough";
-  Modelica.SIunits.Voltage VNeg "Limit of linear negative voltage range";
-  Modelica.SIunits.Voltage vCell = v / ns / nsModule "Cell voltage";
-  Modelica.SIunits.Voltage vModule = v / nsModule "Module voltage";
-  Modelica.SIunits.Current iModule = i / npModule "Module current";
+  final parameter Modelica.Units.SI.Voltage VtRef=Modelica.Constants.k*TRef/Q
+    "Reference voltage equivalent of temperature";
+  final parameter Modelica.Units.SI.Voltage VBv=(-m*Nbv*log(IdsRef*Nbv/Ibv)*
+      VtRef) - Bv "Voltage limit of approximation of breakthrough";
+  final parameter Modelica.Units.SI.Current IdsRef=IRef/(exp(VRef/m/VtRef) - 1)
+    "Reference saturation current";
+  final parameter Modelica.Units.SI.Voltage VNegLin=(-VRef/m/VtRef*(Nbv*m*VtRef))
+       - Bv "Limit of linear range left of breakthrough";
+  Modelica.Units.SI.Voltage VNeg "Limit of linear negative voltage range";
+  Modelica.Units.SI.Voltage vCell=v/ns/nsModule "Cell voltage";
+  Modelica.Units.SI.Voltage vModule=v/nsModule "Module voltage";
+  Modelica.Units.SI.Current iModule=i/npModule "Module current";
 equation
   // Voltage limit of negative range
   VNeg = m * Vt * log(Vt / VtRef);

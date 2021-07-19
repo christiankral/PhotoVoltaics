@@ -1,6 +1,6 @@
 within PhotoVoltaics.Records;
 record SW_250_MONO "Solarworld monocrystalline SI cell 250W"
-  extends PhotoVoltaics.Records.ModuleData(final moduleName = "SW_250_MONO", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 37.8, final IscRef = 8.28, final VmpRef = 31.1, final ImpRef = 8.05, final alphaIsc = +0.00004, final alphaVoc = -0.003, final ns = 60, final nb = 3);
+  extends ModuleData(final moduleName = "SW_250_MONO", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 37.8, final IscRef = 8.28, final VmpRef = 31.1, final ImpRef = 8.05, final alphaIsc = +0.00004, final alphaVoc = -0.003, final ns = 60, final nb = 3);
   annotation (
     defaultComponentName = "moduleData",
     defaultComponentPrefixes = "parameter",

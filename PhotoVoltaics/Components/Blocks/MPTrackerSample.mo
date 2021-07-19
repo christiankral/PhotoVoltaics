@@ -1,13 +1,17 @@
 within PhotoVoltaics.Components.Blocks;
 block MPTrackerSample "Sampling maximum power tracker"
   extends Modelica.Blocks.Icons.Block;
-  parameter Modelica.SIunits.Time startTime = 0 "Start time";
-  parameter Modelica.SIunits.Time samplePeriod = 1 "Sample period";
-  parameter Modelica.SIunits.Voltage VmpRef "Reference maximum power power of plant";
-  parameter Modelica.SIunits.Current ImpRef "Reference maximum power current of plant";
+  parameter Modelica.Units.SI.Time startTime=0 "Start time";
+  parameter Modelica.Units.SI.Time samplePeriod=1 "Sample period";
+  parameter Modelica.Units.SI.Voltage VmpRef
+    "Reference maximum power power of plant";
+  parameter Modelica.Units.SI.Current ImpRef
+    "Reference maximum power current of plant";
   parameter Integer n = 100 "Number of voltage and power discretizations";
-  final parameter Modelica.SIunits.Voltage dv = VmpRef / n "Voltage change and maximum deviation";
-  final parameter Modelica.SIunits.Power dpower = VmpRef * ImpRef / n "Power change and maximum deviation";
+  final parameter Modelica.Units.SI.Voltage dv=VmpRef/n
+    "Voltage change and maximum deviation";
+  final parameter Modelica.Units.SI.Power dpower=VmpRef*ImpRef/n
+    "Power change and maximum deviation";
   Boolean firstTrigger(start = false, fixed = true) "First boolean sample trigger signal";
   // Boolean secondTrigger "Second boolean sample trigger signal";
   Boolean sampleTrigger "Boolean sample trigger signal";

@@ -4,8 +4,8 @@ model DiodeCompare "Compare different diode models"
   parameter Integer ns = 10 "Number of series connected cells";
   parameter Integer nsModule = 2 "Number of series connected modules";
   parameter Integer npModule = 2 "Number of parallel connected modules";
-  parameter Modelica.SIunits.Voltage Vmin = -5.30 "Minimum voltage range";
-  parameter Modelica.SIunits.Voltage Vmax = +0.75 "Maximum voltage range";
+  parameter Modelica.Units.SI.Voltage Vmin=-5.30 "Minimum voltage range";
+  parameter Modelica.Units.SI.Voltage Vmax=+0.75 "Maximum voltage range";
   Modelica.Electrical.Analog.Semiconductors.ZDiode zDiode(useHeatPort = true, R = 1E8, Maxexp = 0.6292 / 0.04, Ids = 1.26092E-6, T = 298.15) annotation (
     Placement(transformation(extent = {{-40, -40}, {-20, -20}})));
   Modelica.Electrical.Analog.Sources.RampVoltage rampVoltage(duration = 1, startTime = 0, V = Vmax - Vmin, offset = Vmin) annotation (

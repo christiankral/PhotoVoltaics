@@ -6,8 +6,9 @@ model TGM_Comax_Measurement_20160704 "Measured irradiance model on 2016-07-04; C
   parameter String fileNameIrradiance = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/Resources/WeatherData/TGM_Trina_20160704.txt") "Irradiance data file name";
   parameter String fileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/Resources/WeatherData/TGM_Comax_20160704.txt") "Power data file name";
   parameter String csvFileName = "TGM_Comax_Measurement_20160704_power.csv";
-  Modelica.SIunits.Irradiance irradiance = irradianceTable.y[1] "Measured irradiance";
-  Modelica.SIunits.Power powerAC = powerTable.y[1] "Measured AC power";
+  Modelica.Units.SI.Irradiance irradiance=irradianceTable.y[1]
+    "Measured irradiance";
+  Modelica.Units.SI.Power powerAC=powerTable.y[1] "Measured AC power";
   PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
     useConstantIrradiance=false,
     moduleData=moduleData,
@@ -25,11 +26,17 @@ model TGM_Comax_Measurement_20160704 "Measured irradiance model on 2016-07-04; C
     Placement(transformation(extent = {{10, -20}, {30, 0}})));
   PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 10) annotation (
     Placement(transformation(extent = {{-10, -70}, {10, -50}})));
-  Modelica.Electrical.QuasiStationary.SinglePhase.Basic.Ground groundAC annotation (
-    Placement(transformation(extent = {{60, -50}, {80, -30}})));
-  Modelica.Electrical.QuasiStationary.SinglePhase.Sources.VoltageSource voltageSource(f = 50, V = 230, phi = 0,
-    gamma(start=0, fixed=true))                                                                                 annotation (
-    Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {70, -10})));
+  Modelica.Electrical.QuasiStatic.SinglePhase.Basic.Ground groundAC
+    annotation (Placement(transformation(extent={{60,-50},{80,-30}})));
+  Modelica.Electrical.QuasiStatic.SinglePhase.Sources.VoltageSource
+    voltageSource(
+    f=50,
+    V=230,
+    phi=0,
+    gamma(start=0, fixed=true)) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={70,-10})));
   Modelica.Electrical.Analog.Sensors.PowerSensor powerSensor annotation (
     Placement(transformation(extent = {{-30, 0}, {-10, 20}})));
   Modelica.Blocks.Continuous.Integrator integrator(y(unit = "J")) annotation (

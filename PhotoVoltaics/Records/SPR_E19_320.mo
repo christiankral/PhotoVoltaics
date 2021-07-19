@@ -1,6 +1,6 @@
 within PhotoVoltaics.Records;
 record SPR_E19_320 "Sunpower monocrystalline SI cell 320W"
-  extends PhotoVoltaics.Records.ModuleData(final moduleName = "SPR_E19_320", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 64.8, final IscRef = 6.26, final VmpRef = 54.7, final ImpRef = 5.86, final alphaIsc = +0.00056, final alphaVoc = -0.00273, final ns = 96, final nb = 3);
+  extends ModuleData(final moduleName = "SPR_E19_320", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 64.8, final IscRef = 6.26, final VmpRef = 54.7, final ImpRef = 5.86, final alphaIsc = +0.00056, final alphaVoc = -0.00273, final ns = 96, final nb = 3);
   annotation (
     defaultComponentName = "moduleData",
     defaultComponentPrefixes = "parameter",

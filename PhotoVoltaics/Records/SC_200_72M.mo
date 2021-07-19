@@ -1,6 +1,6 @@
 within PhotoVoltaics.Records;
 record SC_200_72M "Sunclass monocrystalline SI cell 200W"
-  extends PhotoVoltaics.Records.ModuleData(final moduleName = "SC_200_72M", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 45.65, final IscRef = 5.65, final VmpRef = 37.3, final ImpRef = 5.36, final alphaIsc = +0.0004, final alphaVoc = -0.0029, final ns = 72, final nb = 3);
+  extends ModuleData(final moduleName = "SC_200_72M", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 45.65, final IscRef = 5.65, final VmpRef = 37.3, final ImpRef = 5.36, final alphaIsc = +0.0004, final alphaVoc = -0.0029, final ns = 72, final nb = 3);
   annotation (
     defaultComponentName = "moduleData",
     defaultComponentPrefixes = "parameter",

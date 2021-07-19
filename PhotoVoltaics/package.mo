@@ -2,9 +2,12 @@
   extends Modelica.Icons.Package;
 
   annotation (preferredView="info",
-    version = "1.6.0",
-    versionDate = "2020-02-02",
-    uses(Modelica(version = "3.2.3")),
+    version="2.0.0",
+    versionDate = "2021-07-19",
+    uses(Modelica(version="4.0.0")),
+    conversion(
+      from(version={"1.6.0", "1.5.0", "1.4.1", "1.4.0", "1.3.2", "1.3.1", "1.3.0", "1.2.0", "1.1.0", "1.0.1", "1.0.0"},
+      script="modelica://PhotoVoltaics/Resources/Scripts/Conversion/ConvertFromPhotoVoltaics_1.6.0.mos")),
     Icon(coordinateSystem, graphics={  Ellipse(origin = {36, 75}, fillColor = {255, 255, 127},
             fillPattern = FillPattern.Solid, extent = {{0, 1}, {40, -39}}, endAngle = 360), Rectangle(origin = {-60, -9}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
             fillPattern = FillPattern.Solid, extent = {{-10, 11}, {10, -9}}), Rectangle(origin = {0, -7}, lineColor = {85, 85, 255}, fillColor = {85, 85, 255},
@@ -76,5 +79,7 @@ Library authors are</p>
 <p>This libray was awarded with the
 <a href=\"https://modelica.org/events/modelica2019/subpages/library-award\">second price</a>
 at library award of the 13th Modelica Confernce, Regensburg 2019.</p>
-</html>"));
+</html>"),
+    conversion(from(version="1.6.0", script="modelica://PhotoVoltaics/Resources/ConvertFromPhotoVoltaics_1.6.0.mos")));
+
 end PhotoVoltaics;

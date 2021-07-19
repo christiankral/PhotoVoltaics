@@ -35,11 +35,17 @@ model TGM_Comax_WeatherData_OneYear "One year based on real weather data; Comax 
     Placement(transformation(extent = {{10, -20}, {30, 0}})));
   PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 60) annotation (
     Placement(transformation(extent = {{-10, -70}, {10, -50}})));
-  Modelica.Electrical.QuasiStationary.SinglePhase.Basic.Ground groundAC annotation (
-    Placement(transformation(extent = {{60, -50}, {80, -30}})));
-  Modelica.Electrical.QuasiStationary.SinglePhase.Sources.VoltageSource voltageSource(f = 50, V = 230, phi = 0,
-    gamma(fixed=true, start=0))                                                                                 annotation (
-    Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {70, -10})));
+  Modelica.Electrical.QuasiStatic.SinglePhase.Basic.Ground groundAC
+    annotation (Placement(transformation(extent={{60,-50},{80,-30}})));
+  Modelica.Electrical.QuasiStatic.SinglePhase.Sources.VoltageSource
+    voltageSource(
+    f=50,
+    V=230,
+    phi=0,
+    gamma(fixed=true, start=0)) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={70,-10})));
   Modelica.Electrical.Analog.Sensors.PowerSensor powerSensor annotation (
     Placement(transformation(extent = {{-30, 0}, {-10, 20}})));
   Modelica.Blocks.Continuous.Integrator integrator(y(unit = "J")) annotation (
@@ -62,7 +68,7 @@ equation
   connect(mpTracker.vRef, converter.vDCRef) annotation (
     Line(points={{11,-60},{14,-60},{14,-22}},        color = {0, 0, 127}));
   connect(converter.ac_n, groundAC.pin) annotation (
-    Line(points = {{30, -20}, {30, -30}, {70, -30}}, color = {85, 170, 255}));
+    Line(points={{30,-16},{30,-30},{70,-30}},        color = {85, 170, 255}));
   connect(groundAC.pin, voltageSource.pin_n) annotation (
     Line(points = {{70, -30}, {70, -20}}, color = {85, 170, 255}));
   connect(powerSensor.nc, converter.dc_p) annotation (
@@ -72,7 +78,7 @@ equation
   connect(powerSensor.pc, powerSensor.pv) annotation (
     Line(points = {{-30, 10}, {-30, 20}, {-20, 20}}, color = {0, 0, 255}));
   connect(converter.ac_p, voltageSource.pin_p) annotation (
-    Line(points = {{30, 0}, {30, 0}, {30, 10}, {70, 10}, {70, 0}}, color = {85, 170, 255}));
+    Line(points={{30,-4},{30,-4},{30,10},{70,10},{70,0}},          color = {85, 170, 255}));
   connect(plant.p, powerSensor.pc) annotation (
     Line(points = {{-50, 0}, {-50, 10}, {-30, 10}}, color = {0, 0, 255}));
   connect(powerSensor.nv, ground.p) annotation (

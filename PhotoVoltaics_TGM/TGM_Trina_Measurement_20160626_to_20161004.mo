@@ -5,15 +5,18 @@ model TGM_Trina_Measurement_20160626_to_20161004 "Measured irradiance model from
   parameter Integer npModule = 1 "Number of parallel connected modules";
   parameter String fileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/Resources/WeatherData/TGM_Trina_20160626_to_20161004.txt") "File name";
   parameter String csvFileName = "TGM_Trina_Measurement_20160626_to_20161004_power.csv";
-  Modelica.SIunits.Irradiance irradiance = combiTimeTable.y[1] "Measured irradiance";
-  Modelica.SIunits.Power powerAC = combiTimeTable.y[2] "Measured AC power";
-  Modelica.SIunits.Voltage VAC = combiTimeTable.y[3] "Measured AC voltage";
-  Modelica.SIunits.Current IAC = combiTimeTable.y[4] "Measured AC current";
-  Modelica.SIunits.Power powerDC = combiTimeTable.y[5] "Measured DC power";
-  Modelica.SIunits.Voltage VDC = combiTimeTable.y[6] "Measured DC voltage";
-  Modelica.SIunits.Current IDC = combiTimeTable.y[7] "Measured DC current";
-  Modelica.SIunits.Temperature T1 = combiTimeTable.y[8] "Temperature of ambient";
-  Modelica.SIunits.Temperature T2 = combiTimeTable.y[9] "Temperature of PV modules";
+  Modelica.Units.SI.Irradiance irradiance=combiTimeTable.y[1]
+    "Measured irradiance";
+  Modelica.Units.SI.Power powerAC=combiTimeTable.y[2] "Measured AC power";
+  Modelica.Units.SI.Voltage VAC=combiTimeTable.y[3] "Measured AC voltage";
+  Modelica.Units.SI.Current IAC=combiTimeTable.y[4] "Measured AC current";
+  Modelica.Units.SI.Power powerDC=combiTimeTable.y[5] "Measured DC power";
+  Modelica.Units.SI.Voltage VDC=combiTimeTable.y[6] "Measured DC voltage";
+  Modelica.Units.SI.Current IDC=combiTimeTable.y[7] "Measured DC current";
+  Modelica.Units.SI.Temperature T1=combiTimeTable.y[8]
+    "Temperature of ambient";
+  Modelica.Units.SI.Temperature T2=combiTimeTable.y[9]
+    "Temperature of PV modules";
   PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric plant(
     moduleData=moduleData,
     npModule=npModule,
@@ -30,11 +33,17 @@ model TGM_Trina_Measurement_20160626_to_20161004 "Measured irradiance model from
     Placement(transformation(extent = {{10, -20}, {30, 0}})));
   PhotoVoltaics.Components.Blocks.MPTrackerSample mpTracker(VmpRef = nsModule * moduleData.VmpRef, ImpRef = npModule * moduleData.ImpRef, samplePeriod = 10) annotation (
     Placement(transformation(extent = {{-10, -70}, {10, -50}})));
-  Modelica.Electrical.QuasiStationary.SinglePhase.Basic.Ground groundAC annotation (
-    Placement(transformation(extent = {{60, -50}, {80, -30}})));
-  Modelica.Electrical.QuasiStationary.SinglePhase.Sources.VoltageSource voltageSource(f = 50, V = 230, phi = 0,
-    gamma(start=0, fixed=true))                                                                                 annotation (
-    Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {70, -10})));
+  Modelica.Electrical.QuasiStatic.SinglePhase.Basic.Ground groundAC
+    annotation (Placement(transformation(extent={{60,-50},{80,-30}})));
+  Modelica.Electrical.QuasiStatic.SinglePhase.Sources.VoltageSource
+    voltageSource(
+    f=50,
+    V=230,
+    phi=0,
+    gamma(start=0, fixed=true)) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={70,-10})));
   Modelica.Electrical.Analog.Sensors.PowerSensor powerSensor annotation (
     Placement(transformation(extent = {{-30, 0}, {-10, 20}})));
   Modelica.Blocks.Continuous.Integrator integrator(y(unit = "J")) annotation (
