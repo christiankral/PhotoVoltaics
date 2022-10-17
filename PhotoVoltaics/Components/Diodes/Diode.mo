@@ -7,8 +7,8 @@ equation
     defaultComponentName = "diode",
     Documentation(info="<html>
 <<p>The simple model of a diode solely considers an exponental replationship between current and voltage. The diode formula is:
-<pre>                v/Vt
-  i  =  Ids ( e      - 1).</pre>
+<pre>                v/m/Vt
+  i  =  Ids ( e        - 1).</pre>
 
 <p>The temperature dependence of the temperature voltage <code>Vt</code> and saturation current of the diode are
 considered consistently in the <a href=\"modelica://PhotoVoltaics.Interfaces.PartialDiode\">partial diodel</a> model.

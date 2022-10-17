@@ -13,8 +13,8 @@ equation
 <a href=\"modelica://Modelica.Electrical.Analog.Semiconductors.ZDiode\">ZDiode</a>.
 It consists of the diode with exponental forward and backward breakthrough characteristic, including parallel ohmic resistance <code>R</code>.
 The diode formula is:</p>
-<pre>                v/Vt                -(v+Bv)/(Nbv*Vt)
-  i  =  Ids ( e      - 1) - Ibv ( e                  ) + v / R</pre>
+<pre>                v/(m*Vt)                -(v+Bv)/(Nbv*m*Vt)
+  i  =  Ids ( e          - 1) - Ibv ( e                    ) + v / R</pre>
 
 <p>The temperature dependence of the temperature voltage <code>Vt</code> and saturation current of the diode are
 considered consistently in the <a href=\"modelica://PhotoVoltaics.Interfaces.PartialDiode\">partial diodel</a> model.
