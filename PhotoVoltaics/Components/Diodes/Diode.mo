@@ -5,8 +5,8 @@ equation
   i = Ids * (exp(v / m / Vt) - 1) + v / R;
   annotation (
     defaultComponentName = "diode",
-    Documentation(info="<html>
-<<p>The simple model of a diode solely considers an exponental replationship between current and voltage. The diode formula is:
+    Documentation(info= "<html>
+<p>The simple model of a diode solely considers an exponental replationship between current and voltage. The diode formula is:
 <pre>                v/m/Vt
   i  =  Ids ( e        - 1).</pre>
 
