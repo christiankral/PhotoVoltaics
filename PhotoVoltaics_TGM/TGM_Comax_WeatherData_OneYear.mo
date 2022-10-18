@@ -7,12 +7,10 @@ model TGM_Comax_WeatherData_OneYear "One year based on real weather data; Comax 
   parameter String fileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/Resources/WeatherData/AUT_Vienna.Schwechat.110360_IWEC.mos") "File name";
   parameter String csvFileName = "TGM_Comax_WeatherData_2016_energy.csv";
   Buildings.BoundaryConditions.SolarIrradiation.DiffusePerez HDifTil(                                                azi = 0,
-    til(displayUnit="deg") = 0.17453292519943,
-    lat(displayUnit="deg") = 0.8418964085999744)                                                                                "Diffuse irradiation on tilted surface" annotation (
+    til(displayUnit="deg") = 0.17453292519943)                                                                                  "Diffuse irradiation on tilted surface" annotation (
     Placement(visible = true, transformation(extent = {{-60, 70}, {-40, 90}}, rotation = 0)));
   Buildings.BoundaryConditions.SolarIrradiation.DirectTiltedSurface HDirTil(                                                azi = 0,
-    til(displayUnit="deg") = 0.17453292519943,
-    lat(displayUnit="deg") = 0.8418964085999744)                                                                                                           "Direct irradiation on tilted surface" annotation (
+    til(displayUnit="deg") = 0.17453292519943)                                                                                                             "Direct irradiation on tilted surface" annotation (
     Placement(visible = true, transformation(extent = {{-60, 40}, {-40, 60}}, rotation = 0)));
   Modelica.Blocks.Math.Add G "Total irradiation on tilted surface" annotation (
     Placement(visible = true, transformation(extent = {{-20, 50}, {0, 70}}, rotation = 0)));
@@ -90,7 +88,10 @@ equation
   connect(writeCSV.u, integrator.y) annotation (
     Line(points = {{-78, -60}, {-71, -60}}, color = {0, 0, 127}));
   annotation (
-    experiment(StopTime = 3.1536e+07, Interval = 900, Tolerance = 1e-08, __Dymola_Algorithm = "Rkfix4"),
+    experiment(
+      StopTime=31536000,
+      Interval=900,
+      Tolerance=1e-08),
     Documentation(revisions = "<html>
 </html>",
         info="<html>

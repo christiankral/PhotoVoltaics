@@ -2,12 +2,12 @@
   extends Modelica.Icons.Package;
 
   annotation (preferredView="info",
-    version="2.X.X",
-    versionDate = "2021-XX-XX",
+    version="2.0.1",
+    versionDate = "2022-10-18",
     uses(
-      Buildings(version = "X.X.X"),
+      Buildings(version = "9.0.0"),
       Modelica(version="4.0.0"),
-      PhotoVoltaics(version="2.0.0")),
+      PhotoVoltaics(version="2.0.1")),
     conversion(
       from(version={"1.6.0", "1.5.0", "1.4.1", "1.4.0", "1.3.2", "1.3.1", "1.3.0", "1.2.0", "1.1.0", "1.0.1", "1.0.0"},
       script="modelica://PhotoVoltaics/Resources/Scripts/Conversion/ConvertFromPhotoVoltaics_TGM_1.6.0.mos")),

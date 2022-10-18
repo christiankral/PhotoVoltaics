@@ -6,9 +6,10 @@ model TGM_Trina_WeatherData_OneYear "One year based on real weather data; Trina 
   // Weather data file name has to be passed without loadResource to ReaderTMY3 class of Buildings library
   parameter String fileName = Modelica.Utilities.Files.loadResource("modelica://PhotoVoltaics/Resources/WeatherData/AUT_Vienna.Schwechat.110360_IWEC.mos") "File name";
   parameter String csvFileName = "TGM_Trina_WeatherData_2016_energy.csv";
-  Buildings.BoundaryConditions.SolarIrradiation.DiffusePerez HDifTil(til = 0.17453292519943, lat = 0.8418964085999744, azi = 0) "Diffuse irradiation on tilted surface" annotation (
+  Buildings.BoundaryConditions.SolarIrradiation.DiffusePerez HDifTil(til=0.17453292519943,                             azi = 0) "Diffuse irradiation on tilted surface" annotation (
     Placement(visible = true, transformation(extent = {{-60, 70}, {-40, 90}}, rotation = 0)));
-  Buildings.BoundaryConditions.SolarIrradiation.DirectTiltedSurface HDirTil(til = 0.17453292519943, lat = 0.8418964085999744, azi = 0) "Direct irradiation on tilted surface" annotation (
+  Buildings.BoundaryConditions.SolarIrradiation.DirectTiltedSurface HDirTil(til=
+        0.17453292519943,                                                                                                     azi = 0) "Direct irradiation on tilted surface" annotation (
     Placement(visible = true, transformation(extent = {{-60, 40}, {-40, 60}}, rotation = 0)));
   Modelica.Blocks.Math.Add G "Total irradiation on tilted surface" annotation (
     Placement(visible = true, transformation(extent = {{-20, 50}, {0, 70}}, rotation = 0)));
@@ -64,7 +65,7 @@ equation
   connect(mpTracker.vRef, converter.vDCRef) annotation (
     Line(points={{11,-60},{14,-60},{14,-22}},        color = {0, 0, 127}));
   connect(converter.ac_n, groundAC.pin) annotation (
-    Line(points = {{30, -20}, {30, -30}, {70, -30}}, color = {85, 170, 255}));
+    Line(points={{30,-16},{30,-30},{70,-30}},        color = {85, 170, 255}));
   connect(groundAC.pin, voltageSource.pin_n) annotation (
     Line(points = {{70, -30}, {70, -20}}, color = {85, 170, 255}));
   connect(powerSensor.nc, converter.dc_p) annotation (
@@ -74,7 +75,7 @@ equation
   connect(powerSensor.pc, powerSensor.pv) annotation (
     Line(points = {{-30, 10}, {-30, 20}, {-20, 20}}, color = {0, 0, 255}));
   connect(converter.ac_p, voltageSource.pin_p) annotation (
-    Line(points = {{30, 0}, {30, 0}, {30, 10}, {70, 10}, {70, 0}}, color = {85, 170, 255}));
+    Line(points={{30,-4},{30,-4},{30,10},{70,10},{70,0}},          color = {85, 170, 255}));
   connect(plant.p, powerSensor.pc) annotation (
     Line(points = {{-50, 0}, {-50, 10}, {-30, 10}}, color = {0, 0, 255}));
   connect(powerSensor.nv, ground.p) annotation (
@@ -86,7 +87,7 @@ equation
   connect(writeCSV.u, integrator.y) annotation (
     Line(points = {{-78, -60}, {-71, -60}}, color = {0, 0, 127}));
   annotation (
-    experiment(StopTime = 3.1536e+07, Interval = 900, Tolerance = 1e-08, __Dymola_Algorithm = "Rkfix4", __OpenModelica_simulationFlags(jacobian = "coloredNumerical", s = "dassl", lv = "LOG_STATS")),
+    experiment(StopTime = 3.1536e+07, Interval = 900, Tolerance = 1e-08, __OpenModelica_simulationFlags(jacobian = "coloredNumerical", s = "dassl", lv = "LOG_STATS")),
     Documentation(revisions = "<html>
 </html>",
         info="<html>
