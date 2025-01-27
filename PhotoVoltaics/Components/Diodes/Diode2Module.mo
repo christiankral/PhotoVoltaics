@@ -19,12 +19,13 @@ model Diode2Module "Diode model with four different sections including breakthro
   Modelica.Units.SI.Voltage vCell=v/ns/nsModule "Cell voltage";
   Modelica.Units.SI.Voltage vModule=v/nsModule "Module voltage";
   Modelica.Units.SI.Current iModule=i/npModule "Module current";
+  constant Integer MaxExp = 30;
 equation
   // Voltage limit of negative range
   VNeg = m * Vt * log(Vt / VtRef);
   // Current approximation
-  i / npModule = smooth(1, if v / ns / nsModule > VNeg then Ids * (exp(v / ns / nsModule / m / Vt) - 1) + v / ns / nsModule / R elseif v / ns / nsModule > VBv then Ids * v / ns / nsModule / m / VtRef + v / ns / nsModule / R
-   elseif v / ns / nsModule > VNegLin then (-Ibv * exp(-(v / ns / nsModule + Bv) / (Nbv * m * Vt))) + Ids * VBv / m / VtRef + v / ns / nsModule / R else Ids * v / ns / nsModule / m / Vt - Ibv * exp(VRef / m / VtRef) * (1 - (v / ns / nsModule + Bv) / (Nbv * m * Vt) - VRef / m / VtRef) + v / ns / nsModule / R);
+  i / npModule = smooth(1, if v / ns / nsModule > VNeg then Ids * (Functions.exlin(v / ns / nsModule / m / Vt, MaxExp) - 1) + v / ns / nsModule / R elseif v / ns / nsModule > VBv then Ids * v / ns / nsModule / m / VtRef + v / ns / nsModule / R
+   elseif v / ns / nsModule > VNegLin then (-Ibv * Functions.exlin(-(v / ns / nsModule + Bv) / (Nbv * m * Vt), MaxExp)) + Ids * VBv / m / VtRef + v / ns / nsModule / R else Ids * v / ns / nsModule / m / Vt - Ibv * Functions.exlin(VRef / m / VtRef, MaxExp) * (1 - (v / ns / nsModule + Bv) / (Nbv * m * Vt) - VRef / m / VtRef) + v / ns / nsModule / R);
   annotation (
     defaultComponentName = "diode",
     Documentation(info="<html>

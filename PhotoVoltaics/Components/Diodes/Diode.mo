@@ -1,8 +1,9 @@
 within PhotoVoltaics.Components.Diodes;
 model Diode "Diode with one exponential function"
   extends .PhotoVoltaics.Interfaces.PartialDiode;
+  constant Integer MaxExp = 30;
 equation
-  i = Ids * (exp(v / m / Vt) - 1) + v / R;
+  i = Ids * (Functions.exlin(v / m / Vt, MaxExp) - 1) + v / R;
   annotation (
     defaultComponentName = "diode",
     Documentation(info= "<html>
