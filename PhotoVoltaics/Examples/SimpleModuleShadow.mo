@@ -34,5 +34,5 @@ equation
     Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
     Diagram(coordinateSystem(initialScale = 0.1)),
     experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.0001),
-    __OpenModelica_simulationFlags(jacobian = "coloredNumerical", nls = "newton", s = "dassl", lv = "LOG_STATS"));
+    __OpenModelica_simulationFlags(s = "dassl", lv = "LOG_STATS", jacobian = "coloredNumerical", nls = "newton", nlssMaxDensity = "0", variableFilter = ".*"));
 end SimpleModuleShadow;
