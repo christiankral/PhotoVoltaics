@@ -112,7 +112,8 @@ equation
   // Direct normal irradiance:
   // - useAirMass = false: no atmospheric attenuation, see [Quaschning2015], eq. (2.17) with all transmission factors equal to one
   // - useAirMass = true: attenuation according to [Meinel1976], DNI = E0(J) * 0.7 ^ (airMass ^ 0.678)
-  directIrradianceNormal = if useAirMass then irradianceExtraterrestrialActual * 0.7 ^ (airMass ^ 0.678) else irradianceRef;
+  // - sun below the horizon: no direct normal irradiance
+  directIrradianceNormal = if sunHeight < 0 then 0 else if useAirMass then irradianceExtraterrestrialActual * 0.7 ^ (airMass ^ 0.678) else irradianceRef;
   // Direct irradiance on the horizontal and inclined plane, see [Quaschning2015], eqs. (2.17), (2.32) and (2.35)
   directIrradianceHorizontal = if sunHeight < 0 then 0 else directIrradianceNormal * sin(sunHeight);
   directIrradianceInclined = if angleOfIncidence > pi / 2 then 0 else if abs(sin(sunHeight)) < 1E-5 then 0 else directIrradianceHorizontal * (cos(angleOfIncidence) / sin(sunHeight));
@@ -213,7 +214,8 @@ The attenuation of the direct normal irradiance is determined by the empirical r
 In this case, the parameter <code>irradianceRef</code> is not used.
 The direct irradiance smoothly approaches (almost) zero at sunrise and sunset.
 For the sun at the horizon, the air mass is approximately 38 and the direct normal irradiance is approximately
-1.5&nbsp;% of the extraterrestrial irradiance. Diffuse and ground reflected irradiance are not considered in either case.
+1.5&nbsp;% of the extraterrestrial irradiance.
+For the sun below the horizon, the direct normal irradiance is zero. Diffuse and ground reflected irradiance are not considered in either case.
 </p>
 </html>"),
     Diagram(coordinateSystem(preserveAspectRatio = false)));

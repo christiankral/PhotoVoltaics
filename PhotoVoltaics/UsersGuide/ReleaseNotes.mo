@@ -5,6 +5,14 @@ class ReleaseNotes "Release Notes"
     preferredView = "info",
     Documentation(info="<html>
 
+<h5>Version 3.1.0, 2026-10-29</h5>
+<ul>
+<li>Set direct normal irradiance to zero for the sun below the horizon in
+    <a href=\"modelica://PhotoVoltaics.Sources.Irradiance.Irradiance\">Irradiance</a> and
+    <a href=\"modelica://PhotoVoltaics.Sources.Irradiance.IrradianceVariableLocation\">IrradianceVariableLocation</a>;
+    the irradiance of the inclined area is not affected</li>
+</ul>
+
 <h5>Version 3.0.0, 2026-10-29</h5>
 <ul>
 <li>Remove over-determined initial condition of <code>Jprime</code> in
