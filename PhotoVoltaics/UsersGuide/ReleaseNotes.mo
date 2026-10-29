@@ -7,6 +7,7 @@ class ReleaseNotes "Release Notes"
 
 <h5>Version 2.2.0, 2026-10-29</h5>
 <ul>
+<li>Add Kioto module record <a href=\"modelica://PhotoVoltaics.Records.KPV_480\">KPV_480</a></li>
 <li>Fix spelling and grammar errors in documentation and descriptions</li>
 <li>Fix HTML errors in documentation</li>
 <li>Fix incorrect descriptions, e.g., of
