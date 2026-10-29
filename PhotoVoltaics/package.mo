@@ -2,7 +2,7 @@
   extends Modelica.Icons.Package;
 
   annotation (preferredView="info",
-    version="2.2.0",
+    version="3.0.0",
     versionDate = "2026-10-29",
     uses(Modelica(version="4.0.0")),
     conversion(

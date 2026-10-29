@@ -13,7 +13,14 @@ model Irradiance "Simple solar irradiance without considering weather conditions
   parameter Modelica.Units.SI.Angle latitude=0.8418964085999744
     "Latitude";
   parameter Modelica.Units.SI.Irradiance irradianceRef=1000
-    "Reference solar irradiance";
+    "Reference solar irradiance (direct normal irradiance, if useAirMass = false)"
+    annotation (Dialog(enable = not useAirMass));
+  parameter Boolean useAirMass = false
+    "Consider air mass dependent attenuation of direct normal irradiance, if true"
+    annotation (Evaluate = true, choices(checkBox = true), Dialog(group = "Atmosphere"));
+  parameter Modelica.Units.SI.Irradiance irradianceExtraterrestrial=1360.8
+    "Solar constant, i.e., mean extraterrestrial irradiance"
+    annotation (Dialog(group = "Atmosphere", enable = useAirMass));
   parameter Modelica.Units.SI.Angle gamma=10*pi/180
     "Angle of PV module w.r.t. horizontal plane";
   parameter Modelica.Units.SI.Angle azimuth=0
@@ -28,7 +35,7 @@ model Irradiance "Simple solar irradiance without considering weather conditions
               startYear)/dayOfTheYear(
               31,
               12,
-              startYear)*2*pi, fixed=true)
+              startYear)*2*pi)
     "Equivalent angle of the day of the year w.r.t. total number of days";
   Real delta_J;
   Real timeequation_J;
@@ -48,6 +55,11 @@ model Irradiance "Simple solar irradiance without considering weather conditions
   Modelica.Units.SI.Angle sunAzimuth "Sun azimuth";
   Modelica.Units.SI.Angle angleOfIncidence
     "Angle of incidence between a vector in sun direction and a normal vector";
+  Modelica.Units.SI.Irradiance irradianceExtraterrestrialActual
+    "Extraterrestrial irradiance w.r.t. actual day of the year";
+  Real airMass "Relative optical air mass (Kasten and Young 1989)";
+  Modelica.Units.SI.Irradiance directIrradianceNormal
+    "Direct normal irradiance";
   Modelica.Units.SI.Irradiance directIrradianceHorizontal
     "Direct irradiance on the horizontal in W/m^2";
   Modelica.Units.SI.Irradiance directIrradianceInclined
@@ -91,7 +103,18 @@ equation
   sunAzimuth2 = Modelica.Constants.pi + acos((sin(sunHeight) * sin(latitude) - sin(delta_J)) / (cos(sunHeight) * cos(latitude)));
   sunAzimuth = if mod(localTimeHours, 24) <= 12 then sunAzimuth1 else sunAzimuth2;
   angleOfIncidence = acos((-cos(sunHeight) * sin(gamma) * cos(sunAzimuth - azimuth)) + sin(sunHeight) * cos(gamma));
-  directIrradianceHorizontal = if sunHeight < 0 then 0 else irradianceRef * sin(sunHeight);
+  // Relative optical air mass according to [Kasten1989], eq. (3), with sun height in degree;
+  // the sun height is limited to zero, such that the air mass is finite (approx. 38) at and below the horizon
+  airMass = 1 / (sin(max(sunHeight, 0)) + 0.50572 * (degree(max(sunHeight, 0)) + 6.07995) ^ (-1.6364));
+  // Extraterrestrial irradiance depending on the day of the year due to the varying distance between sun and earth,
+  // see [Quaschning2015], eq. (2.10)
+  irradianceExtraterrestrialActual = irradianceExtraterrestrial * (1 + 0.0334 * cos(rad(0.9855 * dayOfYear - 2.7198)));
+  // Direct normal irradiance:
+  // - useAirMass = false: no atmospheric attenuation, see [Quaschning2015], eq. (2.17) with all transmission factors equal to one
+  // - useAirMass = true: attenuation according to [Meinel1976], DNI = E0(J) * 0.7 ^ (airMass ^ 0.678)
+  directIrradianceNormal = if useAirMass then irradianceExtraterrestrialActual * 0.7 ^ (airMass ^ 0.678) else irradianceRef;
+  // Direct irradiance on the horizontal and inclined plane, see [Quaschning2015], eqs. (2.17), (2.32) and (2.35)
+  directIrradianceHorizontal = if sunHeight < 0 then 0 else directIrradianceNormal * sin(sunHeight);
   directIrradianceInclined = if angleOfIncidence > pi / 2 then 0 else if abs(sin(sunHeight)) < 1E-5 then 0 else directIrradianceHorizontal * (cos(angleOfIncidence) / sin(sunHeight));
   irradiance = directIrradianceInclined;
   annotation (
@@ -146,5 +169,52 @@ equation
           lineColor={255,170,85},
           fillColor={255,255,0},
           fillPattern=FillPattern.Solid),                                                                                                                                                                                                        Text(extent={{-150,150},{150,110}},      lineColor = {0, 0, 255}, textString = "%name")}),
+    Documentation(info="<html>
+<p>
+Analytical model of the direct solar irradiance on an inclined plane without considering weather conditions.
+The sun position (sun height and sun azimuth) is calculated according to the DIN 5034 algorithm, as described in
+<a href=\"modelica://PhotoVoltaics.UsersGuide.References\">[Quaschning2015]</a>, section 2.5, eqs. (2.22) to (2.28).
+The angle of incidence on the inclined plane is calculated by eq. (2.32) and the direct irradiance on the
+inclined plane by eq. (2.35).
+</p>
+
+<h4>Atmospheric attenuation</h4>
+<p>
+If <code>useAirMass = false</code> (default), the direct normal irradiance is equal to <code>irradianceRef</code>,
+independent of the sun height, i.e., the atmospheric attenuation is not considered. All transmission factors of eq. (2.17) of
+<a href=\"modelica://PhotoVoltaics.UsersGuide.References\">[Quaschning2015]</a> are equal to one in this case.
+As a consequence, the irradiance of an inclined plane facing the rising or setting sun changes abruptly at sunrise and sunset.
+</p>
+<p>
+If <code>useAirMass = true</code>, the direct normal irradiance depends on the relative optical air mass
+<code>airMass</code>. The air mass is calculated by the approximation of
+<a href=\"modelica://PhotoVoltaics.UsersGuide.References\">[Kasten1989]</a>:
+</p>
+<pre>
+  airMass = 1 / (sin(sunHeight) + 0.50572 * (sunHeight/deg + 6.07995)^(-1.6364))
+</pre>
+<p>
+The extraterrestrial irradiance varies over the year due to the varying distance between sun and earth, see eq. (2.10) of
+<a href=\"modelica://PhotoVoltaics.UsersGuide.References\">[Quaschning2015]</a>:
+</p>
+<pre>
+  irradianceExtraterrestrialActual = irradianceExtraterrestrial * (1 + 0.0334 * cos(0.9855&deg; * dayOfYear - 2.7198&deg;))
+</pre>
+<p>
+The parameter <code>irradianceExtraterrestrial</code> is the solar constant, 1360.8&nbsp;W/m&sup2; according to eq. (2.9) of
+<a href=\"modelica://PhotoVoltaics.UsersGuide.References\">[Quaschning2015]</a>.
+The attenuation of the direct normal irradiance is determined by the empirical relationship of
+<a href=\"modelica://PhotoVoltaics.UsersGuide.References\">[Meinel1976]</a>:
+</p>
+<pre>
+  directIrradianceNormal = irradianceExtraterrestrialActual * 0.7^(airMass^0.678)
+</pre>
+<p>
+In this case, the parameter <code>irradianceRef</code> is not used.
+The direct irradiance smoothly approaches (almost) zero at sunrise and sunset.
+For the sun at the horizon, the air mass is approximately 38 and the direct normal irradiance is approximately
+1.5&nbsp;% of the extraterrestrial irradiance. Diffuse and ground reflected irradiance are not considered in either case.
+</p>
+</html>"),
     Diagram(coordinateSystem(preserveAspectRatio = false)));
 end Irradiance;

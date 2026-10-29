@@ -5,8 +5,14 @@ class ReleaseNotes "Release Notes"
     preferredView = "info",
     Documentation(info="<html>
 
-<h5>Version 2.2.0, 2026-10-29</h5>
+<h5>Version 3.0.0, 2026-10-29</h5>
 <ul>
+<li>Remove over-determined initial condition of <code>Jprime</code> in
+    <a href=\"modelica://PhotoVoltaics.Sources.Irradiance.Irradiance\">Irradiance</a></li>
+<li>Add optional air mass dependent attenuation of the direct normal irradiance including the seasonal variation of the
+    extraterrestrial irradiance (parameter <code>useAirMass</code>) to
+    <a href=\"modelica://PhotoVoltaics.Sources.Irradiance.Irradiance\">Irradiance</a> and
+    <a href=\"modelica://PhotoVoltaics.Sources.Irradiance.IrradianceVariableLocation\">IrradianceVariableLocation</a></li>
 <li>Add Kioto module record <a href=\"modelica://PhotoVoltaics.Records.KPV_480\">KPV_480</a></li>
 <li>Fix spelling and grammar errors in documentation and descriptions</li>
 <li>Fix HTML errors in documentation</li>
