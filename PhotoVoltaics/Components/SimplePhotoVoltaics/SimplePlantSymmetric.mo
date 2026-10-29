@@ -31,7 +31,7 @@ model SimplePlantSymmetric "Simple plant consisting of symmetric series and para
   Modelica.Units.SI.Power powerCellGenerating=vCell*iCellGenerating
     "Negative power consumption (generating)";
   Modelica.Units.SI.Voltage vModule=v/nsModule "Module voltage";
-  Modelica.Units.SI.Current iModule=i/npModule "Modile current";
+  Modelica.Units.SI.Current iModule=i/npModule "Module current";
   Modelica.Units.SI.Current iModuleGenerating=-iModule
     "Negative module current (generating)";
   Modelica.Units.SI.Power powerModule=vModule*iModule "Module power";

@@ -17,7 +17,7 @@ model DCConverter "DC converter with sampled maximum power tracking"
   parameter Modelica.Units.SI.Time samplePeriod=1 "Sample period"
     annotation (Dialog(group="MP tracker"));
   parameter Modelica.Units.SI.Voltage VmpRef
-    "Reference maximum power power of plant"
+    "Reference maximum power voltage of plant"
     annotation (Dialog(group="MP tracker"));
   parameter Modelica.Units.SI.Current ImpRef
     "Reference maximum power current of plant"
@@ -52,8 +52,8 @@ equation
           textString="bat"),                                                                                                                                                                                                        Text(extent={{40,40},{100,-40}},        lineColor = {0, 0, 255}, textString = "=")}),
                                                                  Diagram(coordinateSystem(preserveAspectRatio=false)),
     Documentation(info="<html>
-<p>This is DC/DC <a href=\"modelica://PhotoVoltaics.Components.Converters.DCConverter\">converter</a>
+<p>This is a DC/DC <a href=\"modelica://PhotoVoltaics.Components.Converters.DCConverter\">converter</a>
    with integrated power measurement and sampled
-   <a href=\"modelica://PhotoVoltaics.Components.Blocks.MPTrackerSample\">maxmimum power tracking</a>.
+   <a href=\"modelica://PhotoVoltaics.Components.Blocks.MPTrackerSample\">maximum power tracking</a>.
 </p></html>"));
 end DCConverter;

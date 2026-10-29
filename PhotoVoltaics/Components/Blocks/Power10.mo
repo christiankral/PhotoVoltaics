@@ -1,5 +1,5 @@
 within PhotoVoltaics.Components.Blocks;
-model Power10 "Calculates to the power of 10"
+model Power10 "Calculates k times 10 to the power of u"
   extends Modelica.Blocks.Interfaces.SISO;
   parameter Real k "Gain";
 equation
@@ -10,8 +10,8 @@ equation
             fillPattern =                                                                                                                                                                                                        FillPattern.Solid, points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}), Line(origin = {80, 0}, points = {{-80, -80}, {-80, 68}}, color = {192, 192, 192}), Text(origin = {-16, 62}, lineColor = {192, 192, 192}, extent = {{-30, -22}, {60, -70}}, textString = "10^")}),
     Documentation(info = "<html>
 <p>This block calculates <code>y = k * 10^u</code> and
-represents thus the inverse of
-<a href=\"modelica://Modelica.Blocks.Math.Log10\">Log10</a>.
+thus represents the inverse of
+<a href=\"modelica://Modelica.Blocks.Math.Log10\">Log10</a>.</p>
 </html>"),
     Diagram);
 end Power10;

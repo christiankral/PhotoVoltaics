@@ -2,18 +2,18 @@
 
 A paper about this library was published at the [Modelica Conference 2019](http://www.ep.liu.se/ecp/157/004/ecp19157004.pdf).
 
-Modelica library for the simulation of photo voltaic cells, modules and plants. The library provides:
- - Simple cell models based on one diode and a irradiance dependent current source including temperature dependence of the open circuit voltage and the short circuit current
- - Simple symmetric modules and non-symmetric module including shading of cells
+Modelica library for the simulation of photovoltaic cells, modules and plants. The library provides:
+ - Simple cell models based on one diode and an irradiance-dependent current source including temperature dependence of the open circuit voltage and the short circuit current
+ - Simple symmetric modules and non-symmetric modules including shading of cells
  - Simple symmetric plant
  - Solar pyramid model
  - Cell, module and plant parameters can be taken directly from manufacturer data sheets
  - Data of commercial modules stored in Modelica Records for convenient investigations
  - Analytical irradiance model without weather conditions
- - Single and three phase quasi static converters
- - Three phase transient converter
+ - Single-phase and three-phase quasi-static converters
+ - Three-phase transient converter
  - Maximum power tracker based on continuous voltage regulation
- - Linear, symmetric and chargable battery model, parameterized by cut off voltage, charge voltage, energy
+ - Linear, symmetric and chargeable battery model, parameterized by cut-off voltage, charge voltage and energy
 
 ![PhotoVoltaics library](https://github.com/christiankral/PhotoVoltaics/blob/master/PhotoVoltaics/Resources/Images/SimpleModuleMPDC.png?raw=true)
 
@@ -34,7 +34,7 @@ Actual irradiance and electric power measurement data of the TGM power plants in
 
 # Award
 
-This libray was awarded with the [second price](https://modelica.org/events/modelica2019/subpages/library-award) at library award of the 13th Modelica Confernce, Regensburg 2019.
+This library was awarded the [second prize](https://modelica.org/events/modelica2019/subpages/library-award) at the library award of the 13th Modelica Conference, Regensburg 2019.
 
 # License
 
@@ -44,9 +44,9 @@ The package also contains weather data of Vienna retrieved from [EnergyPlus](htt
 
 # Development and contribution
 
-The library was developed during a Diploma project at the Technical Engineering College, [TGM](http://www.tgm.ac.at), Wexstraße 19-23, 1200 Vienna, Austria. Library authors are  Jovan Brkic, Muaz Ceran, Mohamed Elmoghazy, Ramazan Kavlak, and [Christian Kral](http://christiankral.net).
+The library was developed during a Diploma project at the Technical Engineering College, [TGM](http://www.tgm.ac.at), Wexstraße 19-23, 1200 Vienna, Austria. Library authors are  Jovan Brkic, Muaz Ceran, Mohamed Elmoghazy, Ramazan Kavlak and [Christian Kral](http://christiankral.net).
 
-The three phase transient multi phase converter was contributed by Luiz Bueno, RWTH Aachen, Germany.
+The three-phase transient polyphase converter was contributed by Luiz Bueno, RWTH Aachen, Germany.
 
 # Contact
 

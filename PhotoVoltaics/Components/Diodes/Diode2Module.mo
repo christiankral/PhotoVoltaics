@@ -29,15 +29,15 @@ equation
   annotation (
     defaultComponentName = "diode",
     Documentation(info="<html>
-<p>This model consists of four different regions:<p>
+<p>This model consists of four different regions:</p>
 <ul>
 <li>Forward direction: exponential function, see <a href=\"modelica://PhotoVoltaics.Components.Diodes.Diode2exp\">Diode2exp</a></li>
-<li>Backwards direction: linear, before reaching backwards breakthrough region<li>
-<li>Breaktrough: exponential function, see <a href=\"modelica://PhotoVoltaics.Components.Diodes.Diode2exp\">Diode2exp</a></li>
+<li>Backward direction: linear, before reaching the backward breakthrough region</li>
+<li>Breakthrough: exponential function, see <a href=\"modelica://PhotoVoltaics.Components.Diodes.Diode2exp\">Diode2exp</a></li>
 <li>Beyond breakthrough: linear region in order to limit magnitude of exponential breakthrough</li>
 </ul>
 
-<p>One particular feature of this scalable model is that this diode can be used to model cells, symmetric modules and symmetric plants,
+<p>One particular feature of this scalable model is that the diode can be used to model cells, symmetric modules and symmetric plants,
 as </p>
 <ul>
 <li>the number of series connections of a module,</li>
@@ -51,7 +51,7 @@ as </p>
 </p>
 
 <p>The temperature dependence of the temperature voltage <code>Vt</code> and saturation current of the diode are
-considered consistently in the <a href=\"modelica://PhotoVoltaics.Interfaces.PartialDiode\">partial diodel</a> model.
+considered consistently in the <a href=\"modelica://PhotoVoltaics.Interfaces.PartialDiode\">partial diode</a> model.
 </p></html>"),
   Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot), Polygon(points = {{-8, 46}, {-68, 86}, {-68, 6}, {-8, 46}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170},
             fillPattern =                                                                                                                                                                                                        FillPattern.Solid), Line(points = {{-8, 86}, {-8, 6}}, color = {0, 0, 255}), Polygon(points = {{72, 46}, {12, 86}, {12, 6}, {72, 46}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 170},

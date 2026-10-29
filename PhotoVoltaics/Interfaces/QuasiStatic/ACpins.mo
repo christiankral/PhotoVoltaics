@@ -12,6 +12,6 @@ partial model ACpins "Single-phase AC pins"
   Modelica.Units.SI.ComplexPower apparentPowerAC=vAC .* conj(iAC)
     "AC apparent power";
   annotation (Documentation(info="<html>
-<p>This model provides single-phase AC quasi static pins.</p>
+<p>This model provides single-phase AC quasi-static pins.</p>
 </html>"));
 end ACpins;

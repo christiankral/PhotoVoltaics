@@ -7,26 +7,26 @@ record ModuleData "Data of PV module"
   parameter Modelica.Units.SI.Irradiance irradianceRef=1000
     "Reference solar irradiance" annotation (Dialog(group="Reference data"));
   parameter Modelica.Units.SI.Voltage VocRef(min=Modelica.Constants.small) = 30.2
-    "Reference open circuit module voltage > 0 at TRref"
+    "Reference open circuit module voltage > 0 at TRef"
     annotation (Dialog(group="Reference data"));
   final parameter Modelica.Units.SI.Voltage VocCellRef=VocRef/ns
-    "Reference open circuit cell voltage > 0 at TRref";
+    "Reference open circuit cell voltage > 0 at TRef";
   parameter Modelica.Units.SI.Current IscRef(min=Modelica.Constants.small) = 8.54
-    "Reference short circuit current > 0 at TRref and irradianceRef"
+    "Reference short circuit current > 0 at TRef and irradianceRef"
     annotation (Dialog(group="Reference data"));
   parameter Modelica.Units.SI.Voltage VmpRef(min=Modelica.Constants.small) = 24.0
-    "Reference maximum power module voltage > 0 at TRref"
+    "Reference maximum power module voltage > 0 at TRef"
     annotation (Dialog(group="Reference data"));
   final parameter Modelica.Units.SI.Voltage VmpCellRef=VmpRef/ns
-    "Reference maximum power cell voltage > 0 at TRref";
+    "Reference maximum power cell voltage > 0 at TRef";
   parameter Modelica.Units.SI.Current ImpRef(min=Modelica.Constants.small) = 7.71
-    "Reference maximum power current > 0 at TRref and irradianceRef"
+    "Reference maximum power current > 0 at TRef and irradianceRef"
     annotation (Dialog(group="Reference data"));
   parameter Modelica.Units.SI.LinearTemperatureCoefficient alphaIsc=+0.00053
-    "Temperature coefficient of reference short circuit current at TRref"
+    "Temperature coefficient of reference short circuit current at TRef"
     annotation (Dialog(group="Reference data"));
   parameter Modelica.Units.SI.LinearTemperatureCoefficient alphaVoc=-0.00340
-    "Temperature coefficient of reference open circuit module voltage at TRref"
+    "Temperature coefficient of reference open circuit module voltage at TRef"
     annotation (Dialog(group="Reference data"));
   parameter Integer ns = 1 "Number of series connected cells";
   parameter Integer nb = 1 "Number of bypass diodes per module";

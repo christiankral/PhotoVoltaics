@@ -6,6 +6,6 @@ package Examples "Examples"
     Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
     Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
     Documentation(info="<html>
-<p>Examples demonstrating the photovoltaics cells, modules and plants</p>
+<p>Examples demonstrating photovoltaic cells, modules and plants</p>
 </html>"));
 end Examples;

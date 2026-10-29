@@ -25,11 +25,11 @@ model IrradianceVariableLocation "Simple solar irradiance without considering we
               31,
               12,
               startYear)*2*pi)
-    "Equivalent Angle of the day of the year w.r.t. total number of days";
+    "Equivalent angle of the day of the year w.r.t. total number of days";
   Real delta_J;
   Real timeequation_J;
   Modelica.Units.NonSI.Time_day localTimeDays "Local time in days";
-  Integer localDays "Locale day";
+  Integer localDays "Local day";
   Modelica.Units.SI.Time localTime "Local time";
   Modelica.Units.NonSI.Time_hour localTimeHours
     "Local time in unit hours";
@@ -47,7 +47,7 @@ model IrradianceVariableLocation "Simple solar irradiance without considering we
   Modelica.Units.SI.Irradiance directIrradianceHorizontal
     "Direct irradiance on the horizontal in W/m^2";
   Modelica.Units.SI.Irradiance directIrradianceInclined
-    "Direct irradiance on the inclined plane in w/m^2";
+    "Direct irradiance on the inclined plane in W/m^2";
   Modelica.Blocks.Interfaces.RealOutput irradiance "Irradiance of inclined area" annotation(Placement(transformation(extent = {{100, -10}, {120, 10}})));
   Modelica.Blocks.Interfaces.RealInput gamma "Inclination angle of area" annotation (Placement(
       visible=true,
@@ -82,12 +82,12 @@ algorithm
   // One full year is reached
   // Reset start day of year
   // Increment year
-  // Determined actual number of total days of year
+  // Determine actual number of total days of year
 equation
   Jprime = dayOfYear / daysOfYear * 2 * pi;
   delta_J = rad(0.3948 - 23.2559 * cos(Jprime + rad(9.1)) - 0.3915 * cos(2 * Jprime + rad(5.4)) - 0.1764 * cos(3 * Jprime + rad(26)));
   timeequation_J = 0.0066 + 7.3525 * cos(Jprime + rad(85.9)) + 9.9359 * cos(2 * Jprime + rad(108.9)) + 0.3387 * cos(3 * Jprime + rad(105.2));
-  // Zeit LZ = time
+  // Local time = time
   localTime = time;
   // Convert time into unit hours
   localTimeHours = localTime / 3600;
@@ -95,7 +95,7 @@ equation
   localTimeDays = localTimeHours / 24;
   // Convert time from real days into integer days (floor)
   localDays = integer(floor(localTimeDays));
-  // Calculate locale mean time
+  // Calculate local mean time
   LocalMeanTimeHours = localTimeHours - TimeZone + 4 / 60 * longitude * 180 / Modelica.Constants.pi;
   // cos(latitude)*tan(...)
   trueMeanTimeHours = LocalMeanTimeHours + timeequation_J / 60;

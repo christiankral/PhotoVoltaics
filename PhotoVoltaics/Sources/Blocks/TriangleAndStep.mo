@@ -55,11 +55,11 @@ equation
     Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor = {0, 0, 255}, fillColor = {255, 255, 255},
             fillPattern =                                                                                                                         FillPattern.Solid, extent = {{-100, 100}, {100, -100}}), Line(points = {{-60, 40}, {-20, 40}, {-20, 60}, {20, 60}, {20, 80}, {60, 80}}, color = {0, 0, 255}), Line(points = {{-58, -80}, {-40, -40}, {-20, -80}, {0, -40}, {20, -80}, {40, -40}, {60, -80}}, color = {0, 0, 255}), Text(origin = {1, 130}, lineColor = {0, 0, 255}, extent = {{-149, -20}, {149, 20}}, textString = "%name")}),
     Documentation(info = "<html>
-<p>The step output starts from <code>stepOffset</code> and increases to <code>stepOffset + stepHeight</code> in <code>stepNumber</code>steps. The total duration of all step changes is equal to <code>T</code>. </p>
+<p>The step output starts from <code>stepOffset</code> and increases to <code>stepOffset + stepHeight</code> in <code>stepNumber</code> steps. The total duration of all step changes is equal to <code>T</code>. </p>
 <p>During each step the <code>triangle</code> output is increased from
 <code>triangleOffset</code> to <code>triangleOffset + triangleHeight</code>
 and back to <code>triangleOffset</code>.</p>
-<p>This way a variable sweep (<code>triangleOffset</code>) can be performed for different
-stepwise changed variables (<code>step</code>).
+<p>This way, a variable sweep (<code>triangle</code>) can be performed for different
+stepwise changed variables (<code>step</code>).</p>
 </html>"));
 end TriangleAndStep;

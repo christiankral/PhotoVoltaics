@@ -1,16 +1,16 @@
 within PhotoVoltaics.Components.Converters;
 model QuasiStaticPolyphaseConverter
-  "Ideal quasi stastic polyphase DC/AC converter"
+  "Ideal quasi-static polyphase DC/AC converter"
   extends Modelica.Electrical.PowerConverters.Interfaces.DCAC.DCtwoPin;
   extends .PhotoVoltaics.Interfaces.QuasiStatic.ACplug;
   extends .PhotoVoltaics.Icons.Converter;
   parameter Modelica.Units.SI.Voltage VRef=400
-    "Reference line to line voltage";
+    "Reference line-to-line voltage";
   parameter Modelica.Units.SI.Time Ti=1E-6
     "Internal integration time constant";
   Modelica.Units.SI.Power powerDC=vDC*iDC "Power of DC side";
   Modelica.Units.SI.Power powerAC=Modelica.ComplexMath.real(vAC*
-      Modelica.ComplexMath.conj(iAC)) "Complex apparent power of AC side";
+      Modelica.ComplexMath.conj(iAC)) "Real power of AC side";
   Modelica.Blocks.Interfaces.RealInput vDCRef(final unit = "V") "DC voltage" annotation (
     Placement(transformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin={-60,-120}),  iconTransformation(extent = {{-20, -20}, {20, 20}}, rotation = 90, origin={-60,-120})));
   Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage annotation (
@@ -128,11 +128,11 @@ The DC/AC converter is characterized by:
 </p>
 <ul>
 <li>Losses are not considered</li>
-<li>The AC output current is determined based on power balance, calculating with instantanteous DC and complex AC phasor values:
+<li>The AC output current is determined based on power balance, calculating with instantaneous DC and complex AC phasor values:
     <code>vDC*iDC + real(
     </code><u><code>v</code></u><code>1*</code><u><code>i</code></u><code>1</code><sup><code>*</code></sup>
-  + </code><u><code>v</code></u><code>2*</code><u><code>i</code></u><code>2</code><sup><code>*</code></sup>
-  + </code><u><code>v</code></u><code>3*</code><u><code>i</code></u><code>3</code><sup><code>*</code></sup>
+  <code>+ </code><u><code>v</code></u><code>2*</code><u><code>i</code></u><code>2</code><sup><code>*</code></sup>
+  <code>+ </code><u><code>v</code></u><code>3*</code><u><code>i</code></u><code>3</code><sup><code>*</code></sup>
     <code>)= 0</code></li>
 <li>The DC input voltage <code>vDCRef</code> is applied to the DC side without limitations</li>
 </ul>

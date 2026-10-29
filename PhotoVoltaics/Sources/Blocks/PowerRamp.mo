@@ -1,6 +1,6 @@
 within PhotoVoltaics.Sources.Blocks;
-block PowerRamp "Generate ramp signal based logarithmic range"
-  parameter Real height = 1 "Height of ramps";
+block PowerRamp "Generate ramp signal based on logarithmic range"
+  parameter Real height = 1 "Height of ramp";
   parameter Modelica.Units.SI.Time duration(min=0.0, start=2)
     "Duration of ramp (= 0.0 gives a Step)";
   parameter Real offset = 0 "Offset of output signal";
@@ -29,6 +29,6 @@ The Real output y of this block is determined by a
 y = ref * 10 ^ ramp output
 </pre>
 
-<p>is set as output to the block. This way various decades of signal range can be generated.</p>
+<p>is set as output of the block. This way, various decades of signal range can be generated.</p>
 </html>"));
 end PowerRamp;

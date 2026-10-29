@@ -4,6 +4,6 @@ package Converters "Converters"
 
   annotation (Icon(graphics={Line(points={{-80,-80},{80,80}}, color={0,0,0}), Rectangle(extent={{-80,80},{80,-80}}, lineColor={0,0,0})}),
       Documentation(info="<html>
-<p>DC to DC, single-phase and polyphase converters</p>
+<p>DC/DC, single-phase and polyphase converters</p>
 </html>"));
 end Converters;

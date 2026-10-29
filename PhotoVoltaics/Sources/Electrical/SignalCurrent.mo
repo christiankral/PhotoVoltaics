@@ -8,7 +8,7 @@ model SignalCurrent "Generic current source using the input signal as source cur
   parameter Modelica.Units.SI.Irradiance irradianceRef=1000
     "Reference solar irradiance";
   parameter Modelica.Units.SI.LinearTemperatureCoefficient alphaRef=0
-    "Temperature coefficient of reference current at TRref";
+    "Temperature coefficient of reference current at TRef";
   Modelica.Electrical.Analog.Interfaces.PositivePin p annotation (
     Placement(transformation(extent = {{-110, -10}, {-90, 10}})));
   Modelica.Electrical.Analog.Interfaces.NegativePin n annotation (
@@ -38,8 +38,8 @@ equation
 </ul>
 </html>",
     info="<html>
-<p>The signal current source is a converter of real valued irradiance signal into a source current.
-Depending on the actual temperature the current is adjusted through a linear temperature coeffficient.</p>
+<p>The signal current source converts a real-valued irradiance signal into a source current.
+Depending on the actual temperature, the current is adjusted through a linear temperature coefficient.</p>
 <pre>
 i = IRef * (irradiance / irradianceRef + alphaRef * (T_heatPort - TRef))
 </pre>

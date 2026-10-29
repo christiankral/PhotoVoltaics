@@ -1,5 +1,5 @@
 within PhotoVoltaics.Components.Converters;
-model DCConverter "DC controlled single phase DC/AC converter"
+model DCConverter "Ideal DC/DC converter"
   extends Modelica.Electrical.PowerConverters.Interfaces.DCDC.DCtwoPin1;
   extends Modelica.Electrical.PowerConverters.Interfaces.DCDC.DCtwoPin2;
   extends .PhotoVoltaics.Icons.Converter;
@@ -62,11 +62,9 @@ The DC/DC converter is characterized by:
 </p>
 <ul>
 <li>Losses are not considered</li>
-<li>The AC output current is determined based on power balance, calculating with instantaneous values:
-    <code>vDC1*iDC1 + vDC2*iDC2 = 0<code></li>
+<li>The output current is determined based on power balance, calculating with instantaneous values:
+    <code>vDC1*iDC1 + vDC2*iDC2 = 0</code></li>
 <li>The DC input voltage <code>vDCRef</code> is applied to the DC side 1 without limitations</li>
-<li>The phase angle input <code>phi</code> influences the AC reactive power based on the following figure,
-    where underlined voltages and currents represent complex phasors</li>
 </ul>
 </html>"));
 end DCConverter;

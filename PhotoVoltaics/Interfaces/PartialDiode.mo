@@ -1,5 +1,5 @@
 within PhotoVoltaics.Interfaces;
-partial model PartialDiode "Diode with one exponential function"
+partial model PartialDiode "Partial diode model"
   extends Modelica.Electrical.Analog.Interfaces.OnePort(v(start = 0));
   extends Modelica.Electrical.Analog.Interfaces.ConditionalHeatPort(T = 298.15);
   constant Modelica.Units.SI.Charge Q=1.6021766208E-19
@@ -18,7 +18,7 @@ partial model PartialDiode "Diode with one exponential function"
     "Temperature coefficient of reference current at TRef"
     annotation (Dialog(group="Reference data"));
   parameter Modelica.Units.SI.LinearTemperatureCoefficient alphaV=-0.00340
-    "Temperature coefficient of reference voltage at TRef*"
+    "Temperature coefficient of reference voltage at TRef"
     annotation (Dialog(group="Reference data"));
   Modelica.Units.SI.Voltage Vt "Voltage equivalent of temperature (k*T/Q)";
   Modelica.Units.SI.Voltage VRefActual
@@ -38,7 +38,7 @@ equation
   annotation (
     defaultComponentName = "diode",
     Documentation(info="<html>
-<p>This partial model of the diode does not yet contain any current versus voltage characteristic. In this model the
+<p>This partial model of the diode does not yet contain any current versus voltage characteristic. In this model, the
 temperature dependencies of the temperature voltage, the saturation current, etc. are defined.</p>
 </html>"),
     Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics={  Text(extent = {{-150, 150}, {150, 110}}, textString = "%name", lineColor = {0, 0, 255}), Line(visible = useHeatPort, points = {{0, -101}, {0, -20}}, color = {127, 0, 0}, pattern = LinePattern.Dot)}),

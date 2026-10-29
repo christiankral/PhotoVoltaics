@@ -13,7 +13,7 @@ model PolyphaseConverter "Ideal polyphase DC/AC converter"
 
   parameter Modelica.Units.SI.Frequency f=50 "Frequency";
   parameter Modelica.Units.SI.Voltage VRef=400
-    "Reference line to line voltage";
+    "Reference line-to-line voltage";
   parameter Modelica.Units.SI.Time Ti=1E-6
     "Internal integration time constant";
   Modelica.Units.SI.Power powerDC=vDC*iDC "Power of DC side";
@@ -173,7 +173,7 @@ defaultComponentName = "converter",
                                                                                                                                                                                                   Text(extent={{90,-110},{150,-150}},     lineColor={0,0,255},     pattern=LinePattern.Dash,   fillColor={0,0,255},
             fillPattern =                                                                                                                                                                                                        FillPattern.Solid,
           textString="phi")}),                                                                                                       Documentation(info="<html>
-<p>This is an ideal DC/AC converter.<p>
+<p>This is an ideal DC/AC converter.</p>
 
 <p>
 The polyphase converter is characterized by:
@@ -181,7 +181,7 @@ The polyphase converter is characterized by:
 <ul>
 <li>Losses are not considered</li>
 <li>The AC output current is determined based on power balance, calculating with instantaneous values:
-    <code>vDC*iDC + v1*i1 + v2*i2 + v3*i3 = 0<code></li>
+    <code>vDC*iDC + v1*i1 + v2*i2 + v3*i3 = 0</code></li>
 <li>The DC input voltage <code>vDCRef</code> is applied to the DC side without limitations</li>
 <li>The phase angle input <code>phi</code> influences the AC reactive power as shown in the figure below,
     where underlined voltages and currents represent complex voltage and current phasors</li>

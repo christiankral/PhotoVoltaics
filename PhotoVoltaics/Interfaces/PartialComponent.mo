@@ -34,7 +34,7 @@ equation
     Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}})),
     Icon(coordinateSystem(preserveAspectRatio = false)),
     Documentation(info="<html>
-<p>This partial model contains the connectors and some parameters of photovoltaic components. Interfaces voltages,
+<p>This partial model contains the connectors and some parameters of photovoltaic components. Interface voltages,
 currents and power terms are defined.</p>
 </html>"));
 end PartialComponent;

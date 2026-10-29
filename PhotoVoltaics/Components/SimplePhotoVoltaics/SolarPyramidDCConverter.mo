@@ -23,7 +23,7 @@ model SolarPyramidDCConverter "Solar pyramid with DC/DC converters"
   parameter Modelica.Units.SI.Time samplePeriod=1 "Sample period"
     annotation (Dialog(group="MP tracker"));
   parameter Modelica.Units.SI.Voltage VmpRef
-    "Reference maximum power power of plant"
+    "Reference maximum power voltage of plant"
     annotation (Dialog(group="MP tracker"));
   parameter Modelica.Units.SI.Current ImpRef
     "Reference maximum power current of plant"
@@ -121,13 +121,13 @@ model SolarPyramidDCConverter "Solar pyramid with DC/DC converters"
   Modelica.Units.SI.Current i3(start=0) = module3.i "Current of module 3";
   Modelica.Units.SI.Current i4(start=0) = module4.i "Current of module 4";
   Modelica.Units.SI.Current iGenerating1=module1.iGenerating
-    "Negativ current of module 1 (generating)";
+    "Negative current of module 1 (generating)";
   Modelica.Units.SI.Current iGenerating2=module2.iGenerating
-    "Negativ current of module 2 (generating)";
+    "Negative current of module 2 (generating)";
   Modelica.Units.SI.Current iGenerating3=module3.iGenerating
-    "Negativ current of module 3 (generating)";
+    "Negative current of module 3 (generating)";
   Modelica.Units.SI.Current iGenerating4=module4.iGenerating
-    "Negativ current of module 4 (generating)";
+    "Negative current of module 4 (generating)";
   // Power
   Modelica.Units.SI.Power power1=module1.power "Power of module 1";
   Modelica.Units.SI.Power power2=module2.power "Power of module 2";
@@ -439,11 +439,11 @@ equation
 Model of a symmetric solar pyramid as used for a
 <a href=\"https://images.sciencedaily.com/2011/04/110425081301-medium.jpg\">Mars rover</a>
 prototype. This model consists of four symmetrical photovoltaic panels.
-The center position of can be moved vertically, such that the four panels are moved altogether.
+The center position can be moved vertically, such that the four panels are moved altogether.
 The angle of inclination of each panel, <code>gamma</code>, is an input to this model.
-The second input is the azimuth of one of the fore panels. The remaining three panels are
+The second input is the azimuth of one of the four panels. The remaining three panels are
 displaced by 90 degrees, each.
 </p>
-<p>This model includes four DC/DC converters</p>
+<p>This model includes four DC/DC converters.</p>
 </html>"));
 end SolarPyramidDCConverter;

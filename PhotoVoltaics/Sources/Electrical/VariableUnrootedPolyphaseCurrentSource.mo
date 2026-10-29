@@ -14,7 +14,7 @@ equation
 
 <p>
 This model describes <i>m</i> variable current sources, with <i>m</i> complex signal inputs,
-specifying the complex current by the complex RMS voltage components.
+specifying the complex current by the complex RMS current components.
 Additionally, the frequency of the current source is defined by a real signal input.
 <i>m</i> <a href=\"modelica://Modelica.Electrical.QuasiStatic.SinglePhase.Sources.VariableCurrentSource\">single-phase VariableCurrentSources</a> are used.
 </p>

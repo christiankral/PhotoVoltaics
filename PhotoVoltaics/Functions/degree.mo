@@ -5,6 +5,6 @@ function degree "Convert radians into degrees"
 algorithm
   degree := rad * 180 / Modelica.Constants.pi;
   annotation (Documentation(info="<html>
-<p>Converter angle in rad to angle in degree.</p>
+<p>Convert angle in rad to angle in degree.</p>
 </html>"));
 end degree;

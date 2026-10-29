@@ -10,6 +10,6 @@ partial model ACplug "AC polyphase plug"
   Modelica.Units.SI.ComplexPower apparentPowerAC[m]=vAC .* conj(iAC)
     "AC apparent power";
   annotation (Documentation(info="<html>
-<p>This model provides a polyphase AC quasi static plug.</p>
+<p>This model provides a polyphase AC quasi-static plug.</p>
 </html>"));
 end ACplug;

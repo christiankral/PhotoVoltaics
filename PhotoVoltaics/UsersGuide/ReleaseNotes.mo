@@ -5,12 +5,34 @@ class ReleaseNotes "Release Notes"
     preferredView = "info",
     Documentation(info="<html>
 
+<h5>Version 2.2.0, 2026-10-29</h5>
+<ul>
+<li>Fix spelling and grammar errors in documentation and descriptions</li>
+<li>Fix HTML errors in documentation</li>
+<li>Fix incorrect descriptions, e.g., of
+    <a href=\"modelica://PhotoVoltaics.Components.Converters.DCConverter\">DCConverter</a> and
+    <a href=\"modelica://PhotoVoltaics.Sources.Electrical.IdealBattery\">IdealBattery</a></li>
+<li>Update license year from 2025 to 2026</li>
+</ul>
+
+<h5>Version 2.1.0, 2025-02-17</h5>
+<ul>
+<li>Use function <a href=\"modelica://PhotoVoltaics.Functions.exlin\">exlin</a> instead of <code>exp</code>
+    in diode models to improve convergence, see
+    <a href=\"https://github.com/christiankral/PhotoVoltaics/pull/50\">#50</a></li>
+<li>Re-add <a href=\"modelica://PhotoVoltaics_TGM\">PhotoVoltaics_TGM</a> examples based on Buildings 9.0.0</li>
+<li>Match parameters of record
+    <a href=\"modelica://PhotoVoltaics.Records.TSM_200_DC01A\">TSM_200_DC01A</a> with data sheet</li>
+<li>Fix documentation, see
+    <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/47\">#47</a></li>
+</ul>
+
 <h5>Version 2.0.0, 2021-07-19</h5>
 <ul>
 <li>Switch to Modelica Standard Library (MSL) 4.0.0</li>
 <li>Remove examples relying on 
-<a href=\"https://github.com/lbl-srg/modelica-buildings/issues/2122\">Bulidings, as this library is not yet prepared for the MSL 4.0.0</a></li>
-<li>Add exmaple <a href=\"modelica://PhotoVoltaics.Examples.SimpleModuleMPTable\">SimpleModuleMPTable</a>, see
+<a href=\"https://github.com/lbl-srg/modelica-buildings/issues/2122\">Buildings, as this library is not yet prepared for the MSL 4.0.0</a></li>
+<li>Add example <a href=\"modelica://PhotoVoltaics.Examples.SimpleModuleMPTable\">SimpleModuleMPTable</a>, see
     <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/44\">#44</a></li>
 <li>Use absolute instance names in all module <a href=\"modelica://PhotoVoltaics.Records\">Records</a>, see
     <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/43\">#43</a></li>
@@ -18,7 +40,7 @@ class ReleaseNotes "Release Notes"
 
 <h5>Version 1.6.0, 2020-02-02</h5>
 <ul>
-<li>Change location of converter pins</a>, see
+<li>Change location of converter pins, see
 <a href=\"https://github.com/christiankral/PhotoVoltaics/pull/42\">#42</a></li>
 <li>Converted
     <a href=\"modelica://PhotoVoltaics_TGM\">PhotoVoltaics_TGM</a>
@@ -52,7 +74,7 @@ class ReleaseNotes "Release Notes"
 
 <h5>Version 1.3.2, 2019-02-26</h5>
 <ul>
-<li>Remove library path from CSV file so that write protected libraries installations can still write data,
+<li>Remove library path from CSV file so that write-protected library installations can still write data, see
     <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/34\">#34</a></li>
 <li>Update license year from 2018 to 2019</li>
 </ul>
@@ -150,17 +172,17 @@ class ReleaseNotes "Release Notes"
 <li>Restructured PV, Converters, Batteries within Components; this is a non-backwards compatible change</li>
 <li>Added some more irradiance models</li>
 <li>Added solar pyramid model</li>
-<li>Added icons package<li>
+<li>Added icons package</li>
 <li>Changed interface names of DC converter (now compatible with
-    <a hfre=\"modelica://Modelica.Electrical.PowerConverters\">PowerConverters</a></li>
-<li>Added Conveters with integrated sampled power tracking</li>
+    <a href=\"modelica://Modelica.Electrical.PowerConverters\">PowerConverters</a>)</li>
+<li>Added converters with integrated sampled power tracking</li>
 <li>Changed internal integration time constant of converters from <code>T</code> to <code>Ti</code>
     due to incompatibility with temperature</li>
 </ul>
 
 <h5>Version 0.3.2, 2017-01-29</h5>
 <ul>
-<li>Used full qualified Modelica class names in examples</li>
+<li>Used fully qualified Modelica class names in examples</li>
 <li>Reduced tolerance of analytical models in
     <a href=\"modelica://PhotoVoltaics_TGM\">PhotoVoltaics_TGM</a>
     to avoid numerical problems</li>
@@ -169,7 +191,7 @@ class ReleaseNotes "Release Notes"
 
 <h5>Version 0.3.1, 2017-01-29</h5>
 <ul>
-<li>Updated initial conditions of diode model to improve converegence of simulations, see
+<li>Updated initial conditions of diode model to improve convergence of simulations, see
     <a href=\"https://github.com/christiankral/PhotoVoltaics/issues/3\">#3</a></li>
 
 </ul>
@@ -199,7 +221,7 @@ class ReleaseNotes "Release Notes"
 
 <h5>Version 0.1.0, 2016-12-31</h5>
 <ul>
-<li>First release version containing</li>
+<li>First release version containing
 <ul>
 <li>Simple cell model</li>
 <li>Simple module model</li>
@@ -209,7 +231,7 @@ class ReleaseNotes "Release Notes"
 <li>Sampling maximum power controller</li>
 <li>Examples</li>
 <li>Component testing models</li>
-</ul>
+</ul></li>
 </ul>
 </html>"));
 end ReleaseNotes;

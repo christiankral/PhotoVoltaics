@@ -27,6 +27,6 @@ algorithm
     Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Text(extent = {{-60, -60}, {60, 60}}, lineColor = {0, 0, 0}, textString = "CSV"), Text(extent = {{-150, -150}, {150, -110}}, lineColor = {0, 0, 255}, textString = "%inputQuantity")}),
     Diagram(coordinateSystem(preserveAspectRatio = false)),
     Documentation(info="<html>
-<p>The sampled input data of this blocks are written to a CSV file.</p>
+<p>The sampled input data of this block are written to a CSV file.</p>
 </html>"));
 end WriteCSV;

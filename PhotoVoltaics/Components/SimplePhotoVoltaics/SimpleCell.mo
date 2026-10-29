@@ -32,10 +32,10 @@ initial equation
 <p>The basic simple cell model consists of a scalable
 <a href=\"modelica://PhotoVoltaics.Components.Diodes.Diode2Module\">diode</a> model and a
 <a href=\"modelica://PhotoVoltaics.Sources.Electrical.SignalCurrent\">signal current source</a> with temperature
-dependency in order to consider the temperature coefficient of the short circuit of PV cell.</p>
+dependency in order to consider the temperature coefficient of the short circuit current of the PV cell.</p>
 
-</p>
-The diode model used an exponential curve when forward conducting. This exponential curve is parameterized by</p>
+<p>
+The diode model uses an exponential curve when forward conducting. This exponential curve is parameterized by</p>
 <ul>
 <li>the ideality factor of the diode, <code>m</code>,</li>
 <li>the photo current <code>IphRef</code> at reference conditions (reference temperature and irradiance)</li>
@@ -57,8 +57,8 @@ These two equations are evaluated in the <code>initial equation</code> section o
 </p>
 
 <p>
-The solar irradiance of the model can eithe be constant or provided by signal input. The current of current source
-is determined linearely dependent of irradiance.</p>
+The solar irradiance of the model can either be constant or provided by a signal input. The current of the current source
+depends linearly on the irradiance.</p>
 
 </html>"));
 end SimpleCell;

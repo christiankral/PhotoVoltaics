@@ -4,7 +4,7 @@ block MPTrackerSample "Sampling maximum power tracker"
   parameter Modelica.Units.SI.Time startTime=0 "Start time";
   parameter Modelica.Units.SI.Time samplePeriod=1 "Sample period";
   parameter Modelica.Units.SI.Voltage VmpRef
-    "Reference maximum power power of plant";
+    "Reference maximum power voltage of plant";
   parameter Modelica.Units.SI.Current ImpRef
     "Reference maximum power current of plant";
   parameter Integer n = 100 "Number of voltage and power discretizations";
@@ -39,10 +39,10 @@ algorithm
   annotation (
     defaultComponentName = "mpTracker",
     Documentation(info="<html>
-<p>This is a simple model of sampling maximum power tracker. The initial output of this tracker is maximum power voltage
-<code>VmpRef</code>. After that, the sensed input power in sampled by a fixed sampling period. The output voltage is decreased by
-a voltage step of <code>VmpRef/n</code>. If then then actual power is greater than the previous power, the sign of of voltage change
-does not change. If the actual power is less than the previous power, the direction of the voltage change is swiched. This way
+<p>This is a simple model of a sampling maximum power tracker. The initial output of this tracker is the maximum power voltage
+<code>VmpRef</code>. After that, the sensed input power is sampled with a fixed sampling period. The output voltage is decreased by
+a voltage step of <code>VmpRef/n</code>. If then the actual power is greater than the previous power, the sign of the voltage change
+does not change. If the actual power is less than the previous power, the direction of the voltage change is switched. This way,
 the sampling maximum power tracker is permanently searching for a local maximum.</p>
 </html>"),
     Icon(graphics={  Line(points = {{-80, -78}, {-12, 20}, {12, 50}, {30, 64}, {44, 70}, {52, 68}, {60, 56}, {68, 22}, {80, -78}}, color = {0, 0, 0}, smooth = Smooth.Bezier), Ellipse(extent = {{34, 78}, {54, 58}}, fillColor = {255, 0, 0},
