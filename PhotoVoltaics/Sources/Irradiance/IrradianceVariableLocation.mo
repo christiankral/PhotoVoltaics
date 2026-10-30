@@ -21,6 +21,12 @@ model IrradianceVariableLocation "Simple solar irradiance without considering we
   parameter Modelica.Units.SI.Irradiance irradianceExtraterrestrial=1360.8
     "Solar constant, i.e., mean extraterrestrial irradiance, see [Quaschning2015], eq. (2.9)"
     annotation (Dialog(group = "Atmosphere", enable = useAirMass));
+  parameter Boolean useDiffuse = false
+    "Consider clear sky diffuse and ground reflected irradiance, if true"
+    annotation (Evaluate = true, choices(checkBox = true), Dialog(group = "Atmosphere"));
+  parameter Real rho(final min = 0, final max = 1, final unit = "1") = 0.2
+    "Ground reflectance (albedo)"
+    annotation (Dialog(group = "Atmosphere", enable = useDiffuse));
   Integer startDayOfYear(start = dayOfTheYear(startDay, startMonth, startYear)) "Start day of year in simulation";
   Integer dayOfYear(final start = dayOfTheYear(startDay, startMonth, startYear)) "Actual day of year";
   Integer daysOfYear(final start = dayOfTheYear(31, 12, startYear)) "Total number of days of year";
@@ -60,6 +66,12 @@ model IrradianceVariableLocation "Simple solar irradiance without considering we
     "Direct irradiance on the horizontal in W/m^2";
   Modelica.Units.SI.Irradiance directIrradianceInclined
     "Direct irradiance on the inclined plane in W/m^2";
+  Modelica.Units.SI.Irradiance diffuseIrradianceHorizontal
+    "Diffuse irradiance on the horizontal in W/m^2";
+  Modelica.Units.SI.Irradiance diffuseIrradianceInclined
+    "Diffuse irradiance on the inclined plane in W/m^2";
+  Modelica.Units.SI.Irradiance reflectedIrradianceInclined
+    "Ground reflected irradiance on the inclined plane in W/m^2";
   Modelica.Blocks.Interfaces.RealOutput irradiance "Irradiance of inclined area" annotation(Placement(transformation(extent = {{100, -10}, {120, 10}})));
   Modelica.Blocks.Interfaces.RealInput gamma "Inclination angle of area" annotation (Placement(
       visible=true,
@@ -131,7 +143,13 @@ equation
   // Direct irradiance on the horizontal and inclined plane, see [Quaschning2015], eqs. (2.17), (2.32) and (2.35)
   directIrradianceHorizontal = if sunHeight < 0 then 0 else directIrradianceNormal * sin(sunHeight);
   directIrradianceInclined = if angleOfIncidence > pi / 2 then 0 else if abs(sin(sunHeight)) < 1E-5 then 0 else directIrradianceHorizontal * (cos(angleOfIncidence) / sin(sunHeight));
-  irradiance = directIrradianceInclined;
+  // Clear sky diffuse irradiance on the horizontal according to [Liu1960], tau_d = 0.271 - 0.294 * tau_b,
+  // with the transmittance of the direct irradiance tau_b = directIrradianceNormal / irradianceExtraterrestrialActual
+  diffuseIrradianceHorizontal = if useDiffuse and sunHeight > 0 then max(0.271 - 0.294 * directIrradianceNormal / irradianceExtraterrestrialActual, 0) * irradianceExtraterrestrialActual * sin(sunHeight) else 0;
+  // Diffuse and ground reflected irradiance on the inclined plane according to the isotropic sky model, see [Duffie2013]
+  diffuseIrradianceInclined = diffuseIrradianceHorizontal * (1 + cos(gamma)) / 2;
+  reflectedIrradianceInclined = if useDiffuse then rho * (directIrradianceHorizontal + diffuseIrradianceHorizontal) * (1 - cos(gamma)) / 2 else 0;
+  irradiance = directIrradianceInclined + diffuseIrradianceInclined + reflectedIrradianceInclined;
   annotation(Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(extent = {{-100, 100}, {100, -100}}, lineColor = {28, 108, 200}),
         Ellipse(
           extent={{-40,40},{40,-40}},
@@ -185,7 +203,8 @@ equation
           fillPattern=FillPattern.Solid),                                                                                                                                                                                                        Text(extent={{-150,150},{150,110}},      lineColor = {0, 0, 255}, textString = "%name")}),
     Documentation(info="<html>
 <p>
-Analytical model of the direct solar irradiance on an inclined plane without considering weather conditions.
+Analytical model of the solar irradiance on an inclined plane without considering weather conditions.
+By default, only the direct irradiance is considered.
 The sun position (sun height and sun azimuth) is calculated according to the DIN 5034 algorithm, as described in
 <a href=\"modelica://PhotoVoltaics.UsersGuide.References\">[Quaschning2015]</a>, section 2.5, eqs. (2.22) to (2.28).
 The angle of incidence on the inclined plane is calculated by eq. (2.32) and the direct irradiance on the
@@ -228,7 +247,32 @@ In this case, the parameter <code>irradianceRef</code> is not used.
 The direct irradiance smoothly approaches (almost) zero at sunrise and sunset.
 For the sun at the horizon, the air mass is approximately 38 and the direct normal irradiance is approximately
 1.5&nbsp;% of the extraterrestrial irradiance.
-For the sun below the horizon, the direct normal irradiance is zero. Diffuse and ground reflected irradiance are not considered in either case.
+For the sun below the horizon, the direct normal irradiance is zero.
+</p>
+
+<h4>Diffuse and ground reflected irradiance</h4>
+<p>
+If <code>useDiffuse = false</code> (default), diffuse and ground reflected irradiance are not considered.
+If <code>useDiffuse = true</code>, the diffuse irradiance on the horizontal is determined for a clear sky according to
+<a href=\"modelica://PhotoVoltaics.UsersGuide.References\">[Liu1960]</a>:
+</p>
+<pre>
+  diffuseIrradianceHorizontal = irradianceExtraterrestrialActual * sin(sunHeight) * (0.271 - 0.294 * tau_b)
+  tau_b = directIrradianceNormal / irradianceExtraterrestrialActual
+</pre>
+<p>
+The diffuse irradiance on the inclined plane is calculated by the isotropic sky model and the ground reflected irradiance
+by the ground reflectance <code>rho</code>, see
+<a href=\"modelica://PhotoVoltaics.UsersGuide.References\">[Duffie2013]</a>:
+</p>
+<pre>
+  diffuseIrradianceInclined = diffuseIrradianceHorizontal * (1 + cos(gamma)) / 2
+  reflectedIrradianceInclined = rho * (directIrradianceHorizontal + diffuseIrradianceHorizontal) * (1 - cos(gamma)) / 2
+</pre>
+<p>
+The output <code>irradiance</code> is the sum of the direct, diffuse and ground reflected irradiance on the inclined plane.
+The clear sky model is intended to be used with <code>useAirMass = true</code>.
+Clouds are not considered, i.e., the results represent a sunny day without clouds.
 </p>
 </html>"),
     Diagram(coordinateSystem(preserveAspectRatio = false)));

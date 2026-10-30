@@ -5,6 +5,13 @@ class ReleaseNotes "Release Notes"
     preferredView = "info",
     Documentation(info="<html>
 
+<h5>Version 3.2.0, 2026-10-30</h5>
+<ul>
+<li>Add optional clear sky diffuse irradiance and ground reflected irradiance (parameters <code>useDiffuse</code> and <code>rho</code>) to
+    <a href=\"modelica://PhotoVoltaics.Sources.Irradiance.Irradiance\">Irradiance</a> and
+    <a href=\"modelica://PhotoVoltaics.Sources.Irradiance.IrradianceVariableLocation\">IrradianceVariableLocation</a></li>
+</ul>
+
 <h5>Version 3.1.0, 2026-10-29</h5>
 <ul>
 <li>Set direct normal irradiance to zero for the sun below the horizon in

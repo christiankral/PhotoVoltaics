@@ -2,13 +2,14 @@
   extends Modelica.Icons.Package;
 
   annotation (preferredView="info",
-    version="3.1.0",
-    versionDate = "2026-10-29",
+    version="3.2.0",
+    versionDate = "2026-10-30",
     uses(
       Buildings(version = "9.0.0"),
       Modelica(version="4.0.0"),
-      PhotoVoltaics(version="3.1.0")),
+      PhotoVoltaics(version="3.2.0")),
     conversion(
+      noneFromVersion="3.1.0",
       noneFromVersion="3.0.0",
       noneFromVersion="2.1.0",
       noneFromVersion="2.0.0",

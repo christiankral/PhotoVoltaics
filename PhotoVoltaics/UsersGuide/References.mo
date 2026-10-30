@@ -14,10 +14,21 @@ class References "References"
         <i>13th Modelica Conference 2019</i>, Regensburg, Germany.</td>
     </tr>
     <tr>
+      <td valign=\"top\">[Duffie2013]</td>
+      <td valign=\"top\">John A. Duffie, William A. Beckman,
+        <i>Solar Engineering of Thermal Processes</i>, 4th edition, John Wiley &amp; Sons, Hoboken, NJ, 2013.</td>
+    </tr>
+    <tr>
       <td valign=\"top\">[Kasten1989]</td>
       <td valign=\"top\">Fritz Kasten, Andrew T. Young,
       \"Revised optical air mass tables and approximation formula\",
         <i>Applied Optics</i>, vol. 28, no. 22, pp. 4735-4738, 1989.</td>
+    </tr>
+    <tr>
+      <td valign=\"top\">[Liu1960]</td>
+      <td valign=\"top\">Benjamin Y. H. Liu, Richard C. Jordan,
+      \"The interrelationship and characteristic distribution of direct, diffuse and total solar radiation\",
+        <i>Solar Energy</i>, vol. 4, no. 3, pp. 1-19, 1960.</td>
     </tr>
     <tr>
       <td valign=\"top\">[Meinel1976]</td>
