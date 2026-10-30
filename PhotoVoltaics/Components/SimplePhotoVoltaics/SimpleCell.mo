@@ -11,19 +11,19 @@ model SimpleCell "Simple cell model"
       final IRef=moduleData.IscRef,
       final alphaI=moduleData.alphaIsc,
       final alphaV=moduleData.alphaVoc,
-      final R=1E8,
+      final R=moduleData.RshCell,
       final m=m,
       final ns=1,
       final nsModule=1,
       final npModule=1));
-  final parameter Real m(start = 2, fixed = false) "Ideality factor of diode";
-  final parameter Modelica.Units.SI.Current IsdRef(start=1E-4, fixed=false)
+  final parameter Real m(start = moduleData.mStart, fixed = false) "Ideality factor of diode";
+  final parameter Modelica.Units.SI.Current IsdRef(start=moduleData.IsdRefStart, fixed=false)
     "Reference saturation current of cell";
   final parameter Modelica.Units.SI.Current IphRef=moduleData.IscRef
     "Reference photo current of cell";
 initial equation
-  IphRef = IsdRef * (exp(moduleData.VocCellRef / m / moduleData.VtCellRef) - 1);
-  IphRef = IsdRef * (exp(moduleData.VmpCellRef / m / moduleData.VtCellRef) - 1) + moduleData.ImpRef;
+  IphRef = IsdRef * (exp(moduleData.VocCellRef / m / moduleData.VtCellRef) - 1) + moduleData.VocCellRef / moduleData.RshCell;
+  IphRef = IsdRef * (exp(moduleData.VmpCellRef / m / moduleData.VtCellRef) - 1) + moduleData.VmpCellRef / moduleData.RshCell + moduleData.ImpRef;
   annotation (
     defaultComponentName = "cell",
     Icon(coordinateSystem, graphics={  Polygon(points = {{-80, 60}, {-60, 80}, {60, 80}, {80, 60}, {80, -60}, {60, -80}, {-60, -80}, {-80, -60}, {-80, 60}}, pattern = LinePattern.None, fillColor = {85, 85, 255},

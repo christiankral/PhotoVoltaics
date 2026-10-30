@@ -2,7 +2,7 @@ within PhotoVoltaics.Components.SimplePhotoVoltaics;
 model SimpleModuleSymmetric "Simple module consisting of symmetric series connected cells"
   extends .PhotoVoltaics.Interfaces.PartialCell(diode(
       final m=m,
-      final R=1E8,
+      final R=moduleData.RshCell,
       final Bv=moduleData.BvCell,
       final Ibv=moduleData.Ibv,
       final Nbv=moduleData.Nbv,
@@ -17,8 +17,8 @@ model SimpleModuleSymmetric "Simple module consisting of symmetric series connec
       final irradianceRef=moduleData.irradianceRef,
       final alphaRef=moduleData.alphaIsc));
 
-  final parameter Real m(start = 2, fixed = false) "Ideality factor of diode";
-  final parameter Modelica.Units.SI.Current IsdRef(start=1E-4, fixed=false)
+  final parameter Real m(start = moduleData.mStart, fixed = false) "Ideality factor of diode";
+  final parameter Modelica.Units.SI.Current IsdRef(start=moduleData.IsdRefStart, fixed=false)
     "Reference saturation current of cell";
   final parameter Modelica.Units.SI.Current IphRef=moduleData.IscRef
     "Reference photo current of cell";
@@ -30,8 +30,8 @@ model SimpleModuleSymmetric "Simple module consisting of symmetric series connec
   Modelica.Units.SI.Power powerCellGenerating=vCell*iCellGenerating
     "Negative power consumption (generating)";
 initial equation
-  IphRef = IsdRef * (exp(moduleData.VocCellRef / m / moduleData.VtCellRef) - 1);
-  IphRef = IsdRef * (exp(moduleData.VmpCellRef / m / moduleData.VtCellRef) - 1) + moduleData.ImpRef;
+  IphRef = IsdRef * (exp(moduleData.VocCellRef / m / moduleData.VtCellRef) - 1) + moduleData.VocCellRef / moduleData.RshCell;
+  IphRef = IsdRef * (exp(moduleData.VmpCellRef / m / moduleData.VtCellRef) - 1) + moduleData.VmpCellRef / moduleData.RshCell + moduleData.ImpRef;
   annotation (
     defaultComponentName = "module",
     Icon(graphics={  Rectangle(lineColor = {0, 0, 0}, fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}, fillColor = {85, 85, 255}), Line(points = {{-80, 0}, {80, 0}}, color = {255, 255, 255}), Rectangle(extent = {{-84, 84}, {84, -84}}, lineColor = {0, 0, 0}), Polygon(points = {{-84, 76}, {-76, 84}, {-68, 76}, {-76, 68}, {-84, 76}}, fillColor = {255, 255, 255},

@@ -5,6 +5,22 @@ class ReleaseNotes "Release Notes"
     preferredView = "info",
     Documentation(info="<html>
 
+<h5>Version 3.2.1, 2026-10-30</h5>
+<ul>
+<li>Improve convergence of the determination of the ideality factor <code>m</code> and the reference saturation current
+    <code>IsdRef</code> in
+    <a href=\"modelica://PhotoVoltaics.Components.SimplePhotoVoltaics.SimpleCell\">SimpleCell</a>,
+    <a href=\"modelica://PhotoVoltaics.Components.SimplePhotoVoltaics.SimpleModuleSymmetric\">SimpleModuleSymmetric</a> and
+    <a href=\"modelica://PhotoVoltaics.Components.SimplePhotoVoltaics.SimplePlantSymmetric\">SimplePlantSymmetric</a>
+    by start values derived from an approximate analytical solution</li>
+<li>Add shunt resistance of cell <code>RshCell</code> to
+    <a href=\"modelica://PhotoVoltaics.Records.ModuleData\">ModuleData</a>, with default value 1E8&nbsp;Ohm as before;
+    the shunt resistance is considered in the determination of <code>m</code> and <code>IsdRef</code>,
+    such that open circuit voltage and maximum power point of the data sheet are met</li>
+<li>Set <code>RshCell = 100</code>&nbsp;Ohm in <a href=\"modelica://PhotoVoltaics.Records.KPV_480\">KPV_480</a>
+    to enable the simulation of modules with series connected cells</li>
+</ul>
+
 <h5>Version 3.2.0, 2026-10-30</h5>
 <ul>
 <li>Add optional clear sky diffuse irradiance and ground reflected irradiance (parameters <code>useDiffuse</code> and <code>rho</code>) to

@@ -36,12 +36,17 @@ record ModuleData "Data of PV module"
     annotation (Dialog(group="Breakthrough data"));
   parameter Real Nbv = 0.74 "Breakthrough emission coefficient" annotation (
     Dialog(group = "Breakthrough data"));
+  parameter Modelica.Units.SI.Resistance RshCell=1E8 "Shunt resistance of cell"
+    annotation (Dialog(group="Non-ideal effects"));
   /*
                     parameter Modelica.SIunits.Resistance RsCell = 0 "Series resistance of cell" annotation(Dialog(group = "Non-ideal effects"));
-                    parameter Modelica.SIunits.Resistance RshCell = 1E8 "Shunt resistance of cell" annotation(Dialog(group = "Non-ideal effects"));
                     */
   final parameter Modelica.Units.SI.Voltage VtCellRef=Modelica.Constants.k*
       TRef/Q "Reference temperature voltage of cell";
+  final parameter Real mStart=(VocCellRef - VmpCellRef)/VtCellRef/log(IscRef/(IscRef - ImpRef))
+    "Start value of ideality factor of diode (approximation neglecting -1 terms and shunt resistance)";
+  final parameter Modelica.Units.SI.Current IsdRefStart=IscRef/(exp(VocCellRef/mStart/VtCellRef) - 1)
+    "Start value of reference saturation current of cell";
   constant Modelica.Units.SI.Charge Q=1.6021766208E-19
     "Elementary charge of electron";
   annotation (

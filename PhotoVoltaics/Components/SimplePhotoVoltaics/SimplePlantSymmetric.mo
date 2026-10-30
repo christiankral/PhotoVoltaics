@@ -2,7 +2,7 @@ within PhotoVoltaics.Components.SimplePhotoVoltaics;
 model SimplePlantSymmetric "Simple plant consisting of symmetric series and parallel connected modules"
   extends .PhotoVoltaics.Interfaces.PartialCell(diode(
       final m=m,
-      final R=1E8,
+      final R=moduleData.RshCell,
       final Bv=moduleData.BvCell,
       final Ibv=moduleData.Ibv,
       final Nbv=moduleData.Nbv,
@@ -18,8 +18,8 @@ model SimplePlantSymmetric "Simple plant consisting of symmetric series and para
       final IRef=npModule*IphRef));
   parameter Integer nsModule(final min = 1) = 1 "Number of series connected modules";
   parameter Integer npModule(final min = 1) = 1 "Number of parallel connected modules";
-  final parameter Real m(start = 2, fixed = false) "Ideality factor of diode";
-  final parameter Modelica.Units.SI.Current IsdRef(start=1E-4, fixed=false)
+  final parameter Real m(start = moduleData.mStart, fixed = false) "Ideality factor of diode";
+  final parameter Modelica.Units.SI.Current IsdRef(start=moduleData.IsdRefStart, fixed=false)
     "Reference saturation current of cell";
   final parameter Modelica.Units.SI.Current IphRef=moduleData.IscRef
     "Reference photo current of cell";
@@ -38,8 +38,8 @@ model SimplePlantSymmetric "Simple plant consisting of symmetric series and para
   Modelica.Units.SI.Power powerModuleGenerating=vModule*iModuleGenerating
     "Negative module power (generating)";
 initial equation
-  IphRef = IsdRef * (exp(moduleData.VocCellRef / m / moduleData.VtCellRef) - 1);
-  IphRef = IsdRef * (exp(moduleData.VmpCellRef / m / moduleData.VtCellRef) - 1) + moduleData.ImpRef;
+  IphRef = IsdRef * (exp(moduleData.VocCellRef / m / moduleData.VtCellRef) - 1) + moduleData.VocCellRef / moduleData.RshCell;
+  IphRef = IsdRef * (exp(moduleData.VmpCellRef / m / moduleData.VtCellRef) - 1) + moduleData.VmpCellRef / moduleData.RshCell + moduleData.ImpRef;
   annotation (
     Icon(graphics={  Rectangle(extent = {{-84, 82}, {-8, 8}}, lineColor = {0, 0, 0}), Text(extent = {{-150, -150}, {150, -110}}, textString = "%name", lineColor = {0, 0, 255}), Rectangle(extent = {{-76, 74}, {-16, 16}}, lineColor = {255, 255, 255}, fillColor = {85, 85, 255},
             fillPattern =                                                                                                                                                                                                        FillPattern.Solid), Line(points = {{-46, 76}, {-46, 16}}, color = {255, 255, 255}), Line(points = {{-76, 46}, {-16, 46}}, color = {255, 255, 255}), Rectangle(extent = {{8, 82}, {84, 8}}, lineColor = {0, 0, 0}), Rectangle(extent = {{16, 74}, {76, 16}}, lineColor = {255, 255, 255}, fillColor = {85, 85, 255},

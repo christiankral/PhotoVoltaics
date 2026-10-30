@@ -1,6 +1,6 @@
 within PhotoVoltaics.Records;
 record KPV_480 "Kioto monocrystalline SI cell 480W"
-  extends ModuleData(final moduleName = "KPV_480", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 40.53, final IscRef = 14.98, final VmpRef = 33.51, final ImpRef = 14.33, final alphaIsc = +0.0005, final alphaVoc = -0.002, final ns = 54, final nb = 3);
+  extends ModuleData(final moduleName = "KPV_480", final TRef = 298.15, final irradianceRef = 1000, final VocRef = 40.53, final IscRef = 14.98, final VmpRef = 33.51, final ImpRef = 14.33, final alphaIsc = +0.0005, final alphaVoc = -0.002, final ns = 54, final nb = 3, final RshCell = 100);
   annotation (
     defaultComponentName = "moduleData",
     defaultComponentPrefixes = "parameter",
